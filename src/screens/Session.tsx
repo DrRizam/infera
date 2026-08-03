@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Achievement, Drill, Profile, RankDrill, RedFlagDrill } from "../types";
 import { drills } from "../content";
-import { buildSession, reviewDrill, todayISO } from "../engine/srs";
+import { DECAY_THRESHOLD, buildSession, dueCount, recallNow, reviewDrill, todayISO } from "../engine/srs";
 import { Easy, Good, Hard, gradeFromScore, type Grade } from "../engine/fsrs";
 import {
   addXp,
@@ -12,6 +12,7 @@ import {
   touchStreak,
 } from "../engine/store";
 import { checkAchievements } from "../engine/achievements";
+import FlagControl from "../components/FlagControl";
 
 // ── Shared bits ──────────────────────────────────────────────────────────
 
@@ -51,59 +52,6 @@ function Feedback({ score, drill }: { score: number; drill: Drill }) {
             {drill.contestedNote && <span className="contested-note">{drill.contestedNote}</span>}
           </div>
         )}
-      </div>
-    </div>
-  );
-}
-
-/**
- * Lets a tester report a problem with an item without leaving the session.
- * Flags live in the profile and ride along in the JSON export, which is how
- * content feedback gets back to the author during the pilot.
- */
-function FlagControl({
-  drill,
-  profile,
-  setProfile,
-}: {
-  drill: Drill;
-  profile: Profile;
-  setProfile: (p: Profile) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const [note, setNote] = useState("");
-  const already = profile.flags.some((f) => f.drillId === drill.id);
-
-  if (already) return <div className="flag-btn flagged">⚑ Flagged — thanks, it's in your report</div>;
-
-  if (!open)
-    return (
-      <button className="flag-btn" onClick={() => setOpen(true)}>
-        ⚑ Something wrong with this item?
-      </button>
-    );
-
-  const submit = () => {
-    setProfile({
-      ...profile,
-      flags: [...profile.flags, { drillId: drill.id, note: note.trim(), date: todayISO() }],
-    });
-    setOpen(false);
-  };
-
-  return (
-    <div className="flag-box">
-      <textarea
-        autoFocus
-        value={note}
-        onChange={(e) => setNote(e.target.value)}
-        placeholder="What's wrong? Wrong answer, outdated number, unclear wording, bad citation…"
-      />
-      <div className="flag-actions">
-        <button onClick={() => setOpen(false)}>Cancel</button>
-        <button className="send" onClick={submit}>
-          Send flag
-        </button>
       </div>
     </div>
   );
@@ -427,6 +375,7 @@ export default function Session({
   const [scores, setScores] = useState<number[]>(resumed?.scores ?? []);
   const [finished, setFinished] = useState(false);
   const [unlocked, setUnlocked] = useState<Achievement[]>([]);
+  const [rescued, setRescued] = useState(0);
   const showHint = !profile.seenGradeHint;
 
   const drill = queue[idx];
@@ -443,6 +392,11 @@ export default function Session({
   }, [idx, scores, finished, queue]);
 
   const handleDone = (score: number, grade: Grade) => {
+    // Measure decay BEFORE rescheduling — afterwards the record looks healthy.
+    const prior = profile.srs[drill.id];
+    if (prior && prior.lastReview && recallNow(prior) < DECAY_THRESHOLD) {
+      setRescued((n) => n + 1);
+    }
     const updated = reviewDrill(profile.srs[drill.id], drill.id, score, grade);
     const xpGain = Math.round(10 * score) + (score >= 0.99 ? 2 : 0);
     let next: Profile = addXp(
@@ -471,6 +425,10 @@ export default function Session({
   if (finished) {
     const avg = scores.reduce((a, b) => a + b, 0) / Math.max(scores.length, 1);
     const xp = scores.reduce((a, s) => a + Math.round(10 * s) + (s >= 0.99 ? 2 : 0), 0);
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowISO = todayISO(tomorrow);
+    const dueTomorrow = Object.values(profile.srs).filter((r) => r.dueDate <= tomorrowISO).length;
     return (
       <div className="app">
         <div className="card" style={{ textAlign: "center", paddingTop: 32 }}>
@@ -491,10 +449,18 @@ export default function Session({
               <div className="lbl">streak</div>
             </div>
           </div>
+          {rescued > 0 && (
+            <div className="rescue-note">
+              🧠 <b>{rescued} drill{rescued === 1 ? "" : "s"} caught on the way down.</b> Your recall
+              on {rescued === 1 ? "it" : "them"} had already started slipping — reviewing today is
+              what stops {rescued === 1 ? "it" : "them"} becoming something you'd have to relearn.
+            </div>
+          )}
           <p className="sub" style={{ marginBottom: 16 }}>
             {avg >= 0.8
               ? "Sharp reasoning. Harder material is coming."
               : "The drills you missed will return sooner — that's the system working."}
+            {dueTomorrow > 0 && ` ${dueTomorrow} due again tomorrow.`}
           </p>
           {unlocked.map((a) => (
             <div className="unlock-banner" key={a.id}>

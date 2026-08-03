@@ -18,6 +18,13 @@ export const SESSION_PRESETS = [
 
 export const DEFAULT_DAILY_GOAL = 8;
 
+/**
+ * The drill shown during onboarding. Picked to land the "this is properly
+ * sourced" moment in one question. Falls back to the first MCQ in the library
+ * if the id ever disappears from the content banks.
+ */
+export const ONBOARDING_DRILL_ID = "sh1-s5";
+
 /** Rough minutes for a session of n drills — used in button labels. */
 export function estimateMinutes(n: number): number {
   return Math.max(2, Math.round(n * 0.85));

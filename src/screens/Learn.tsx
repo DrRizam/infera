@@ -44,10 +44,12 @@ export default function Learn({
   profile,
   setProfile,
   onStartSession,
+  onOpenLibrary,
 }: {
   profile: Profile;
   setProfile: (p: Profile) => void;
   onStartSession: () => void;
+  onOpenLibrary: () => void;
 }) {
   const streak = effectiveStreak(profile);
   const foundation = overallMastery(profile);
@@ -194,6 +196,20 @@ export default function Learn({
           "Sharp" means you've remembered it across widening gaps — not that you answered it right
           once. Anything below Solid comes back sooner.
         </p>
+      </div>
+
+      <div className="card">
+        <div className="card-head">
+          <h2>📚 Evidence library</h2>
+          <span className="sub">{drills.length} items</span>
+        </div>
+        <p className="sub" style={{ marginBottom: 12 }}>
+          Read every drill with its citation and review status. If a number looks wrong, dispute
+          it — that's how the content gets better.
+        </p>
+        <button className="big-btn ghost" onClick={onOpenLibrary}>
+          Browse the evidence →
+        </button>
       </div>
 
       <div className="footer-note">

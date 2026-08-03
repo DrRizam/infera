@@ -10,6 +10,7 @@ import Stats from "./screens/Stats";
 import Onboarding from "./screens/Onboarding";
 import Learn from "./screens/Learn";
 import You from "./screens/You";
+import Library from "./screens/Library";
 import { cases } from "./content/cases";
 
 type Screen =
@@ -19,7 +20,8 @@ type Screen =
   | { name: "case"; caseId: string }
   | { name: "speed" }
   | { name: "stats" }
-  | { name: "you" };
+  | { name: "you" }
+  | { name: "library" };
 
 const NAV: { screen: Screen["name"]; icon: string; label: string }[] = [
   { screen: "home", icon: "🏠", label: "Today" },
@@ -87,6 +89,7 @@ export default function App() {
           profile={profile}
           setProfile={setProfile}
           onStartSession={() => setScreen({ name: "session" })}
+          onOpenLibrary={() => setScreen({ name: "library" })}
         />
       );
       break;
@@ -106,11 +109,21 @@ export default function App() {
     case "stats":
       content = <Stats profile={profile} />;
       break;
+    case "library":
+      content = (
+        <Library
+          profile={profile}
+          setProfile={setProfile}
+          onBack={() => setScreen({ name: "learn" })}
+        />
+      );
+      break;
     case "you":
       content = (
         <You
           profile={profile}
           setProfile={setProfile}
+          onOpenLibrary={() => setScreen({ name: "library" })}
           onResetDone={() => {
             setProfileState(loadProfile());
             setScreen({ name: "home" });

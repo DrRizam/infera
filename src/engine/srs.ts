@@ -43,6 +43,12 @@ export function reviewDrill(
 }
 
 /**
+ * Below this predicted recall, an item was genuinely slipping — catching it
+ * now is the entire point of spaced repetition, so the session says so.
+ */
+export const DECAY_THRESHOLD = 0.9;
+
+/**
  * Build today's session: due reviews first (weakest first, from ALL modules —
  * spaced repetition doesn't pause for a path change), then unseen drills from
  * the learner's current path, topping up from other modules only if the path
@@ -71,8 +77,12 @@ export function buildSession(profile: Profile, size?: number): Drill[] {
   return [...due, ...onPath, ...offPath].slice(0, size ?? profile.dailyGoal);
 }
 
-/** Predicted probability the learner still recalls this drill today. */
-function recallNow(r: SrsRecord, today: string): number {
+/**
+ * Predicted probability the learner still recalls this drill today.
+ * Exported so the session can tell the learner which items it caught on the
+ * way down — the whole value of spaced repetition is invisible otherwise.
+ */
+export function recallNow(r: SrsRecord, today: string = todayISO()): number {
   if (!r.lastReview) return 0;
   const elapsed = Math.max(
     0,

@@ -22,10 +22,12 @@ export default function You({
   profile,
   setProfile,
   onResetDone,
+  onOpenLibrary,
 }: {
   profile: Profile;
   setProfile: (p: Profile) => void;
   onResetDone: () => void;
+  onOpenLibrary: () => void;
 }) {
   const lvl = levelFor(profile.xp);
   const streak = effectiveStreak(profile);
@@ -208,7 +210,10 @@ export default function You({
           judgement, supervision, or your own reading of the primary literature. Scope of practice
           and terminology vary by country and licence.
         </p>
-        <p className="sub" style={{ marginTop: 10 }}>
+        <button className="big-btn ghost" style={{ marginTop: 14 }} onClick={onOpenLibrary}>
+          📚 Browse every item and its source
+        </button>
+        <p className="sub" style={{ marginTop: 12 }}>
           {drills.length} drills in the library · Pilot build
         </p>
       </div>
