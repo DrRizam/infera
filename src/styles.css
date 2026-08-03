@@ -442,3 +442,40 @@ body {
 .badge.unverified { background: var(--unverified); color: var(--on-primary); }
 .badge.contested { background: var(--info-soft); color: var(--info); }
 .contested-note { font-style: italic; }
+
+/* ── Streak shields (earned rest days) ───────────── */
+.chip.shield { color: var(--info); }
+.day-cell.rested { background: var(--info-soft); border-color: var(--info-border); }
+.shield-note {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 10px; font-size: 12.5px; color: var(--ink-soft);
+}
+.shield-note .pips { display: flex; gap: 3px; }
+.shield-note .pip {
+  width: 7px; height: 7px; border-radius: 999px; background: var(--well);
+  border: 1px solid var(--line);
+}
+.shield-note .pip.on { background: var(--info); border-color: var(--info); }
+
+/* ── Flag an item ────────────────────────────────── */
+.flag-btn {
+  background: none; border: none; cursor: pointer; font-family: inherit;
+  font-size: 12px; font-weight: 700; color: var(--ink-muted);
+  padding: 4px 0; margin-top: 8px; text-align: left;
+}
+.flag-btn:hover { color: var(--ink-soft); text-decoration: underline; }
+.flag-btn.flagged { color: var(--unverified); }
+.flag-box { margin-top: 8px; display: flex; flex-direction: column; gap: 8px; }
+.flag-box textarea {
+  width: 100%; min-height: 62px; resize: vertical; font-family: inherit; font-size: 13.5px;
+  padding: 9px 11px; border-radius: 10px; border: 2px solid var(--line);
+  background: var(--card); color: var(--ink);
+}
+.flag-box textarea:focus { outline: none; border-color: var(--primary); }
+.flag-box .flag-actions { display: flex; gap: 8px; }
+.flag-box .flag-actions button {
+  flex: 1; border-radius: 10px; padding: 8px 10px; font-family: inherit;
+  font-size: 13px; font-weight: 800; cursor: pointer; border: 2px solid var(--line);
+  background: var(--card); color: var(--ink-soft);
+}
+.flag-box .flag-actions button.send { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }

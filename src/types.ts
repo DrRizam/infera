@@ -203,11 +203,25 @@ export interface CaseResult {
   xp: number;
 }
 
+/** A learner-reported problem with a content item. Travels with the export. */
+export interface ItemFlag {
+  drillId: string;
+  note: string;
+  date: string; // ISO date
+}
+
 export interface Profile {
   /** Bumped on breaking changes so exports/imports can be migrated safely. */
   profileVersion: number;
   xp: number;
   streak: number;
+  /** Banked rest days (max 2). Earned by practicing, spent automatically. */
+  shields: number;
+  /** Practice days accumulated toward the next shield (7 earns one). */
+  shieldProgress: number;
+  /** Days a shield covered — shown on the week strip so the mechanic is visible. */
+  shieldedDates: string[];
+  flags: ItemFlag[];
   lastActiveDate: string | null; // ISO date of last completed session/case
   activityLog: string[]; // ISO dates with at least one completed session/case
   srs: Record<string, SrsRecord>;

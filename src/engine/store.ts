@@ -2,7 +2,11 @@ import type { Profile, SrsRecord } from "../types";
 import { todayISO } from "./srs";
 
 const KEY = "clinician-profile-v1";
-export const PROFILE_VERSION = 2;
+export const PROFILE_VERSION = 3;
+
+/** Rest-day mechanic: how many days can be banked, and what earns one. */
+export const MAX_SHIELDS = 2;
+export const DAYS_PER_SHIELD = 7;
 
 /** SM-2 record shape written by profileVersion 1 (pre-FSRS). */
 interface LegacySrsRecord {
@@ -52,6 +56,15 @@ export function migrateProfile(p: Profile): Profile {
     p.srs = migrated;
     p.profileVersion = 2;
   }
+  if (p.profileVersion < 3) {
+    // Existing users start with one shield banked rather than none — losing a
+    // streak to a mechanic that didn't exist when you earned it feels unfair.
+    if (typeof p.shields !== "number") p.shields = p.streak > 0 ? 1 : 0;
+    if (typeof p.shieldProgress !== "number") p.shieldProgress = 0;
+    if (!Array.isArray(p.shieldedDates)) p.shieldedDates = [];
+    if (!Array.isArray(p.flags)) p.flags = [];
+    p.profileVersion = 3;
+  }
   return p;
 }
 
@@ -59,7 +72,7 @@ export function loadProfile(): Profile {
   try {
     const raw = localStorage.getItem(KEY);
     if (raw) {
-      const migrated = migrateProfile(JSON.parse(raw) as Profile);
+      const migrated = reconcileStreak(migrateProfile(JSON.parse(raw) as Profile));
       const reserialized = JSON.stringify(migrated);
       if (reserialized !== raw) localStorage.setItem(KEY, reserialized);
       return migrated;
@@ -82,6 +95,10 @@ export function loadProfile(): Profile {
     topicAgg: {},
     speedBest: 0,
     currentPath: "Shoulder pain",
+    shields: 0,
+    shieldProgress: 0,
+    shieldedDates: [],
+    flags: [],
   };
 }
 
@@ -89,17 +106,66 @@ export function saveProfile(p: Profile): void {
   localStorage.setItem(KEY, JSON.stringify(p));
 }
 
+function shiftISO(iso: string, days: number): string {
+  const d = new Date(iso + "T00:00:00");
+  d.setDate(d.getDate() + days);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function daysBetween(fromISO: string, toISO: string): number {
+  const from = new Date(fromISO + "T00:00:00").getTime();
+  const to = new Date(toISO + "T00:00:00").getTime();
+  return Math.max(0, Math.round((to - from) / 86_400_000));
+}
+
+/**
+ * Settle any missed days since the last visit. Called once on app load.
+ *
+ * Rest-day mechanic (chosen over Duolingo's hearts): a clinician finishing a
+ * 12-hour clinic day should not be punished for skipping, so shields are
+ * EARNED by practicing rather than bought, spend themselves silently, and
+ * never block a session. Missing a day with a shield banked costs the shield,
+ * not the streak — and a shielded day never increments the streak either, so
+ * the number still means "days I actually practiced".
+ */
+export function reconcileStreak(p: Profile): Profile {
+  if (!p.lastActiveDate) return p;
+  const today = todayISO();
+  const gap = daysBetween(p.lastActiveDate, today);
+  if (gap <= 1) return p; // active today, or yesterday with today still open
+
+  const missed = gap - 1;
+  if (p.shields >= missed) {
+    const covered: string[] = [];
+    for (let i = 1; i <= missed; i++) covered.push(shiftISO(p.lastActiveDate, i));
+    return {
+      ...p,
+      shields: p.shields - missed,
+      shieldedDates: [...p.shieldedDates, ...covered],
+      // Carry the streak forward to yesterday; today is still unearned.
+      lastActiveDate: shiftISO(today, -1),
+    };
+  }
+  return { ...p, streak: 0, shieldProgress: 0 };
+}
+
 /** Streak logic: completing any session/case today extends or starts the streak. */
 export function touchStreak(p: Profile): Profile {
   const today = todayISO();
   if (p.lastActiveDate === today) return p;
   const activityLog = p.activityLog.includes(today) ? p.activityLog : [...p.activityLog, today];
-  p = { ...p, activityLog };
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  const yISO = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, "0")}-${String(yesterday.getDate()).padStart(2, "0")}`;
+  const yISO = shiftISO(today, -1);
   const streak = p.lastActiveDate === yISO ? p.streak + 1 : 1;
-  return { ...p, streak, lastActiveDate: today };
+
+  // Earn a shield every DAYS_PER_SHIELD practice days, capped at MAX_SHIELDS.
+  let shieldProgress = p.shieldProgress + 1;
+  let shields = p.shields;
+  if (shieldProgress >= DAYS_PER_SHIELD) {
+    shieldProgress -= DAYS_PER_SHIELD;
+    shields = Math.min(shields + 1, MAX_SHIELDS);
+  }
+
+  return { ...p, activityLog, streak, lastActiveDate: today, shields, shieldProgress };
 }
 
 /** Has the streak lapsed since last visit? (display only) */
@@ -107,10 +173,7 @@ export function effectiveStreak(p: Profile): number {
   if (!p.lastActiveDate) return 0;
   const today = todayISO();
   if (p.lastActiveDate === today) return p.streak;
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  const yISO = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, "0")}-${String(yesterday.getDate()).padStart(2, "0")}`;
-  return p.lastActiveDate === yISO ? p.streak : 0;
+  return p.lastActiveDate === shiftISO(today, -1) ? p.streak : 0;
 }
 
 /** Add XP and log it against today's date (for the stats chart). */

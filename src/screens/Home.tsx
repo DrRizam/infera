@@ -3,7 +3,7 @@ import { MODULE_OF_TOPIC } from "../types";
 import { cases } from "../content/cases";
 import { drills } from "../content";
 import { buildSession, dueCount, masteryByTopic, todayISO } from "../engine/srs";
-import { effectiveStreak, levelFor } from "../engine/store";
+import { DAYS_PER_SHIELD, MAX_SHIELDS, effectiveStreak, levelFor } from "../engine/store";
 
 // ── Level ring (SVG progress circle) ─────────────────────────────────────
 
@@ -20,7 +20,7 @@ function LevelRing({ level, into, needed }: { level: number; into: number; neede
           cy="38"
           r={r}
           fill="none"
-          stroke="#fbbf24"
+          stroke="var(--accent)"
           strokeWidth="7"
           strokeLinecap="round"
           strokeDasharray={`${circ * frac} ${circ}`}
@@ -50,15 +50,20 @@ function WeekStrip({ profile }: { profile: Profile }) {
     });
   }
   const active = new Set(profile.activityLog);
+  const shielded = new Set(profile.shieldedDates);
   return (
     <div className="week-strip">
       {days.map((d) => {
         const done = active.has(d.iso);
+        const rest = !done && shielded.has(d.iso);
         return (
           <div className="day-col" key={d.iso}>
             <div className="day-letter">{d.letter}</div>
-            <div className={`day-cell ${done ? "done" : ""} ${d.isToday ? "today" : ""}`}>
-              {done ? "🔥" : ""}
+            <div
+              className={`day-cell ${done ? "done" : ""} ${rest ? "rested" : ""} ${d.isToday ? "today" : ""}`}
+              title={rest ? "Rest day — a shield covered this one" : undefined}
+            >
+              {done ? "🔥" : rest ? "🛡️" : ""}
             </div>
           </div>
         );
@@ -96,6 +101,11 @@ export default function Home({
         </div>
         <div className="stats">
           <div className="chip flame">🔥 {streak}</div>
+          {profile.shields > 0 && (
+            <div className="chip shield" title="Banked rest days — a missed day spends one of these instead of your streak">
+              🛡️ {profile.shields}
+            </div>
+          )}
           <div className="chip xp">⚡ {profile.xp} XP</div>
         </div>
       </div>
@@ -135,6 +145,20 @@ export default function Home({
           </span>
         </div>
         <WeekStrip profile={profile} />
+        <div className="shield-note">
+          <span className="pips">
+            {Array.from({ length: DAYS_PER_SHIELD }, (_, i) => (
+              <span key={i} className={`pip ${i < profile.shieldProgress ? "on" : ""}`} />
+            ))}
+          </span>
+          <span>
+            {profile.shields >= MAX_SHIELDS
+              ? `🛡️ ${profile.shields} rest days banked (full) — miss a day and one covers you`
+              : `${DAYS_PER_SHIELD - profile.shieldProgress} more practice day${
+                  DAYS_PER_SHIELD - profile.shieldProgress === 1 ? "" : "s"
+                } earns a rest-day shield`}
+          </span>
+        </div>
       </div>
 
       <div className="card">

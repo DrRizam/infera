@@ -91,6 +91,11 @@ export default function Stats({
         </div>
         <div className="stats">
           <div className="chip flame">🔥 {streak}</div>
+          {profile.shields > 0 && (
+            <div className="chip shield" title="Banked rest days — a missed day spends one of these instead of your streak">
+              🛡️ {profile.shields}
+            </div>
+          )}
           <div className="chip xp">⚡ {profile.xp} XP</div>
         </div>
       </div>
@@ -199,6 +204,27 @@ export default function Stats({
           })}
         </div>
       </div>
+
+      {profile.flags.length > 0 && (
+        <div className="card">
+          <div className="card-head">
+            <h2>⚑ Items you flagged</h2>
+            <span className="sub">{profile.flags.length}</span>
+          </div>
+          <p className="sub" style={{ marginBottom: 10 }}>
+            These ride along in your backup file — send it over and the content gets fixed.
+          </p>
+          {profile.flags.map((f) => (
+            <div className="mastery-row" key={f.drillId + f.date}>
+              <div className="mastery-label">
+                <span>{drills.find((d) => d.id === f.drillId)?.topic ?? f.drillId}</span>
+                <span className="sub">{f.date}</span>
+              </div>
+              {f.note && <div className="sub">{f.note}</div>}
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="card">
         <h2>⚙️ Settings</h2>

@@ -55,6 +55,11 @@ export default function Learn({
         </div>
         <div className="stats">
           <div className="chip flame">🔥 {streak}</div>
+          {profile.shields > 0 && (
+            <div className="chip shield" title="Banked rest days — a missed day spends one of these instead of your streak">
+              🛡️ {profile.shields}
+            </div>
+          )}
           <div className="chip xp">⚡ {profile.xp} XP</div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import type { Achievement, Drill, Profile, RankDrill, RedFlagDrill } from "../types";
-import { buildSession, reviewDrill } from "../engine/srs";
+import { buildSession, reviewDrill, todayISO } from "../engine/srs";
 import { Easy, Good, Hard, gradeFromScore, type Grade } from "../engine/fsrs";
 import { addXp, logAnswer, touchStreak } from "../engine/store";
 import { checkAchievements } from "../engine/achievements";
@@ -29,6 +29,59 @@ function Feedback({ score, drill }: { score: number; drill: Drill }) {
         )}
         <span>📚 {drill.citation}</span>
         {drill.contestedNote && <span className="contested-note">{drill.contestedNote}</span>}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Lets a tester report a problem with an item without leaving the session.
+ * Flags live in the profile and ride along in the JSON export, which is how
+ * content feedback gets back to the author during the pilot.
+ */
+function FlagControl({
+  drill,
+  profile,
+  setProfile,
+}: {
+  drill: Drill;
+  profile: Profile;
+  setProfile: (p: Profile) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [note, setNote] = useState("");
+  const already = profile.flags.some((f) => f.drillId === drill.id);
+
+  if (already) return <div className="flag-btn flagged">⚑ Flagged — thanks, it's in your report</div>;
+
+  if (!open)
+    return (
+      <button className="flag-btn" onClick={() => setOpen(true)}>
+        ⚑ Something wrong with this item?
+      </button>
+    );
+
+  const submit = () => {
+    setProfile({
+      ...profile,
+      flags: [...profile.flags, { drillId: drill.id, note: note.trim(), date: todayISO() }],
+    });
+    setOpen(false);
+  };
+
+  return (
+    <div className="flag-box">
+      <textarea
+        autoFocus
+        value={note}
+        onChange={(e) => setNote(e.target.value)}
+        placeholder="What's wrong? Wrong answer, outdated number, unclear wording, bad citation…"
+      />
+      <div className="flag-actions">
+        <button onClick={() => setOpen(false)}>Cancel</button>
+        <button className="send" onClick={submit}>
+          Send flag
+        </button>
       </div>
     </div>
   );
@@ -419,6 +472,7 @@ export default function Session({
         ) : (
           <ChoiceDrill drill={drill} onDone={handleDone} />
         )}
+        <FlagControl drill={drill} profile={profile} setProfile={setProfile} />
       </div>
     </div>
   );
