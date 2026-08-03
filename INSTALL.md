@@ -3,7 +3,7 @@
 Thanks for testing this. It takes about a minute, and there's no app store, no
 account, and no sign-up — you open a link and add it to your home screen.
 
-**The link:** _[paste your deployed URL here]_
+**The link:** https://whimsical-taiyaki-e74b8b.netlify.app/
 
 ---
 
