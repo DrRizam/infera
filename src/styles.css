@@ -632,3 +632,37 @@ body {
 .lib-body { padding: 0 0 14px; display: flex; flex-direction: column; gap: 8px; }
 .lib-row { display: flex; gap: 10px; font-size: 13px; color: var(--ink-soft); }
 .lib-row b { flex-shrink: 0; width: 72px; color: var(--ink); font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; }
+
+/* ── First-launch tour ───────────────────────────── */
+.tour-overlay { position: fixed; inset: 0; z-index: 100; }
+.tour-spotlight {
+  position: fixed; border-radius: 14px; pointer-events: none;
+  box-shadow: 0 0 0 9999px rgba(4, 8, 20, 0.72);
+  border: 2px solid var(--accent);
+  transition: top 0.2s ease, left 0.2s ease, width 0.2s ease, height 0.2s ease;
+}
+.tour-card {
+  position: fixed; left: 16px; right: 16px; max-width: 420px;
+  margin: 0 auto; background: var(--card); color: var(--ink);
+  border-radius: var(--radius); padding: 18px; border: 2px solid var(--line);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.tour-step-count {
+  font-size: 11px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.6px; color: var(--primary); margin-bottom: 6px;
+}
+.tour-card h3 { font-size: 17px; margin-bottom: 6px; }
+.tour-card p { font-size: 14px; color: var(--ink-soft); }
+.tour-actions { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+.tour-skip {
+  background: none; border: none; cursor: pointer; font-family: inherit;
+  font-size: 13.5px; font-weight: 700; color: var(--ink-muted); padding: 8px 0;
+}
+.tour-skip:hover { color: var(--ink-soft); text-decoration: underline; }
+.tour-next {
+  margin-left: auto; background: var(--primary); color: var(--on-primary);
+  border: none; border-radius: 12px; padding: 10px 22px;
+  font-family: inherit; font-size: 14.5px; font-weight: 800; cursor: pointer;
+  box-shadow: 0 3px 0 var(--primary-deep);
+}
+.tour-next:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--primary-deep); }

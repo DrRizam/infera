@@ -3,7 +3,7 @@ import { todayISO } from "./srs";
 import { DEFAULT_DAILY_GOAL } from "../config";
 
 const KEY = "clinician-profile-v1";
-export const PROFILE_VERSION = 5;
+export const PROFILE_VERSION = 6;
 
 /** Rest-day mechanic: how many days can be banked, and what earns one. */
 export const MAX_SHIELDS = 2;
@@ -77,6 +77,11 @@ export function migrateProfile(p: Profile): Profile {
     if (!p.textSize) p.textSize = "normal";
     p.profileVersion = 5;
   }
+  if (p.profileVersion < 6) {
+    // Existing users already know their way around — don't interrupt them.
+    if (typeof p.seenTour !== "boolean") p.seenTour = p.sessionsCompleted > 0;
+    p.profileVersion = 6;
+  }
   return p;
 }
 
@@ -120,6 +125,7 @@ export function loadProfile(): Profile {
     flags: [],
     dailyGoal: DEFAULT_DAILY_GOAL,
     seenGradeHint: false,
+    seenTour: false,
     theme: "system",
     textSize: "normal",
   };

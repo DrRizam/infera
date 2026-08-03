@@ -11,6 +11,7 @@ import Onboarding from "./screens/Onboarding";
 import Learn from "./screens/Learn";
 import You from "./screens/You";
 import Library from "./screens/Library";
+import Tour, { HOME_TOUR } from "./components/Tour";
 import { cases } from "./content/cases";
 
 type Screen =
@@ -141,14 +142,22 @@ export default function App() {
       );
   }
 
+  // The tour spotlights real elements, so it can only run on the home screen
+  // with the tab bar present — and never on top of the onboarding flow.
+  const showTour = !profile.seenTour && screen.name === "home";
+
   return (
     <>
       {content}
+      {showTour && (
+        <Tour steps={HOME_TOUR} onDone={() => setProfile({ ...profile, seenTour: true })} />
+      )}
       {!inActivity && (
         <nav className="tabbar">
           {NAV.map((n) => (
             <button
               key={n.screen}
+              data-tour={n.screen}
               className={`tab ${screen.name === n.screen ? "on" : ""}`}
               onClick={() => setScreen({ name: n.screen } as Screen)}
             >

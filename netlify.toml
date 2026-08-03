@@ -1,0 +1,39 @@
+# Netlify deploy config. With this committed you can accept every default in
+# the Netlify UI — it reads the build command and publish directory from here.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# The app keeps all state in memory and localStorage rather than in the URL,
+# so any path should serve the shell rather than 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# The service worker and the shell must never be served stale, or testers get
+# stuck on an old build and never receive fixes. Hashed assets are immutable
+# and can be cached hard.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

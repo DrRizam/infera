@@ -102,7 +102,9 @@ export default function Home({
           Clini<span>cian</span>
         </div>
         <div className="stats">
-          <div className="chip flame">🔥 {streak}</div>
+          <div className="chip flame" data-tour="streak">
+            🔥 {streak}
+          </div>
           {profile.shields > 0 && (
             <div className="chip shield" title="Banked rest days — a missed day spends one of these instead of your streak">
               🛡️ {profile.shields}
@@ -134,7 +136,7 @@ export default function Home({
         </div>
         {session.length > 0 ? (
           <>
-            <button className="big-btn" onClick={() => onStartSession()}>
+            <button className="big-btn" data-tour="start" onClick={() => onStartSession()}>
               {inProgress
                 ? `Resume · ${inProgress.drillIds.length - inProgress.idx} left`
                 : doneToday
