@@ -23,10 +23,13 @@ export default function SpeedRound({
   profile,
   setProfile,
   onExit,
+  onRunningChange,
 }: {
   profile: Profile;
   setProfile: (p: Profile) => void;
   onExit: () => void;
+  /** Tells the shell to hide the tab bar only while the timer is running. */
+  onRunningChange: (running: boolean) => void;
 }) {
   const pool = useMemo(
     () =>
@@ -71,6 +74,7 @@ export default function SpeedRound({
 
   const finish = () => {
     setFinished(true);
+    onRunningChange(false);
     const { correct: c, log } = statsRef.current;
     let p = profile;
     for (const l of log) p = logAnswer(p, l.topic, l.score);
@@ -112,7 +116,13 @@ export default function SpeedRound({
           <p className="sub" style={{ marginBottom: 16 }}>
             Personal best: <b>{profile.speedBest}</b>
           </p>
-          <button className="big-btn" onClick={() => setStarted(true)}>
+          <button
+            className="big-btn"
+            onClick={() => {
+              setStarted(true);
+              onRunningChange(true);
+            }}
+          >
             Go
           </button>
           <button className="big-btn ghost" style={{ marginTop: 10 }} onClick={onExit}>

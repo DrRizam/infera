@@ -479,3 +479,35 @@ body {
   background: var(--card); color: var(--ink-soft);
 }
 .flag-box .flag-actions button.send { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+
+/* ── Self-grading prompt ─────────────────────────── */
+.grade-prompt {
+  margin-top: 14px; font-size: 13px; font-weight: 800; color: var(--ink-soft);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.grade-hint {
+  font-weight: 600; font-size: 12.5px; color: var(--ink-muted);
+  background: var(--info-soft); border: 1px solid var(--info-border);
+  border-radius: 10px; padding: 8px 10px; margin-top: 2px;
+}
+
+/* ── Hero secondary action ───────────────────────── */
+.hero-link {
+  display: block; width: 100%; margin-top: 10px;
+  background: none; border: none; cursor: pointer; font-family: inherit;
+  font-size: 13.5px; font-weight: 700; color: #fff; opacity: 0.85;
+  padding: 6px; text-align: center;
+}
+.hero-link:hover { opacity: 1; text-decoration: underline; }
+
+/* ── Daily goal selector ─────────────────────────── */
+.goal-row { display: flex; gap: 8px; margin-top: 10px; }
+.goal-btn {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  border: 2px solid var(--line); border-radius: 12px; padding: 10px 6px;
+  background: var(--card); color: var(--ink); cursor: pointer; font-family: inherit;
+  font-size: 14px; font-weight: 800;
+}
+.goal-btn span { font-size: 11px; font-weight: 600; color: var(--ink-muted); }
+.goal-btn.on { border-color: var(--primary); background: var(--primary-soft); color: var(--primary); }
+.goal-btn.on span { color: var(--primary); }

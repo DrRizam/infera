@@ -3,7 +3,7 @@ import { MODULE_OF_TOPIC } from "../types";
 import { MODULES, isReadyModule } from "../content/modules";
 import { drills } from "../content";
 import { cases } from "../content/cases";
-import { moduleMastery, overallMastery } from "../engine/srs";
+import { masteryByTopic, moduleMastery, overallMastery } from "../engine/srs";
 import { effectiveStreak } from "../engine/store";
 
 function FoundationRing({ pct }: { pct: number }) {
@@ -129,6 +129,40 @@ export default function Learn({
           </div>
         );
       })}
+
+      <div className="card">
+        <div className="card-head">
+          <h2>🗺️ Mastery map</h2>
+          <span className="sub">by topic</span>
+        </div>
+        {[...new Set(masteryByTopic(profile).map((m) => MODULE_OF_TOPIC[m.topic]))].map((mod) => (
+          <div key={mod}>
+            <div className="module-head">{mod}</div>
+            {masteryByTopic(profile)
+              .filter((m) => MODULE_OF_TOPIC[m.topic] === mod)
+              .map((m) => (
+                <div className="mastery-row" key={m.topic}>
+                  <div className="mastery-label">
+                    <span>{m.topic}</span>
+                    <span className="sub">
+                      {m.seen}/{m.total}
+                    </span>
+                  </div>
+                  <div className="mastery-track">
+                    <div
+                      className={`mastery-fill ${m.pct >= 70 ? "strong" : m.pct >= 30 ? "mid" : ""}`}
+                      style={{ width: `${Math.max(m.pct, 2)}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+          </div>
+        ))}
+        <p className="sub" style={{ marginTop: 10 }}>
+          Bars grow as drills survive longer review intervals — mastery means remembering, not
+          just answering once.
+        </p>
+      </div>
 
       <div className="footer-note">
         Modules in development show real curriculum plans — they unlock as content passes

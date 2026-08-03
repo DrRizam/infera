@@ -1,8 +1,9 @@
 import type { Profile, SrsRecord } from "../types";
 import { todayISO } from "./srs";
+import { DEFAULT_DAILY_GOAL } from "../config";
 
 const KEY = "clinician-profile-v1";
-export const PROFILE_VERSION = 3;
+export const PROFILE_VERSION = 4;
 
 /** Rest-day mechanic: how many days can be banked, and what earns one. */
 export const MAX_SHIELDS = 2;
@@ -65,6 +66,12 @@ export function migrateProfile(p: Profile): Profile {
     if (!Array.isArray(p.flags)) p.flags = [];
     p.profileVersion = 3;
   }
+  if (p.profileVersion < 4) {
+    if (typeof p.dailyGoal !== "number") p.dailyGoal = DEFAULT_DAILY_GOAL;
+    // Existing users have already met the grade buttons, so don't re-explain.
+    if (typeof p.seenGradeHint !== "boolean") p.seenGradeHint = p.sessionsCompleted > 0;
+    p.profileVersion = 4;
+  }
   return p;
 }
 
@@ -99,7 +106,47 @@ export function loadProfile(): Profile {
     shieldProgress: 0,
     shieldedDates: [],
     flags: [],
+    dailyGoal: DEFAULT_DAILY_GOAL,
+    seenGradeHint: false,
   };
+}
+
+// ── Active session (interruption safety) ───────────────────────────────────
+// Clinicians get interrupted mid-anything, and an iOS PWA can be evicted from
+// memory while backgrounded. The in-progress session is mirrored to storage so
+// reopening the app resumes exactly where it left off instead of silently
+// starting over.
+
+const SESSION_KEY = "clinician-active-session-v1";
+
+export interface ActiveSession {
+  date: string;
+  drillIds: string[];
+  idx: number;
+  scores: number[];
+}
+
+export function saveActiveSession(s: ActiveSession): void {
+  localStorage.setItem(SESSION_KEY, JSON.stringify(s));
+}
+
+/** Returns an in-progress session from today, or null. */
+export function loadActiveSession(): ActiveSession | null {
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw) as ActiveSession;
+    if (s.date !== todayISO() || !Array.isArray(s.drillIds) || s.idx >= s.drillIds.length) {
+      return null;
+    }
+    return s;
+  } catch {
+    return null;
+  }
+}
+
+export function clearActiveSession(): void {
+  localStorage.removeItem(SESSION_KEY);
 }
 
 export function saveProfile(p: Profile): void {

@@ -1,9 +1,8 @@
-import type { Complaint, Profile, Topic } from "../types";
-import { MODULE_OF_TOPIC } from "../types";
+import type { Profile } from "../types";
 import { cases } from "../content/cases";
-import { drills } from "../content";
-import { buildSession, dueCount, masteryByTopic, todayISO } from "../engine/srs";
-import { DAYS_PER_SHIELD, MAX_SHIELDS, effectiveStreak, levelFor } from "../engine/store";
+import { buildSession, dueCount, todayISO } from "../engine/srs";
+import { DAYS_PER_SHIELD, MAX_SHIELDS, effectiveStreak, levelFor, loadActiveSession } from "../engine/store";
+import { SHOW_BOSS_CASES, estimateMinutes } from "../config";
 
 // ── Level ring (SVG progress circle) ─────────────────────────────────────
 
@@ -73,6 +72,9 @@ function WeekStrip({ profile }: { profile: Profile }) {
 }
 
 // ── Home ─────────────────────────────────────────────────────────────────
+// One screen, one decision: start today's session. Progress detail lives on
+// Learn — a clinician opening this at the end of a shift should not have to
+// scroll past three cards to find the button.
 
 export default function Home({
   profile,
@@ -80,7 +82,7 @@ export default function Home({
   onStartCase,
 }: {
   profile: Profile;
-  onStartSession: () => void;
+  onStartSession: (size?: number) => void;
   onStartCase: (caseId: string) => void;
 }) {
   const streak = effectiveStreak(profile);
@@ -88,10 +90,10 @@ export default function Home({
   const due = dueCount(profile);
   const session = buildSession(profile);
   const doneToday = profile.lastActiveDate === todayISO();
-  const mastery = masteryByTopic(profile);
-  const modules = [...new Set(mastery.map((m) => MODULE_OF_TOPIC[m.topic]))] as Complaint[];
   const newCount = session.filter((d) => !profile.srs[d.id]).length;
   const reviewCount = session.length - newCount;
+  const quickSize = Math.min(3, session.length);
+  const inProgress = loadActiveSession();
 
   return (
     <div className="app">
@@ -116,7 +118,7 @@ export default function Home({
             <h1>{doneToday ? "Streak secured 🔥" : "Today's session"}</h1>
             <p>
               {session.length === 0
-                ? "All drills seen — reviews appear as they fall due."
+                ? "Nothing due — you're ahead of the curve."
                 : [
                     reviewCount > 0 ? `${reviewCount} review${reviewCount === 1 ? "" : "s"}` : null,
                     newCount > 0 ? `${newCount} new drill${newCount === 1 ? "" : "s"}` : null,
@@ -125,24 +127,37 @@ export default function Home({
                     .join(" · ")}
             </p>
             <p className="hero-xp">
-              Path: {profile.currentPath} · {lvl.into}/{lvl.needed} XP to level {lvl.level + 1}
+              {profile.currentPath} · {lvl.into}/{lvl.needed} XP to level {lvl.level + 1}
             </p>
           </div>
           <LevelRing level={lvl.level} into={lvl.into} needed={lvl.needed} />
         </div>
-        {session.length > 0 && (
-          <button className="big-btn" onClick={onStartSession}>
-            {doneToday ? "Keep training" : "Start · ~7 min"}
-          </button>
+        {session.length > 0 ? (
+          <>
+            <button className="big-btn" onClick={() => onStartSession()}>
+              {inProgress
+                ? `Resume · ${inProgress.drillIds.length - inProgress.idx} left`
+                : doneToday
+                  ? "Keep training"
+                  : `Start · ${session.length} drills · ~${estimateMinutes(session.length)} min`}
+            </button>
+            {!inProgress && session.length > quickSize && (
+              <button className="hero-link" onClick={() => onStartSession(quickSize)}>
+                Only have a minute? Do {quickSize} →
+              </button>
+            )}
+          </>
+        ) : (
+          <p className="hero-xp" style={{ marginTop: 12 }}>
+            {due === 0 && "Reviews reappear as they fall due — check back tomorrow."}
+          </p>
         )}
       </div>
 
       <div className="card">
         <div className="card-head">
           <h2>This week</h2>
-          <span className="sub">
-            {streak > 0 ? `${streak}-day streak` : "Start a streak today"}
-          </span>
+          <span className="sub">{streak > 0 ? `${streak}-day streak` : "Start a streak today"}</span>
         </div>
         <WeekStrip profile={profile} />
         <div className="shield-note">
@@ -161,82 +176,52 @@ export default function Home({
         </div>
       </div>
 
-      <div className="card">
-        <div className="card-head">
-          <h2>🧠 Boss cases</h2>
-          <span className="sub">{profile.caseResults.length}/{cases.length} solved</span>
-        </div>
-        <p className="sub" style={{ marginBottom: 14 }}>
-          Full patient encounters — every question, exam pick, and ranking is scored.
-        </p>
-        {cases.map((c) => {
-          const done = profile.caseResults.find((r) => r.caseId === c.id);
-          return (
-            <div className="card case-list-item" key={c.id} style={{ marginBottom: 10, padding: 14 }}>
-              <div className="meta">
-                <h3>
-                  {c.title}{" "}
-                  <span className={`diff-chip diff-${c.difficulty}`}>
-                    {"●".repeat(c.difficulty)}
-                    {"○".repeat(3 - c.difficulty)}
-                  </span>
-                </h3>
-                <div className="sub">
-                  {c.presentingComplaint} · {c.patient.age}
-                  {c.patient.sex[0]} · {c.patient.occupation}
-                </div>
-                {done && (
-                  <div className="case-scores">
-                    <span className="mini-score">🧩 {done.scores.reasoning}%</span>
-                    <span className="mini-score">🚩 {done.scores.redFlag}%</span>
-                    <span className="mini-score">🔬 {done.scores.evidence}%</span>
-                  </div>
-                )}
-              </div>
-              <button className="mini-btn" onClick={() => onStartCase(c.id)}>
-                {done ? "Replay" : "Start"}
-              </button>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="card">
-        <div className="card-head">
-          <h2>🗺️ Mastery map</h2>
-          <span className="sub">{modules.length} modules</span>
-        </div>
-        {modules.map((mod) => (
-          <div key={mod}>
-            <div className="module-head">{mod}</div>
-            {mastery
-              .filter((m) => MODULE_OF_TOPIC[m.topic] === mod)
-              .map((m) => (
-                <div className="mastery-row" key={m.topic}>
-                  <div className="mastery-label">
-                    <span>{m.topic}</span>
-                    <span className="sub">
-                      {m.seen}/{m.total}
-                    </span>
-                  </div>
-                  <div className="mastery-track">
-                    <div
-                      className={`mastery-fill ${m.pct >= 70 ? "strong" : m.pct >= 30 ? "mid" : ""}`}
-                      style={{ width: `${Math.max(m.pct, 2)}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+      {SHOW_BOSS_CASES && (
+        <div className="card">
+          <div className="card-head">
+            <h2>🧠 Boss cases</h2>
+            <span className="sub">
+              {profile.caseResults.length}/{cases.length} solved
+            </span>
           </div>
-        ))}
-        <p className="sub" style={{ marginTop: 10 }}>
-          Bars grow as drills survive longer review intervals — mastery means remembering, not
-          just answering once.
-        </p>
-      </div>
+          <p className="sub" style={{ marginBottom: 14 }}>
+            Full patient encounters — every question, exam pick, and ranking is scored.
+          </p>
+          {cases.map((c) => {
+            const done = profile.caseResults.find((r) => r.caseId === c.id);
+            return (
+              <div className="card case-list-item" key={c.id} style={{ marginBottom: 10, padding: 14 }}>
+                <div className="meta">
+                  <h3>
+                    {c.title}{" "}
+                    <span className={`diff-chip diff-${c.difficulty}`}>
+                      {"●".repeat(c.difficulty)}
+                      {"○".repeat(3 - c.difficulty)}
+                    </span>
+                  </h3>
+                  <div className="sub">
+                    {c.presentingComplaint} · {c.patient.age}
+                    {c.patient.sex[0]} · {c.patient.occupation}
+                  </div>
+                  {done && (
+                    <div className="case-scores">
+                      <span className="mini-score">🧩 {done.scores.reasoning}%</span>
+                      <span className="mini-score">🚩 {done.scores.redFlag}%</span>
+                      <span className="mini-score">🔬 {done.scores.evidence}%</span>
+                    </div>
+                  )}
+                </div>
+                <button className="mini-btn" onClick={() => onStartCase(c.id)}>
+                  {done ? "Replay" : "Start"}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       <div className="footer-note">
-        Clinician prototype · Shoulder pain module · Educational use only — not medical advice
+        Clinician · A study aid, not a diagnostic tool — not medical advice
       </div>
     </div>
   );

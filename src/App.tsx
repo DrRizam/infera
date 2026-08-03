@@ -14,7 +14,7 @@ import { cases } from "./content/cases";
 type Screen =
   | { name: "home" }
   | { name: "learn" }
-  | { name: "session" }
+  | { name: "session"; size?: number }
   | { name: "case"; caseId: string }
   | { name: "speed" }
   | { name: "stats" };
@@ -29,6 +29,9 @@ const NAV: { screen: Screen["name"]; icon: string; label: string }[] = [
 export default function App() {
   const [profile, setProfileState] = useState<Profile>(() => loadProfile());
   const [screen, setScreen] = useState<Screen>({ name: "home" });
+  // Speed only goes full-screen once the timer is running — its intro and
+  // results screens keep the tab bar, or tapping "Speed" strands the user.
+  const [speedRunning, setSpeedRunning] = useState(false);
 
   const setProfile = (p: Profile) => {
     saveProfile(p);
@@ -48,13 +51,19 @@ export default function App() {
     return <Onboarding onDone={() => setProfile({ ...profile, onboarded: true })} />;
   }
 
-  const inActivity = screen.name === "session" || screen.name === "case" || screen.name === "speed";
+  const inActivity =
+    screen.name === "session" || screen.name === "case" || (screen.name === "speed" && speedRunning);
 
   let content;
   switch (screen.name) {
     case "session":
       content = (
-        <Session profile={profile} setProfile={setProfile} onExit={() => setScreen({ name: "home" })} />
+        <Session
+          profile={profile}
+          setProfile={setProfile}
+          size={screen.size}
+          onExit={() => setScreen({ name: "home" })}
+        />
       );
       break;
     case "case": {
@@ -75,13 +84,22 @@ export default function App() {
       break;
     case "speed":
       content = (
-        <SpeedRound profile={profile} setProfile={setProfile} onExit={() => setScreen({ name: "home" })} />
+        <SpeedRound
+          profile={profile}
+          setProfile={setProfile}
+          onRunningChange={setSpeedRunning}
+          onExit={() => {
+            setSpeedRunning(false);
+            setScreen({ name: "home" });
+          }}
+        />
       );
       break;
     case "stats":
       content = (
         <Stats
           profile={profile}
+          onSetProfile={setProfile}
           onResetDone={() => {
             setProfileState(loadProfile());
             setScreen({ name: "home" });
@@ -93,7 +111,7 @@ export default function App() {
       content = (
         <Home
           profile={profile}
-          onStartSession={() => setScreen({ name: "session" })}
+          onStartSession={(size) => setScreen({ name: "session", size })}
           onStartCase={(caseId) => setScreen({ name: "case", caseId })}
         />
       );

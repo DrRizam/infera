@@ -2,8 +2,18 @@ import type { Achievement, Profile } from "../types";
 import { drills } from "../content";
 import { cases } from "../content/cases";
 import { levelFor } from "./store";
+import { SHOW_BOSS_CASES } from "../config";
 
-export const ACHIEVEMENTS: Achievement[] = [
+/** Achievements that can only be earned through boss cases. */
+const CASE_ACHIEVEMENTS = new Set([
+  "case-solver",
+  "guardian",
+  "diagnostician",
+  "test-scientist",
+  "specialist",
+]);
+
+const ALL_ACHIEVEMENTS: Achievement[] = [
   { id: "first-steps", icon: "👣", title: "First steps", description: "Complete your first daily session" },
   { id: "case-solver", icon: "🩺", title: "Case solver", description: "Complete your first boss case" },
   { id: "streak-3", icon: "🔥", title: "Warming up", description: "Reach a 3-day streak" },
@@ -19,6 +29,14 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: "specialist", icon: "🏆", title: "Specialist", description: "Solve every boss case" },
 ];
 
+/**
+ * Only achievements the learner can actually reach. Showing permanently
+ * unobtainable locks is worse than not showing them at all.
+ */
+export const ACHIEVEMENTS: Achievement[] = ALL_ACHIEVEMENTS.filter(
+  (a) => SHOW_BOSS_CASES || !CASE_ACHIEVEMENTS.has(a.id)
+);
+
 export interface AchievementContext {
   sessionAccuracy?: number; // 0–1, when a session just finished
   caseScores?: { reasoning: number; redFlag: number; evidence: number };
@@ -30,10 +48,9 @@ export function checkAchievements(p: Profile, ctx: AchievementContext = {}): Ach
   const has = new Set(p.achievements);
   const earned: Achievement[] = [];
   const award = (id: string) => {
-    if (!has.has(id)) {
-      const a = ACHIEVEMENTS.find((x) => x.id === id)!;
-      earned.push(a);
-    }
+    if (has.has(id)) return;
+    const a = ACHIEVEMENTS.find((x) => x.id === id);
+    if (a) earned.push(a); // silently skipped when the feature is out of scope
   };
 
   if (p.sessionsCompleted >= 1) award("first-steps");

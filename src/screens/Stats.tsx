@@ -4,6 +4,7 @@ import { drills } from "../content";
 import { effectiveStreak, exportProfile, importProfile, levelFor, resetProfile, saveProfile } from "../engine/store";
 import { ACHIEVEMENTS } from "../engine/achievements";
 import { todayISO } from "../engine/srs";
+import { SESSION_PRESETS, estimateMinutes } from "../config";
 import { useRef } from "react";
 
 function nextSevenDays(): { iso: string; label: string }[] {
@@ -22,9 +23,11 @@ function nextSevenDays(): { iso: string; label: string }[] {
 export default function Stats({
   profile,
   onResetDone,
+  onSetProfile,
 }: {
   profile: Profile;
   onResetDone: () => void;
+  onSetProfile: (p: Profile) => void;
 }) {
   const lvl = levelFor(profile.xp);
   const streak = effectiveStreak(profile);
@@ -225,6 +228,31 @@ export default function Stats({
           ))}
         </div>
       )}
+
+      <div className="card">
+        <div className="card-head">
+          <h2>🎯 Daily goal</h2>
+          <span className="sub">{profile.dailyGoal} drills</span>
+        </div>
+        <p className="sub">
+          How much you want to do on a normal day. Reviews that fall due are always included
+          first — a smaller goal just spreads them out.
+        </p>
+        <div className="goal-row">
+          {SESSION_PRESETS.map((p) => (
+            <button
+              key={p.size}
+              className={`goal-btn ${profile.dailyGoal === p.size ? "on" : ""}`}
+              onClick={() => onSetProfile({ ...profile, dailyGoal: p.size })}
+            >
+              {p.label}
+              <span>
+                {p.size} · ~{estimateMinutes(p.size)} min
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div className="card">
         <h2>⚙️ Settings</h2>

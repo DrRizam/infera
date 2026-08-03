@@ -42,15 +42,15 @@ export function reviewDrill(
   };
 }
 
-export const SESSION_SIZE = 8;
-
 /**
  * Build today's session: due reviews first (weakest first, from ALL modules —
  * spaced repetition doesn't pause for a path change), then unseen drills from
  * the learner's current path, topping up from other modules only if the path
  * is exhausted.
+ *
+ * `size` overrides the learner's daily goal (used by the short "quick" session).
  */
-export function buildSession(profile: Profile): Drill[] {
+export function buildSession(profile: Profile, size?: number): Drill[] {
   const today = todayISO();
   const byId = new Map(drills.map((d) => [d.id, d]));
 
@@ -68,7 +68,7 @@ export function buildSession(profile: Profile): Drill[] {
   const onPath = shuffled.filter((d) => MODULE_OF_TOPIC[d.topic] === profile.currentPath);
   const offPath = shuffled.filter((d) => MODULE_OF_TOPIC[d.topic] !== profile.currentPath);
 
-  return [...due, ...onPath, ...offPath].slice(0, SESSION_SIZE);
+  return [...due, ...onPath, ...offPath].slice(0, size ?? profile.dailyGoal);
 }
 
 /** Predicted probability the learner still recalls this drill today. */

@@ -222,6 +222,10 @@ export interface Profile {
   /** Days a shield covered — shown on the week strip so the mechanic is visible. */
   shieldedDates: string[];
   flags: ItemFlag[];
+  /** Drills per daily session — the learner picks their own commitment. */
+  dailyGoal: number;
+  /** Whether the one-time "why am I grading myself?" hint has been shown. */
+  seenGradeHint: boolean;
   lastActiveDate: string | null; // ISO date of last completed session/case
   activityLog: string[]; // ISO dates with at least one completed session/case
   srs: Record<string, SrsRecord>;

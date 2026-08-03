@@ -1,8 +1,16 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Achievement, Drill, Profile, RankDrill, RedFlagDrill } from "../types";
+import { drills } from "../content";
 import { buildSession, reviewDrill, todayISO } from "../engine/srs";
 import { Easy, Good, Hard, gradeFromScore, type Grade } from "../engine/fsrs";
-import { addXp, logAnswer, touchStreak } from "../engine/store";
+import {
+  addXp,
+  clearActiveSession,
+  loadActiveSession,
+  logAnswer,
+  saveActiveSession,
+  touchStreak,
+} from "../engine/store";
 import { checkAchievements } from "../engine/achievements";
 
 // ── Shared bits ──────────────────────────────────────────────────────────
@@ -93,7 +101,15 @@ function FlagControl({
  * automatically: partial credit means the construct was right but execution
  * wasn't, which by our rubric is Hard, never Again.
  */
-function GradeBar({ score, onGrade }: { score: number; onGrade: (g: Grade) => void }) {
+function GradeBar({
+  score,
+  showHint,
+  onGrade,
+}: {
+  score: number;
+  showHint: boolean;
+  onGrade: (g: Grade) => void;
+}) {
   if (score < 0.99) {
     return (
       <button className="big-btn teal" style={{ marginTop: 14 }} onClick={() => onGrade(gradeFromScore(score))}>
@@ -102,20 +118,31 @@ function GradeBar({ score, onGrade }: { score: number; onGrade: (g: Grade) => vo
     );
   }
   return (
-    <div className="grade-row">
-      <button className="grade-btn hard" onClick={() => onGrade(Hard)}>
-        Shaky
-        <span>back soon</span>
-      </button>
-      <button className="grade-btn good" onClick={() => onGrade(Good)}>
-        Got it
-        <span>normal gap</span>
-      </button>
-      <button className="grade-btn easy" onClick={() => onGrade(Easy)}>
-        Knew it cold
-        <span>longer gap</span>
-      </button>
-    </div>
+    <>
+      <div className="grade-prompt">
+        How did that feel?
+        {showHint && (
+          <span className="grade-hint">
+            Your answer sets when this drill comes back. Be honest — overrating it only costs you
+            the review you needed.
+          </span>
+        )}
+      </div>
+      <div className="grade-row">
+        <button className="grade-btn hard" onClick={() => onGrade(Hard)}>
+          Shaky
+          <span>back soon</span>
+        </button>
+        <button className="grade-btn good" onClick={() => onGrade(Good)}>
+          Got it
+          <span>normal gap</span>
+        </button>
+        <button className="grade-btn easy" onClick={() => onGrade(Easy)}>
+          Knew it cold
+          <span>longer gap</span>
+        </button>
+      </div>
+    </>
   );
 }
 
@@ -139,9 +166,11 @@ function TestStatsLine({ drill }: { drill: Drill }) {
 
 function ChoiceDrill({
   drill,
+  showHint,
   onDone,
 }: {
   drill: Extract<Drill, { options: string[]; correctIndex: number }>;
+  showHint: boolean;
   onDone: (score: number, grade: Grade) => void;
 }) {
   const [picked, setPicked] = useState<number | null>(null);
@@ -188,6 +217,7 @@ function ChoiceDrill({
           <Feedback score={picked === drill.correctIndex ? 1 : 0} drill={drill} />
           <GradeBar
             score={picked === drill.correctIndex ? 1 : 0}
+            showHint={showHint}
             onGrade={(g) => onDone(picked === drill.correctIndex ? 1 : 0, g)}
           />
         </>
@@ -213,9 +243,11 @@ export function kendallScore(userOrder: number[], correctCount: number): number 
 
 function RankDrillView({
   drill,
+  showHint,
   onDone,
 }: {
   drill: RankDrill;
+  showHint: boolean;
   onDone: (s: number, g: Grade) => void;
 }) {
   const shuffled = useMemo(() => {
@@ -275,7 +307,7 @@ function RankDrillView({
       ) : (
         <>
           <Feedback score={score} drill={drill} />
-          <GradeBar score={score} onGrade={(g) => onDone(score, g)} />
+          <GradeBar score={score} showHint={showHint} onGrade={(g) => onDone(score, g)} />
         </>
       )}
     </div>
@@ -286,9 +318,11 @@ function RankDrillView({
 
 function RedFlagDrillView({
   drill,
+  showHint,
   onDone,
 }: {
   drill: RedFlagDrill;
+  showHint: boolean;
   onDone: (s: number, g: Grade) => void;
 }) {
   const [selected, setSelected] = useState<Set<number>>(new Set());
@@ -342,7 +376,7 @@ function RedFlagDrillView({
       ) : (
         <>
           <Feedback score={score} drill={drill} />
-          <GradeBar score={score} onGrade={(g) => onDone(score, g)} />
+          <GradeBar score={score} showHint={showHint} onGrade={(g) => onDone(score, g)} />
         </>
       )}
     </div>
@@ -355,18 +389,44 @@ export default function Session({
   profile,
   setProfile,
   onExit,
+  size,
 }: {
   profile: Profile;
   setProfile: (p: Profile) => void;
   onExit: () => void;
+  /** Overrides the daily goal — used by the short "only have a minute" session. */
+  size?: number;
 }) {
-  const [queue] = useState<Drill[]>(() => buildSession(profile));
-  const [idx, setIdx] = useState(0);
-  const [scores, setScores] = useState<number[]>([]);
+  // Resume an interrupted session if one is pending from today. A clinician
+  // gets interrupted mid-drill constantly, and iOS can evict a backgrounded
+  // PWA from memory — neither should silently discard their progress.
+  const [resumed] = useState(() => (size === undefined ? loadActiveSession() : null));
+  const [queue] = useState<Drill[]>(() => {
+    if (resumed) {
+      const byId = new Map(drills.map((d) => [d.id, d]));
+      const restored = resumed.drillIds.map((id) => byId.get(id)).filter((d): d is Drill => !!d);
+      if (restored.length === resumed.drillIds.length) return restored;
+    }
+    return buildSession(profile, size);
+  });
+  const [idx, setIdx] = useState(resumed?.idx ?? 0);
+  const [scores, setScores] = useState<number[]>(resumed?.scores ?? []);
   const [finished, setFinished] = useState(false);
   const [unlocked, setUnlocked] = useState<Achievement[]>([]);
+  const showHint = !profile.seenGradeHint;
 
   const drill = queue[idx];
+
+  // Mirror progress to storage after every answer so a reload resumes here.
+  useEffect(() => {
+    if (finished || queue.length === 0) return;
+    saveActiveSession({
+      date: todayISO(),
+      drillIds: queue.map((d) => d.id),
+      idx,
+      scores,
+    });
+  }, [idx, scores, finished, queue]);
 
   const handleDone = (score: number, grade: Grade) => {
     const updated = reviewDrill(profile.srs[drill.id], drill.id, score, grade);
@@ -375,9 +435,11 @@ export default function Session({
       logAnswer({ ...profile, srs: { ...profile.srs, [drill.id]: updated } }, drill.topic, score),
       xpGain
     );
+    if (showHint) next = { ...next, seenGradeHint: true };
     const newScores = [...scores, score];
     setScores(newScores);
     if (idx + 1 >= queue.length) {
+      clearActiveSession();
       next = touchStreak({ ...next, sessionsCompleted: next.sessionsCompleted + 1 });
       const accuracy = newScores.reduce((a, b) => a + b, 0) / newScores.length;
       const earned = checkAchievements(next, { sessionAccuracy: accuracy });
@@ -466,11 +528,11 @@ export default function Session({
           {drill.topic}
         </span>
         {drill.type === "rank" ? (
-          <RankDrillView drill={drill} onDone={handleDone} />
+          <RankDrillView drill={drill} showHint={showHint} onDone={handleDone} />
         ) : drill.type === "redflags" ? (
-          <RedFlagDrillView drill={drill} onDone={handleDone} />
+          <RedFlagDrillView drill={drill} showHint={showHint} onDone={handleDone} />
         ) : (
-          <ChoiceDrill drill={drill} onDone={handleDone} />
+          <ChoiceDrill drill={drill} showHint={showHint} onDone={handleDone} />
         )}
         <FlagControl drill={drill} profile={profile} setProfile={setProfile} />
       </div>
