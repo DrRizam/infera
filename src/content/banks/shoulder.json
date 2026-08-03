@@ -1,0 +1,744 @@
+{
+  "module": "Shoulder pain",
+  "items": [
+    {
+      "id": "mcq-frozen-capsular",
+      "type": "mcq",
+      "topic": "Frozen shoulder",
+      "stem": "A patient has a globally stiff, painful shoulder. Which passive movement, when most restricted, is the strongest sign pointing toward frozen shoulder?",
+      "options": [
+        "Passive external rotation",
+        "Passive internal rotation",
+        "Passive flexion",
+        "Passive horizontal adduction"
+      ],
+      "correctIndex": 0,
+      "explanation": "Frozen shoulder follows a capsular pattern: external rotation is proportionally the most restricted movement, then abduction, then internal rotation. Marked loss of passive ER with a firm capsular end-feel — in a shoulder with normal X-rays — is the closest thing to a diagnostic sign the condition has.",
+      "pearl": "No special test diagnoses frozen shoulder. The passive ROM pattern IS the test.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "mcq-droparm-specificity",
+      "type": "mcq",
+      "topic": "Rotator cuff tear",
+      "stem": "The drop arm sign has sensitivity ~27% and specificity ~88–92% for full-thickness rotator cuff tears. What does this profile mean clinically?",
+      "options": [
+        "A positive test substantially raises the probability of a full-thickness tear",
+        "A negative test rules out a full-thickness tear",
+        "The test is useless because sensitivity is low",
+        "It should be used to screen all shoulder patients"
+      ],
+      "correctIndex": 0,
+      "explanation": "High specificity means few false positives — so a POSITIVE result rules the diagnosis in (SpPin). Low sensitivity means many tears are missed, so a negative drop arm tells you very little. Low-sensitivity/high-specificity tests are confirmers, not screeners.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "mcq-nightpain",
+      "type": "mcq",
+      "topic": "Red flags",
+      "stem": "A patient reports shoulder night pain. Which feature would make the night pain genuinely concerning rather than routine?",
+      "options": [
+        "Pain when lying on the affected shoulder",
+        "Unremitting pain regardless of position, with weight loss",
+        "Pain that wakes them when they roll over",
+        "Morning stiffness lasting 10 minutes"
+      ],
+      "correctIndex": 1,
+      "explanation": "Night pain is present in most painful shoulder conditions and is a poor discriminator on its own. The concerning pattern is constant, position-independent pain — especially with systemic features (weight loss, fever, night sweats, cancer history). Positional night pain that eases with repositioning is mechanically driven and common in RCRSP and frozen shoulder.",
+      "pearl": "Night pain isn't a red flag. UNREMITTING night pain is.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "mcq-frozen-assoc",
+      "type": "mcq",
+      "topic": "Frozen shoulder",
+      "stem": "Which comorbidity most increases the risk of frozen shoulder — and should be asked about in every stiff-shoulder history?",
+      "options": [
+        "Diabetes mellitus",
+        "Hypertension",
+        "Asthma",
+        "Osteoporosis"
+      ],
+      "correctIndex": 0,
+      "explanation": "Diabetes raises frozen shoulder risk roughly 5-fold (prevalence ~10–20% in diabetic populations vs 2–5% general), with more severe and treatment-resistant courses. Thyroid disease is the other classic association. A stiff shoulder in a 45–60 year old should always trigger the diabetes question.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "mcq-rcrsp-mgmt",
+      "type": "mcq",
+      "topic": "RCRSP",
+      "stem": "For rotator cuff related shoulder pain, what does current evidence support as first-line management?",
+      "options": [
+        "Progressive loaded exercise over ≥12 weeks",
+        "Early subacromial decompression surgery",
+        "Complete rest until pain-free",
+        "Routine corticosteroid injection at diagnosis"
+      ],
+      "correctIndex": 0,
+      "explanation": "Trials (including CSAW and comparable exercise trials) show progressive exercise matches surgical decompression at 6–12 months, and decompression performs no better than placebo surgery. Injections can give short-term relief but don't change long-term outcomes. Rest deconditions the cuff — graded loading is the treatment.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "mcq-imaging-asymptomatic",
+      "type": "mcq",
+      "topic": "Test science",
+      "stem": "Why is early ultrasound/MRI often unhelpful in atraumatic shoulder pain?",
+      "options": [
+        "Rotator cuff abnormalities are common in pain-free people, so findings may not explain symptoms",
+        "Imaging cannot visualize the rotator cuff",
+        "MRI is contraindicated in shoulder conditions",
+        "Ultrasound has no role in the shoulder"
+      ],
+      "correctIndex": 0,
+      "explanation": "Cuff tears are found in roughly 20–25% of asymptomatic adults overall, exceeding 50% by the 7th–8th decade. An imaging 'abnormality' in an atraumatic presentation may be an incidental finding — treating the scan instead of the patient drives overdiagnosis and unnecessary surgery. Image when there's trauma, red flags, or failure to progress with good rehab.",
+      "pearl": "Scan findings without a matching clinical picture are noise, not diagnosis.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "mcq-erls",
+      "type": "mcq",
+      "topic": "Rotator cuff tear",
+      "stem": "A patient cannot hold their arm in external rotation when you place it there — it drifts back to neutral (positive external rotation lag sign). What does this most suggest?",
+      "options": [
+        "Full-thickness tear of supraspinatus/infraspinatus",
+        "Subacromial bursitis",
+        "Frozen shoulder",
+        "Biceps tendinopathy"
+      ],
+      "correctIndex": 0,
+      "explanation": "Lag signs test whether the cuff can HOLD a position, which requires structural continuity. The ER lag sign has specificity ~94–98% for full-thickness posterosuperior cuff tears — a true lag is one of the most convincing bedside findings in the shoulder. Pain-related weakness gives way gradually; a lag drops.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "mcq-pancoast",
+      "type": "mcq",
+      "topic": "Red flags",
+      "stem": "Which combination should make you think of a Pancoast (superior sulcus lung) tumor presenting as 'shoulder pain'?",
+      "options": [
+        "Shoulder/medial scapular pain + hand intrinsic wasting + drooping eyelid in a smoker",
+        "Painful arc + weak empty can test",
+        "Clicking with overhead movement in a swimmer",
+        "Morning stiffness that eases in 15 minutes"
+      ],
+      "correctIndex": 0,
+      "explanation": "Pancoast tumors invade the C8–T1 roots and stellate ganglion: shoulder/scapular pain, intrinsic hand weakness/wasting, and Horner's syndrome (ptosis, miosis, anhidrosis). Smoking history is the biggest risk factor. These patients see MSK clinicians first because the presenting complaint is 'shoulder pain' — and the shoulder exam is often normal.",
+      "pearl": "A normal shoulder exam in a patient with severe shoulder pain is itself a finding.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "int-hawkins-pos",
+      "type": "interpret",
+      "topic": "Test science",
+      "stem": "Your patient's Hawkins-Kennedy is painful. Given these numbers, what's the best conclusion?",
+      "test": {
+        "name": "Hawkins-Kennedy",
+        "target": "Subacromial pain / RCRSP",
+        "sensitivity": 80,
+        "specificity": 56,
+        "lrPlus": 1.8,
+        "lrMinus": 0.36
+      },
+      "result": "positive",
+      "options": [
+        "Small probability shift only — a positive barely changes my differential",
+        "Confirms subacromial impingement definitively",
+        "Rules out cervical referral",
+        "Indicates a full-thickness cuff tear"
+      ],
+      "correctIndex": 0,
+      "explanation": "With specificity 56%, nearly half of people WITHOUT subacromial pathology also test positive. LR+ of 1.8 shifts probability only slightly. Hawkins-Kennedy earns its keep as a rule-OUT test when negative (decent sensitivity), not as a confirmer. No single 'impingement' test can rule the diagnosis in.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "int-spurling-pos",
+      "type": "interpret",
+      "topic": "Cervical referral",
+      "stem": "Spurling's test reproduces your patient's arm pain. Best conclusion?",
+      "test": {
+        "name": "Spurling's test",
+        "target": "Cervical radiculopathy",
+        "sensitivity": 50,
+        "specificity": 93,
+        "lrPlus": 7.1,
+        "lrMinus": 0.54
+      },
+      "result": "positive",
+      "options": [
+        "Substantially increases the probability of cervical radiculopathy",
+        "Meaningless — sensitivity is too low to use the test at all",
+        "Confirms the shoulder itself is the source",
+        "Rules out cervical myelopathy"
+      ],
+      "correctIndex": 0,
+      "explanation": "Specificity 93% and LR+ ~7 mean a positive Spurling's produces a large probability shift toward cervical radiculopathy. The low sensitivity means a NEGATIVE test can't exclude it — but that's not what's being asked. Know which direction each test is allowed to push you.",
+      "pearl": "Spurling's: positive is informative, negative is not. The mirror image of Hawkins-Kennedy.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "int-droparm-neg",
+      "type": "interpret",
+      "topic": "Rotator cuff tear",
+      "stem": "You suspect a full-thickness cuff tear, but the drop arm test is negative. Best conclusion?",
+      "test": {
+        "name": "Drop arm sign",
+        "target": "Full-thickness RC tear",
+        "sensitivity": 27,
+        "specificity": 88,
+        "lrPlus": 2.3,
+        "lrMinus": 0.83
+      },
+      "result": "negative",
+      "options": [
+        "Tear is still very much possible — this test misses most tears",
+        "Full-thickness tear is now excluded",
+        "The patient has frozen shoulder instead",
+        "Sensitivity of 27% means the test was performed incorrectly"
+      ],
+      "correctIndex": 0,
+      "explanation": "Sensitivity 27% means the drop arm misses ~3 of 4 full-thickness tears — LR− of 0.83 barely moves the needle. A negative result should not reassure you. If suspicion is real, use higher-sensitivity findings (ER lag, weakness in ER, age >60) or image.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "int-erls-pos",
+      "type": "interpret",
+      "topic": "Rotator cuff tear",
+      "stem": "A 63-year-old with sudden weakness after a fall shows a clear external rotation lag. Pre-test probability of a full-thickness tear was ~40%. Best conclusion?",
+      "test": {
+        "name": "ER lag sign",
+        "target": "Full-thickness posterosuperior tear",
+        "sensitivity": 46,
+        "specificity": 94,
+        "lrPlus": 7.2,
+        "lrMinus": 0.57
+      },
+      "result": "positive",
+      "options": [
+        "Probability now well above 80% — discuss imaging and surgical opinion pathways",
+        "Probability roughly unchanged",
+        "The lag proves the tear is only partial-thickness",
+        "Start with 12 weeks of exercise before telling anyone"
+      ],
+      "correctIndex": 0,
+      "explanation": "LR+ ~7 applied to a 40% pre-test probability pushes post-test probability above 80%. An acute traumatic full-thickness tear in this age group is one of the few shoulder presentations where early imaging and timely surgical opinion genuinely change outcomes — repairs done early do better than late.",
+      "pearl": "Traumatic + weak + lag sign = don't sit on it for 12 weeks.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "int-cluster",
+      "type": "interpret",
+      "topic": "Test science",
+      "stem": "Hawkins-Kennedy, painful arc, and infraspinatus resistance are ALL positive in a 48-year-old with atraumatic shoulder pain. Why is this cluster more useful than any single test?",
+      "test": {
+        "name": "Park cluster (3/3 positive)",
+        "target": "Subacromial pain syndrome",
+        "sensitivity": 33,
+        "specificity": 90,
+        "lrPlus": 10.6
+      },
+      "result": "positive",
+      "options": [
+        "Combining tests trades sensitivity for specificity — 3/3 positive gives LR+ ~10, a large shift",
+        "Three tests triple the sensitivity",
+        "Clusters remove the need for a history",
+        "It proves surgery is indicated"
+      ],
+      "correctIndex": 0,
+      "explanation": "Individually these tests have LR+ below 2. Requiring all three positive drops sensitivity but pushes specificity to ~90% (LR+ ~10). Clustering is how weak tests become useful — you accept missing some cases in exchange for confidence when the full pattern is present.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "int-apprehension",
+      "type": "interpret",
+      "topic": "Instability",
+      "stem": "A 22-year-old overhead athlete gets apprehension (not just pain) at 90° abduction + external rotation, relieved by a posteriorly-directed relocation force. Best conclusion?",
+      "test": {
+        "name": "Apprehension–relocation",
+        "target": "Anterior instability",
+        "sensitivity": 65,
+        "specificity": 90,
+        "lrPlus": 6.5
+      },
+      "result": "positive",
+      "options": [
+        "Anterior instability is now the leading diagnosis",
+        "This confirms rotator cuff tendinopathy",
+        "Apprehension is a normal response in athletes",
+        "The relocation manoeuvre invalidates the test"
+      ],
+      "correctIndex": 0,
+      "explanation": "When the endpoint is APPREHENSION (guarding, 'it's going to come out') rather than pain, specificity reaches ~90%+, and relief with relocation strengthens it further. Pain as the endpoint ruins the test's accuracy. In a young athlete this pattern makes instability the working diagnosis.",
+      "pearl": "Apprehension tests: the patient's face is the outcome measure, not their pain report.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "rank-overhead-worker",
+      "type": "rank",
+      "topic": "RCRSP",
+      "stem": "45-year-old painter. 3 months of gradual lateral shoulder pain, worse with overhead work, painful arc 70–110°, FULL passive ROM including external rotation. No neck pain, no trauma. Rank the differentials, most likely first.",
+      "orderedOptions": [
+        "Rotator cuff related shoulder pain",
+        "Acromioclavicular joint pathology",
+        "Frozen shoulder",
+        "Cervical radiculopathy"
+      ],
+      "explanation": "Gradual onset + overhead aggravation + painful arc + FULL passive ROM is the RCRSP signature. Full passive ER effectively removes frozen shoulder from contention. ACJ pathology stays above frozen shoulder (it's overhead-aggravated, though pain is usually superior and end-range). No neck pain or arm symptoms puts cervical referral last — but it stays on the list until screened.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "rank-diabetic-stiff",
+      "type": "rank",
+      "topic": "Frozen shoulder",
+      "stem": "54-year-old woman with type 2 diabetes. 4 months of progressive shoulder pain, now marked stiffness. Passive external rotation is 50% lost versus the other side with a firm end-feel. X-ray normal. Rank the differentials.",
+      "orderedOptions": [
+        "Frozen shoulder",
+        "Glenohumeral osteoarthritis",
+        "Rotator cuff related shoulder pain",
+        "Full-thickness rotator cuff tear"
+      ],
+      "explanation": "Age 40–60 + diabetes + progressive pain-then-stiffness + major passive ER loss is textbook frozen shoulder. GH osteoarthritis produces the same capsular pattern — which is exactly why the normal X-ray matters (frozen shoulder is a NORMAL-X-ray diagnosis). RCRSP doesn't restrict passive ROM. Cuff tears cause weakness, not capsular stiffness.",
+      "pearl": "Frozen shoulder and GH OA look identical on exam. The X-ray separates them.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "rank-young-athlete",
+      "type": "rank",
+      "topic": "Instability",
+      "stem": "23-year-old rugby player. Two previous 'dead arm' episodes tackling, now vague shoulder pain and doesn't trust the arm overhead. Apprehension positive with relocation relief. Rank the differentials.",
+      "orderedOptions": [
+        "Anterior shoulder instability",
+        "Labral (Bankart) lesion",
+        "Rotator cuff related shoulder pain",
+        "Acromioclavicular joint sprain"
+      ],
+      "explanation": "Young + collision sport + dead-arm episodes + positive apprehension-relocation = anterior instability until proven otherwise. A Bankart lesion is the usual underlying structural cause, so it ranks right behind (arguably the same problem at different levels of description). Cuff pathology is uncommon as a primary diagnosis at 23. Nothing here points to the ACJ.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "rank-traumatic-weak",
+      "type": "rank",
+      "topic": "Rotator cuff tear",
+      "stem": "61-year-old fell off a ladder 2 weeks ago. Since then: can't actively lift the arm past 60°, but you can passively take it to 160°. Weak, painless-ish external rotation. Rank the differentials.",
+      "orderedOptions": [
+        "Traumatic full-thickness rotator cuff tear",
+        "Axillary nerve injury",
+        "Rotator cuff related shoulder pain",
+        "Frozen shoulder"
+      ],
+      "explanation": "The key dissociation: passive ROM near-full, active ROM severely limited, with true weakness — that's a structural or neurological failure, not pain inhibition. In a >60-year-old after trauma, full-thickness tear leads. Axillary nerve injury (deltoid wasting, regimental badge sensation) is the important mimic after shoulder trauma/dislocation. Frozen shoulder is excluded by the free passive ROM.",
+      "pearl": "Big active–passive ROM gap + weakness = structure or nerve, not 'tendinopathy'.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "rank-neck-arm",
+      "type": "rank",
+      "topic": "Cervical referral",
+      "stem": "38-year-old office worker. Aching shoulder/upper arm pain with pins and needles into the thumb and index finger. Neck extension + rotation reproduces the arm symptoms. Shoulder tests unremarkable. Rank the differentials.",
+      "orderedOptions": [
+        "Cervical radiculopathy (C6)",
+        "Peripheral nerve entrapment",
+        "Rotator cuff related shoulder pain",
+        "Thoracic outlet syndrome"
+      ],
+      "explanation": "Symptoms distal to the elbow in a dermatomal pattern (thumb/index = C6) + reproduction with neck movement + a quiet shoulder exam moves the problem to the neck. Peripheral entrapment (median/radial) can mimic but doesn't respond to neck position. RCRSP rarely refers below the elbow. TOS is a diagnosis of exclusion.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "rank-sinister",
+      "type": "rank",
+      "topic": "Red flags",
+      "stem": "72-year-old smoker. 6 weeks of progressive deep shoulder pain, constant including at rest and at night, 5 kg unintentional weight loss. Shoulder exam nearly normal. Rank what should top your concern list.",
+      "orderedOptions": [
+        "Malignancy (primary or metastatic)",
+        "Polymyalgia rheumatica",
+        "Frozen shoulder",
+        "Rotator cuff related shoulder pain"
+      ],
+      "explanation": "Age >50 + smoking + constant non-mechanical pain + weight loss + a pain-out-of-proportion-to-exam picture is a malignancy pattern until investigated — this patient needs medical referral and imaging, not a rehab plan. PMR is the other systemic consideration at this age (check bilateral symptoms, morning stiffness, ESR/CRP). The mechanical diagnoses rank last because the exam doesn't support them.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "rf-mixed-history",
+      "type": "redflags",
+      "topic": "Red flags",
+      "stem": "58-year-old with 8 weeks of shoulder pain. Select every finding in this history that is a genuine red flag requiring escalation.",
+      "findings": [
+        {
+          "text": "Unintentional weight loss of 6 kg",
+          "isRedFlag": true,
+          "note": "With age >50, unexplained weight loss is a primary malignancy flag."
+        },
+        {
+          "text": "Past history of breast cancer",
+          "isRedFlag": true,
+          "note": "Prior cancer + new persistent MSK pain = rule out metastasis. Breast, lung, prostate, kidney, thyroid metastasize to bone."
+        },
+        {
+          "text": "Pain when lying on the affected side",
+          "isRedFlag": false,
+          "note": "Positional night pain is mechanically driven and near-universal in painful shoulders."
+        },
+        {
+          "text": "Constant pain unchanged by position or activity",
+          "isRedFlag": true,
+          "note": "Non-mechanical pain behaviour — nothing makes it better or worse — is the pattern that should worry you."
+        },
+        {
+          "text": "Painful arc between 60–120°",
+          "isRedFlag": false,
+          "note": "A classic mechanical RCRSP finding."
+        },
+        {
+          "text": "Stiffness after sitting for an hour",
+          "isRedFlag": false,
+          "note": "Brief inactivity stiffness is common and benign."
+        }
+      ],
+      "explanation": "Three findings escalate this case: weight loss, cancer history, and non-mechanical constant pain. Any one alone warrants attention; together they mandate referral for investigation before any rehab plan. The mechanical findings (painful arc, positional night pain) are reassuring, not alarming.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "rf-septic",
+      "type": "redflags",
+      "topic": "Red flags",
+      "stem": "49-year-old, shoulder pain worsening rapidly over 4 days. Had a corticosteroid injection 10 days ago. Select the red flags.",
+      "findings": [
+        {
+          "text": "Recent intra-articular injection",
+          "isRedFlag": true,
+          "note": "Any joint injection or surgery is a portal for infection — essential context."
+        },
+        {
+          "text": "Fever and feeling generally unwell",
+          "isRedFlag": true,
+          "note": "Systemic signs + acute joint pain = septic arthritis until excluded. This is a same-day medical emergency."
+        },
+        {
+          "text": "The joint is hot, swollen, and any movement is severely painful",
+          "isRedFlag": true,
+          "note": "The classic septic joint triad: red/hot, effusion, dramatic pain with any ROM."
+        },
+        {
+          "text": "Pain started gradually over months before the injection",
+          "isRedFlag": false,
+          "note": "The chronic backstory is the original mechanical problem — it's the acute change that signals infection."
+        },
+        {
+          "text": "Aged 49",
+          "isRedFlag": false,
+          "note": "Age alone is not a flag here."
+        }
+      ],
+      "explanation": "Septic arthritis destroys cartilage within days and has real mortality. Post-injection + fever + hot swollen joint + severe pain on any movement = emergency referral for aspiration, not physiotherapy. The speed of change is the signal: a chronic shoulder that suddenly becomes acutely inflamed has a new problem.",
+      "pearl": "Ask every acute-worsening patient: any injections, surgery, or dental work recently? Any fever?",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "rf-cardiac",
+      "type": "redflags",
+      "topic": "Red flags",
+      "stem": "60-year-old man referred with 'left shoulder pain'. Select the findings that suggest this is not a shoulder problem at all.",
+      "findings": [
+        {
+          "text": "Pain comes on when climbing stairs and settles with rest",
+          "isRedFlag": true,
+          "note": "Exertional, non-movement-specific pain relieved by rest is an angina pattern."
+        },
+        {
+          "text": "Shoulder movement testing does not reproduce the pain",
+          "isRedFlag": true,
+          "note": "If the symptom can't be mechanically reproduced, question the MSK hypothesis itself."
+        },
+        {
+          "text": "Associated breathlessness and jaw tightness during episodes",
+          "isRedFlag": true,
+          "note": "Classic cardiac companions. This patient needs urgent medical assessment."
+        },
+        {
+          "text": "Pain located over the deltoid region",
+          "isRedFlag": false,
+          "note": "Deltoid-region pain is the standard referral zone for most shoulder pathology — location alone doesn't discriminate."
+        },
+        {
+          "text": "History of doing heavy gardening last month",
+          "isRedFlag": false,
+          "note": "A plausible mechanical trigger — but it doesn't explain the exertional pattern."
+        }
+      ],
+      "explanation": "The unifying signal: pain linked to cardiovascular exertion, not shoulder movement, plus autonomic companions (breathlessness, jaw pain), plus a shoulder exam that can't reproduce it. Visceral referral hides inside MSK caseloads — the exam that fails to reproduce symptoms is telling you where the problem isn't.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "rf-pmr",
+      "type": "redflags",
+      "topic": "Red flags",
+      "stem": "68-year-old woman with 6 weeks of shoulder pain. Select the features suggesting an inflammatory condition (e.g. polymyalgia rheumatica) rather than mechanical shoulder pain.",
+      "findings": [
+        {
+          "text": "Both shoulders affected, and both hips ache too",
+          "isRedFlag": true,
+          "note": "Bilateral girdle (shoulder + pelvic) involvement is the PMR distribution."
+        },
+        {
+          "text": "Morning stiffness lasting over 45 minutes",
+          "isRedFlag": true,
+          "note": "Prolonged morning stiffness (>45 min) is an inflammatory hallmark; mechanical stiffness eases in minutes."
+        },
+        {
+          "text": "New headache and scalp tenderness",
+          "isRedFlag": true,
+          "note": "PMR's dangerous companion is giant cell arteritis — headache, scalp tenderness, jaw claudication, visual symptoms. GCA threatens sight: same-day referral."
+        },
+        {
+          "text": "Difficulty reaching overhead",
+          "isRedFlag": false,
+          "note": "Non-specific — every shoulder condition limits overhead reach."
+        },
+        {
+          "text": "Pain eased somewhat by ibuprofen",
+          "isRedFlag": false,
+          "note": "NSAID response doesn't discriminate inflammatory from mechanical."
+        }
+      ],
+      "explanation": "Bilateral girdle pain + prolonged morning stiffness in a >50-year-old should trigger the PMR question and inflammatory markers (ESR/CRP) — PMR responds dramatically to low-dose steroids, and missing it means months of futile 'rehab'. The GCA screen (headache, scalp, jaw, vision) is mandatory whenever PMR is suspected.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "rf-neuro",
+      "type": "redflags",
+      "topic": "Red flags",
+      "stem": "45-year-old with shoulder discomfort and arm symptoms. Select the neurological findings that require escalation rather than routine MSK care.",
+      "findings": [
+        {
+          "text": "Progressive painless wasting of the hand muscles",
+          "isRedFlag": true,
+          "note": "Progressive painless weakness/wasting suggests motor neuron disease, syrinx, or tumour — never a routine MSK finding."
+        },
+        {
+          "text": "New clumsiness in BOTH hands and recent balance problems",
+          "isRedFlag": true,
+          "note": "Bilateral hand symptoms + gait change = cervical myelopathy pattern (upper motor neuron). Check Hoffmann's, reflexes, gait."
+        },
+        {
+          "text": "Pins and needles in the thumb when the neck is extended",
+          "isRedFlag": false,
+          "note": "Position-dependent dermatomal paraesthesia fits cervical radiculopathy — manage as MSK, monitor for progression."
+        },
+        {
+          "text": "A single episode of arm tingling after sleeping awkwardly",
+          "isRedFlag": false,
+          "note": "Transient positional symptoms with an obvious trigger and full recovery are benign."
+        },
+        {
+          "text": "Diminished biceps reflex on one side, stable for years",
+          "isRedFlag": false,
+          "note": "A stable, isolated reflex change is a residual finding, not a progressive process."
+        }
+      ],
+      "explanation": "The discriminators are progression and pattern: progressive deficits and bilateral/UMN signs (both hands, balance, hyperreflexia) escalate; stable, positional, single-dermatome findings stay in MSK land. 'Is it getting worse?' is the most important neurological question you can ask.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "rf-fracture",
+      "type": "redflags",
+      "topic": "Red flags",
+      "stem": "78-year-old woman on long-term prednisolone slipped in the bathroom yesterday, landing on her shoulder. Select the features that mandate imaging before any physical examination or treatment.",
+      "findings": [
+        {
+          "text": "Age 78 with long-term corticosteroid use",
+          "isRedFlag": true,
+          "note": "Osteoporosis risk: age + steroids means low-energy trauma can fracture. Proximal humerus is a classic fragility site."
+        },
+        {
+          "text": "Refuses to move the arm at all, supporting it against her body",
+          "isRedFlag": true,
+          "note": "Complete guarding after trauma is a fracture pattern — do not force an examination."
+        },
+        {
+          "text": "Bruising tracking down the upper arm",
+          "isRedFlag": true,
+          "note": "Ecchymosis migrating distally after trauma suggests bony/vascular injury."
+        },
+        {
+          "text": "She has had mild shoulder stiffness for years",
+          "isRedFlag": false,
+          "note": "Chronic background stiffness is irrelevant to the acute decision."
+        },
+        {
+          "text": "The fall was from standing height",
+          "isRedFlag": false,
+          "note": "In an osteoporotic patient, standing-height falls are EXACTLY how fragility fractures happen — low energy does not mean low risk. The energy of the fall is not reassuring here."
+        }
+      ],
+      "explanation": "Fragility-risk patient + trauma + guarding + tracking bruise = X-ray first. The instinct to 'just have a quick look at movement' is how proximal humeral fractures get manipulated in clinic. Note the trap: a 'minor' fall is not reassuring when bone quality is the variable.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "disc-rcrsp-frozen",
+      "type": "discriminator",
+      "conditionA": "Rotator cuff related shoulder pain",
+      "conditionB": "Frozen shoulder",
+      "topic": "Frozen shoulder",
+      "stem": "One examination finding best separates these two. Which?",
+      "options": [
+        "Passive external rotation range compared to the other side",
+        "Pain severity on a 0–10 scale",
+        "Presence of night pain",
+        "Tenderness on palpation of the greater tuberosity"
+      ],
+      "correctIndex": 0,
+      "explanation": "Both conditions cause pain, night pain, and difficulty overhead. But RCRSP preserves passive ROM (it's a load-related pain problem), while frozen shoulder destroys passive ER (it's a capsular contracture). Preserved passive ER essentially excludes established frozen shoulder; marked loss makes it (or GH OA) the diagnosis. Pain scores, night pain, and tenderness discriminate nothing.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "disc-neck-shoulder",
+      "type": "discriminator",
+      "conditionA": "Cervical radiculopathy",
+      "conditionB": "Rotator cuff related shoulder pain",
+      "topic": "Cervical referral",
+      "stem": "Which single history question best discriminates?",
+      "options": [
+        "Do your symptoms travel below the elbow, into the forearm or hand?",
+        "Does it hurt to reach overhead?",
+        "Is the pain worse at the end of the day?",
+        "Did the pain start gradually?"
+      ],
+      "correctIndex": 0,
+      "explanation": "RCRSP refers to the deltoid region and rarely below the elbow; radicular pain follows dermatomes into the forearm and hand, often with paraesthesia. Overhead pain, gradual onset and end-of-day patterns occur in both. Follow up a 'yes' with neck movement testing and neuro screening.",
+      "pearl": "Below-the-elbow symptoms move your exam to the neck first.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "disc-tear-rcrsp",
+      "type": "discriminator",
+      "conditionA": "Full-thickness rotator cuff tear",
+      "conditionB": "Rotator cuff related shoulder pain (tendinopathy)",
+      "topic": "Rotator cuff tear",
+      "stem": "Which examination finding best separates a full-thickness tear from a painful but intact cuff?",
+      "options": [
+        "A true lag sign — the arm cannot be held in the test position",
+        "Pain on the empty can test",
+        "A positive Hawkins-Kennedy",
+        "Crepitus with circumduction"
+      ],
+      "correctIndex": 0,
+      "explanation": "Pain-provocation tests (empty can pain, Hawkins) fire in both conditions. What an intact-but-painful cuff can still do is HOLD a position — weakness from pain gives way gradually, while a lag from structural discontinuity drops immediately. Lag signs (ER lag, drop arm, internal rotation lag) are the bedside dividers, with specificity >90%.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "disc-instab-rcrsp",
+      "type": "discriminator",
+      "conditionA": "Anterior instability",
+      "conditionB": "Rotator cuff related shoulder pain",
+      "topic": "Instability",
+      "stem": "In a 21-year-old swimmer with shoulder pain, which finding best discriminates?",
+      "options": [
+        "Apprehension (guarding, not just pain) at 90° abduction + external rotation",
+        "Painful arc on elevation",
+        "Weakness on resisted external rotation",
+        "Clicking during freestyle stroke"
+      ],
+      "correctIndex": 0,
+      "explanation": "In young athletes the prior probability already favours instability over cuff pathology. Apprehension — the defensive 'it's going to come out' response — is specific to instability; pain-based findings (painful arc, resisted pain, clicking) overlap heavily between the two. Age flips the pre-test odds: the same painful arc means different things at 21 vs 51.",
+      "pearl": "Under 30: think instability first. Over 40: think cuff first. Priors before tests.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "disc-pmr-bilateral",
+      "type": "discriminator",
+      "conditionA": "Polymyalgia rheumatica",
+      "conditionB": "Bilateral rotator cuff related shoulder pain",
+      "topic": "Red flags",
+      "stem": "A 66-year-old has pain in both shoulders. Which question best discriminates?",
+      "options": [
+        "How long does morning stiffness last, and are your hips/thighs stiff too?",
+        "Does reaching overhead hurt?",
+        "Do you do repetitive work with your arms?",
+        "Is one shoulder worse than the other?"
+      ],
+      "correctIndex": 0,
+      "explanation": "Bilateral RCRSP exists (especially in manual workers), so bilaterality alone doesn't decide it. PMR's signature is systemic: morning stiffness >45 minutes, pelvic girdle involvement, constitutional symptoms, raised ESR/CRP, age >50. Overhead pain and asymmetry occur in both. If the answer is 'over an hour, and yes my thighs' — order inflammatory markers.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    },
+    {
+      "id": "disc-acj-subacromial",
+      "type": "discriminator",
+      "conditionA": "Acromioclavicular joint pathology",
+      "conditionB": "Subacromial pain (RCRSP)",
+      "topic": "RCRSP",
+      "stem": "Which finding best localizes the problem to the ACJ rather than the subacromial region?",
+      "options": [
+        "Pain pinpointed on top of the shoulder, worst at end-range elevation and cross-body adduction",
+        "Painful arc between 60–120°",
+        "Night pain lying on the shoulder",
+        "Pain on resisted abduction"
+      ],
+      "correctIndex": 0,
+      "explanation": "ACJ pain is felt ON TOP of the shoulder (patients point with one finger), and provoked at END-range elevation (>170°) and horizontal adduction — versus the 60–120° mid-arc of subacromial pain. Resisted pain and night pain overlap. The one-finger localization is genuinely useful here: the ACJ is superficial and self-reports accurately.",
+      "citation": "UNVERIFIED — prototype draft; citation pending clinical review",
+      "evidenceReviewedOn": null,
+      "verification": "unverified"
+    }
+  ]
+}
