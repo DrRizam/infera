@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Profile } from "./types";
-import { loadProfile, saveProfile } from "./engine/store";
+import { applyDisplayPrefs, loadProfile, saveProfile } from "./engine/store";
 import { checkAchievements } from "./engine/achievements";
 import Home from "./screens/Home";
 import Session from "./screens/Session";
@@ -9,6 +9,7 @@ import SpeedRound from "./screens/SpeedRound";
 import Stats from "./screens/Stats";
 import Onboarding from "./screens/Onboarding";
 import Learn from "./screens/Learn";
+import You from "./screens/You";
 import { cases } from "./content/cases";
 
 type Screen =
@@ -17,13 +18,15 @@ type Screen =
   | { name: "session"; size?: number }
   | { name: "case"; caseId: string }
   | { name: "speed" }
-  | { name: "stats" };
+  | { name: "stats" }
+  | { name: "you" };
 
 const NAV: { screen: Screen["name"]; icon: string; label: string }[] = [
   { screen: "home", icon: "🏠", label: "Today" },
   { screen: "learn", icon: "🗺️", label: "Learn" },
   { screen: "speed", icon: "⚡", label: "Speed" },
   { screen: "stats", icon: "📊", label: "Stats" },
+  { screen: "you", icon: "👤", label: "You" },
 ];
 
 export default function App() {
@@ -37,6 +40,11 @@ export default function App() {
     saveProfile(p);
     setProfileState(p);
   };
+
+  // Theme and text size live on the document root so they cover every screen.
+  useEffect(() => {
+    applyDisplayPrefs(profile);
+  }, [profile.theme, profile.textSize]);
 
   // Grant any achievements earned by progress made before the achievement system existed
   useEffect(() => {
@@ -96,10 +104,13 @@ export default function App() {
       );
       break;
     case "stats":
+      content = <Stats profile={profile} />;
+      break;
+    case "you":
       content = (
-        <Stats
+        <You
           profile={profile}
-          onSetProfile={setProfile}
+          setProfile={setProfile}
           onResetDone={() => {
             setProfileState(loadProfile());
             setScreen({ name: "home" });

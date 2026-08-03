@@ -38,10 +38,18 @@
   --info-border: #BFDBFE;
   --unverified: #7C3AED;
   --radius: 16px;
+  /* Reading size for drill text — bumped by the You screen, not the OS. */
+  --text-scale: 1;
 }
 
+:root[data-text="large"] { --text-scale: 1.15; }
+
+/* Dark tokens apply when the device asks for dark AND the learner hasn't
+   forced light, or whenever the learner has explicitly chosen dark. The two
+   selectors below carry identical values on purpose — plain CSS has no way
+   to share a token block across a media query and an attribute selector. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #0B1120;
     --card: #1E293B;
     --well: #334155;
@@ -71,6 +79,37 @@
     --info-border: #1E40AF;
     --unverified: #A78BFA;
   }
+}
+
+:root[data-theme="dark"] {
+    --bg: #0B1120;
+    --card: #1E293B;
+    --well: #334155;
+    --fill-weak: #475569;
+    --ink: #F1F5F9;
+    --ink-soft: #CBD5E1;
+    --ink-muted: #94A3B8;
+    --line: #334155;
+    --primary: #818CF8;
+    --primary-deep: #6366F1;
+    --primary-soft: #312E81;
+    --on-primary: #0B1120;
+    --accent: #FBBF24;
+    --accent-deep: #FBBF24;
+    --accent-soft: #451A03;
+    --accent-border: #78350F;
+    --good: #34D399;
+    --good-soft: #064E3B;
+    --good-border: #065F46;
+    --bad: #F87171;
+    --bad-deep: #FCA5A5;
+    --bad-soft: #7F1D1D;
+    --bad-border: #991B1B;
+    --info: #60A5FA;
+    --info-deep: #3B82F6;
+    --info-soft: #1E3A8A;
+    --info-border: #1E40AF;
+    --unverified: #A78BFA;
 }
 
 html, body { height: 100%; }
@@ -105,7 +144,7 @@ body {
   border-radius: var(--radius); padding: 20px; margin-bottom: 16px;
 }
 .card h2 { font-size: 18px; margin-bottom: 6px; }
-.card .sub { color: var(--ink-soft); font-size: 14px; }
+.card .sub { color: var(--ink-soft); font-size: calc(14px * var(--text-scale)); }
 
 /* Deep indigo reads well against both light and dark bg — fixed on purpose */
 .hero { background: linear-gradient(135deg, #4F46E5, #4338CA); color: #fff; border: none; }
@@ -145,7 +184,7 @@ body {
 .quit { background: none; border: none; font-size: 20px; color: var(--ink-soft); cursor: pointer; padding: 4px; }
 
 /* ── Drill options ───────────────────────────────── */
-.stem { font-size: 17px; font-weight: 600; margin-bottom: 16px; }
+.stem { font-size: calc(17px * var(--text-scale)); font-weight: 600; margin-bottom: 16px; }
 .tag {
   display: inline-block; font-size: 11px; font-weight: 800; text-transform: uppercase;
   letter-spacing: 0.6px; color: var(--primary); background: var(--primary-soft);
@@ -156,7 +195,7 @@ body {
 .option {
   display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
   background: var(--card); border: 2px solid var(--line); border-radius: 12px;
-  padding: 13px 14px; margin-bottom: 10px; font-size: 15px; font-weight: 600;
+  padding: 13px 14px; margin-bottom: 10px; font-size: calc(15px * var(--text-scale)); font-weight: 600;
   cursor: pointer; color: var(--ink); font-family: inherit;
   transition: border-color 0.1s, background 0.1s;
 }
@@ -178,7 +217,7 @@ body {
 .option .check.on { background: var(--info); border-color: var(--info); color: var(--card); }
 
 /* ── Feedback panel ──────────────────────────────── */
-.feedback { border-radius: 12px; padding: 14px 16px; margin-top: 14px; font-size: 14.5px; }
+.feedback { border-radius: 12px; padding: 14px 16px; margin-top: 14px; font-size: calc(14.5px * var(--text-scale)); }
 .feedback.good { background: var(--good-soft); border: 2px solid var(--good-border); }
 .feedback.bad { background: var(--bad-soft); border: 2px solid var(--bad-border); }
 .feedback.neutral { background: var(--info-soft); border: 2px solid var(--info-border); }
@@ -187,7 +226,7 @@ body {
 .feedback .verdict.bad-text { color: var(--bad-deep); }
 .pearl {
   margin-top: 10px; padding: 10px 12px; border-radius: 10px;
-  background: var(--accent-soft); border: 2px solid var(--accent-border); font-size: 14px;
+  background: var(--accent-soft); border: 2px solid var(--accent-border); font-size: calc(14px * var(--text-scale));
 }
 .pearl b { color: var(--accent-deep); }
 
@@ -511,3 +550,34 @@ body {
 .goal-btn span { font-size: 11px; font-weight: 600; color: var(--ink-muted); }
 .goal-btn.on { border-color: var(--primary); background: var(--primary-soft); color: var(--primary); }
 .goal-btn.on span { color: var(--primary); }
+
+/* ── You screen ──────────────────────────────────── */
+.you-head { display: flex; align-items: center; gap: 14px; }
+.you-avatar {
+  width: 52px; height: 52px; border-radius: 999px; flex-shrink: 0;
+  background: var(--primary); color: var(--on-primary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 800;
+}
+
+/* ── Collapsible citation ────────────────────────── */
+.citation-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.source-toggle {
+  background: none; border: none; cursor: pointer; font-family: inherit;
+  font-size: 12px; font-weight: 800; color: var(--ink-soft); padding: 2px 0;
+}
+.source-toggle:hover { color: var(--ink); text-decoration: underline; }
+.citation-body { display: flex; flex-direction: column; gap: 4px; margin-top: 2px; }
+
+/* ── Competency chips ────────────────────────────── */
+.comp-chip {
+  font-size: 11px; font-weight: 800; border-radius: 999px; padding: 2px 10px;
+  white-space: nowrap; background: var(--well); color: var(--ink-soft);
+}
+.comp-chip.shaky { background: var(--accent-soft); color: var(--accent-deep); }
+.comp-chip.building { background: var(--info-soft); color: var(--info); }
+.comp-chip.solid { background: var(--good-soft); color: var(--good); }
+.comp-chip.sharp { background: var(--good); color: var(--card); }
+
+.safety-card.sharp, .safety-card.solid { border-color: var(--good-border); }
+.safety-card.shaky { border-color: var(--accent-border); }

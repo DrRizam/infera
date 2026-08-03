@@ -18,10 +18,15 @@ import { checkAchievements } from "../engine/achievements";
 function Feedback({ score, drill }: { score: number; drill: Drill }) {
   const good = score >= 0.99;
   const partial = score >= 0.6 && !good;
+  // The full citation string is long and rarely needed mid-session, so it
+  // collapses. The verification badge never does — a learner must always be
+  // able to see at a glance that a claim hasn't been checked yet.
+  const [showSource, setShowSource] = useState(false);
+
   return (
     <div className={`feedback ${good ? "good" : partial ? "neutral" : "bad"}`}>
       <div className={`verdict ${good ? "good-text" : partial ? "" : "bad-text"}`}>
-        {good ? "Correct" : partial ? `Partially right (${Math.round(score * 100)}%)` : "Not quite"}
+        {good ? "✓ Correct" : partial ? `◐ Partially right (${Math.round(score * 100)}%)` : "✕ Not quite"}
       </div>
       <div>{drill.explanation}</div>
       {drill.pearl && (
@@ -30,13 +35,22 @@ function Feedback({ score, drill }: { score: number; drill: Drill }) {
         </div>
       )}
       <div className="citation">
-        {drill.verification !== "verified" && (
-          <span className={`badge ${drill.verification}`}>
-            {drill.verification === "contested" ? "⚖️ evidence contested" : "⚠️ unverified"}
-          </span>
+        <div className="citation-head">
+          {drill.verification !== "verified" && (
+            <span className={`badge ${drill.verification}`}>
+              {drill.verification === "contested" ? "⚖️ evidence contested" : "⚠️ unverified"}
+            </span>
+          )}
+          <button className="source-toggle" onClick={() => setShowSource((s) => !s)}>
+            📚 Source {showSource ? "▲" : "▼"}
+          </button>
+        </div>
+        {showSource && (
+          <div className="citation-body">
+            <span>{drill.citation}</span>
+            {drill.contestedNote && <span className="contested-note">{drill.contestedNote}</span>}
+          </div>
         )}
-        <span>📚 {drill.citation}</span>
-        {drill.contestedNote && <span className="contested-note">{drill.contestedNote}</span>}
       </div>
     </div>
   );

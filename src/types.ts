@@ -226,6 +226,10 @@ export interface Profile {
   dailyGoal: number;
   /** Whether the one-time "why am I grading myself?" hint has been shown. */
   seenGradeHint: boolean;
+  /** Colour scheme: follow the device, or force one. */
+  theme: "system" | "light" | "dark";
+  /** Reading size for drill text — clinicians read this tired, in bad light. */
+  textSize: "normal" | "large";
   lastActiveDate: string | null; // ISO date of last completed session/case
   activityLog: string[]; // ISO dates with at least one completed session/case
   srs: Record<string, SrsRecord>;

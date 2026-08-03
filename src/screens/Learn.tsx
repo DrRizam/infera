@@ -3,7 +3,14 @@ import { MODULE_OF_TOPIC } from "../types";
 import { MODULES, isReadyModule } from "../content/modules";
 import { drills } from "../content";
 import { cases } from "../content/cases";
-import { masteryByTopic, moduleMastery, overallMastery } from "../engine/srs";
+import {
+  COMPETENCY_CLASS,
+  competencyOf,
+  masteryByTopic,
+  moduleMastery,
+  overallMastery,
+  safetyCompetency,
+} from "../engine/srs";
 import { effectiveStreak } from "../engine/store";
 
 function FoundationRing({ pct }: { pct: number }) {
@@ -44,6 +51,8 @@ export default function Learn({
 }) {
   const streak = effectiveStreak(profile);
   const foundation = overallMastery(profile);
+  const mastery = masteryByTopic(profile);
+  const safety = safetyCompetency(profile);
 
   const setPath = (id: Complaint) => setProfile({ ...profile, currentPath: id });
 
@@ -76,6 +85,28 @@ export default function Learn({
             </p>
           </div>
           <FoundationRing pct={foundation} />
+        </div>
+      </div>
+
+      <div className={`card safety-card ${COMPETENCY_CLASS[safety.competency]}`}>
+        <div className="card-head">
+          <h2>🚩 Red flag screening</h2>
+          <span className={`comp-chip ${COMPETENCY_CLASS[safety.competency]}`}>
+            {safety.competency}
+          </span>
+        </div>
+        <p className="sub">
+          {safety.seen === 0
+            ? "You haven't met the screening drills yet — these are the ones that matter most."
+            : safety.pct >= 85
+              ? `Holding strong across ${safety.seen} of ${safety.total} screening drills. This is the competency worth never losing.`
+              : `${safety.seen} of ${safety.total} screening drills met. Missing a red flag costs more than missing a special test — these stay in rotation.`}
+        </p>
+        <div className="mastery-track" style={{ marginTop: 10 }}>
+          <div
+            className={`mastery-fill ${safety.pct >= 70 ? "strong" : safety.pct >= 30 ? "mid" : ""}`}
+            style={{ width: `${Math.max(safety.pct, 2)}%` }}
+          />
         </div>
       </div>
 
@@ -132,35 +163,36 @@ export default function Learn({
 
       <div className="card">
         <div className="card-head">
-          <h2>🗺️ Mastery map</h2>
+          <h2>🗺️ Where you stand</h2>
           <span className="sub">by topic</span>
         </div>
-        {[...new Set(masteryByTopic(profile).map((m) => MODULE_OF_TOPIC[m.topic]))].map((mod) => (
+        {[...new Set(mastery.map((m) => MODULE_OF_TOPIC[m.topic]))].map((mod) => (
           <div key={mod}>
             <div className="module-head">{mod}</div>
-            {masteryByTopic(profile)
+            {mastery
               .filter((m) => MODULE_OF_TOPIC[m.topic] === mod)
-              .map((m) => (
-                <div className="mastery-row" key={m.topic}>
-                  <div className="mastery-label">
-                    <span>{m.topic}</span>
-                    <span className="sub">
-                      {m.seen}/{m.total}
-                    </span>
+              .map((m) => {
+                const comp = competencyOf(m);
+                return (
+                  <div className="mastery-row" key={m.topic}>
+                    <div className="mastery-label">
+                      <span>{m.topic}</span>
+                      <span className={`comp-chip ${COMPETENCY_CLASS[comp]}`}>{comp}</span>
+                    </div>
+                    <div className="mastery-track">
+                      <div
+                        className={`mastery-fill ${m.pct >= 70 ? "strong" : m.pct >= 30 ? "mid" : ""}`}
+                        style={{ width: `${Math.max(m.pct, 2)}%` }}
+                      />
+                    </div>
                   </div>
-                  <div className="mastery-track">
-                    <div
-                      className={`mastery-fill ${m.pct >= 70 ? "strong" : m.pct >= 30 ? "mid" : ""}`}
-                      style={{ width: `${Math.max(m.pct, 2)}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+                );
+              })}
           </div>
         ))}
         <p className="sub" style={{ marginTop: 10 }}>
-          Bars grow as drills survive longer review intervals — mastery means remembering, not
-          just answering once.
+          "Sharp" means you've remembered it across widening gaps — not that you answered it right
+          once. Anything below Solid comes back sooner.
         </p>
       </div>
 

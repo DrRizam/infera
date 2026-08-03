@@ -91,6 +91,46 @@ export interface TopicMastery {
   total: number;
 }
 
+/**
+ * Competency band for a topic. Clinicians don't think in percentages — they
+ * think "am I safe on this?". The label is what the learner reads; the number
+ * stays available underneath for anyone who wants it.
+ */
+export type Competency = "Not started" | "Shaky" | "Building" | "Solid" | "Sharp";
+
+export function competencyOf(m: TopicMastery): Competency {
+  if (m.seen === 0) return "Not started";
+  if (m.pct < 30) return "Shaky";
+  if (m.pct < 60) return "Building";
+  if (m.pct < 85) return "Solid";
+  return "Sharp";
+}
+
+export const COMPETENCY_CLASS: Record<Competency, string> = {
+  "Not started": "none",
+  Shaky: "shaky",
+  Building: "building",
+  Solid: "solid",
+  Sharp: "sharp",
+};
+
+/** Topics that carry safety consequences — surfaced separately on Learn. */
+const SAFETY_TOPICS: Topic[] = ["Red flags", "Spinal red flags"];
+
+export function safetyCompetency(profile: Profile): {
+  pct: number;
+  competency: Competency;
+  seen: number;
+  total: number;
+} {
+  const rows = masteryByTopic(profile).filter((m) => SAFETY_TOPICS.includes(m.topic));
+  const total = rows.reduce((a, m) => a + m.total, 0);
+  const seen = rows.reduce((a, m) => a + m.seen, 0);
+  const pct = total === 0 ? 0 : Math.round(rows.reduce((a, m) => a + m.pct * m.total, 0) / total);
+  const agg: TopicMastery = { topic: "Red flags", pct, seen, total };
+  return { pct, competency: competencyOf(agg), seen, total };
+}
+
 /** Per-topic mastery: a drill counts as mastered after ~4 surviving reps. */
 export function masteryByTopic(profile: Profile): TopicMastery[] {
   const topics = [...new Set(drills.map((d) => d.topic))];

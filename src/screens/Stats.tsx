@@ -1,11 +1,9 @@
 import type { Profile, Topic } from "../types";
 import { MODULE_OF_TOPIC } from "../types";
 import { drills } from "../content";
-import { effectiveStreak, exportProfile, importProfile, levelFor, resetProfile, saveProfile } from "../engine/store";
+import { effectiveStreak, levelFor } from "../engine/store";
 import { ACHIEVEMENTS } from "../engine/achievements";
 import { todayISO } from "../engine/srs";
-import { SESSION_PRESETS, estimateMinutes } from "../config";
-import { useRef } from "react";
 
 function nextSevenDays(): { iso: string; label: string }[] {
   const out = [];
@@ -22,12 +20,8 @@ function nextSevenDays(): { iso: string; label: string }[] {
 
 export default function Stats({
   profile,
-  onResetDone,
-  onSetProfile,
 }: {
   profile: Profile;
-  onResetDone: () => void;
-  onSetProfile: (p: Profile) => void;
 }) {
   const lvl = levelFor(profile.xp);
   const streak = effectiveStreak(profile);
@@ -47,44 +41,6 @@ export default function Stats({
   topics.sort((a, b) => a[1].sum / a[1].n - b[1].sum / b[1].n);
 
   const unlockedSet = new Set(profile.achievements);
-
-  const handleReset = () => {
-    if (window.confirm("Reset ALL progress? Streak, XP, reviews, and achievements will be wiped. This cannot be undone.")) {
-      resetProfile();
-      onResetDone();
-    }
-  };
-
-  const fileInput = useRef<HTMLInputElement>(null);
-
-  const handleExport = () => {
-    const blob = new Blob([exportProfile(profile)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `clinician-backup-${todayISO()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const handleImportFile = async (file: File | undefined) => {
-    if (!file) return;
-    try {
-      const imported = importProfile(await file.text());
-      if (
-        window.confirm(
-          `Restore backup from this file? Your current progress on this device will be replaced (level ${levelFor(imported.xp).level}, ${Object.keys(imported.srs).length} drills tracked).`
-        )
-      ) {
-        saveProfile(imported);
-        onResetDone();
-      }
-    } catch (e) {
-      window.alert(`Could not restore backup: ${e instanceof Error ? e.message : e}`);
-    } finally {
-      if (fileInput.current) fileInput.current.value = "";
-    }
-  };
 
   return (
     <div className="app">
@@ -208,81 +164,8 @@ export default function Stats({
         </div>
       </div>
 
-      {profile.flags.length > 0 && (
-        <div className="card">
-          <div className="card-head">
-            <h2>⚑ Items you flagged</h2>
-            <span className="sub">{profile.flags.length}</span>
-          </div>
-          <p className="sub" style={{ marginBottom: 10 }}>
-            These ride along in your backup file — send it over and the content gets fixed.
-          </p>
-          {profile.flags.map((f) => (
-            <div className="mastery-row" key={f.drillId + f.date}>
-              <div className="mastery-label">
-                <span>{drills.find((d) => d.id === f.drillId)?.topic ?? f.drillId}</span>
-                <span className="sub">{f.date}</span>
-              </div>
-              {f.note && <div className="sub">{f.note}</div>}
-            </div>
-          ))}
-        </div>
-      )}
-
-      <div className="card">
-        <div className="card-head">
-          <h2>🎯 Daily goal</h2>
-          <span className="sub">{profile.dailyGoal} drills</span>
-        </div>
-        <p className="sub">
-          How much you want to do on a normal day. Reviews that fall due are always included
-          first — a smaller goal just spreads them out.
-        </p>
-        <div className="goal-row">
-          {SESSION_PRESETS.map((p) => (
-            <button
-              key={p.size}
-              className={`goal-btn ${profile.dailyGoal === p.size ? "on" : ""}`}
-              onClick={() => onSetProfile({ ...profile, dailyGoal: p.size })}
-            >
-              {p.label}
-              <span>
-                {p.size} · ~{estimateMinutes(p.size)} min
-              </span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="card">
-        <h2>⚙️ Settings</h2>
-        <p className="sub" style={{ margin: "8px 0 12px" }}>
-          All progress is stored locally on this device. Back it up occasionally — especially
-          before deleting the app or clearing browser data.
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <button className="big-btn teal" onClick={handleExport}>
-            ⬇️ Back up my progress
-          </button>
-          <button className="big-btn ghost" onClick={() => fileInput.current?.click()}>
-            ⬆️ Restore from backup
-          </button>
-          <input
-            ref={fileInput}
-            type="file"
-            accept="application/json,.json"
-            style={{ display: "none" }}
-            onChange={(e) => handleImportFile(e.target.files?.[0])}
-          />
-          <button className="big-btn ghost danger" onClick={handleReset}>
-            Reset all progress
-          </button>
-        </div>
-      </div>
-
       <div className="footer-note">
-        Clinician · Educational use only — not medical advice · Test metrics are representative
-        literature values pending citation review
+        Clinician · A study aid, not a diagnostic tool · Settings and backup live on the You tab
       </div>
     </div>
   );
