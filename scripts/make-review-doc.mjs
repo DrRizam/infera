@@ -57,7 +57,9 @@ const rows = bank.items.map((item, n) => {
   const status =
     item.verification === "contested"
       ? `⚖️ CONTESTED — ${item.contestedNote ?? "see explanation"}`
-      : item.verification.toUpperCase();
+      : item.verification === "source-checked"
+        ? `🔍 SOURCE-CHECKED (figures re-checked against the cited paper on ${item.evidenceReviewedOn}; your clinical sign-off still needed)`
+        : item.verification.toUpperCase();
   return `
 ---
 
@@ -91,7 +93,9 @@ const doc = `# Content review — ${name}
 
 Category mix: ${Object.entries(counts).map(([k, v]) => `${k} ${v}`).join(" · ")}
 
-**How to review:** for each item, check the citation actually supports every number and claim in the stem, options, and explanation. Tick one box, add notes for anything to fix. Items stay visibly UNVERIFIED in the app until you approve them; approved items get \`verification: "verified"\` and today's date as \`evidenceReviewedOn\`.
+**How to review:** for each item, check the citation actually supports every number and claim in the stem, options, and explanation. Tick one box, add notes for anything to fix.
+
+Items marked 🔍 SOURCE-CHECKED have had their figures re-checked against the cited paper by an independent lookup — that catches wrong numbers and bad citations, but it does **not** catch bad teaching, wrong emphasis, or an item that misrepresents how the test is used in practice. That judgement is yours. Only you can move an item to \`verified\`.
 ${rows.join("")}`;
 
 await mkdir(outDir, { recursive: true });

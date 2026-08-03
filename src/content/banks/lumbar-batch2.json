@@ -34,7 +34,7 @@
       ],
       "correctIndex": 0,
       "explanation": "Raising the asymptomatic leg and reproducing symptoms in the symptomatic leg is the crossed straight leg raise. It is far less sensitive than the standard SLR but considerably more specific — a positive crossed SLR is one of the stronger clinical pointers toward a disc herniation with root compression.",
-      "citation": "van der Windt DA, et al. Physical examination for lumbar radiculopathy due to disc herniation in patients with low-back pain. Cochrane Database Syst Rev. 2010;(2):CD007431.",
+      "citation": "van der Windt DA, et al. Physical examination for lumbar radiculopathy due to disc herniation in patients with low-back pain. Cochrane Database Syst Rev. 2010;(2):CD007431.pub2.",
       "evidenceReviewedOn": null,
       "verification": "unverified"
     },
@@ -74,8 +74,8 @@
       "correctIndex": 0,
       "explanation": "The prone instability test compares segmental PA provocation with the stabilizing musculature relaxed versus actively engaged. Pain that eases once the patient engages the trunk and hip musculature is taken as a sign the segment responds to active stabilization — it is a treatment-response indicator, not proof of radiographic instability.",
       "citation": "Hicks GE, Fritz JM, Delitto A, McGill SM. Preliminary development of a clinical prediction rule for determining which patients with low back pain will respond to a stabilization exercise program. Arch Phys Med Rehabil. 2005;86(9):1753-1762.",
-      "evidenceReviewedOn": null,
-      "verification": "unverified"
+      "evidenceReviewedOn": "2026-08-03",
+      "verification": "source-checked"
     },
     {
       "id": "lb2-p1",
@@ -90,7 +90,7 @@
         "Lower slightly below the symptomatic angle, then add ankle dorsiflexion or cervical flexion to differentiate neural from musculotendinous origin"
       ],
       "explanation": "Standardise the position first: hip rotation, pelvic tilt, and trunk position all change the angle at which symptoms appear. Raise until FAMILIAR symptoms appear — posterior thigh tightness is not a positive. The sensitising manoeuvre at the end is what separates neural mechanosensitivity from hamstring tension.",
-      "citation": "van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431 (test description and accuracy).",
+      "citation": "van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431.pub2 (test description and accuracy).",
       "evidenceReviewedOn": null,
       "verification": "unverified"
     },
@@ -146,8 +146,8 @@
       ],
       "explanation": "Screen for the emergency first — cauda equina questions cost fifteen seconds and change the entire disposition. Then work from least to most provocative: sensation, then strength, then reflexes, and only then the neurodynamic tests, which are the most likely to flare symptoms and can confound the rest of the exam if done early.",
       "citation": "George SZ, et al. Interventions for the management of acute and chronic low back pain: clinical practice guideline. J Orthop Sports Phys Ther. 2021;51(11):CPG1-CPG60.",
-      "evidenceReviewedOn": null,
-      "verification": "unverified"
+      "evidenceReviewedOn": "2026-08-03",
+      "verification": "source-checked"
     },
     {
       "id": "lb2-s1",
@@ -164,9 +164,9 @@
       "correctIndex": 0,
       "explanation": "Sensitivity ~92% with specificity ~28% describes a test that is positive in most people WITH the condition and also in most people without it. So a negative SLR is informative (few herniations are missed), while a positive one barely shifts probability. Note the studies were done in surgical populations with 58–98% prevalence — accuracy in a primary care caseload will differ.",
       "pearl": "SnNout applies here: high sensitivity, negative result, rules out. Just don't run it backwards.",
-      "citation": "van der Windt DA, Simons E, Riphagen II, et al. Physical examination for lumbar radiculopathy due to disc herniation in patients with low-back pain. Cochrane Database Syst Rev. 2010;(2):CD007431.",
-      "evidenceReviewedOn": null,
-      "verification": "unverified"
+      "citation": "van der Windt DA, Simons E, Riphagen II, et al. Physical examination for lumbar radiculopathy due to disc herniation in patients with low-back pain. Cochrane Database Syst Rev. 2010;(2):CD007431.pub2.",
+      "evidenceReviewedOn": "2026-08-03",
+      "verification": "source-checked"
     },
     {
       "id": "lb2-s2",
@@ -182,7 +182,7 @@
       ],
       "correctIndex": 0,
       "explanation": "They are complementary opposites, which is exactly why you perform both. The standard SLR screens (few true herniations escape it); the crossed SLR confirms (it is rarely positive without significant nerve root compression, though it misses many cases). Reported estimates come largely from surgical populations with high disease prevalence.",
-      "citation": "van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431.",
+      "citation": "van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431.pub2.",
       "evidenceReviewedOn": null,
       "verification": "contested",
       "contestedNote": "Pooled specificity estimates for the standard SLR vary widely between studies (reported range roughly 0.10–1.00), and nearly all data come from high-prevalence surgical cohorts, so accuracy in primary care is genuinely uncertain."
@@ -211,7 +211,7 @@
       "type": "mcq",
       "topic": "Spinal stenosis",
       "category": "psychometrics",
-      "stem": "The two-stage treadmill test for lumbar spinal stenosis has been reported with sensitivity ~50% and specificity ~92%. How should it be used?",
+      "stem": "Secondary sources commonly quote the two-stage treadmill test at around 50% sensitivity and 92% specificity for lumbar spinal stenosis. How should it be used?",
       "options": [
         "As a confirmatory test — prolonged walking tolerance on the inclined stage supports stenosis, but a normal result doesn't exclude it",
         "As a screening test to rule out stenosis in anyone with leg pain",
@@ -219,10 +219,11 @@
         "As a measure of cardiovascular fitness in older adults with back pain"
       ],
       "correctIndex": 0,
-      "explanation": "Specificity ~92% with sensitivity ~50% is a confirmer's profile: patients who walk longer on the inclined (flexed) treadmill than the level one are likely to have stenosis, but half of those with stenosis won't show the pattern. It also has practical value beyond diagnosis — it quantifies walking tolerance, which is usually the patient's actual goal.",
-      "citation": "Fritz JM, Erhard RE, Delitto A, Welch WC, Nowakowski PE. Preliminary results of the use of a two-stage treadmill test as a clinical diagnostic tool in the differential diagnosis of lumbar spinal stenosis. J Spinal Disord. 1997;10(5):410-416.",
+      "explanation": "That profile is a confirmer's: patients who walk longer on the inclined (flexed) treadmill than the level one are likely to have stenosis, but roughly half of those with stenosis will not show the pattern. Note the provenance - the original Fritz 1997 paper reports correct classification of 76.9% of stenotic and 94.7% of non-stenotic subjects by discriminant analysis, not these sensitivity and specificity figures, which circulate via secondary summaries. The test also quantifies walking tolerance, which is usually the patient's actual goal.",
+      "citation": "Fritz JM, Erhard RE, Delitto A, Welch WC, Nowakowski PE. Preliminary results of the use of a two-stage treadmill test as a clinical diagnostic tool in the differential diagnosis of lumbar spinal stenosis. J Spinal Disord. 1997;10(5):410-416 (reports 76.9%/94.7% correct classification). The ~50%/92% sensitivity-specificity figures are widely repeated in secondary sources; the primary source for them was not confirmed.",
       "evidenceReviewedOn": null,
-      "verification": "unverified"
+      "verification": "contested",
+      "contestedNote": "The commonly quoted Sn ~50% / Sp ~92.3% could not be traced to the primary paper, which reports different metrics. Use the test as a confirmer but do not quote those figures as if they came from Fritz 1997."
     },
     {
       "id": "lb2-s5",
@@ -239,9 +240,9 @@
       "correctIndex": 0,
       "explanation": "These are poor screening properties: most patients with CES will NOT report any given red flag, so a clean screen provides false reassurance. The findings are somewhat more specific than sensitive — bowel incontinence, perineal anaesthesia, and reduced anal tone are the most specific — meaning their PRESENCE matters far more than their absence. Progressive or bilateral neurological symptoms warrant urgent referral regardless of the checklist.",
       "pearl": "The red-flag list is a prompt to think, not a rule-out. CES is a clinical emergency diagnosed on suspicion plus MRI.",
-      "citation": "Dionne N, Adefolarin A, Kunzelman D, et al. What is the diagnostic accuracy of red flags related to cauda equina syndrome (CES), when compared to magnetic resonance imaging (MRI)? A systematic review. Musculoskelet Sci Pract. 2019;42:125-133.",
-      "evidenceReviewedOn": null,
-      "verification": "unverified"
+      "citation": "Dionne N, Adefolarin A, Kunzelman D, et al. What is the diagnostic accuracy of red flags related to cauda equina syndrome (CES), when compared to magnetic resonance imaging (MRI)? A systematic review. Musculoskelet Sci Pract. 2019;42:125-133 (see also the 2019 corrigendum).",
+      "evidenceReviewedOn": "2026-08-03",
+      "verification": "source-checked"
     },
     {
       "id": "lb2-s6",
@@ -259,8 +260,8 @@
       "explanation": "The five ASAS parameters are: age at onset ≤40, insidious onset, improvement with exercise, no improvement with rest, and night pain (improving on getting up). Morning stiffness — despite being the feature clinicians most associate with inflammatory back pain, and part of older criteria sets — was dropped because it proved non-specific: plenty of mechanical back pain is stiff in the morning too.",
       "pearl": "The discriminating question isn't 'are you stiff in the morning?' It's 'does moving help and resting not?'",
       "citation": "Sieper J, van der Heijde D, Landewé R, et al. New criteria for inflammatory back pain in patients with chronic back pain: a real patient exercise by experts from the Assessment of SpondyloArthritis international Society (ASAS). Ann Rheum Dis. 2009;68(6):784-788.",
-      "evidenceReviewedOn": null,
-      "verification": "unverified"
+      "evidenceReviewedOn": "2026-08-03",
+      "verification": "source-checked"
     },
     {
       "id": "lb2-i1",
@@ -284,9 +285,9 @@
       ],
       "correctIndex": 0,
       "explanation": "High sensitivity is what makes a negative useful: with LR− around 0.3, a pretest probability of 60% falls to roughly 30%. That's a real shift, not exclusion. The poor specificity limits what a POSITIVE tells you — it doesn't diminish the value of this negative.",
-      "citation": "van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431 (LR− computed from pooled Sn/Sp).",
-      "evidenceReviewedOn": null,
-      "verification": "unverified"
+      "citation": "van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431.pub2 (LR− computed from pooled Sn/Sp).",
+      "evidenceReviewedOn": "2026-08-03",
+      "verification": "source-checked"
     },
     {
       "id": "lb2-i2",
@@ -311,9 +312,9 @@
       "correctIndex": 0,
       "explanation": "A likelihood ratio near 1 means the test result carries almost no information. Specificity of 28% means most people WITHOUT radiculopathy also test positive — hamstring tension, hip pathology, and general pain sensitivity all produce positives. Posterior thigh ache without symptoms below the knee and without neurological signs remains, on balance, unlikely to be true radiculopathy.",
       "pearl": "Any LR between about 0.5 and 2 is clinical noise. Know which of your tests live there.",
-      "citation": "van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431 (LR+ computed from pooled Sn/Sp); Bayesian conversion is standard.",
-      "evidenceReviewedOn": null,
-      "verification": "unverified"
+      "citation": "van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431.pub2 (LR+ computed from pooled Sn/Sp); Bayesian conversion is standard.",
+      "evidenceReviewedOn": "2026-08-03",
+      "verification": "source-checked"
     },
     {
       "id": "lb2-i3",
@@ -349,7 +350,7 @@
       "correctIndex": 0,
       "explanation": "Distal-to-proximal migration is centralization, even when central pain worsens — direction of travel matters more than intensity. It carries genuine prognostic weight and identifies a directional preference to train. What it does NOT do is confirm the disc as the source: the evidence does not support centralization as specific enough to identify discogenic pain.",
       "pearl": "Centralization tells you which way to load the patient. It doesn't tell you what tissue is at fault.",
-      "citation": "Werneke M, Hart DL. Centralization phenomenon as a prognostic factor for chronic low back pain and disability. Spine. 2001;26(7):758-764; specificity caveat per Laslett M, et al. and Chevrot A, et al. Joint Bone Spine. 2007;74(5):425-427.",
+      "citation": "Werneke M, Hart DL. Centralization phenomenon as a prognostic factor for chronic low back pain and disability. Spine. 2001;26(7):758-764; specificity caveat per Berthelot JM, Delecrin J, Maugars Y, Passuti N. Contribution of centralization phenomenon to the diagnosis, prognosis, and treatment of diskogenic low back pain. Joint Bone Spine. 2007;74(4):319-323.",
       "evidenceReviewedOn": null,
       "verification": "contested",
       "contestedNote": "Centralization's prognostic value is reasonably supported; its diagnostic specificity for discogenic pain is disputed and should not be presented as established."
@@ -368,7 +369,7 @@
       ],
       "correctIndex": 0,
       "explanation": "Bilateral leg symptoms, urinary hesitancy, and saddle sensory change together are enough to act on. CES is a surgical emergency where delay costs bladder, bowel, and sexual function permanently — the decision threshold for referral is deliberately low, and no examination finding you can add will safely rule it out. Refer now and document the neurological findings and the time.",
-      "citation": "Dionne N, et al. Musculoskelet Sci Pract. 2019;42:125-133 (accuracy of CES red flags); George SZ, et al. J Orthop Sports Phys Ther. 2021;51(11):CPG1-CPG60 (referral guidance).",
+      "citation": "Dionne N, et al. Musculoskelet Sci Pract. 2019;42:125-133 (see also the 2019 corrigendum) (accuracy of CES red flags); George SZ, et al. J Orthop Sports Phys Ther. 2021;51(11):CPG1-CPG60 (referral guidance).",
       "evidenceReviewedOn": null,
       "verification": "unverified"
     },
@@ -387,8 +388,8 @@
       "correctIndex": 0,
       "explanation": "STarT Back stratifies risk of persistent disabling pain, driven largely by the psychosocial subscale (fear, catastrophizing, anxiety, depression, bothersomeness). High risk points toward combined physiotherapy with psychologically informed care — not toward imaging, and not toward the assumption that something is structurally worse.",
       "citation": "Hill JC, Dunn KM, Lewis M, et al. A primary care back pain screening tool: identifying patient subgroups for initial treatment. Arthritis Rheum. 2008;59(5):632-641.",
-      "evidenceReviewedOn": null,
-      "verification": "unverified"
+      "evidenceReviewedOn": "2026-08-03",
+      "verification": "source-checked"
     },
     {
       "id": "lb2-o1",
@@ -405,8 +406,8 @@
       "correctIndex": 0,
       "explanation": "Four points falls short of the ~6-point threshold associated with patients reporting themselves meaningfully better. That is not the same as 'no progress' — it may be too early, or gains may be showing in measures the ODI doesn't capture (walking tolerance, work hours, sleep). Keep treating, re-measure, and look at the patient-specific goals alongside it.",
       "citation": "Fritz JM, Irrgang JJ. A comparison of a modified Oswestry Low Back Pain Disability Questionnaire and the Quebec Back Pain Disability Scale. Phys Ther. 2001;81(2):776-788.",
-      "evidenceReviewedOn": null,
-      "verification": "unverified"
+      "evidenceReviewedOn": "2026-08-03",
+      "verification": "source-checked"
     },
     {
       "id": "lb2-o2",
@@ -462,8 +463,8 @@
       "correctIndex": 0,
       "explanation": "Scoring runs in two stages: a total of 0–3 is low risk; a total ≥4 is then split by the psychosocial subscale — subscale ≤3 is medium risk, subscale ≥4 is high risk. The subscale (bothersomeness, catastrophizing, fear, anxiety, depression) is what separates medium from high, which is precisely why high-risk patients need psychologically informed care rather than simply more of the same.",
       "citation": "Hill JC, Dunn KM, Lewis M, et al. A primary care back pain screening tool: identifying patient subgroups for initial treatment. Arthritis Rheum. 2008;59(5):632-641.",
-      "evidenceReviewedOn": null,
-      "verification": "unverified"
+      "evidenceReviewedOn": "2026-08-03",
+      "verification": "source-checked"
     },
     {
       "id": "lb2-o5",

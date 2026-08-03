@@ -28,7 +28,7 @@ const drillBase = z.object({
   pearl: z.string().optional(),
   citation: z.string().min(1),
   evidenceReviewedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(),
-  verification: z.enum(["verified", "unverified", "contested"]),
+  verification: z.enum(["verified", "source-checked", "unverified", "contested"]),
   contestedNote: z.string().optional(),
   category: z
     .enum(["recognition", "procedure", "interpretation", "psychometrics", "outcome-measure"])

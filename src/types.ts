@@ -50,7 +50,20 @@ export interface TestStats {
  * anything not yet checked against its source by a clinician is UNVERIFIED
  * and rendered with a visible badge rather than silently trusted.
  */
-export type Verification = "verified" | "unverified" | "contested";
+/**
+ * How much scrutiny an item's clinical claims have had.
+ *
+ * - `unverified`    drafted from published sources, nothing checked
+ * - `source-checked` every figure re-checked against the cited source, but no
+ *                    clinician has signed off on the teaching yet
+ * - `contested`     the literature genuinely disagrees; the item says so
+ * - `verified`      a clinician has confirmed it against the source
+ *
+ * Only a clinician may set `verified`. The distinction is the whole point of
+ * the badge — collapsing it would make the app claim a review that never
+ * happened.
+ */
+export type Verification = "verified" | "source-checked" | "unverified" | "contested";
 
 /**
  * Pedagogical category, orthogonal to the render type (`type`). Tracks the

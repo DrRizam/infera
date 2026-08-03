@@ -666,3 +666,5 @@ body {
   box-shadow: 0 3px 0 var(--primary-deep);
 }
 .tour-next:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--primary-deep); }
+.badge.source-checked { background: var(--info-soft); color: var(--info-deep); border: 1px solid var(--info-border); }
+.comp-chip.source-checked { background: var(--info-soft); color: var(--info-deep); }

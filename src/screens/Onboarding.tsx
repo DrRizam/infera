@@ -74,7 +74,11 @@ function SampleDrill({ onAnswered }: { onAnswered: () => void }) {
               <div className="citation-head">
                 {drill.verification !== "verified" && (
                   <span className={`badge ${drill.verification}`}>
-                    {drill.verification === "contested" ? "⚖️ evidence contested" : "⚠️ unverified"}
+                    {drill.verification === "contested"
+                      ? "⚖️ evidence contested"
+                      : drill.verification === "source-checked"
+                        ? "🔍 source-checked"
+                        : "⚠️ unverified"}
                   </span>
                 )}
                 <button className="source-toggle" onClick={() => setShowSource((s) => !s)}>

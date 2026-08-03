@@ -4,7 +4,9 @@
 
 Category mix: recognition 4 · procedure 4 · psychometrics 6 · interpretation 6 · outcome-measure 5
 
-**How to review:** for each item, check the citation actually supports every number and claim in the stem, options, and explanation. Tick one box, add notes for anything to fix. Items stay visibly UNVERIFIED in the app until you approve them; approved items get `verification: "verified"` and today's date as `evidenceReviewedOn`.
+**How to review:** for each item, check the citation actually supports every number and claim in the stem, options, and explanation. Tick one box, add notes for anything to fix.
+
+Items marked 🔍 SOURCE-CHECKED have had their figures re-checked against the cited paper by an independent lookup — that catches wrong numbers and bad citations, but it does **not** catch bad teaching, wrong emphasis, or an item that misrepresents how the test is used in practice. That judgement is yours. Only you can move an item to `verified`.
 
 ---
 
@@ -45,7 +47,7 @@ Notes:
 
 **Explanation (shown after answering):** Raising the asymptomatic leg and reproducing symptoms in the symptomatic leg is the crossed straight leg raise. It is far less sensitive than the standard SLR but considerably more specific — a positive crossed SLR is one of the stronger clinical pointers toward a disc herniation with root compression.
 
-> 📚 **Citation:** van der Windt DA, et al. Physical examination for lumbar radiculopathy due to disc herniation in patients with low-back pain. Cochrane Database Syst Rev. 2010;(2):CD007431.
+> 📚 **Citation:** van der Windt DA, et al. Physical examination for lumbar radiculopathy due to disc herniation in patients with low-back pain. Cochrane Database Syst Rev. 2010;(2):CD007431.pub2.
 
 **Your review:**
 - [ ] ✅ Approve — claim matches the source
@@ -83,7 +85,7 @@ Notes:
 
 ## 4. `lb2-r4` — Low back mechanics (recognition)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** A patient lies prone with the trunk on the table and feet resting on the floor. The examiner applies posterior-to-anterior pressure to a symptomatic segment (pain reported), then the patient lifts the legs off the floor and the pressure is repeated (pain reduced). Which test is described, and what does the reduction suggest?
 
@@ -118,7 +120,7 @@ Notes:
 
 **Explanation (shown after answering):** Standardise the position first: hip rotation, pelvic tilt, and trunk position all change the angle at which symptoms appear. Raise until FAMILIAR symptoms appear — posterior thigh tightness is not a positive. The sensitising manoeuvre at the end is what separates neural mechanosensitivity from hamstring tension.
 
-> 📚 **Citation:** van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431 (test description and accuracy).
+> 📚 **Citation:** van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431.pub2 (test description and accuracy).
 
 **Your review:**
 - [ ] ✅ Approve — claim matches the source
@@ -185,7 +187,7 @@ Notes:
 
 ## 8. `lb2-p4` — Radiculopathy (procedure)
 
-*Order the steps / rank* · Status: **UNVERIFIED**
+*Order the steps / rank* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** A patient reports leg pain below the knee with suspected lumbar radiculopathy. Order a sensible lower-quarter neurological screen.
 
@@ -211,7 +213,7 @@ Notes:
 
 ## 9. `lb2-s1` — Radiculopathy (psychometrics)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** In the Cochrane review of physical examination for lumbar radiculopathy, the straight leg raise showed pooled sensitivity ~0.92 but pooled specificity of only ~0.28 in surgical populations. What is the practical implication?
 
@@ -223,7 +225,7 @@ Notes:
 
 **Pearl:** SnNout applies here: high sensitivity, negative result, rules out. Just don't run it backwards.
 
-> 📚 **Citation:** van der Windt DA, Simons E, Riphagen II, et al. Physical examination for lumbar radiculopathy due to disc herniation in patients with low-back pain. Cochrane Database Syst Rev. 2010;(2):CD007431.
+> 📚 **Citation:** van der Windt DA, Simons E, Riphagen II, et al. Physical examination for lumbar radiculopathy due to disc herniation in patients with low-back pain. Cochrane Database Syst Rev. 2010;(2):CD007431.pub2.
 
 **Your review:**
 - [ ] ✅ Approve — claim matches the source
@@ -246,7 +248,7 @@ Notes:
 
 **Explanation (shown after answering):** They are complementary opposites, which is exactly why you perform both. The standard SLR screens (few true herniations escape it); the crossed SLR confirms (it is rarely positive without significant nerve root compression, though it misses many cases). Reported estimates come largely from surgical populations with high disease prevalence.
 
-> 📚 **Citation:** van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431.
+> 📚 **Citation:** van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431.pub2.
 
 **Your review:**
 - [ ] ✅ Approve — claim matches the source
@@ -282,17 +284,17 @@ Notes:
 
 ## 12. `lb2-s4` — Spinal stenosis (psychometrics)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **⚖️ CONTESTED — The commonly quoted Sn ~50% / Sp ~92.3% could not be traced to the primary paper, which reports different metrics. Use the test as a confirmer but do not quote those figures as if they came from Fritz 1997.**
 
-**Stem:** The two-stage treadmill test for lumbar spinal stenosis has been reported with sensitivity ~50% and specificity ~92%. How should it be used?
+**Stem:** Secondary sources commonly quote the two-stage treadmill test at around 50% sensitivity and 92% specificity for lumbar spinal stenosis. How should it be used?
 
 **Correct answer:** As a confirmatory test — prolonged walking tolerance on the inclined stage supports stenosis, but a normal result doesn't exclude it
 
 **Distractors:** As a screening test to rule out stenosis in anyone with leg pain · As a substitute for imaging in surgical planning · As a measure of cardiovascular fitness in older adults with back pain
 
-**Explanation (shown after answering):** Specificity ~92% with sensitivity ~50% is a confirmer's profile: patients who walk longer on the inclined (flexed) treadmill than the level one are likely to have stenosis, but half of those with stenosis won't show the pattern. It also has practical value beyond diagnosis — it quantifies walking tolerance, which is usually the patient's actual goal.
+**Explanation (shown after answering):** That profile is a confirmer's: patients who walk longer on the inclined (flexed) treadmill than the level one are likely to have stenosis, but roughly half of those with stenosis will not show the pattern. Note the provenance - the original Fritz 1997 paper reports correct classification of 76.9% of stenotic and 94.7% of non-stenotic subjects by discriminant analysis, not these sensitivity and specificity figures, which circulate via secondary summaries. The test also quantifies walking tolerance, which is usually the patient's actual goal.
 
-> 📚 **Citation:** Fritz JM, Erhard RE, Delitto A, Welch WC, Nowakowski PE. Preliminary results of the use of a two-stage treadmill test as a clinical diagnostic tool in the differential diagnosis of lumbar spinal stenosis. J Spinal Disord. 1997;10(5):410-416.
+> 📚 **Citation:** Fritz JM, Erhard RE, Delitto A, Welch WC, Nowakowski PE. Preliminary results of the use of a two-stage treadmill test as a clinical diagnostic tool in the differential diagnosis of lumbar spinal stenosis. J Spinal Disord. 1997;10(5):410-416 (reports 76.9%/94.7% correct classification). The ~50%/92% sensitivity-specificity figures are widely repeated in secondary sources; the primary source for them was not confirmed.
 
 **Your review:**
 - [ ] ✅ Approve — claim matches the source
@@ -305,7 +307,7 @@ Notes:
 
 ## 13. `lb2-s5` — Spinal red flags (psychometrics)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** A systematic review of red flags for cauda equina syndrome found pooled sensitivities of roughly 0.19–0.43 and specificities of roughly 0.62–0.88 against MRI. What is the correct clinical takeaway?
 
@@ -317,7 +319,7 @@ Notes:
 
 **Pearl:** The red-flag list is a prompt to think, not a rule-out. CES is a clinical emergency diagnosed on suspicion plus MRI.
 
-> 📚 **Citation:** Dionne N, Adefolarin A, Kunzelman D, et al. What is the diagnostic accuracy of red flags related to cauda equina syndrome (CES), when compared to magnetic resonance imaging (MRI)? A systematic review. Musculoskelet Sci Pract. 2019;42:125-133.
+> 📚 **Citation:** Dionne N, Adefolarin A, Kunzelman D, et al. What is the diagnostic accuracy of red flags related to cauda equina syndrome (CES), when compared to magnetic resonance imaging (MRI)? A systematic review. Musculoskelet Sci Pract. 2019;42:125-133 (see also the 2019 corrigendum).
 
 **Your review:**
 - [ ] ✅ Approve — claim matches the source
@@ -330,7 +332,7 @@ Notes:
 
 ## 14. `lb2-s6` — Inflammatory back pain (psychometrics)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** Fulfilling at least 4 of the 5 ASAS inflammatory back pain parameters gives sensitivity ~77% and specificity ~92%. Which of the following is NOT one of the five ASAS parameters?
 
@@ -355,7 +357,7 @@ Notes:
 
 ## 15. `lb2-i1` — Radiculopathy (interpretation)
 
-*Interpret a result* · Status: **UNVERIFIED**
+*Interpret a result* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** A patient referred from a spinal surgical clinic with suspected L5 radiculopathy has a clearly negative SLR. Best interpretation?
 
@@ -365,7 +367,7 @@ Notes:
 
 **Explanation (shown after answering):** High sensitivity is what makes a negative useful: with LR− around 0.3, a pretest probability of 60% falls to roughly 30%. That's a real shift, not exclusion. The poor specificity limits what a POSITIVE tells you — it doesn't diminish the value of this negative.
 
-> 📚 **Citation:** van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431 (LR− computed from pooled Sn/Sp).
+> 📚 **Citation:** van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431.pub2 (LR− computed from pooled Sn/Sp).
 
 **Your review:**
 - [ ] ✅ Approve — claim matches the source
@@ -378,7 +380,7 @@ Notes:
 
 ## 16. `lb2-i2` — Radiculopathy (interpretation)
 
-*Interpret a result* · Status: **UNVERIFIED**
+*Interpret a result* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** In an outpatient clinic, a patient with 3 weeks of low back pain and vague posterior thigh ache has a positive SLR at 60°. Pretest probability of true radiculopathy is maybe 20%. What follows?
 
@@ -390,7 +392,7 @@ Notes:
 
 **Pearl:** Any LR between about 0.5 and 2 is clinical noise. Know which of your tests live there.
 
-> 📚 **Citation:** van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431 (LR+ computed from pooled Sn/Sp); Bayesian conversion is standard.
+> 📚 **Citation:** van der Windt DA, et al. Cochrane Database Syst Rev. 2010;(2):CD007431.pub2 (LR+ computed from pooled Sn/Sp); Bayesian conversion is standard.
 
 **Your review:**
 - [ ] ✅ Approve — claim matches the source
@@ -438,7 +440,7 @@ Notes:
 
 **Pearl:** Centralization tells you which way to load the patient. It doesn't tell you what tissue is at fault.
 
-> 📚 **Citation:** Werneke M, Hart DL. Centralization phenomenon as a prognostic factor for chronic low back pain and disability. Spine. 2001;26(7):758-764; specificity caveat per Laslett M, et al. and Chevrot A, et al. Joint Bone Spine. 2007;74(5):425-427.
+> 📚 **Citation:** Werneke M, Hart DL. Centralization phenomenon as a prognostic factor for chronic low back pain and disability. Spine. 2001;26(7):758-764; specificity caveat per Berthelot JM, Delecrin J, Maugars Y, Passuti N. Contribution of centralization phenomenon to the diagnosis, prognosis, and treatment of diskogenic low back pain. Joint Bone Spine. 2007;74(4):319-323.
 
 **Your review:**
 - [ ] ✅ Approve — claim matches the source
@@ -461,7 +463,7 @@ Notes:
 
 **Explanation (shown after answering):** Bilateral leg symptoms, urinary hesitancy, and saddle sensory change together are enough to act on. CES is a surgical emergency where delay costs bladder, bowel, and sexual function permanently — the decision threshold for referral is deliberately low, and no examination finding you can add will safely rule it out. Refer now and document the neurological findings and the time.
 
-> 📚 **Citation:** Dionne N, et al. Musculoskelet Sci Pract. 2019;42:125-133 (accuracy of CES red flags); George SZ, et al. J Orthop Sports Phys Ther. 2021;51(11):CPG1-CPG60 (referral guidance).
+> 📚 **Citation:** Dionne N, et al. Musculoskelet Sci Pract. 2019;42:125-133 (see also the 2019 corrigendum) (accuracy of CES red flags); George SZ, et al. J Orthop Sports Phys Ther. 2021;51(11):CPG1-CPG60 (referral guidance).
 
 **Your review:**
 - [ ] ✅ Approve — claim matches the source
@@ -474,7 +476,7 @@ Notes:
 
 ## 20. `lb2-i6` — Low back mechanics (interpretation)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** A patient with 6 weeks of low back pain scores in the HIGH-risk group on the STarT Back tool. What does this most appropriately change?
 
@@ -497,7 +499,7 @@ Notes:
 
 ## 21. `lb2-o1` — Low back mechanics (outcome-measure)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** Using Fritz and Irrgang's reported MCID of 6 points for the Modified Oswestry Disability Questionnaire, a patient improves from 42% to 38% over three weeks. What can you conclude?
 
@@ -568,7 +570,7 @@ Notes:
 
 ## 24. `lb2-o4` — Low back mechanics (outcome-measure)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** How does the STarT Back tool assign a patient to the HIGH-risk subgroup?
 

@@ -4,7 +4,9 @@
 
 Category mix: recognition 4 · procedure 4 · psychometrics 6 · interpretation 6 · outcome-measure 5
 
-**How to review:** for each item, check the citation actually supports every number and claim in the stem, options, and explanation. Tick one box, add notes for anything to fix. Items stay visibly UNVERIFIED in the app until you approve them; approved items get `verification: "verified"` and today's date as `evidenceReviewedOn`.
+**How to review:** for each item, check the citation actually supports every number and claim in the stem, options, and explanation. Tick one box, add notes for anything to fix.
+
+Items marked 🔍 SOURCE-CHECKED have had their figures re-checked against the cited paper by an independent lookup — that catches wrong numbers and bad citations, but it does **not** catch bad teaching, wrong emphasis, or an item that misrepresents how the test is used in practice. That judgement is yours. Only you can move an item to `verified`.
 
 ---
 
@@ -35,7 +37,7 @@ Notes:
 
 ## 2. `sh1-r2` — Rotator cuff tear (recognition)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** A patient places the dorsum of their hand against the mid-lumbar spine and is asked to lift the hand away from the back. Which muscle is this test primarily assessing?
 
@@ -58,7 +60,7 @@ Notes:
 
 ## 3. `sh1-r3` — RCRSP (recognition)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **⚖️ CONTESTED — The painful arc concept is well established, but the exact degree boundaries vary between textbooks (mid-range commonly 60-120 degrees; high arc quoted anywhere from 140 to 180 degrees). Treat them as descriptive conventions rather than validated cut-offs.**
 
 **Stem:** During active abduction a patient reports pain roughly between 60° and 120°, with less pain below and above that range. This finding is best described as:
 
@@ -66,9 +68,9 @@ Notes:
 
 **Distractors:** A high painful arc, associated with the acromioclavicular joint · A capsular pattern of restriction · A positive drop arm sign
 
-**Explanation (shown after answering):** Kessel and Watson's classic description: pain in the mid-range arc (~60–120°) of abduction implicates the subacromial structures being compressed under the acromion, whereas pain only at the top of range (~170–180°) points to the acromioclavicular joint. A capsular pattern is a restriction of passive motion, not an arc of pain.
+**Explanation (shown after answering):** Pain through the mid-range of abduction (conventionally ~60-120 degrees) implicates the subacromial structures being compressed under the acromion, whereas pain confined to the top of range (commonly given as ~140-180 degrees) points to the acromioclavicular joint. A capsular pattern is a restriction of passive motion, not an arc of pain.
 
-> 📚 **Citation:** Kessel L, Watson M. The painful arc syndrome. Clinical classification as a guide to management. J Bone Joint Surg Br. 1977;59(2):166-172.
+> 📚 **Citation:** Kessel L, Watson M. The painful arc syndrome. Clinical classification as a guide to management. J Bone Joint Surg Br. 1977;59(2):166-172 (syndrome and lesion classification). The specific degree boundaries above are textbook convention, e.g. Magee DJ. Orthopedic Physical Assessment. 6th ed. Elsevier Saunders; 2014 - they are not stated as cut-offs in the 1977 paper.
 
 **Your review:**
 - [ ] ✅ Approve — claim matches the source
@@ -183,7 +185,7 @@ Notes:
 
 ## 8. `sh1-p4` — Rotator cuff tear (procedure)
 
-*Order the steps / rank* · Status: **UNVERIFIED**
+*Order the steps / rank* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** Order the steps for a valid lift-off test.
 
@@ -254,7 +256,7 @@ Notes:
 
 ## 11. `sh1-s3` — Instability (psychometrics)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** In Farber et al.'s study of traumatic anterior instability, the apprehension test reached specificity ~96% — but only when which response was counted as positive?
 
@@ -279,7 +281,7 @@ Notes:
 
 ## 12. `sh1-s4` — Rotator cuff tear (psychometrics)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** For diagnosing subscapularis tears, which pairing of test properties is correct (per Barth et al.)?
 
@@ -302,7 +304,7 @@ Notes:
 
 ## 13. `sh1-s5` — Cervical referral (psychometrics)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** The Spurling test carries sensitivity ~30% and specificity ~93% for cervical radiculopathy. A patient with lateral shoulder and arm pain has a negative Spurling. Best conclusion?
 
@@ -327,7 +329,7 @@ Notes:
 
 ## 14. `sh1-s6` — RCRSP (psychometrics)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** Per Park et al., which finding-combination most raises the post-test probability of subacromial pathology?
 
@@ -444,7 +446,7 @@ Notes:
 
 ## 19. `sh1-i5` — Instability (interpretation)
 
-*Interpret a result* · Status: **UNVERIFIED**
+*Interpret a result* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** A 19-year-old rugby player, six weeks after a first-time dislocation, shows clear apprehension at 90° abduction with external rotation, easing with a relocation force. Interpretation?
 
@@ -490,7 +492,7 @@ Notes:
 
 ## 21. `sh1-o1` — Test science (outcome-measure)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** A shoulder patient's QuickDASH improves from 62 to 57 (5 points) over three weeks. Reported values for shoulder pain: MCID ≈ 8, MDC90 ≈ 11. What can you conclude?
 
@@ -538,7 +540,7 @@ Notes:
 
 ## 23. `sh1-o3` — Test science (outcome-measure)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** The MCID for the Numeric Pain Rating Scale has been reported as ~1.1 points in shoulder pain (Mintken) but ~2 points in low back pain (Childs). What does this tell you?
 
@@ -561,7 +563,7 @@ Notes:
 
 ## 24. `sh1-o4` — Test science (outcome-measure)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** What is the defining strength of the Patient-Specific Functional Scale (PSFS) — and its corresponding limitation?
 
@@ -584,7 +586,7 @@ Notes:
 
 ## 25. `sh1-o5` — Test science (outcome-measure)
 
-*Multiple choice* · Status: **UNVERIFIED**
+*Multiple choice* · Status: **🔍 SOURCE-CHECKED (figures re-checked against the cited paper on 2026-08-03; your clinical sign-off still needed)**
 
 **Stem:** Measuring shoulder external rotation with the arm at 90° of abduction, roughly what is the expected normal adult end-range?
 

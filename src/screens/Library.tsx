@@ -13,7 +13,8 @@ type Filter = "all" | Verification;
 
 const FILTERS: { id: Filter; label: string }[] = [
   { id: "all", label: "All" },
-  { id: "verified", label: "✓ Verified" },
+  { id: "verified", label: "✓ Clinician-verified" },
+  { id: "source-checked", label: "🔍 Source-checked" },
   { id: "unverified", label: "⚠️ Unverified" },
   { id: "contested", label: "⚖️ Contested" },
 ];
@@ -35,7 +36,11 @@ function LibraryItem({
         <span className="lib-meta">
           {drill.verification !== "verified" && (
             <span className={`badge ${drill.verification}`}>
-              {drill.verification === "contested" ? "⚖️" : "⚠️"}
+              {drill.verification === "contested"
+                ? "⚖️"
+                : drill.verification === "source-checked"
+                  ? "🔍"
+                  : "⚠️"}
             </span>
           )}
           <span className="lib-caret">{open ? "▲" : "▼"}</span>
@@ -55,13 +60,15 @@ function LibraryItem({
             <span>
               {drill.verification === "verified"
                 ? "✓ Checked against source by a clinician"
-                : drill.verification === "contested"
-                  ? "⚖️ Evidence genuinely disputed"
-                  : "⚠️ Drafted from published sources, not yet clinician-checked"}
+                : drill.verification === "source-checked"
+                  ? "🔍 Figures re-checked against the cited source — clinician sign-off still pending"
+                  : drill.verification === "contested"
+                    ? "⚖️ Evidence genuinely disputed"
+                    : "⚠️ Drafted from published sources, nothing checked yet"}
             </span>
           </div>
           <div className="lib-row">
-            <b>Reviewed</b>
+            <b>Checked</b>
             <span>{drill.evidenceReviewedOn ?? "—"}</span>
           </div>
           <div className="lib-row">
@@ -99,7 +106,13 @@ export default function Library({
   const [query, setQuery] = useState("");
 
   const counts = useMemo(() => {
-    const c: Record<string, number> = { all: drills.length, verified: 0, unverified: 0, contested: 0 };
+    const c: Record<string, number> = {
+      all: drills.length,
+      verified: 0,
+      "source-checked": 0,
+      unverified: 0,
+      contested: 0,
+    };
     for (const d of drills) c[d.verification]++;
     return c;
   }, []);
@@ -130,9 +143,10 @@ export default function Library({
       <div className="card">
         <h2>📚 Evidence library</h2>
         <p className="sub" style={{ marginTop: 6 }}>
-          Every drill in the app with its source. Content is drafted from published literature and
-          then checked by a clinician — until it has been, it stays marked unverified. If something
-          looks wrong, dispute it here.
+          Every drill in the app with its source. Items marked <b>🔍 source-checked</b> have had
+          their figures re-checked against the cited paper; <b>✓ clinician-verified</b> means a
+          clinician has signed off on the teaching, which is a higher bar and set only by them. If
+          something looks wrong, dispute it here.
         </p>
       </div>
 
