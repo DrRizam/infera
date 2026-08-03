@@ -1,5 +1,7 @@
 {
   "module": "Shoulder pain",
+  "status": "archived",
+  "archiveNote": "Original prototype content from before the citation pipeline existed. Every item carries a placeholder citation rather than a real source, so these are excluded from the app. Kept for reference and for rewriting into properly-cited items; set status to \"active\" to restore.",
   "items": [
     {
       "id": "mcq-frozen-capsular",

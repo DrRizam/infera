@@ -186,7 +186,17 @@ function hash(s: string): number {
   return h;
 }
 
+/**
+ * Scheduling records whose drill is still in the library. A profile can hold
+ * records for content that has since been archived; counting those would show
+ * the learner reviews they can never clear.
+ */
+export function liveRecords(profile: Profile): SrsRecord[] {
+  const ids = new Set(drills.map((d) => d.id));
+  return Object.values(profile.srs).filter((r) => ids.has(r.drillId));
+}
+
 export function dueCount(profile: Profile): number {
   const today = todayISO();
-  return Object.values(profile.srs).filter((r) => r.dueDate <= today).length;
+  return liveRecords(profile).filter((r) => r.dueDate <= today).length;
 }

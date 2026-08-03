@@ -23,6 +23,7 @@ for (const [path, mod] of Object.entries(modules)) {
         .join("\n")}`
     );
   }
+  if (parsed.data.status === "archived") continue;
   for (const item of parsed.data.items) {
     if (seen.has(item.id)) throw new Error(`Duplicate drill id "${item.id}" (${path})`);
     seen.add(item.id);

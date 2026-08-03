@@ -1,7 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Achievement, Drill, Profile, RankDrill, RedFlagDrill } from "../types";
 import { drills } from "../content";
-import { DECAY_THRESHOLD, buildSession, dueCount, recallNow, reviewDrill, todayISO } from "../engine/srs";
+import {
+  DECAY_THRESHOLD,
+  buildSession,
+  liveRecords,
+  recallNow,
+  reviewDrill,
+  todayISO,
+} from "../engine/srs";
 import { Easy, Good, Hard, gradeFromScore, type Grade } from "../engine/fsrs";
 import {
   addXp,
@@ -432,7 +439,7 @@ export default function Session({
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     const tomorrowISO = todayISO(tomorrow);
-    const dueTomorrow = Object.values(profile.srs).filter((r) => r.dueDate <= tomorrowISO).length;
+    const dueTomorrow = liveRecords(profile).filter((r) => r.dueDate <= tomorrowISO).length;
     return (
       <div className="app">
         <div className="card" style={{ textAlign: "center", paddingTop: 32 }}>

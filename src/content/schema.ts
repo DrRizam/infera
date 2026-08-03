@@ -74,6 +74,15 @@ const drill = z.discriminatedUnion("type", [
 
 export const bankSchema = z.object({
   module: z.enum(["Shoulder pain", "Low back pain"]),
+  /**
+   * `archived` banks stay in the repo but are excluded from the app. Used for
+   * the original prototype content, whose citations are placeholders — half a
+   * library of "citation pending" does more damage to a clinician's trust
+   * than a smaller, fully-sourced library does.
+   */
+  status: z.enum(["active", "archived"]).optional(),
+  /** Why a bank is archived, for whoever finds it later. */
+  archiveNote: z.string().optional(),
   items: z.array(drill).superRefine((items, ctx) => {
     for (const [i, item] of items.entries()) {
       if ("correctIndex" in item && item.correctIndex >= item.options.length) {

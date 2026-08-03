@@ -3,7 +3,7 @@ import { MODULE_OF_TOPIC } from "../types";
 import { drills } from "../content";
 import { effectiveStreak, levelFor } from "../engine/store";
 import { ACHIEVEMENTS } from "../engine/achievements";
-import { todayISO } from "../engine/srs";
+import { liveRecords, todayISO } from "../engine/srs";
 
 function nextSevenDays(): { iso: string; label: string }[] {
   const out = [];
@@ -29,10 +29,9 @@ export default function Stats({
   // Review forecast: due counts over next 7 days (overdue counts as today)
   const days = nextSevenDays();
   const today = todayISO();
+  const live = liveRecords(profile);
   const counts = days.map(({ iso }, i) =>
-    Object.values(profile.srs).filter((r) =>
-      i === 0 ? r.dueDate <= today : r.dueDate === iso
-    ).length
+    live.filter((r) => (i === 0 ? r.dueDate <= today : r.dueDate === iso)).length
   );
   const maxCount = Math.max(...counts, 1);
 
