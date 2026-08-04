@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Drill, Profile } from "../types";
-import { drills } from "../content";
+import { drills, moduleOfTopic } from "../content";
 import { addXp, logAnswer, touchStreak } from "../engine/store";
 import { checkAchievements } from "../engine/achievements";
 import type { Achievement } from "../types";
@@ -187,7 +187,8 @@ export default function SpeedRound({
         </div>
       </div>
       <div className={`card speed-card ${flash === "right" ? "flash-right" : flash === "wrong" ? "flash-wrong" : ""}`}>
-        <span className="tag">{d.topic}</span>
+        {/* Presenting complaint only — the topic name would give the answer away. */}
+        <span className="tag">{moduleOfTopic[d.topic] ?? d.topic}</span>
         <div className="stem">{d.stem}</div>
         {d.type === "interpret" && (
           <div className="stats-line">

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Achievement, Drill, Profile, RankDrill, RedFlagDrill } from "../types";
-import { drills } from "../content";
+import { drills, moduleOfTopic } from "../content";
 import {
   DECAY_THRESHOLD,
   buildSession,
@@ -44,6 +44,7 @@ function Feedback({ score, drill }: { score: number; drill: Drill }) {
       )}
       <div className="citation">
         <div className="citation-head">
+          <span className="topic-reveal">{drill.topic}</span>
           {drill.verification !== "verified" && (
             <span className={`badge ${drill.verification}`}>
               {drill.verification === "contested"
@@ -514,9 +515,13 @@ export default function Session({
         </div>
       </div>
       <div className="card" key={drill.id}>
+        {/* The presenting complaint, never the topic: topic names like "Knee OA"
+            or "Radiculopathy" are diagnoses, and showing one above the stem
+            hands the learner the answer. The topic is revealed with the
+            explanation instead. */}
         <span className={`tag ${isReview ? "review" : ""}`}>
           {isReview ? "🔁 review · " : ""}
-          {drill.topic}
+          {moduleOfTopic[drill.topic] ?? drill.topic}
         </span>
         {drill.type === "rank" ? (
           <RankDrillView drill={drill} showHint={showHint} onDone={handleDone} />
