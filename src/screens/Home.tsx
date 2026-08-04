@@ -3,6 +3,8 @@ import { cases } from "../content/cases";
 import { buildSession, dueCount, todayISO } from "../engine/srs";
 import { DAYS_PER_SHIELD, MAX_SHIELDS, effectiveStreak, levelFor, loadActiveSession } from "../engine/store";
 import { SHOW_BOSS_CASES, estimateMinutes } from "../config";
+import { cases as encounterCases } from "../cases";
+import { loadEncounter } from "../engine/case/encounter";
 
 // ── Level ring (SVG progress circle) ─────────────────────────────────────
 
@@ -80,10 +82,12 @@ export default function Home({
   profile,
   onStartSession,
   onStartCase,
+  onStartEncounter,
 }: {
   profile: Profile;
   onStartSession: (size?: number) => void;
   onStartCase: (caseId: string) => void;
+  onStartEncounter: (caseId: string, resume?: boolean) => void;
 }) {
   const streak = effectiveStreak(profile);
   const lvl = levelFor(profile.xp);
@@ -94,6 +98,14 @@ export default function Home({
   const reviewCount = session.length - newCount;
   const quickSize = Math.min(3, session.length);
   const inProgress = loadActiveSession();
+  // An unfinished encounter always wins; otherwise rotate a case by day so the
+  // "daily case" is stable within a day rather than changing on every render.
+  const pendingEncounter = loadEncounter();
+  const dailyCase =
+    (pendingEncounter && encounterCases.find((x) => x.id === pendingEncounter.caseId)) ??
+    (encounterCases.length
+      ? encounterCases[Number(todayISO().replace(/-/g, "")) % encounterCases.length]
+      : undefined);
 
   return (
     <div className="app">
@@ -154,6 +166,57 @@ export default function Home({
             {due === 0 && "Reviews reappear as they fall due — check back tomorrow."}
           </p>
         )}
+      </div>
+
+      <div className="card">
+        <div className="card-head">
+          <h2>Today</h2>
+          <span className="sub">three ways to train</span>
+        </div>
+
+        {dailyCase && (
+          <button
+            className="mode-card primary"
+            onClick={() => onStartEncounter(dailyCase.id, !!pendingEncounter)}
+          >
+            <span className="mode-icon" aria-hidden="true">
+              🩺
+            </span>
+            <span>
+              <h3>{pendingEncounter ? "Resume your case" : "Daily case"}</h3>
+              <span className="sub">
+                {pendingEncounter
+                  ? `${dailyCase.presentingComplaint} — picked up where you left off`
+                  : `${dailyCase.presentingComplaint} · a full patient encounter`}
+              </span>
+            </span>
+            <span className="mode-meta sub">~{dailyCase.estimatedMinutes} min</span>
+          </button>
+        )}
+
+        <button className="mode-card" onClick={() => onStartSession(quickSize || undefined)}>
+          <span className="mode-icon" aria-hidden="true">
+            ⚡
+          </span>
+          <span>
+            <h3>Quick review</h3>
+            <span className="sub">
+              {due > 0 ? `${due} item${due === 1 ? "" : "s"} due` : "Nothing due — practise ahead"}
+            </span>
+          </span>
+          <span className="mode-meta sub">2–5 min</span>
+        </button>
+
+        <button className="mode-card" disabled aria-disabled="true">
+          <span className="mode-icon" aria-hidden="true">
+            🧠
+          </span>
+          <span>
+            <h3>Challenge case</h3>
+            <span className="sub">Ambiguous presentations — coming soon</span>
+          </span>
+          <span className="mode-meta sub">Soon</span>
+        </button>
       </div>
 
       <div className="card">

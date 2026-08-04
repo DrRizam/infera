@@ -11,6 +11,9 @@ import Onboarding from "./screens/Onboarding";
 import Learn from "./screens/Learn";
 import You from "./screens/You";
 import Library from "./screens/Library";
+import CaseEncounter from "./screens/case/CaseEncounter";
+import { getCase } from "./cases";
+import { loadEncounter } from "./engine/case/encounter";
 import Tour, { HOME_TOUR } from "./components/Tour";
 import { cases } from "./content/cases";
 
@@ -22,7 +25,8 @@ type Screen =
   | { name: "speed" }
   | { name: "stats" }
   | { name: "you" }
-  | { name: "library" };
+  | { name: "library" }
+  | { name: "encounter"; caseId: string; resume?: boolean };
 
 const NAV: { screen: Screen["name"]; icon: string; label: string }[] = [
   { screen: "home", icon: "🏠", label: "Today" },
@@ -63,7 +67,10 @@ export default function App() {
   }
 
   const inActivity =
-    screen.name === "session" || screen.name === "case" || (screen.name === "speed" && speedRunning);
+    screen.name === "session" ||
+    screen.name === "case" ||
+    screen.name === "encounter" ||
+    (screen.name === "speed" && speedRunning);
 
   let content;
   switch (screen.name) {
@@ -110,6 +117,31 @@ export default function App() {
     case "stats":
       content = <Stats profile={profile} />;
       break;
+    case "encounter": {
+      const encounterCase = getCase(screen.caseId);
+      content = encounterCase ? (
+        <CaseEncounter
+          clinicalCase={encounterCase}
+          profile={profile}
+          setProfile={setProfile}
+          resume={screen.resume ? loadEncounter() : null}
+          onExit={() => setScreen({ name: "home" })}
+        />
+      ) : (
+        <div className="app">
+          <div className="card">
+            <h2>Case unavailable</h2>
+            <p className="sub" style={{ marginTop: 6 }}>
+              That case could not be loaded. It may have been removed from this build.
+            </p>
+            <button className="big-btn" style={{ marginTop: 14 }} onClick={() => setScreen({ name: "home" })}>
+              Back to home
+            </button>
+          </div>
+        </div>
+      );
+      break;
+    }
     case "library":
       content = (
         <Library
@@ -138,6 +170,7 @@ export default function App() {
           profile={profile}
           onStartSession={(size) => setScreen({ name: "session", size })}
           onStartCase={(caseId) => setScreen({ name: "case", caseId })}
+          onStartEncounter={(caseId, resume) => setScreen({ name: "encounter", caseId, resume })}
         />
       );
   }
