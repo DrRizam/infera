@@ -14,6 +14,9 @@ import Library from "./screens/Library";
 import CaseEncounter from "./screens/case/CaseEncounter";
 import { getCase } from "./cases";
 import { loadEncounter } from "./engine/case/encounter";
+import ConditionsList from "./screens/conditions/ConditionsList";
+import ConditionLesson from "./screens/conditions/ConditionLesson";
+import { getCondition } from "./conditions";
 import Tour, { HOME_TOUR } from "./components/Tour";
 import { cases } from "./content/cases";
 
@@ -26,7 +29,9 @@ type Screen =
   | { name: "stats" }
   | { name: "you" }
   | { name: "library" }
-  | { name: "encounter"; caseId: string; resume?: boolean };
+  | { name: "encounter"; caseId: string; resume?: boolean }
+  | { name: "conditions" }
+  | { name: "condition"; conditionId: string };
 
 const NAV: { screen: Screen["name"]; icon: string; label: string }[] = [
   { screen: "home", icon: "🏠", label: "Today" },
@@ -70,6 +75,7 @@ export default function App() {
     screen.name === "session" ||
     screen.name === "case" ||
     screen.name === "encounter" ||
+    screen.name === "condition" ||
     (screen.name === "speed" && speedRunning);
 
   let content;
@@ -98,6 +104,7 @@ export default function App() {
           setProfile={setProfile}
           onStartSession={() => setScreen({ name: "session" })}
           onOpenLibrary={() => setScreen({ name: "library" })}
+          onOpenConditions={() => setScreen({ name: "conditions" })}
         />
       );
       break;
@@ -136,6 +143,46 @@ export default function App() {
             </p>
             <button className="big-btn" style={{ marginTop: 14 }} onClick={() => setScreen({ name: "home" })}>
               Back to home
+            </button>
+          </div>
+        </div>
+      );
+      break;
+    }
+    case "conditions":
+      content = (
+        <ConditionsList
+          progress={profile.conditionProgress}
+          onOpen={(conditionId) => setScreen({ name: "condition", conditionId })}
+          onBack={() => setScreen({ name: "learn" })}
+        />
+      );
+      break;
+    case "condition": {
+      const cond = getCondition(screen.conditionId);
+      content = cond ? (
+        <ConditionLesson
+          condition={cond}
+          progress={profile.conditionProgress[cond.id] ?? null}
+          onProgress={(lp) =>
+            setProfile({
+              ...profile,
+              conditionProgress: { ...profile.conditionProgress, [cond.id]: lp },
+            })
+          }
+          onReviewSeeds={(seeds) => {
+            // Seeds are surfaced in the debrief today; enqueueing them into the
+            // FSRS queue is Phase 2 work and deliberately not faked here.
+            if (seeds.length) console.info("Condition review seeds:", seeds);
+          }}
+          onExit={() => setScreen({ name: "conditions" })}
+        />
+      ) : (
+        <div className="app">
+          <div className="card">
+            <h2>Lesson unavailable</h2>
+            <button className="big-btn" style={{ marginTop: 14 }} onClick={() => setScreen({ name: "conditions" })}>
+              Back
             </button>
           </div>
         </div>

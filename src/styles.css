@@ -822,3 +822,118 @@ body {
   font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
   color: var(--ink-muted); background: var(--well); border-radius: 999px; padding: 2px 9px;
 }
+
+/* ── Condition lessons ───────────────────────────── */
+.lesson-step {
+  font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--primary); margin-bottom: 10px;
+}
+.lesson-card { min-height: 300px; }
+.lesson-focus:focus { outline: none; }
+.card-title { font-size: 20px; margin-bottom: 8px; }
+.card-sub { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--ink-muted); margin: 14px 0 6px; }
+.card-sub.good-text { color: var(--good); }
+.also-known { font-size: 13px; color: var(--ink-muted); margin-bottom: 10px; }
+.definition { font-size: calc(16px * var(--text-scale)); line-height: 1.5; }
+.lesson-time { margin-top: 14px; }
+.lesson-nav { display: flex; gap: 10px; }
+.lesson-nav .big-btn { flex: 1; }
+.lesson-nav-stack { display: flex; flex-direction: column; gap: 10px; }
+
+.finding-list { list-style: none; margin: 0; padding: 0; }
+.finding-list li {
+  padding: 11px 12px; margin-bottom: 8px; border-radius: 10px;
+  background: var(--well); border-left: 4px solid var(--line);
+}
+.finding-list.good li { border-left-color: var(--good); background: var(--good-soft); }
+.finding-list.bad li { border-left-color: var(--accent); background: var(--accent-soft); }
+.finding-list.safety li { border-left-color: var(--bad); background: var(--bad-soft); }
+.finding-text { font-size: calc(14.5px * var(--text-scale)); font-weight: 600; }
+.takeaway-list { margin: 0; padding-left: 20px; }
+.takeaway-list li { padding: 7px 0; font-size: calc(15px * var(--text-scale)); font-weight: 600; }
+
+.learn-more { margin-top: 8px; }
+.learn-more-toggle {
+  background: none; border: none; padding: 4px 0; cursor: pointer; font-family: inherit;
+  font-size: 12.5px; font-weight: 800; color: var(--primary);
+}
+.learn-more-body { font-size: 13.5px; color: var(--ink-soft); margin-top: 6px; }
+
+.interaction { margin-top: 18px; padding-top: 16px; border-top: 2px dashed var(--line); }
+.interaction-prompt { font-size: calc(15px * var(--text-scale)); font-weight: 700; margin-bottom: 12px; }
+.interaction-feedback { font-size: 14px; padding: 11px 12px; border-radius: 10px; margin-top: 4px; }
+.interaction-feedback.good { background: var(--good-soft); color: var(--good); }
+.interaction-feedback.bad { background: var(--accent-soft); color: var(--accent-deep); }
+
+/* ── Body map ────────────────────────────────────── */
+.body-map svg { width: 100%; max-width: 190px; display: block; margin: 0 auto 12px; }
+.bm-limb { fill: var(--well); stroke: var(--line); stroke-width: 2; }
+.bm-joint { fill: var(--card); stroke: var(--line); stroke-width: 2; }
+.bm-zone { fill: var(--primary); opacity: 0.12; stroke: none; }
+.bm-zone.tappable { cursor: pointer; }
+.bm-zone.tappable:focus-visible { outline: 3px solid var(--info); }
+.bm-zone.picked { opacity: 0.45; }
+.bm-zone.correct { fill: var(--good); opacity: 0.42; }
+.bm-zone.wrong { fill: var(--bad); opacity: 0.35; }
+.bm-legend { list-style: none; margin: 0; padding: 0; }
+.bm-legend li { margin-bottom: 6px; }
+.bm-legend-btn {
+  display: flex; align-items: center; gap: 9px; width: 100%; text-align: left;
+  background: none; border: 2px solid var(--line); border-radius: 10px;
+  padding: 10px 12px; font-family: inherit; font-size: 13.5px; font-weight: 600;
+  color: var(--ink); cursor: pointer; min-height: 44px;
+}
+.bm-legend-btn:disabled { cursor: default; }
+.bm-legend-btn .bm-swatch {
+  width: 12px; height: 12px; border-radius: 3px; background: var(--fill-weak); flex-shrink: 0;
+}
+.bm-legend-btn.picked { border-color: var(--info); }
+.bm-legend-btn.correct { border-color: var(--good); background: var(--good-soft); }
+.bm-legend-btn.correct .bm-swatch { background: var(--good); }
+.bm-legend-btn.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.bm-legend-btn.wrong .bm-swatch { background: var(--bad); }
+.bm-note { font-size: 12.5px; color: var(--ink-soft); padding: 4px 0 0 33px; }
+.bm-caveat { margin-top: 8px; font-style: italic; }
+
+/* ── Differential comparison ─────────────────────── */
+.dd-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.dd-tab {
+  border: 2px solid var(--line); background: var(--card); color: var(--ink-soft);
+  border-radius: 999px; padding: 7px 12px; font-family: inherit; font-size: 12.5px;
+  font-weight: 800; cursor: pointer; min-height: 40px;
+}
+.dd-tab.on { border-color: var(--primary); background: var(--primary-soft); color: var(--primary); }
+.compare-scroll { overflow-x: auto; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.compare-table th, .compare-table td {
+  padding: 9px 8px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top;
+}
+.compare-table thead th { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--ink-muted); }
+.compare-table tbody th { font-weight: 700; color: var(--ink-soft); width: 28%; }
+
+/* ── Knowledge check ─────────────────────────────── */
+.kc-question { border: none; padding: 0; margin: 0 0 20px; }
+.kc-question legend { font-size: calc(15px * var(--text-scale)); font-weight: 700; margin-bottom: 10px; padding: 0; }
+.kc-feedback { font-size: 13.5px; color: var(--ink-soft); margin-top: 4px; }
+.kc-result { background: var(--primary-soft); border-radius: 12px; padding: 14px; text-align: center; }
+
+/* ── Deep dive & list ────────────────────────────── */
+.dd-section { padding: 0; overflow: hidden; }
+.dd-section-head {
+  width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+  font-size: 15px; font-weight: 800; color: var(--ink); text-align: left; min-height: 52px;
+}
+.dd-section-body { padding: 0 18px 16px; }
+.condition-row {
+  display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+  background: none; border: none; border-bottom: 1px solid var(--line);
+  padding: 14px 0; cursor: pointer; font-family: inherit; color: var(--ink); min-height: 56px;
+}
+.condition-row:last-child { border-bottom: none; }
+.condition-meta { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.condition-meta b { font-size: 15px; }
+.condition-status { font-size: 18px; color: var(--ink-muted); }
+.condition-status.done { color: var(--good); }
+.condition-status.part { color: var(--primary); }

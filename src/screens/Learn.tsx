@@ -43,11 +43,13 @@ export default function Learn({
   setProfile,
   onStartSession,
   onOpenLibrary,
+  onOpenConditions,
 }: {
   profile: Profile;
   setProfile: (p: Profile) => void;
   onStartSession: () => void;
   onOpenLibrary: () => void;
+  onOpenConditions: () => void;
 }) {
   const streak = effectiveStreak(profile);
   const foundation = overallMastery(profile);
@@ -194,6 +196,20 @@ export default function Learn({
           "Sharp" means you've remembered it across widening gaps — not that you answered it right
           once. Anything below Solid comes back sooner.
         </p>
+      </div>
+
+      <div className="card">
+        <div className="card-head">
+          <h2>📖 Conditions</h2>
+          <span className="sub">short lessons</span>
+        </div>
+        <p className="sub" style={{ marginBottom: 12 }}>
+          Build the recognition pattern for a diagnosis in five to eight minutes — one idea per
+          screen, then a quick check.
+        </p>
+        <button className="big-btn ghost" onClick={onOpenConditions}>
+          Browse conditions →
+        </button>
       </div>
 
       <div className="card">

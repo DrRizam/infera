@@ -220,6 +220,14 @@ export interface Profile {
   seenGradeHint: boolean;
   /** Whether the first-launch guided tour of the app has been completed. */
   seenTour: boolean;
+  /**
+   * Controls presentation depth, not content: the same condition data is
+   * rendered with more explanation for students and faster summaries for
+   * experienced clinicians.
+   */
+  experienceLevel: "student" | "clinician";
+  /** Per-condition lesson progress, keyed by condition id. */
+  conditionProgress: Record<string, import("./conditions/lesson").LessonProgress>;
   /** Colour scheme: follow the device, or force one. */
   theme: "system" | "light" | "dark";
   /** Reading size for drill text — clinicians read this tired, in bad light. */
