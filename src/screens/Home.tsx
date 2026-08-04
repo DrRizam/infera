@@ -168,17 +168,19 @@ export default function Home({
         )}
       </div>
 
+      {/* Secondary to the hero on purpose — the hero already owns the one
+          primary action (due reviews decay if skipped; the daily case
+          doesn't). Neither row here uses .primary styling, and "quick
+          review" isn't repeated — the hero's "only have a minute" link
+          already covers that shorter path, so offering it twice would just
+          be two buttons for one action. */}
       <div className="card">
         <div className="card-head">
-          <h2>Today</h2>
-          <span className="sub">three ways to train</span>
+          <h2>Also today</h2>
         </div>
 
         {dailyCase && (
-          <button
-            className="mode-card primary"
-            onClick={() => onStartEncounter(dailyCase.id, !!pendingEncounter)}
-          >
+          <button className="mode-card" onClick={() => onStartEncounter(dailyCase.id, !!pendingEncounter)}>
             <span className="mode-icon" aria-hidden="true">
               🩺
             </span>
@@ -193,19 +195,6 @@ export default function Home({
             <span className="mode-meta sub">~{dailyCase.estimatedMinutes} min</span>
           </button>
         )}
-
-        <button className="mode-card" onClick={() => onStartSession(quickSize || undefined)}>
-          <span className="mode-icon" aria-hidden="true">
-            ⚡
-          </span>
-          <span>
-            <h3>Quick review</h3>
-            <span className="sub">
-              {due > 0 ? `${due} item${due === 1 ? "" : "s"} due` : "Nothing due — practise ahead"}
-            </span>
-          </span>
-          <span className="mode-meta sub">2–5 min</span>
-        </button>
 
         <button className="mode-card" disabled aria-disabled="true">
           <span className="mode-icon" aria-hidden="true">
