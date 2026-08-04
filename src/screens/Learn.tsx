@@ -1,7 +1,5 @@
 import type { Complaint, Profile } from "../types";
-import { MODULE_OF_TOPIC } from "../types";
-import { MODULES, isReadyModule } from "../content/modules";
-import { drills } from "../content";
+import { MODULES, drills, isReadyModule, moduleOfTopic } from "../content";
 import { cases } from "../content/cases";
 import {
   COMPETENCY_CLASS,
@@ -118,7 +116,7 @@ export default function Learn({
         const isCurrent = ready && profile.currentPath === m.id;
         const pct = ready ? moduleMastery(profile, m.id as Complaint) : 0;
         const drillCount = ready
-          ? drills.filter((d) => MODULE_OF_TOPIC[d.topic] === m.id).length
+          ? drills.filter((d) => moduleOfTopic[d.topic] === m.id).length
           : 0;
         const caseCount = ready ? cases.filter((c) => c.presentingComplaint.toLowerCase().includes(m.id.toLowerCase().split(" ")[0])).length : 0;
         return (
@@ -168,11 +166,11 @@ export default function Learn({
           <h2>🗺️ Where you stand</h2>
           <span className="sub">by topic</span>
         </div>
-        {[...new Set(mastery.map((m) => MODULE_OF_TOPIC[m.topic]))].map((mod) => (
+        {[...new Set(mastery.map((m) => moduleOfTopic[m.topic]))].map((mod) => (
           <div key={mod}>
             <div className="module-head">{mod}</div>
             {mastery
-              .filter((m) => MODULE_OF_TOPIC[m.topic] === mod)
+              .filter((m) => moduleOfTopic[m.topic] === mod)
               .map((m) => {
                 const comp = competencyOf(m);
                 return (

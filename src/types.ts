@@ -2,37 +2,16 @@
 // Everything the app plays is data conforming to these types. Content scales
 // independently of code: new drills/cases are just new objects.
 
-export type Topic =
-  | "RCRSP"
-  | "Frozen shoulder"
-  | "Rotator cuff tear"
-  | "Instability"
-  | "Cervical referral"
-  | "Red flags"
-  | "Test science"
-  | "Low back mechanics"
-  | "Radiculopathy"
-  | "Spinal stenosis"
-  | "Inflammatory back pain"
-  | "Spinal red flags";
-
-export type Complaint = "Shoulder pain" | "Low back pain";
-
-/** Which presenting-complaint module each topic belongs to. */
-export const MODULE_OF_TOPIC: Record<Topic, Complaint> = {
-  RCRSP: "Shoulder pain",
-  "Frozen shoulder": "Shoulder pain",
-  "Rotator cuff tear": "Shoulder pain",
-  Instability: "Shoulder pain",
-  "Cervical referral": "Shoulder pain",
-  "Red flags": "Shoulder pain",
-  "Test science": "Shoulder pain",
-  "Low back mechanics": "Low back pain",
-  Radiculopathy: "Low back pain",
-  "Spinal stenosis": "Low back pain",
-  "Inflammatory back pain": "Low back pain",
-  "Spinal red flags": "Low back pain",
-};
+/**
+ * Topics and modules are defined by the content, not by this file.
+ *
+ * These were once hardcoded unions, which meant adding a specialty track was a
+ * code change — the one thing the content pipeline is supposed to avoid. A
+ * bank declares its own module and its items their own topics; the loader
+ * derives the topic → module mapping at startup. See content/index.ts.
+ */
+export type Topic = string;
+export type Complaint = string;
 
 export interface TestStats {
   name: string;

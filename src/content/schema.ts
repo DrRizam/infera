@@ -5,20 +5,9 @@
 
 import { z } from "zod";
 
-const topic = z.enum([
-  "RCRSP",
-  "Frozen shoulder",
-  "Rotator cuff tear",
-  "Instability",
-  "Cervical referral",
-  "Red flags",
-  "Test science",
-  "Low back mechanics",
-  "Radiculopathy",
-  "Spinal stenosis",
-  "Inflammatory back pain",
-  "Spinal red flags",
-]);
+// Topics are free-form so a new bank can introduce its own without a code
+// change. The loader collects them and derives the topic → module mapping.
+const topic = z.string().min(1);
 
 const drillBase = z.object({
   id: z.string().min(1),
@@ -73,7 +62,15 @@ const drill = z.discriminatedUnion("type", [
 ]);
 
 export const bankSchema = z.object({
-  module: z.enum(["Shoulder pain", "Low back pain"]),
+  /** Presenting-complaint track this bank belongs to, e.g. "Knee pain". */
+  module: z.string().min(1),
+  /** Sort order of the module on the Learn screen. Lower first. */
+  order: z.number().optional(),
+  /**
+   * Topics in this bank that carry safety consequences (red flags, screening).
+   * Surfaced as their own competency card rather than buried in the list.
+   */
+  safetyTopics: z.array(z.string()).optional(),
   /**
    * `archived` banks stay in the repo but are excluded from the app. Used for
    * the original prototype content, whose citations are placeholders — half a

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "Neck pain",
+    "status": "development",
+    "note": "Curriculum drafted — content in progress",
+    "order": 50
+  },
+  {
+    "id": "Dizziness",
+    "status": "locked",
+    "note": "Curriculum planned",
+    "order": 60
+  }
+]

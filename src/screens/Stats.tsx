@@ -1,6 +1,5 @@
 import type { Profile, Topic } from "../types";
-import { MODULE_OF_TOPIC } from "../types";
-import { drills } from "../content";
+import { drills, moduleOfTopic } from "../content";
 import { effectiveStreak, levelFor } from "../engine/store";
 import { ACHIEVEMENTS } from "../engine/achievements";
 import { liveRecords, todayISO } from "../engine/srs";
@@ -119,7 +118,7 @@ export default function Stats({
                 <div className="mastery-label">
                   <span>
                     {topic}
-                    <span className="sub" style={{ fontWeight: 600 }}> · {MODULE_OF_TOPIC[topic]}</span>
+                    <span className="sub" style={{ fontWeight: 600 }}> · {moduleOfTopic[topic]}</span>
                   </span>
                   <span className="sub">
                     {pct}% · {agg.n} answered

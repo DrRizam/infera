@@ -1,6 +1,5 @@
 import type { Complaint, Drill, Profile, SrsRecord, Topic } from "../types";
-import { MODULE_OF_TOPIC } from "../types";
-import { drills } from "../content";
+import { drills, moduleOfTopic, safetyTopics } from "../content";
 import { review, gradeFromScore, retrievability, todayISO, type Grade } from "./fsrs";
 
 export { todayISO };
@@ -71,8 +70,8 @@ export function buildSession(profile: Profile, size?: number): Drill[] {
   // Interleave topics a little: shuffle unseen deterministically by day
   const seed = today.split("-").join("");
   const shuffled = [...unseen].sort((a, b) => hash(seed + a.id) - hash(seed + b.id));
-  const onPath = shuffled.filter((d) => MODULE_OF_TOPIC[d.topic] === profile.currentPath);
-  const offPath = shuffled.filter((d) => MODULE_OF_TOPIC[d.topic] !== profile.currentPath);
+  const onPath = shuffled.filter((d) => moduleOfTopic[d.topic] === profile.currentPath);
+  const offPath = shuffled.filter((d) => moduleOfTopic[d.topic] !== profile.currentPath);
 
   return [...due, ...onPath, ...offPath].slice(0, size ?? profile.dailyGoal);
 }
@@ -125,7 +124,7 @@ export const COMPETENCY_CLASS: Record<Competency, string> = {
 };
 
 /** Topics that carry safety consequences — surfaced separately on Learn. */
-const SAFETY_TOPICS: Topic[] = ["Red flags", "Spinal red flags"];
+// Declared per-bank via `safetyTopics`, so a new track brings its own.
 
 export function safetyCompetency(profile: Profile): {
   pct: number;
@@ -133,7 +132,7 @@ export function safetyCompetency(profile: Profile): {
   seen: number;
   total: number;
 } {
-  const rows = masteryByTopic(profile).filter((m) => SAFETY_TOPICS.includes(m.topic));
+  const rows = masteryByTopic(profile).filter((m) => safetyTopics.includes(m.topic));
   const total = rows.reduce((a, m) => a + m.total, 0);
   const seen = rows.reduce((a, m) => a + m.seen, 0);
   const pct = total === 0 ? 0 : Math.round(rows.reduce((a, m) => a + m.pct * m.total, 0) / total);
@@ -160,7 +159,7 @@ export function masteryByTopic(profile: Profile): TopicMastery[] {
 
 /** Mastery of one module (0–100). */
 export function moduleMastery(profile: Profile, module: Complaint): number {
-  const rows = masteryByTopic(profile).filter((m) => MODULE_OF_TOPIC[m.topic] === module);
+  const rows = masteryByTopic(profile).filter((m) => moduleOfTopic[m.topic] === module);
   if (!rows.length) return 0;
   const totals = rows.reduce(
     (a, m) => ({ w: a.w + m.total, s: a.s + (m.pct / 100) * m.total }),
