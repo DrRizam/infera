@@ -1,13 +1,5 @@
 // ── v1 scope flags ─────────────────────────────────────────────────────────
 // Features that are built and working but deliberately out of the v1 pilot.
-// Flip a flag to restore the feature everywhere it appears — nav, home screen,
-// and its achievements — without touching component code.
-
-/**
- * Branching patient cases. Deferred to v2: the daily drill loop is what the
- * pilot is testing, and the case content is still prototype-quality.
- */
-export const SHOW_BOSS_CASES = false;
 
 /** Session length presets (number of drills). */
 export const SESSION_PRESETS = [

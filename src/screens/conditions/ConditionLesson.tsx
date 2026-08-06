@@ -5,10 +5,10 @@ import {
   createProgress,
   progressLabel,
   recordAnswer,
-  reviewSeeds,
-  type ConditionReviewSeed,
+  seedReviewCards,
   type LessonProgress,
 } from "../../conditions/lesson";
+import type { ReviewQueueItem } from "../../engine/reviewQueue";
 import {
   DifferentialsCard,
   DoesNotFitCard,
@@ -41,7 +41,7 @@ export default function ConditionLesson({
   progress: LessonProgress | null;
   onProgress: (p: LessonProgress) => void;
   /** Called once with the review items the knowledge check earned. */
-  onReviewSeeds: (seeds: ConditionReviewSeed[]) => void;
+  onReviewSeeds: (items: ReviewQueueItem[]) => void;
   onExit: () => void;
 }) {
   const cards = useMemo(() => buildLesson(c), [c]);
@@ -116,7 +116,7 @@ export default function ConditionLesson({
                 });
                 // Only wrong answers generate study material, capped so one
                 // lesson cannot flood the queue.
-                onReviewSeeds(reviewSeeds(c, wrongIds));
+                onReviewSeeds(seedReviewCards(c, wrongIds));
               }}
             />
           )}

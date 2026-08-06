@@ -8,6 +8,7 @@ import {
   progressLabel,
   recordAnswer,
   reviewSeeds,
+  seedReviewCards,
 } from "../lesson";
 
 const c: Condition = condition.parse(pfp);
@@ -144,5 +145,30 @@ describe("review seeds", () => {
   it("puts safety-critical concepts first", () => {
     const seeds = reviewSeeds(c, ["kc-location", "kc-safety", "kc-aggravator"]);
     expect(seeds[0].concept).toBe("safety");
+  });
+});
+
+describe("seedReviewCards", () => {
+  it("FSRS-seeds each seed, id-prefixed by condition and concept, into the shared queue shape", () => {
+    const items = seedReviewCards(c, ["kc-location"], "2026-08-01");
+    expect(items).toHaveLength(1);
+    expect(items[0].id).toBe(`condition:${c.id}:pain-location`);
+    expect(items[0].source).toBe("condition");
+    expect(items[0].createdOn).toBe("2026-08-01");
+    expect(items[0].dueDate).toBeTruthy();
+  });
+
+  it("seeds a missed safety question harder than other misses", () => {
+    const [safetyItem] = seedReviewCards(c, ["kc-safety"], "2026-08-01");
+    const [otherItem] = seedReviewCards(c, ["kc-location"], "2026-08-01");
+    expect(safetyItem.severity).toBe("high");
+    expect(otherItem.severity).toBe("moderate");
+    // Hard-seeded cards come back sooner than Good-seeded ones.
+    expect(safetyItem.dueDate <= otherItem.dueDate).toBe(true);
+  });
+
+  it("still respects the review-seed cap", () => {
+    const allWrong = c.knowledgeCheck.map((q) => q.id);
+    expect(seedReviewCards(c, allWrong).length).toBeLessThanOrEqual(MAX_REVIEW_CARDS_PER_CONDITION);
   });
 });

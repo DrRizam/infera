@@ -14,6 +14,7 @@ import {
 } from "../../engine/case/encounter";
 import { scoreEncounter } from "../../engine/case/scoring";
 import { generateReviewCards } from "../../engine/case/reviewCards";
+import { fromCaseCards } from "../../engine/reviewQueue";
 import { addXp, touchStreak } from "../../engine/store";
 import DifferentialBuilder from "./DifferentialBuilder";
 import Debrief from "./Debrief";
@@ -87,6 +88,7 @@ export default function CaseEncounter({
     clearEncounter();
 
     const final = scoreEncounter(c, finished);
+    const cards = generateReviewCards(c, finished, final);
     const xp = Math.round(final.overall / 2);
     let next = touchStreak(addXp(profile, xp));
     next = {
@@ -104,6 +106,10 @@ export default function CaseEncounter({
           xp,
         },
       ],
+      reviewItems: {
+        ...next.reviewItems,
+        ...Object.fromEntries(fromCaseCards(cards).map((item) => [item.id, item])),
+      },
     };
     setProfile(next);
   };

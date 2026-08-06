@@ -84,6 +84,19 @@ describe("migrateProfile", () => {
     expect(migrated.experienceLevel).toBe("clinician");
     expect(migrated.conditionProgress).toEqual({});
     expect(migrated.flags).toEqual([]);
+    expect(migrated.reviewItems).toEqual({});
+  });
+
+  it("defaults reviewItems to {} for a pre-v8 profile and leaves existing ones alone", () => {
+    const withoutReviewItems = { ...legacyV1Profile(), profileVersion: 7 } as unknown as Profile;
+    delete (withoutReviewItems as unknown as Record<string, unknown>).reviewItems;
+    const migrated = migrateProfile(withoutReviewItems);
+    expect(migrated.profileVersion).toBe(PROFILE_VERSION);
+    expect(migrated.reviewItems).toEqual({});
+
+    // Re-migrating an already-current profile must be a no-op (idempotent).
+    const already: Profile = { ...migrated, reviewItems: { "case:x": {} as never } };
+    expect(migrateProfile(already).reviewItems).toEqual({ "case:x": {} });
   });
 
   it("converts SM-2 records to FSRS state using the documented formula", () => {

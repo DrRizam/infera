@@ -1,9 +1,17 @@
 import type { Complaint, Drill, Profile, SrsRecord, Topic } from "../types";
 import { drills, moduleOfTopic, safetyTopics } from "../content";
 import { review, gradeFromScore, retrievability, todayISO, type Grade } from "./fsrs";
+import { dueQueueItems, type ReviewQueueItem } from "./reviewQueue";
 
 export { todayISO };
 export type { Grade };
+
+/** A due card can be a drill or error-derived review material — see reviewQueue.ts. */
+export type SessionItem = Drill | ReviewQueueItem;
+
+export function isReviewItem(item: SessionItem): item is ReviewQueueItem {
+  return "source" in item;
+}
 
 /**
  * Apply one review. `grade` comes from the learner's self-rating when they
@@ -55,16 +63,25 @@ export const DECAY_THRESHOLD = 0.9;
  *
  * `size` overrides the learner's daily goal (used by the short "quick" session).
  */
-export function buildSession(profile: Profile, size?: number): Drill[] {
+export function buildSession(profile: Profile, size?: number): SessionItem[] {
   const today = todayISO();
   const byId = new Map(drills.map((d) => [d.id, d]));
 
-  const due = Object.values(profile.srs)
+  const dueDrills = Object.values(profile.srs)
     .filter((r) => r.dueDate <= today && byId.has(r.drillId))
-    // Weakest first: lowest predicted recall probability right now.
-    .map((r) => ({ r, p: recallNow(r, today) }))
-    .sort((a, b) => a.p - b.p || a.r.dueDate.localeCompare(b.r.dueDate))
-    .map(({ r }) => byId.get(r.drillId)!);
+    .map((r) => ({ item: byId.get(r.drillId)! as SessionItem, p: recallNow(r, today), due: r.dueDate }));
+
+  // Error-derived review material competes for the same due-first slots as
+  // drills — one queue, weakest recall first, regardless of where it came from.
+  const dueReviews = dueQueueItems(profile.reviewItems, today).map((r) => ({
+    item: r as SessionItem,
+    p: recallNow(r, today),
+    due: r.dueDate,
+  }));
+
+  const due = [...dueDrills, ...dueReviews]
+    .sort((a, b) => a.p - b.p || a.due.localeCompare(b.due))
+    .map(({ item }) => item);
 
   const unseen = drills.filter((d) => !profile.srs[d.id]);
   // Interleave topics a little: shuffle unseen deterministically by day
@@ -81,7 +98,10 @@ export function buildSession(profile: Profile, size?: number): Drill[] {
  * Exported so the session can tell the learner which items it caught on the
  * way down — the whole value of spaced repetition is invisible otherwise.
  */
-export function recallNow(r: SrsRecord, today: string = todayISO()): number {
+export function recallNow(
+  r: { lastReview: string | null; stability: number },
+  today: string = todayISO()
+): number {
   if (!r.lastReview) return 0;
   const elapsed = Math.max(
     0,
@@ -197,5 +217,8 @@ export function liveRecords(profile: Profile): SrsRecord[] {
 
 export function dueCount(profile: Profile): number {
   const today = todayISO();
-  return liveRecords(profile).filter((r) => r.dueDate <= today).length;
+  return (
+    liveRecords(profile).filter((r) => r.dueDate <= today).length +
+    dueQueueItems(profile.reviewItems, today).length
+  );
 }

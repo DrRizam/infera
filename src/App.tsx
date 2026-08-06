@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import type { Profile } from "./types";
 import { applyDisplayPrefs, loadProfile, saveProfile } from "./engine/store";
 import { checkAchievements } from "./engine/achievements";
-import Home from "./screens/Home";
 import Session from "./screens/Session";
-import CasePlayer from "./screens/CasePlayer";
 import SpeedRound from "./screens/SpeedRound";
 import Stats from "./screens/Stats";
 import Onboarding from "./screens/Onboarding";
@@ -17,40 +15,50 @@ import { loadEncounter } from "./engine/case/encounter";
 import ConditionsList from "./screens/conditions/ConditionsList";
 import ConditionLesson from "./screens/conditions/ConditionLesson";
 import { getCondition } from "./conditions";
-import Tour, { HOME_TOUR } from "./components/Tour";
-import { cases } from "./content/cases";
+import Tour, { LEARN_TOUR } from "./components/Tour";
+import SpecialtyHub from "./screens/specialty/SpecialtyHub";
+import BodyExplorer from "./screens/BodyExplorer";
+import { getSpecialty } from "./specialties";
 
 type Screen =
-  | { name: "home" }
   | { name: "learn" }
   | { name: "session"; size?: number }
-  | { name: "case"; caseId: string }
   | { name: "speed" }
   | { name: "stats" }
   | { name: "you" }
   | { name: "library" }
   | { name: "encounter"; caseId: string; resume?: boolean }
   | { name: "conditions" }
-  | { name: "condition"; conditionId: string };
+  | { name: "condition"; conditionId: string }
+  | { name: "specialty"; specialtyId: string }
+  | { name: "body-explorer" };
 
 const NAV: { screen: Screen["name"]; icon: string; label: string }[] = [
-  { screen: "home", icon: "🏠", label: "Today" },
   { screen: "learn", icon: "🗺️", label: "Learn" },
   { screen: "speed", icon: "⚡", label: "Speed" },
-  { screen: "stats", icon: "📊", label: "Stats" },
-  { screen: "you", icon: "👤", label: "You" },
+  { screen: "stats", icon: "🏆", label: "Awards" },
+  { screen: "you", icon: "👤", label: "Profile" },
 ];
 
 export default function App() {
   const [profile, setProfileState] = useState<Profile>(() => loadProfile());
-  const [screen, setScreen] = useState<Screen>({ name: "home" });
+  const [screen, setScreen] = useState<Screen>({ name: "learn" });
   // Speed only goes full-screen once the timer is running — its intro and
   // results screens keep the tab bar, or tapping "Speed" strands the user.
   const [speedRunning, setSpeedRunning] = useState(false);
 
-  const setProfile = (p: Profile) => {
-    saveProfile(p);
-    setProfileState(p);
+  // Accepts a plain Profile, or a React-style updater when a handler can't
+  // safely assume it's building on the latest state — e.g. ConditionLesson's
+  // knowledge-check completion fires onProgress and onReviewSeeds back to
+  // back in the same tick, and each closes over the same stale `profile`.
+  // Without the functional form, the second call's `...profile` spread would
+  // silently discard the first call's update.
+  const setProfile = (update: Profile | ((prev: Profile) => Profile)) => {
+    setProfileState((prev) => {
+      const next = typeof update === "function" ? update(prev) : update;
+      saveProfile(next);
+      return next;
+    });
   };
 
   // Theme and text size live on the document root so they cover every screen.
@@ -73,7 +81,6 @@ export default function App() {
 
   const inActivity =
     screen.name === "session" ||
-    screen.name === "case" ||
     screen.name === "encounter" ||
     screen.name === "condition" ||
     (screen.name === "speed" && speedRunning);
@@ -86,25 +93,7 @@ export default function App() {
           profile={profile}
           setProfile={setProfile}
           size={screen.size}
-          onExit={() => setScreen({ name: "home" })}
-        />
-      );
-      break;
-    case "case": {
-      const c = cases.find((x) => x.id === (screen as { caseId: string }).caseId)!;
-      content = (
-        <CasePlayer clinicalCase={c} profile={profile} setProfile={setProfile} onExit={() => setScreen({ name: "home" })} />
-      );
-      break;
-    }
-    case "learn":
-      content = (
-        <Learn
-          profile={profile}
-          setProfile={setProfile}
-          onStartSession={() => setScreen({ name: "session" })}
-          onOpenLibrary={() => setScreen({ name: "library" })}
-          onOpenConditions={() => setScreen({ name: "conditions" })}
+          onExit={() => setScreen({ name: "learn" })}
         />
       );
       break;
@@ -116,7 +105,7 @@ export default function App() {
           onRunningChange={setSpeedRunning}
           onExit={() => {
             setSpeedRunning(false);
-            setScreen({ name: "home" });
+            setScreen({ name: "learn" });
           }}
         />
       );
@@ -132,7 +121,7 @@ export default function App() {
           profile={profile}
           setProfile={setProfile}
           resume={screen.resume ? loadEncounter() : null}
-          onExit={() => setScreen({ name: "home" })}
+          onExit={() => setScreen({ name: "learn" })}
         />
       ) : (
         <div className="app">
@@ -141,8 +130,8 @@ export default function App() {
             <p className="sub" style={{ marginTop: 6 }}>
               That case could not be loaded. It may have been removed from this build.
             </p>
-            <button className="big-btn" style={{ marginTop: 14 }} onClick={() => setScreen({ name: "home" })}>
-              Back to home
+            <button className="big-btn" style={{ marginTop: 14 }} onClick={() => setScreen({ name: "learn" })}>
+              Back to Learn
             </button>
           </div>
         </div>
@@ -170,10 +159,15 @@ export default function App() {
               conditionProgress: { ...profile.conditionProgress, [cond.id]: lp },
             })
           }
-          onReviewSeeds={(seeds) => {
-            // Seeds are surfaced in the debrief today; enqueueing them into the
-            // FSRS queue is Phase 2 work and deliberately not faked here.
-            if (seeds.length) console.info("Condition review seeds:", seeds);
+          onReviewSeeds={(items) => {
+            if (!items.length) return;
+            setProfile((prev) => ({
+              ...prev,
+              reviewItems: {
+                ...prev.reviewItems,
+                ...Object.fromEntries(items.map((item) => [item.id, item])),
+              },
+            }));
           }}
           onExit={() => setScreen({ name: "conditions" })}
         />
@@ -189,6 +183,40 @@ export default function App() {
       );
       break;
     }
+    case "specialty": {
+      const specialty = getSpecialty(screen.specialtyId);
+      content = specialty ? (
+        <SpecialtyHub
+          specialty={specialty}
+          profile={profile}
+          setProfile={setProfile}
+          onStartSession={() => setScreen({ name: "session" })}
+          onStartEncounter={(caseId, resume) => setScreen({ name: "encounter", caseId, resume })}
+          onOpenCondition={(conditionId) => setScreen({ name: "condition", conditionId })}
+          onBack={() => setScreen({ name: "learn" })}
+        />
+      ) : (
+        <div className="app">
+          <div className="card">
+            <h2>Specialty unavailable</h2>
+            <button className="big-btn" style={{ marginTop: 14 }} onClick={() => setScreen({ name: "learn" })}>
+              Back
+            </button>
+          </div>
+        </div>
+      );
+      break;
+    }
+    case "body-explorer":
+      content = (
+        <BodyExplorer
+          onOpenSpecialty={(specialtyId) => setScreen({ name: "specialty", specialtyId })}
+          onStartEncounter={(caseId, resume) => setScreen({ name: "encounter", caseId, resume })}
+          onOpenCondition={(conditionId) => setScreen({ name: "condition", conditionId })}
+          onBack={() => setScreen({ name: "learn" })}
+        />
+      );
+      break;
     case "library":
       content = (
         <Library
@@ -206,31 +234,36 @@ export default function App() {
           onOpenLibrary={() => setScreen({ name: "library" })}
           onResetDone={() => {
             setProfileState(loadProfile());
-            setScreen({ name: "home" });
+            setScreen({ name: "learn" });
           }}
         />
       );
       break;
     default:
       content = (
-        <Home
+        <Learn
           profile={profile}
+          setProfile={setProfile}
           onStartSession={(size) => setScreen({ name: "session", size })}
-          onStartCase={(caseId) => setScreen({ name: "case", caseId })}
           onStartEncounter={(caseId, resume) => setScreen({ name: "encounter", caseId, resume })}
+          onOpenCondition={(conditionId) => setScreen({ name: "condition", conditionId })}
+          onOpenConditions={() => setScreen({ name: "conditions" })}
+          onOpenLibrary={() => setScreen({ name: "library" })}
+          onOpenSpecialty={(specialtyId) => setScreen({ name: "specialty", specialtyId })}
+          onOpenBodyExplorer={() => setScreen({ name: "body-explorer" })}
         />
       );
   }
 
-  // The tour spotlights real elements, so it can only run on the home screen
-  // with the tab bar present — and never on top of the onboarding flow.
-  const showTour = !profile.seenTour && screen.name === "home";
+  // The tour spotlights real elements, so it can only run on Learn — the
+  // screen those elements actually live on — and never on top of onboarding.
+  const showTour = !profile.seenTour && screen.name === "learn";
 
   return (
     <>
       {content}
       {showTour && (
-        <Tour steps={HOME_TOUR} onDone={() => setProfile({ ...profile, seenTour: true })} />
+        <Tour steps={LEARN_TOUR} onDone={() => setProfile({ ...profile, seenTour: true })} />
       )}
       {!inActivity && (
         <nav className="tabbar">

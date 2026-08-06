@@ -235,6 +235,8 @@ export interface Profile {
   lastActiveDate: string | null; // ISO date of last completed session/case
   activityLog: string[]; // ISO dates with at least one completed session/case
   srs: Record<string, SrsRecord>;
+  /** Case/condition review material, keyed by ReviewQueueItem.id. See engine/reviewQueue.ts. */
+  reviewItems: Record<string, import("./engine/reviewQueue").ReviewQueueItem>;
   caseResults: CaseResult[];
   sessionsCompleted: number;
   onboarded: boolean;

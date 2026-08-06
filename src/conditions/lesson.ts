@@ -5,6 +5,9 @@
 
 import type { Condition, Finding, Interaction } from "./schema";
 import { essentialOnly } from "./schema";
+import { Good, Hard, review, type Grade } from "../engine/fsrs";
+import { todayISO } from "../engine/srs";
+import type { ReviewQueueItem } from "../engine/reviewQueue";
 
 export const CARD_IDS = [
   "snapshot",
@@ -140,4 +143,38 @@ export function reviewSeeds(
   return seeds
     .sort((a, b) => (CONCEPT_RANK[a.concept] ?? 9) - (CONCEPT_RANK[b.concept] ?? 9))
     .slice(0, MAX_REVIEW_CARDS_PER_CONDITION);
+}
+
+/**
+ * FSRS-seeds the same seeds `reviewSeeds` computes, in the shared queue shape
+ * so they can sit alongside case review cards and drills. A missed safety
+ * question is scheduled harder (Hard) than other misses (Good) — but never as
+ * hard as a missed red flag in a live case (Again): getting a lesson quiz
+ * question wrong isn't the same stakes as missing a real red flag.
+ */
+export function seedReviewCards(
+  c: Condition,
+  wrongQuestionIds: string[],
+  today: string = todayISO()
+): ReviewQueueItem[] {
+  return reviewSeeds(c, wrongQuestionIds).map((seed) => {
+    const severity = seed.concept === "safety" ? "high" : "moderate";
+    const grade: Grade = seed.concept === "safety" ? Hard : Good;
+    const card = review(undefined, grade, today);
+    return {
+      id: `condition:${seed.conditionId}:${seed.concept}`,
+      source: "condition",
+      prompt: seed.prompt,
+      answer: seed.answer,
+      severity,
+      because: `Missed in the "${c.name}" knowledge check.`,
+      createdOn: today,
+      stability: card.stability,
+      difficulty: card.difficulty,
+      dueDate: card.due,
+      lastReview: card.lastReview,
+      reps: card.reps,
+      lapses: card.lapses,
+    };
+  });
 }

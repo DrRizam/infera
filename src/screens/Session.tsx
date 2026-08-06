@@ -4,12 +4,14 @@ import { drills, moduleOfTopic } from "../content";
 import {
   DECAY_THRESHOLD,
   buildSession,
+  isReviewItem,
   liveRecords,
   recallNow,
   reviewDrill,
   todayISO,
+  type SessionItem,
 } from "../engine/srs";
-import { Easy, Good, Hard, gradeFromScore, type Grade } from "../engine/fsrs";
+import { Again, Easy, Good, Hard, gradeFromScore, type Grade } from "../engine/fsrs";
 import {
   addXp,
   clearActiveSession,
@@ -20,6 +22,7 @@ import {
 } from "../engine/store";
 import { checkAchievements } from "../engine/achievements";
 import FlagControl from "../components/FlagControl";
+import { dueQueueItems, reviewQueueItem, type ReviewQueueItem } from "../engine/reviewQueue";
 
 // ── Shared bits ──────────────────────────────────────────────────────────
 
@@ -357,6 +360,70 @@ function RedFlagDrillView({
   );
 }
 
+// ── Review card: free-recall flashcard from a case/condition mistake ─────
+// No auto-score is possible here — the learner either recalled it or didn't
+// — so unlike GradeBar, "Didn't know it" (Again) is a real, offered choice.
+
+/** Grade→score is display-only (XP framing); FSRS scheduling runs off the grade itself. */
+function reviewGradeScore(grade: Grade): number {
+  if (grade === Again) return 0;
+  if (grade === Hard) return 0.5;
+  if (grade === Good) return 0.85;
+  return 1;
+}
+
+function ReviewCardView({
+  item,
+  onDone,
+}: {
+  item: ReviewQueueItem;
+  onDone: (grade: Grade) => void;
+}) {
+  const [revealed, setRevealed] = useState(false);
+
+  return (
+    <div>
+      <div className="stats-line">
+        <span className={`sev-chip ${item.severity}`}>{item.severity}</span>
+      </div>
+      <div className="stem">{item.prompt}</div>
+      {!revealed ? (
+        <button className="big-btn teal" onClick={() => setRevealed(true)}>
+          Reveal answer
+        </button>
+      ) : (
+        <>
+          <div className="feedback good">
+            <div>{item.answer}</div>
+          </div>
+          <p className="sub" style={{ margin: "10px 0" }}>
+            {item.because}
+          </p>
+          <div className="grade-prompt">How well did you recall it?</div>
+          <div className="grade-row">
+            <button className="grade-btn bad" onClick={() => onDone(Again)}>
+              Didn't know it
+              <span>back tomorrow</span>
+            </button>
+            <button className="grade-btn hard" onClick={() => onDone(Hard)}>
+              Shaky
+              <span>back soon</span>
+            </button>
+            <button className="grade-btn good" onClick={() => onDone(Good)}>
+              Got it
+              <span>normal gap</span>
+            </button>
+            <button className="grade-btn easy" onClick={() => onDone(Easy)}>
+              Knew it cold
+              <span>longer gap</span>
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 // ── Session orchestrator ─────────────────────────────────────────────────
 
 export default function Session({
@@ -375,10 +442,12 @@ export default function Session({
   // gets interrupted mid-drill constantly, and iOS can evict a backgrounded
   // PWA from memory — neither should silently discard their progress.
   const [resumed] = useState(() => (size === undefined ? loadActiveSession() : null));
-  const [queue] = useState<Drill[]>(() => {
+  const [queue] = useState<SessionItem[]>(() => {
     if (resumed) {
       const byId = new Map(drills.map((d) => [d.id, d]));
-      const restored = resumed.drillIds.map((id) => byId.get(id)).filter((d): d is Drill => !!d);
+      const restored = resumed.drillIds
+        .map((id): SessionItem | undefined => byId.get(id) ?? profile.reviewItems[id])
+        .filter((d): d is SessionItem => !!d);
       if (restored.length === resumed.drillIds.length) return restored;
     }
     return buildSession(profile, size);
@@ -390,7 +459,7 @@ export default function Session({
   const [rescued, setRescued] = useState(0);
   const showHint = !profile.seenGradeHint;
 
-  const drill = queue[idx];
+  const current = queue[idx];
 
   // Mirror progress to storage after every answer so a reload resumes here.
   useEffect(() => {
@@ -403,19 +472,8 @@ export default function Session({
     });
   }, [idx, scores, finished, queue]);
 
-  const handleDone = (score: number, grade: Grade) => {
-    // Measure decay BEFORE rescheduling — afterwards the record looks healthy.
-    const prior = profile.srs[drill.id];
-    if (prior && prior.lastReview && recallNow(prior) < DECAY_THRESHOLD) {
-      setRescued((n) => n + 1);
-    }
-    const updated = reviewDrill(profile.srs[drill.id], drill.id, score, grade);
-    const xpGain = Math.round(10 * score) + (score >= 0.99 ? 2 : 0);
-    let next: Profile = addXp(
-      logAnswer({ ...profile, srs: { ...profile.srs, [drill.id]: updated } }, drill.topic, score),
-      xpGain
-    );
-    if (showHint) next = { ...next, seenGradeHint: true };
+  /** Shared tail of every answer: log the score, advance or finish. */
+  const advance = (next: Profile, score: number) => {
     const newScores = [...scores, score];
     setScores(newScores);
     if (idx + 1 >= queue.length) {
@@ -434,13 +492,41 @@ export default function Session({
     }
   };
 
+  const handleDrillDone = (drill: Drill, score: number, grade: Grade) => {
+    // Measure decay BEFORE rescheduling — afterwards the record looks healthy.
+    const prior = profile.srs[drill.id];
+    if (prior && prior.lastReview && recallNow(prior) < DECAY_THRESHOLD) {
+      setRescued((n) => n + 1);
+    }
+    const updated = reviewDrill(profile.srs[drill.id], drill.id, score, grade);
+    const xpGain = Math.round(10 * score) + (score >= 0.99 ? 2 : 0);
+    let next: Profile = addXp(
+      logAnswer({ ...profile, srs: { ...profile.srs, [drill.id]: updated } }, drill.topic, score),
+      xpGain
+    );
+    if (showHint) next = { ...next, seenGradeHint: true };
+    advance(next, score);
+  };
+
+  const handleReviewDone = (item: ReviewQueueItem, grade: Grade) => {
+    const updated = reviewQueueItem(item, grade);
+    const score = reviewGradeScore(grade);
+    const next: Profile = addXp(
+      { ...profile, reviewItems: { ...profile.reviewItems, [item.id]: updated } },
+      Math.round(10 * score)
+    );
+    advance(next, score);
+  };
+
   if (finished) {
     const avg = scores.reduce((a, b) => a + b, 0) / Math.max(scores.length, 1);
     const xp = scores.reduce((a, s) => a + Math.round(10 * s) + (s >= 0.99 ? 2 : 0), 0);
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     const tomorrowISO = todayISO(tomorrow);
-    const dueTomorrow = liveRecords(profile).filter((r) => r.dueDate <= tomorrowISO).length;
+    const dueTomorrow =
+      liveRecords(profile).filter((r) => r.dueDate <= tomorrowISO).length +
+      dueQueueItems(profile.reviewItems, tomorrowISO).length;
     return (
       <div className="app">
         <div className="card" style={{ textAlign: "center", paddingTop: 32 }}>
@@ -487,7 +573,7 @@ export default function Session({
     );
   }
 
-  if (!drill) {
+  if (!current) {
     return (
       <div className="app">
         <div className="card">
@@ -500,7 +586,8 @@ export default function Session({
     );
   }
 
-  const isReview = !!profile.srs[drill.id];
+  const isDrill = !isReviewItem(current);
+  const isReview = isDrill && !!profile.srs[current.id];
   return (
     <div className="app">
       <div className="progress-wrap">
@@ -514,23 +601,33 @@ export default function Session({
           {idx + 1}/{queue.length}
         </div>
       </div>
-      <div className="card" key={drill.id}>
+      <div className="card" key={current.id}>
         {/* The presenting complaint, never the topic: topic names like "Knee OA"
             or "Radiculopathy" are diagnoses, and showing one above the stem
             hands the learner the answer. The topic is revealed with the
             explanation instead. */}
-        <span className={`tag ${isReview ? "review" : ""}`}>
-          {isReview ? "🔁 review · " : ""}
-          {moduleOfTopic[drill.topic] ?? drill.topic}
+        <span className={`tag ${isReview || !isDrill ? "review" : ""}`}>
+          {!isDrill
+            ? `📌 review · ${current.source === "case" ? "case" : "condition"} · `
+            : isReview
+              ? "🔁 review · "
+              : ""}
+          {isDrill && (moduleOfTopic[current.topic] ?? current.topic)}
         </span>
-        {drill.type === "rank" ? (
-          <RankDrillView drill={drill} showHint={showHint} onDone={handleDone} />
-        ) : drill.type === "redflags" ? (
-          <RedFlagDrillView drill={drill} showHint={showHint} onDone={handleDone} />
+        {isReviewItem(current) ? (
+          <ReviewCardView item={current} onDone={(grade) => handleReviewDone(current, grade)} />
+        ) : current.type === "rank" ? (
+          <RankDrillView drill={current} showHint={showHint} onDone={(s, g) => handleDrillDone(current, s, g)} />
+        ) : current.type === "redflags" ? (
+          <RedFlagDrillView
+            drill={current}
+            showHint={showHint}
+            onDone={(s, g) => handleDrillDone(current, s, g)}
+          />
         ) : (
-          <ChoiceDrill drill={drill} showHint={showHint} onDone={handleDone} />
+          <ChoiceDrill drill={current} showHint={showHint} onDone={(s, g) => handleDrillDone(current, s, g)} />
         )}
-        <FlagControl drill={drill} profile={profile} setProfile={setProfile} />
+        {isDrill && <FlagControl drill={current} profile={profile} setProfile={setProfile} />}
       </div>
     </div>
   );

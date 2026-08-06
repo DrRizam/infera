@@ -13,10 +13,15 @@ export interface TourStep {
   body: string;
 }
 
-export const HOME_TOUR: TourStep[] = [
+export const LEARN_TOUR: TourStep[] = [
+  {
+    target: "path",
+    title: "Your reasoning path",
+    body: "Cases and condition lessons, in order — work through a patient, not a quiz about a named disease.",
+  },
   {
     target: "start",
-    title: "This is the whole app",
+    title: "Daily practice",
     body: "One tap starts today's session — reviews that have fallen due, plus new material. Five to ten minutes and you're done.",
   },
   {
@@ -25,23 +30,18 @@ export const HOME_TOUR: TourStep[] = [
     body: "Practise seven days and you bank a rest day. Miss a day after that and it's quietly covered — no lives, nothing to buy back.",
   },
   {
-    target: "learn",
-    title: "Learn — where you stand",
-    body: "Pick which complaint you're training, see your competency topic by topic, and browse every item with its citation.",
-  },
-  {
     target: "speed",
     title: "Speed — optional sharpening",
     body: "Sixty seconds, as many as you can answer. Good for recall speed; it doesn't replace your daily session.",
   },
   {
     target: "stats",
-    title: "Stats — what's coming",
-    body: "Your review forecast for the week ahead and your accuracy by topic, weakest first.",
+    title: "Awards — what you've earned",
+    body: "Milestones, level, and lifetime numbers.",
   },
   {
     target: "you",
-    title: "You — settings and backup",
+    title: "Profile — settings and backup",
     body: "Daily goal, theme, text size, and your backup file. Everything lives on this device, so back it up now and then.",
   },
 ];
