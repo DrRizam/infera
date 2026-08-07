@@ -8,28 +8,17 @@
 [build.environment]
   NODE_VERSION = "20"
 
-# The app keeps all state in memory and localStorage rather than in the URL,
-# so any path should serve the shell rather than 404.
+# react-router handles routing client-side, so every path needs to serve the
+# shell rather than 404.
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# The service worker and the shell must never be served stale, or testers get
-# stuck on an old build and never receive fixes. Hashed assets are immutable
-# and can be cached hard.
-[[headers]]
-  for = "/sw.js"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-
+# The shell must never be served stale, or testers get stuck on an old build.
+# Hashed assets are immutable and can be cached hard.
 [[headers]]
   for = "/index.html"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-
-[[headers]]
-  for = "/manifest.webmanifest"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
