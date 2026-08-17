@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import { useProfile } from "@/lib/ProfileContext";
+import { useAuth } from "@/lib/AuthContext";
+import { supabase } from "@/lib/supabaseClient";
 import { levelFromXp } from "@/lib/gamification";
 import { resetProfile } from "@/lib/store";
 import LevelRing from "@/components/LevelRing";
@@ -8,12 +11,26 @@ import { Button } from "@/components/ui/button";
 
 export default function Profile() {
   const { profile } = useProfile();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const lvl = levelFromXp(profile.xp || 0);
 
-  const handleReset = () => {
-    if (!window.confirm("Reset all progress on this device? This can't be undone.")) return;
-    resetProfile();
+  const handleReset = async () => {
+    if (!window.confirm("Reset all progress? This can't be undone.")) return;
+    await resetProfile(user.id);
     window.location.reload();
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!window.confirm("Delete your account? This permanently erases all your progress and cannot be undone.")) return;
+    const { error } = await supabase.rpc("delete_own_account");
+    if (error) {
+      console.error("Failed to delete account", error);
+      window.alert("Something went wrong deleting your account. Please try again.");
+      return;
+    }
+    await signOut();
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -56,12 +73,18 @@ export default function Profile() {
         </CardContent>
       </Card>
 
-      <p className="text-center text-xs text-muted-foreground">
-        Everything is stored on this device only — no account, no server.
-      </p>
+      <p className="text-center text-xs text-muted-foreground">{user?.email}</p>
 
       <Button variant="outline" className="w-full" onClick={handleReset}>
         Reset all progress
+      </Button>
+
+      <Button variant="ghost" className="w-full" onClick={signOut}>
+        Sign out
+      </Button>
+
+      <Button variant="destructive" className="w-full" onClick={handleDeleteAccount}>
+        Delete account
       </Button>
     </div>
   );

@@ -2,15 +2,16 @@ import { Check, Lock, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * Staggered vertical path of case nodes. A case unlocks once the previous
- * one *in the same module* is completed — locking is per-module, not
- * across the whole list, so an unrelated module (e.g. cardio) isn't gated
- * behind finishing an earlier one (e.g. spine) just because both happen to
- * be rendered in one path (as Home does, showing every module at once).
+ * Staggered vertical path of case nodes, strictly sequential: a case stays
+ * locked until the one directly above it in the list is completed. When
+ * called with cases from multiple modules at once (as Home does, showing
+ * every module in one path), the chain still runs top to bottom across all
+ * of them rather than per-module, so the lock state always matches what's
+ * visually above/below a given node.
  */
 export default function CasePath({ cases, progressByCaseId, onOpen }) {
   const sorted = [...cases].sort((a, b) => (a.order || 0) - (b.order || 0));
-  const unlockedByModule = {};
+  let unlocked = true;
 
   return (
     <div className="flex flex-col items-center gap-3 py-2">
@@ -18,10 +19,8 @@ export default function CasePath({ cases, progressByCaseId, onOpen }) {
         const progress = progressByCaseId?.[c.id];
         const done = progress?.status === "completed";
         const inProgress = progress?.status === "in_progress";
-        const moduleKey = c.module || "_";
-        if (!(moduleKey in unlockedByModule)) unlockedByModule[moduleKey] = true;
-        const locked = !unlockedByModule[moduleKey];
-        if (!done) unlockedByModule[moduleKey] = false;
+        const locked = !unlocked;
+        if (!done) unlocked = false;
 
         return (
           <button

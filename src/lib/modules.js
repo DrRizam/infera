@@ -107,3 +107,32 @@ export function dailyHardCase(cases, moduleId, today) {
   const idx = (dayIndex + hashStr(moduleId)) % sorted.length;
   return sorted[idx];
 }
+
+/**
+ * One educational card per day, independent of spaced-repetition review —
+ * deterministic so it's the same pick all day and rotates tomorrow. Biased
+ * toward the user's focus module when they have one and it has cases;
+ * otherwise (or if that module is empty) falls back to the full case list.
+ */
+export function conditionOfTheDay(cases, focusModule, today) {
+  const all = cases || [];
+  const filtered = focusModule ? all.filter((c) => c.module === focusModule) : all;
+  const pool = filtered.length ? filtered : all;
+  if (!pool.length) return null;
+  const sorted = [...pool].sort((a, b) => a.id.localeCompare(b.id));
+  const dayIndex = Math.floor(new Date(`${today}T00:00:00Z`).getTime() / 86400000);
+  const idx = (dayIndex + hashStr(focusModule || "mixed")) % sorted.length;
+  return sorted[idx];
+}
+
+/**
+ * A fixed (not randomized) baseline quiz: the same N questions for every
+ * user, drawn from each case's speed_questions and sorted by case id so the
+ * selection is stable — a consistent baseline is what makes scores comparable.
+ */
+export function selectBaselineQuestions(cases, n = 10) {
+  const pool = [...(cases || [])]
+    .sort((a, b) => a.id.localeCompare(b.id))
+    .flatMap((c) => (c.speed_questions || []).map((q) => ({ ...q, caseId: c.id })));
+  return pool.slice(0, n);
+}

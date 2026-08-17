@@ -1,7 +1,8 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { Award, Home, Trophy, User, Zap } from "lucide-react";
+import { Award, Home, LogOut, Trophy, User, Zap } from "lucide-react";
 import LevelRing from "@/components/LevelRing";
 import { useProfile } from "@/lib/ProfileContext";
+import { useAuth } from "@/lib/AuthContext";
 import { levelFromXp } from "@/lib/gamification";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +16,7 @@ const NAV = [
 
 export default function AppLayout() {
   const { profile } = useProfile();
+  const { signOut } = useAuth();
   const lvl = levelFromXp(profile.xp || 0);
 
   return (
@@ -33,6 +35,9 @@ export default function AppLayout() {
             <span title="Hearts">❤️{profile.hearts ?? 5}</span>
             <span title="Rest shields">🛡️{profile.rest_shields ?? 0}</span>
             <span title="Total XP">⚡{profile.xp ?? 0}</span>
+            <button type="button" title="Sign out" onClick={signOut} className="text-muted-foreground">
+              <LogOut className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </header>

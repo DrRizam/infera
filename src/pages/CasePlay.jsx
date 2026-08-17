@@ -2,7 +2,10 @@ import { useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getCase } from "@/data/cases";
 import { useProfile } from "@/lib/ProfileContext";
+import { useAuth } from "@/lib/AuthContext";
+import { supabase } from "@/lib/supabaseClient";
 import { scoreEncounter } from "@/lib/caseEngine";
+import { buildCaseAttemptRow } from "@/lib/caseAttempts";
 import {
   ensureDailyFresh,
   heartsAfterCase,
@@ -29,6 +32,7 @@ export default function CasePlay() {
   const [searchParams] = useSearchParams();
   const isDaily = searchParams.get("daily") === "1";
   const { profile, setProfile } = useProfile();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const clinicalCase = useMemo(() => getCase(caseId), [caseId]);
@@ -99,6 +103,15 @@ export default function CasePlay() {
     const leveledUp = next.level > prevLevel;
 
     setProfile(next);
+
+    // Dashboard telemetry only — never block or fail the debrief on this.
+    supabase
+      .from("case_attempts")
+      .insert({ user_id: user.id, ...buildCaseAttemptRow(scored, clinicalCase, xp, attempts, isDaily) })
+      .then(({ error }) => {
+        if (error) console.error("Failed to record case attempt", error);
+      });
+
     setResult({ scored, xp, shieldUsed, leveledUp, streak: next.streak_count });
     setStageIdx(stages.length - 1);
   };
