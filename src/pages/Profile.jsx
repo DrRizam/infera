@@ -90,6 +90,47 @@ export default function Profile() {
       </Card>
 
       <Card>
+        <CardHeader>
+          <CardTitle>Calibration</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {(() => {
+            const c = profile.calibration || { calibrated: 0, overconfident: 0, underconfident: 0 };
+            const total = c.calibrated + c.overconfident + c.underconfident;
+            if (!total) {
+              return (
+                <p className="text-sm text-muted-foreground">
+                  Rate your confidence on a disposition call to start tracking how well it matches your accuracy.
+                </p>
+              );
+            }
+            const pct = Math.round((c.calibrated / total) * 100);
+            return (
+              <div className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  How often your stated confidence matches whether you were actually right.
+                </p>
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <div className="text-xl font-extrabold text-primary">{pct}%</div>
+                    <div className="text-xs text-muted-foreground">Well-calibrated</div>
+                  </div>
+                  <div>
+                    <div className="text-xl font-extrabold text-rose-600">{c.overconfident}</div>
+                    <div className="text-xs text-muted-foreground">Overconfident</div>
+                  </div>
+                  <div>
+                    <div className="text-xl font-extrabold text-amber-600">{c.underconfident}</div>
+                    <div className="text-xs text-muted-foreground">Underconfident</div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+        </CardContent>
+      </Card>
+
+      <Card>
         <CardContent className="flex divide-x divide-border p-0">
           <button className="flex-1 py-3 text-center" onClick={() => toggleExpanded("followers")}>
             <div className="text-lg font-extrabold">{followerCount}</div>

@@ -1,15 +1,16 @@
 import { describe, expect, it } from "vitest";
 import {
   achievementProgress,
+  classifyCalibration,
   daysBetween,
   ensureDailyFresh,
-  heartsAfterCase,
   isAchievementEarned,
   levelFromXp,
   nextReviewDate,
   rollStreak,
   speedRoundTimerDelta,
   todayStr,
+  updateCalibration,
   updateMastery,
   weekStreakDays,
   xpForCase,
@@ -105,16 +106,6 @@ describe("ensureDailyFresh", () => {
     const p = ensureDailyFresh({ daily_xp: 40, daily_goal_date: "2026-08-06" }, "2026-08-06");
     expect(p.daily_xp).toBe(40);
   });
-
-  it("refills hearts to full on a new day", () => {
-    const p = ensureDailyFresh({ hearts: 0, daily_goal_date: "2026-08-05" }, "2026-08-06");
-    expect(p.hearts).toBe(5);
-  });
-
-  it("leaves hearts alone on the same day", () => {
-    const p = ensureDailyFresh({ hearts: 2, daily_goal_date: "2026-08-06" }, "2026-08-06");
-    expect(p.hearts).toBe(2);
-  });
 });
 
 describe("weekStreakDays", () => {
@@ -184,14 +175,34 @@ describe("xpForCase", () => {
   });
 });
 
-describe("heartsAfterCase", () => {
-  it("gains a heart on a perfect case, capped at 5", () => {
-    expect(heartsAfterCase(2, 100)).toBe(3);
-    expect(heartsAfterCase(5, 100)).toBe(5);
+describe("classifyCalibration", () => {
+  it("flags high confidence on a wrong call as overconfident", () => {
+    expect(classifyCalibration(90, false)).toBe("overconfident");
   });
 
-  it("costs hearts on a poor case, never below 0", () => {
-    expect(heartsAfterCase(1, 0)).toBe(0);
+  it("flags low confidence on a right call as underconfident", () => {
+    expect(classifyCalibration(25, true)).toBe("underconfident");
+  });
+
+  it("treats high confidence + correct, and low confidence + wrong, as calibrated", () => {
+    expect(classifyCalibration(90, true)).toBe("calibrated");
+    expect(classifyCalibration(25, false)).toBe("calibrated");
+  });
+
+  it("treats mid-range confidence as calibrated regardless of outcome", () => {
+    expect(classifyCalibration(60, true)).toBe("calibrated");
+    expect(classifyCalibration(60, false)).toBe("calibrated");
+  });
+});
+
+describe("updateCalibration", () => {
+  it("starts a fresh tally from undefined", () => {
+    expect(updateCalibration(undefined, "overconfident")).toEqual({ calibrated: 0, overconfident: 1, underconfident: 0 });
+  });
+
+  it("increments the right bucket without touching the others", () => {
+    const start = { calibrated: 3, overconfident: 1, underconfident: 0 };
+    expect(updateCalibration(start, "calibrated")).toEqual({ calibrated: 4, overconfident: 1, underconfident: 0 });
   });
 });
 

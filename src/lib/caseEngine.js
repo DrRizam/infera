@@ -214,6 +214,28 @@ export function detectErrors({ clinicalCase: c, answers, redFlagResult, disposit
   return errors;
 }
 
+/**
+ * A literal count of wrong decisions (not a weighted/blended score) — one
+ * per wrong history question, missed or false-positive red flag, non-useful
+ * examination picked, and a wrong disposition. Kept alongside `accuracy` as
+ * a plain mistake tally distinct from the calibration tracking (see
+ * gamification.js classifyCalibration), which is about confidence vs.
+ * correctness, not raw mistake count.
+ */
+function countWrongDecisions({ clinicalCase: c, answers, redFlagResult, dispositionResult }) {
+  const historyAnswers = answers.history || {};
+  const historyWrong = (c.history_questions || []).filter((q) => historyAnswers[q.id] !== q.correct).length;
+
+  const redFlagWrong = redFlagResult.missed.length + redFlagResult.falsePos.length;
+
+  const performedExams = answers.examinations || [];
+  const examWrong = (c.examinations || []).filter((e) => !e.useful && performedExams.includes(e.id)).length;
+
+  const dispositionWrong = c.disposition?.options?.length && dispositionResult.score < 1 ? 1 : 0;
+
+  return historyWrong + redFlagWrong + examWrong + dispositionWrong;
+}
+
 /** Weighted total: history 15%, red flags 25%, differential 20%, examinations 15%, disposition 25%. */
 export function scoreEncounter(answers, clinicalCase) {
   const historyScore = scoreHistory(answers.history, clinicalCase.history_questions);
@@ -233,6 +255,7 @@ export function scoreEncounter(answers, clinicalCase) {
 
   const errors = detectErrors({ clinicalCase, answers, redFlagResult, dispositionResult });
   const citations = collectCitations({ clinicalCase, redFlagResult, dispositionResult, disposition: answers.disposition });
+  const wrongCount = countWrongDecisions({ clinicalCase, answers, redFlagResult, dispositionResult });
 
   return {
     accuracy,
@@ -245,6 +268,7 @@ export function scoreEncounter(answers, clinicalCase) {
     },
     errors,
     citations,
+    wrongCount,
     missedRedFlags: redFlagResult.missed,
     falsePositiveRedFlags: redFlagResult.falsePos,
   };

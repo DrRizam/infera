@@ -15,7 +15,8 @@ const DEFAULT_PROFILE = {
   daily_xp: 0,
   daily_goal: 50,
   daily_goal_date: null,
-  hearts: 5,
+  /** disposition-confidence-vs-outcome tally, replaces a hard hearts/lives mechanic */
+  calibration: { calibrated: 0, overconfident: 0, underconfident: 0 },
   mastery: {},
   /** "{module}:{exam|red_flag|differential|disposition|history}" -> EMA accuracy 0-100 */
   competency: {},
@@ -39,7 +40,7 @@ const DEFAULT_PROFILE = {
 export async function loadProfile(user) {
   const { data, error } = await supabase
     .from("profiles")
-    .select("state, display_name, clinic_name, country, role, role_other_label")
+    .select("state, display_name, clinic_name, country, role, role_other_label, phone, email_opt_in")
     .eq("user_id", user.id)
     .maybeSingle();
 
@@ -61,14 +62,23 @@ export async function loadProfile(user) {
     state: fresh,
   });
   if (insertError) console.error("Failed to create profile row", insertError);
-  return { ...fresh, display_name: displayName, clinic_name: null, country: null, role: null, role_other_label: null };
+  return {
+    ...fresh,
+    display_name: displayName,
+    clinic_name: null,
+    country: null,
+    role: null,
+    role_other_label: null,
+    phone: null,
+    email_opt_in: false,
+  };
 }
 
-// display_name/clinic_name/country/role/role_other_label are real columns,
-// not part of the jsonb `state` blob — pulled out here so they never get
-// duplicated into it.
+// display_name/clinic_name/country/role/role_other_label/phone/email_opt_in
+// are real columns, not part of the jsonb `state` blob — pulled out here so
+// they never get duplicated into it.
 export async function saveProfile(userId, profile) {
-  const { display_name, clinic_name, country, role, role_other_label, ...state } = profile;
+  const { display_name, clinic_name, country, role, role_other_label, phone, email_opt_in, ...state } = profile;
   const write = () =>
     supabase.from("profiles").upsert({
       user_id: userId,
@@ -78,6 +88,8 @@ export async function saveProfile(userId, profile) {
       country,
       role,
       role_other_label,
+      phone,
+      email_opt_in,
       updated_at: new Date().toISOString(),
     });
 

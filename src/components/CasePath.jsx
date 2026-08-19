@@ -13,8 +13,15 @@ const NODE_ICONS = [Dumbbell, Activity, Bone, HeartPulse, Footprints, Stethoscop
  * of them rather than per-module, so the lock state always matches what's
  * visually above/below a given node.
  */
+// Demo padding: modules with only a couple of real cases still show a full
+// path of locked nodes below them, so every module looks like it has a
+// depth of content coming rather than visibly running out after one case.
+// Purely cosmetic — these have no case behind them and never unlock.
+const DEMO_MIN_NODES = 8;
+
 export default function CasePath({ cases, progressByCaseId, onOpen }) {
   const sorted = [...cases].sort((a, b) => (a.order || 0) - (b.order || 0));
+  const placeholderCount = Math.max(0, DEMO_MIN_NODES - sorted.length);
   let unlocked = true;
 
   return (
@@ -53,6 +60,21 @@ export default function CasePath({ cases, progressByCaseId, onOpen }) {
               <Star className="absolute -top-2 -right-1 h-5 w-5 fill-amber-400 text-amber-500" />
             )}
           </button>
+        );
+      })}
+      {Array.from({ length: placeholderCount }).map((_, j) => {
+        const i = sorted.length + j;
+        return (
+          <div
+            key={`placeholder-${j}`}
+            title="Coming soon"
+            className={cn(
+              "flex h-16 w-16 items-center justify-center rounded-full border-2 border-border bg-muted text-muted-foreground",
+              i % 2 === 0 ? "-translate-x-6" : "translate-x-6"
+            )}
+          >
+            <Lock className="h-5 w-5" />
+          </div>
         );
       })}
     </div>

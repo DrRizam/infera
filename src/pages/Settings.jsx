@@ -24,6 +24,8 @@ export default function Settings() {
   const [country, setCountry] = useState(profile.country || "");
   const [role, setRole] = useState(profile.role || "");
   const [roleOtherLabel, setRoleOtherLabel] = useState(profile.role_other_label || "");
+  const [phone, setPhone] = useState(profile.phone || "");
+  const [emailOptIn, setEmailOptIn] = useState(profile.email_opt_in ?? false);
   const [profileSaving, setProfileSaving] = useState(false);
   const [profileNotice, setProfileNotice] = useState("");
 
@@ -44,7 +46,15 @@ export default function Settings() {
     const otherLabel = role === "other" ? roleOtherLabel.trim() || null : null;
     const { error } = await supabase
       .from("profiles")
-      .update({ display_name: displayName, clinic_name: clinicName, country, role: role || null, role_other_label: otherLabel })
+      .update({
+        display_name: displayName,
+        clinic_name: clinicName,
+        country,
+        role: role || null,
+        role_other_label: otherLabel,
+        phone: phone.trim() || null,
+        email_opt_in: emailOptIn,
+      })
       .eq("user_id", user.id);
 
     if (!error) await supabase.auth.updateUser({ data: { full_name: displayName } });
@@ -62,6 +72,8 @@ export default function Settings() {
       country,
       role: role || null,
       role_other_label: otherLabel,
+      phone: phone.trim() || null,
+      email_opt_in: emailOptIn,
     }));
     setProfileNotice("Saved.");
   };
@@ -127,6 +139,10 @@ export default function Settings() {
               <Input id="clinic-name" value={clinicName} onChange={(e) => setClinicName(e.target.value)} />
             </div>
             <div className="space-y-1.5">
+              <Label htmlFor="phone">Phone number</Label>
+              <Input id="phone" type="tel" placeholder="Optional" value={phone} onChange={(e) => setPhone(e.target.value)} />
+            </div>
+            <div className="space-y-1.5">
               <Label htmlFor="country">Country</Label>
               <select id="country" value={country} onChange={(e) => setCountry(e.target.value)} className={SELECT_CLASS}>
                 <option value="">Select a country</option>
@@ -159,6 +175,16 @@ export default function Settings() {
                 />
               </div>
             )}
+            <label htmlFor="email-opt-in" className="flex items-center gap-2 text-sm">
+              <input
+                id="email-opt-in"
+                type="checkbox"
+                className="h-4 w-4 rounded border-input accent-primary"
+                checked={emailOptIn}
+                onChange={(e) => setEmailOptIn(e.target.checked)}
+              />
+              Add me to the email list for updates and tips
+            </label>
             {profileNotice && <p className="text-sm text-primary">{profileNotice}</p>}
             <Button type="submit" className="w-full" disabled={profileSaving}>
               {profileSaving ? "Saving…" : "Save"}

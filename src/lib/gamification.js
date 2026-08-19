@@ -130,14 +130,10 @@ export function rollStreak(profile, today = todayStr()) {
   };
 }
 
-/**
- * Resets daily_xp and refills hearts to full when the calendar date has
- * rolled over since last play. Hearts have no other regen mechanic, so a
- * daily reset is what keeps a bad session from being a permanent lockout.
- */
+/** Resets daily_xp when the calendar date has rolled over since last play. */
 export function ensureDailyFresh(profile, today = todayStr()) {
   if (profile.daily_goal_date === today) return profile;
-  return { ...profile, daily_xp: 0, daily_goal_date: today, hearts: 5 };
+  return { ...profile, daily_xp: 0, daily_goal_date: today };
 }
 
 /** Exponential moving average — recent performance matters more than history. */
@@ -163,10 +159,25 @@ export function xpForCase(reward, accuracy) {
   return Math.max(5, Math.round(reward * (accuracy / 100)));
 }
 
-/** A perfect case refills hearts to full; a poor one costs hearts. */
-export function heartsAfterCase(hearts, accuracy) {
-  const wrongs = Math.round(((100 - accuracy) / 100) * 5);
-  return Math.min(5, Math.max(0, hearts - wrongs + 1));
+/**
+ * Classifies a stated confidence level (0-100) against whether the call was
+ * actually right — not a hard lives/hearts mechanic. Clinical answers are
+ * rarely fully right or wrong, so what matters more than "wrong = penalty"
+ * is whether the learner's confidence matches their actual accuracy.
+ * Overconfidence (sure of a wrong call) is the clinically dangerous
+ * direction; underconfidence (unsure despite being right) is a lesser but
+ * still real miscalibration. Anything else counts as calibrated.
+ */
+export function classifyCalibration(confidence, wasCorrect) {
+  if (confidence >= 66 && !wasCorrect) return "overconfident";
+  if (confidence <= 33 && wasCorrect) return "underconfident";
+  return "calibrated";
+}
+
+/** Tallies a calibration outcome into the running per-category counts. */
+export function updateCalibration(calibration, outcome) {
+  const c = calibration || { calibrated: 0, overconfident: 0, underconfident: 0 };
+  return { ...c, [outcome]: (c[outcome] || 0) + 1 };
 }
 
 /** Speed round timer: wrong answers cost 10s; a correct-answer streak of 2+ earns 5s each time. */

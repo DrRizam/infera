@@ -13,6 +13,8 @@ create table public.profiles (
   country text,
   role text check (role is null or role in ('student', 'pt', 'dpt', 'other')),
   role_other_label text,
+  phone text,
+  email_opt_in boolean not null default false,
   state jsonb not null default '{}'::jsonb,
   updated_at timestamptz not null default now()
 );

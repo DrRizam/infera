@@ -156,6 +156,20 @@ describe("scoreEncounter", () => {
     const result = scoreEncounter(answers, clinicalCase);
     expect(result.accuracy).toBe(100);
     expect(result.errors).toEqual([]);
+    expect(result.wrongCount).toBe(0);
+  });
+
+  it("counts exactly one wrong per mistake, not a blended score", () => {
+    const answers = {
+      history: { q1: 1, q2: 0 }, // one wrong history question
+      redFlags: ["trauma"], // missed the real flag (night-pain) + one false positive (trauma)
+      differentialRanking: ["bone-stress", "pfp", "tendinopathy"],
+      examinations: ["xray-lumbar"], // one non-useful exam picked
+      disposition: "treat", // wrong disposition
+    };
+    const result = scoreEncounter(answers, clinicalCase);
+    // 1 history + 1 missed flag + 1 false-positive flag + 1 bad exam + 1 wrong disposition
+    expect(result.wrongCount).toBe(5);
   });
 
   it("cites evidence for what was caught correctly, not just errors", () => {
