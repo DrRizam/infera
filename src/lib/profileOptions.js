@@ -1,6 +1,6 @@
 export const ROLE_OPTIONS = [
-  { id: "dpt_student", label: "DPT Student" },
-  { id: "new_grad", label: "New Grad" },
-  { id: "practicing_pt", label: "Practicing PT" },
+  { id: "student", label: "Student" },
+  { id: "pt", label: "PT" },
+  { id: "dpt", label: "DPT" },
   { id: "other", label: "Other" },
 ];

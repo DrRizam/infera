@@ -11,6 +11,7 @@ import {
   speedRoundTimerDelta,
   todayStr,
   updateMastery,
+  weekStreakDays,
   xpForCase,
 } from "../gamification";
 
@@ -113,6 +114,41 @@ describe("ensureDailyFresh", () => {
   it("leaves hearts alone on the same day", () => {
     const p = ensureDailyFresh({ hearts: 2, daily_goal_date: "2026-08-06" }, "2026-08-06");
     expect(p.hearts).toBe(2);
+  });
+});
+
+describe("weekStreakDays", () => {
+  it("labels Monday through Sunday and marks today", () => {
+    // 2026-08-19 is a Wednesday.
+    const days = weekStreakDays({ caseProgress: {} }, "2026-08-19");
+    expect(days.map((d) => d.label)).toEqual(["M", "T", "W", "T", "F", "S", "S"]);
+    expect(days.map((d) => d.date)).toEqual([
+      "2026-08-17",
+      "2026-08-18",
+      "2026-08-19",
+      "2026-08-20",
+      "2026-08-21",
+      "2026-08-22",
+      "2026-08-23",
+    ]);
+    expect(days.find((d) => d.isToday).date).toBe("2026-08-19");
+  });
+
+  it("marks a day done only when a case was completed that day", () => {
+    const profile = {
+      caseProgress: {
+        "case-a": { completed_date: "2026-08-17" },
+        "case-b": { completed_date: "2026-08-19" },
+      },
+    };
+    const days = weekStreakDays(profile, "2026-08-19");
+    expect(days.filter((d) => d.done).map((d) => d.date)).toEqual(["2026-08-17", "2026-08-19"]);
+  });
+
+  it("rolls back to the prior week's Monday when today is a Sunday", () => {
+    const days = weekStreakDays({ caseProgress: {} }, "2026-08-23");
+    expect(days[0].date).toBe("2026-08-17");
+    expect(days[6].date).toBe("2026-08-23");
   });
 });
 

@@ -11,7 +11,8 @@ create table public.profiles (
   display_name text,
   clinic_name text,
   country text,
-  role text check (role is null or role in ('dpt_student', 'new_grad', 'practicing_pt', 'other')),
+  role text check (role is null or role in ('student', 'pt', 'dpt', 'other')),
+  role_other_label text,
   state jsonb not null default '{}'::jsonb,
   updated_at timestamptz not null default now()
 );
@@ -94,54 +95,46 @@ grant execute on function public.delete_own_account() to authenticated;
 -- `profiles` stays fully self-scoped; these are the one deliberate, narrow
 -- exception to that, mirroring delete_own_account()'s pattern.
 --
--- Windowed to the current calendar week (Mon-Sun, Postgres's default
--- `date_trunc('week', ...)` boundary) and summed from `case_attempts`
--- rather than lifetime `state->>xp` — a permanent global rank reads badly
--- to a professional audience and goes stale; a weekly, cohort-scoped board
--- resets the game every week instead of calcifying into a fixed pecking
--- order. A user with no attempts this week simply doesn't appear.
-create or replace function public.leaderboard_weekly_global(limit_n int default 50)
+-- Lifetime, not windowed — a weekly reset looked empty/broken for a
+-- low-traffic early-stage app ("no one's practiced this week yet"), so this
+-- is back to a straightforward permanent ranking off `state->>xp`.
+create or replace function public.leaderboard_global(limit_n int default 50)
 returns table(user_id uuid, display_name text, xp int)
 language sql security definer set search_path = public stable as $$
-  select p.user_id, coalesce(p.display_name, 'Anonymous'), sum(ca.xp_earned)::int as xp
-  from public.profiles p
-  join public.case_attempts ca on ca.user_id = p.user_id
-  where ca.played_at >= date_trunc('week', now())
-  group by p.user_id, p.display_name
-  order by xp desc
+  select user_id, coalesce(display_name, 'Anonymous'), coalesce((state->>'xp')::int, 0)
+  from public.profiles
+  order by coalesce((state->>'xp')::int, 0) desc
   limit limit_n;
 $$;
-grant execute on function public.leaderboard_weekly_global(int) to authenticated;
+grant execute on function public.leaderboard_global(int) to authenticated;
 
-create or replace function public.leaderboard_weekly_friends(limit_n int default 50)
+create or replace function public.leaderboard_friends(limit_n int default 50)
 returns table(user_id uuid, display_name text, xp int)
 language sql security definer set search_path = public stable as $$
-  select p.user_id, coalesce(p.display_name, 'Anonymous'), sum(ca.xp_earned)::int as xp
-  from public.profiles p
-  join public.case_attempts ca on ca.user_id = p.user_id
-  where ca.played_at >= date_trunc('week', now())
-    and (p.user_id = auth.uid() or p.user_id in (select followee_id from public.follows where follower_id = auth.uid()))
-  group by p.user_id, p.display_name
-  order by xp desc
+  select user_id, coalesce(display_name, 'Anonymous'), coalesce((state->>'xp')::int, 0)
+  from public.profiles
+  where user_id = auth.uid()
+     or user_id in (select followee_id from public.follows where follower_id = auth.uid())
+  order by coalesce((state->>'xp')::int, 0) desc
   limit limit_n;
 $$;
-grant execute on function public.leaderboard_weekly_friends(int) to authenticated;
+grant execute on function public.leaderboard_friends(int) to authenticated;
 
--- Cohort-scoped by specialty (case_module) rather than a global pool —
--- "how am I doing against other people practicing Sports Physio this week."
-create or replace function public.leaderboard_weekly_specialty(module text, limit_n int default 50)
+-- Cohort-scoped by specialty (case_module) — this one still needs
+-- `case_attempts` since per-module XP isn't tracked in `state`, but it's
+-- lifetime now too, not windowed to a week.
+create or replace function public.leaderboard_specialty(module text, limit_n int default 50)
 returns table(user_id uuid, display_name text, xp int)
 language sql security definer set search_path = public stable as $$
   select p.user_id, coalesce(p.display_name, 'Anonymous'), sum(ca.xp_earned)::int as xp
   from public.profiles p
   join public.case_attempts ca on ca.user_id = p.user_id
-  where ca.played_at >= date_trunc('week', now())
-    and ca.case_module = module
+  where ca.case_module = module
   group by p.user_id, p.display_name
   order by xp desc
   limit limit_n;
 $$;
-grant execute on function public.leaderboard_weekly_specialty(text, int) to authenticated;
+grant execute on function public.leaderboard_specialty(text, int) to authenticated;
 
 create or replace function public.search_users(query text, limit_n int default 20)
 returns table(user_id uuid, display_name text, following boolean)

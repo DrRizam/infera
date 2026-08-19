@@ -39,7 +39,7 @@ const DEFAULT_PROFILE = {
 export async function loadProfile(user) {
   const { data, error } = await supabase
     .from("profiles")
-    .select("state, display_name, clinic_name, country, role")
+    .select("state, display_name, clinic_name, country, role, role_other_label")
     .eq("user_id", user.id)
     .maybeSingle();
 
@@ -61,23 +61,27 @@ export async function loadProfile(user) {
     state: fresh,
   });
   if (insertError) console.error("Failed to create profile row", insertError);
-  return { ...fresh, display_name: displayName, clinic_name: null, country: null, role: null };
+  return { ...fresh, display_name: displayName, clinic_name: null, country: null, role: null, role_other_label: null };
 }
 
-// display_name/clinic_name/country/role are real columns, not part of the
-// jsonb `state` blob — pulled out here so they never get duplicated into it.
+// display_name/clinic_name/country/role/role_other_label are real columns,
+// not part of the jsonb `state` blob — pulled out here so they never get
+// duplicated into it.
 export async function saveProfile(userId, profile) {
-  const { display_name, clinic_name, country, role, ...state } = profile;
+  const { display_name, clinic_name, country, role, role_other_label, ...state } = profile;
   const write = () =>
-    supabase
-      .from("profiles")
-      .upsert({ user_id: userId, state, display_name, clinic_name, country, role, updated_at: new Date().toISOString() });
+    supabase.from("profiles").upsert({
+      user_id: userId,
+      state,
+      display_name,
+      clinic_name,
+      country,
+      role,
+      role_other_label,
+      updated_at: new Date().toISOString(),
+    });
 
   let { error } = await write();
   if (error) ({ error } = await write()); // one retry, network hiccups aren't worth a queue at this scale
   if (error) console.error("Failed to save profile", error);
-}
-
-export async function resetProfile(userId) {
-  await saveProfile(userId, { ...DEFAULT_PROFILE });
 }

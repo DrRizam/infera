@@ -21,6 +21,7 @@ export default function Profile() {
   const [followingCount, setFollowingCount] = useState(0);
   const [expanded, setExpanded] = useState(null); // "followers" | "following" | null
   const [list, setList] = useState([]);
+  const [showAllAchievements, setShowAllAchievements] = useState(false);
 
   useEffect(() => {
     supabase
@@ -121,10 +122,17 @@ export default function Profile() {
         <CardHeader>
           <CardTitle>Achievements</CardTitle>
         </CardHeader>
-        <CardContent className="grid grid-cols-2 gap-3">
-          {ACHIEVEMENTS.map((a) => (
-            <AchievementBadge key={a.code} achievement={a} profile={profile} />
-          ))}
+        <CardContent className="space-y-3">
+          <div className="grid grid-cols-2 gap-3">
+            {(showAllAchievements ? ACHIEVEMENTS : ACHIEVEMENTS.slice(0, 4)).map((a) => (
+              <AchievementBadge key={a.code} achievement={a} profile={profile} />
+            ))}
+          </div>
+          {ACHIEVEMENTS.length > 4 && (
+            <Button variant="ghost" className="w-full" onClick={() => setShowAllAchievements((s) => !s)}>
+              {showAllAchievements ? "View less" : `View more (${ACHIEVEMENTS.length - 4})`}
+            </Button>
+          )}
         </CardContent>
       </Card>
 

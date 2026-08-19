@@ -19,7 +19,7 @@ export default function AppLayout() {
   const lvl = levelFromXp(profile.xp || 0);
 
   return (
-    <div className="min-h-screen bg-background pb-20 lg:pb-0">
+    <div className="min-h-screen bg-background pb-20 lg:pb-24">
       <header className="sticky top-0 z-20 border-b-2 border-border bg-card px-4 py-3 sm:px-6">
         <div className="mx-auto flex max-w-6xl items-center gap-4">
           <div className="hidden shrink-0 items-center gap-2 lg:flex">
@@ -52,8 +52,8 @@ export default function AppLayout() {
         <Outlet />
       </main>
 
-      <nav className="fixed inset-x-0 bottom-0 z-20 border-t-2 border-border bg-card lg:static lg:border-0 lg:bg-transparent">
-        <div className="mx-auto flex max-w-6xl lg:justify-start lg:gap-2 lg:px-6 lg:py-3">
+      <nav className="fixed inset-x-0 bottom-0 z-20 border-t-2 border-border bg-card lg:bottom-6 lg:border-t-0 lg:bg-transparent">
+        <div className="mx-auto flex max-w-6xl lg:w-fit lg:justify-center lg:gap-1 lg:rounded-2xl lg:border-2 lg:border-border lg:bg-card lg:px-2 lg:py-2 lg:shadow-lg">
           {NAV.map((n) => (
             <NavLink
               key={n.to}

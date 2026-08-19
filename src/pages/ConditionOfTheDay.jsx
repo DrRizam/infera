@@ -1,16 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useProfile } from "@/lib/ProfileContext";
 import { CASES } from "@/data/cases";
-import { todayStr } from "@/lib/gamification";
+import { todayStr, weekStreakDays } from "@/lib/gamification";
 import { conditionOfTheDay } from "@/lib/modules";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import StreakWeek from "@/components/StreakWeek";
 
 export default function ConditionOfTheDay() {
   const { profile } = useProfile();
   const navigate = useNavigate();
 
   const cotd = conditionOfTheDay(CASES, profile.focus_module, todayStr());
+  const weekDays = weekStreakDays(profile);
 
   if (!cotd) {
     return (
@@ -18,6 +20,7 @@ export default function ConditionOfTheDay() {
         <Link to="/" className="text-sm text-primary underline">
           ← Back
         </Link>
+        <StreakWeek days={weekDays} />
         <p className="text-sm text-muted-foreground">No condition to show today.</p>
       </div>
     );
@@ -28,6 +31,8 @@ export default function ConditionOfTheDay() {
       <Link to="/" className="text-sm text-primary underline">
         ← Back
       </Link>
+
+      <StreakWeek days={weekDays} />
 
       <Card>
         <CardHeader>

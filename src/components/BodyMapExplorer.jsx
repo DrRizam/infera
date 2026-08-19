@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { Search } from "lucide-react";
 import { BODY_REGIONS, MODULES } from "@/lib/modules";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 import muscularSystemImg from "@/assets/muscular-system.png";
 
 // Percentages positioned against the real muscular-system photo (front
@@ -29,15 +31,32 @@ const HOTSPOTS = {
 export default function BodyMapExplorer({ cases, onOpenCase }) {
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [selectedSpecialty, setSelectedSpecialty] = useState(null);
+  const [query, setQuery] = useState("");
 
   const scoped = selectedSpecialty ? (cases || []).filter((c) => c.module === selectedSpecialty) : cases || [];
   const activeRegionIds = new Set(scoped.map((c) => c.body_region));
 
   const region = BODY_REGIONS.find((r) => r.id === selectedRegion);
-  const matches = selectedRegion ? scoped.filter((c) => c.body_region === selectedRegion) : [];
+  const regionMatches = selectedRegion ? scoped.filter((c) => c.body_region === selectedRegion) : [];
+
+  const trimmedQuery = query.trim().toLowerCase();
+  const searchMatches = trimmedQuery
+    ? scoped.filter((c) => `${c.title} ${c.presenting_complaint}`.toLowerCase().includes(trimmedQuery))
+    : [];
 
   return (
     <div>
+      <div className="relative mb-3">
+        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Input
+          aria-label="Search conditions"
+          placeholder="Search conditions…"
+          className="pl-9"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </div>
+
       <div className="mb-3 flex flex-wrap justify-center gap-2">
         <button
           onClick={() => setSelectedSpecialty(null)}
@@ -62,7 +81,7 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
         ))}
       </div>
 
-      <div className="relative mx-auto aspect-square w-full max-w-sm">
+      <div className="relative mx-auto aspect-square w-full max-w-xl">
         <img src={muscularSystemImg} alt="Muscular system diagram, front and back view" className="h-full w-full object-contain" draggable={false} />
         {BODY_REGIONS.map((r) => {
           const p = HOTSPOTS[r.id];
@@ -90,14 +109,14 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
         })}
       </div>
 
-      {region && (
+      {trimmedQuery ? (
         <div className="mt-5">
-          <h3 className="mb-2 text-lg font-black tracking-tight">{region.label}</h3>
-          {matches.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No cases here yet.</p>
+          <h3 className="mb-2 text-lg font-black tracking-tight">Search results</h3>
+          {searchMatches.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No conditions match "{query.trim()}".</p>
           ) : (
             <ul className="space-y-2">
-              {matches.map((c) => (
+              {searchMatches.map((c) => (
                 <li key={c.id}>
                   <button
                     onClick={() => onOpenCase(c.id)}
@@ -111,6 +130,29 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
             </ul>
           )}
         </div>
+      ) : (
+        region && (
+          <div className="mt-5">
+            <h3 className="mb-2 text-lg font-black tracking-tight">{region.label}</h3>
+            {regionMatches.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No cases here yet.</p>
+            ) : (
+              <ul className="space-y-2">
+                {regionMatches.map((c) => (
+                  <li key={c.id}>
+                    <button
+                      onClick={() => onOpenCase(c.id)}
+                      className="w-full rounded-xl border-2 border-border bg-card px-4 py-3 text-left text-sm transition-colors hover:border-primary"
+                    >
+                      <span className="font-semibold">{c.title}</span>
+                      <span className="ml-2 text-muted-foreground">{c.presenting_complaint}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )
       )}
     </div>
   );

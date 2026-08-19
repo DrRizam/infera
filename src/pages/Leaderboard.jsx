@@ -14,12 +14,11 @@ const RANK_STYLES = [
   "border-orange-400 bg-orange-100 text-orange-700",
 ];
 
-// Weekly-windowed, cohort-scoped — no permanent global rank. See schema.sql.
 export default function Leaderboard() {
   const { user } = useAuth();
   const { profile } = useProfile();
   const focusModule = profile.focus_module;
-  const [scope, setScope] = useState("week"); // "week" | "specialty" | "friends"
+  const [scope, setScope] = useState("global"); // "global" | "specialty" | "friends"
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -33,11 +32,11 @@ export default function Leaderboard() {
     }
     setLoading(true);
     const call =
-      scope === "week"
-        ? supabase.rpc("leaderboard_weekly_global", { limit_n: 50 })
+      scope === "global"
+        ? supabase.rpc("leaderboard_global", { limit_n: 50 })
         : scope === "specialty"
-        ? supabase.rpc("leaderboard_weekly_specialty", { module: focusModule, limit_n: 50 })
-        : supabase.rpc("leaderboard_weekly_friends", { limit_n: 50 });
+        ? supabase.rpc("leaderboard_specialty", { module: focusModule, limit_n: 50 })
+        : supabase.rpc("leaderboard_friends", { limit_n: 50 });
     call.then(({ data, error }) => {
       if (error) console.error("Failed to load leaderboard", error);
       setRows(data || []);
@@ -75,11 +74,10 @@ export default function Leaderboard() {
         </div>
         <h1 className="text-2xl font-black tracking-tight sm:text-3xl">Leaderboard</h1>
       </div>
-      <p className="text-xs text-muted-foreground">Resets every week — this ranks recent practice, not a permanent lifetime score.</p>
 
       <div className="flex gap-2">
-        <Button variant={scope === "week" ? "default" : "outline"} className="flex-1" onClick={() => setScope("week")}>
-          This week
+        <Button variant={scope === "global" ? "default" : "outline"} className="flex-1" onClick={() => setScope("global")}>
+          Global
         </Button>
         <Button
           variant={scope === "specialty" ? "default" : "outline"}
@@ -132,8 +130,8 @@ export default function Leaderboard() {
               : scope === "specialty" && !focusModule
               ? "Pick a module on Home to see your specialty leaderboard."
               : scope === "specialty"
-              ? `No one's practiced ${getModule(focusModule)?.name || "this specialty"} this week yet.`
-              : "No one's practiced this week yet."}
+              ? `No one's practiced ${getModule(focusModule)?.name || "this specialty"} yet.`
+              : "No one here yet."}
           </p>
         </div>
       ) : (

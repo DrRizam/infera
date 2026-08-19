@@ -27,10 +27,35 @@ export function daysBetween(a, b) {
   return Math.round((db - da) / 86400000);
 }
 
-function addDays(iso, days) {
+export function addDays(iso, days) {
   const d = new Date(`${iso}T00:00:00Z`);
   d.setUTCDate(d.getUTCDate() + days);
   return d.toISOString().slice(0, 10);
+}
+
+const WEEK_DAY_LABELS = ["M", "T", "W", "T", "F", "S", "S"]; // Monday-first
+
+/**
+ * The current calendar week (Mon-Sun) as 7 days, each flagged done if a case
+ * was completed that day — driven by `caseProgress[].completed_date`, the
+ * same source rollStreak() itself advances from, so this never shows a day
+ * as "done" that didn't actually count toward the streak.
+ */
+export function weekStreakDays(profile, today = todayStr()) {
+  const completedDates = new Set(
+    Object.values(profile?.caseProgress || {})
+      .map((p) => p.completed_date)
+      .filter(Boolean)
+  );
+
+  const dow = new Date(`${today}T00:00:00Z`).getUTCDay(); // 0=Sun..6=Sat
+  const mondayOffset = dow === 0 ? -6 : 1 - dow;
+  const monday = addDays(today, mondayOffset);
+
+  return WEEK_DAY_LABELS.map((label, i) => {
+    const date = addDays(monday, i);
+    return { date, label, done: completedDates.has(date), isToday: date === today };
+  });
 }
 
 /** Level, title, and progress toward the next level from lifetime XP. */

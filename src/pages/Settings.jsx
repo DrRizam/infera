@@ -4,12 +4,15 @@ import { Settings as SettingsIcon } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
-import { resetProfile } from "@/lib/store";
 import { ROLE_OPTIONS } from "@/lib/profileOptions";
+import { COUNTRIES } from "@/lib/countries";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+const SELECT_CLASS =
+  "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 export default function Settings() {
   const { profile, setProfile } = useProfile();
@@ -20,6 +23,7 @@ export default function Settings() {
   const [clinicName, setClinicName] = useState(profile.clinic_name || "");
   const [country, setCountry] = useState(profile.country || "");
   const [role, setRole] = useState(profile.role || "");
+  const [roleOtherLabel, setRoleOtherLabel] = useState(profile.role_other_label || "");
   const [profileSaving, setProfileSaving] = useState(false);
   const [profileNotice, setProfileNotice] = useState("");
 
@@ -27,6 +31,7 @@ export default function Settings() {
   const [emailNotice, setEmailNotice] = useState("");
   const [emailError, setEmailError] = useState("");
 
+  const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [passwordNotice, setPasswordNotice] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -36,9 +41,10 @@ export default function Settings() {
     setProfileSaving(true);
     setProfileNotice("");
 
+    const otherLabel = role === "other" ? roleOtherLabel.trim() || null : null;
     const { error } = await supabase
       .from("profiles")
-      .update({ display_name: displayName, clinic_name: clinicName, country, role: role || null })
+      .update({ display_name: displayName, clinic_name: clinicName, country, role: role || null, role_other_label: otherLabel })
       .eq("user_id", user.id);
 
     if (!error) await supabase.auth.updateUser({ data: { full_name: displayName } });
@@ -49,7 +55,14 @@ export default function Settings() {
       setProfileNotice("Something went wrong saving your profile.");
       return;
     }
-    setProfile((prev) => ({ ...prev, display_name: displayName, clinic_name: clinicName, country, role: role || null }));
+    setProfile((prev) => ({
+      ...prev,
+      display_name: displayName,
+      clinic_name: clinicName,
+      country,
+      role: role || null,
+      role_other_label: otherLabel,
+    }));
     setProfileNotice("Saved.");
   };
 
@@ -67,16 +80,15 @@ export default function Settings() {
     e.preventDefault();
     setPasswordError("");
     setPasswordNotice("");
+
+    const { error: verifyError } = await supabase.auth.signInWithPassword({ email: user.email, password: oldPassword });
+    if (verifyError) return setPasswordError("Current password is incorrect.");
+
     const { error } = await supabase.auth.updateUser({ password: newPassword });
     if (error) return setPasswordError(error.message);
     setPasswordNotice("Password updated.");
+    setOldPassword("");
     setNewPassword("");
-  };
-
-  const handleReset = async () => {
-    if (!window.confirm("Reset all progress? This can't be undone.")) return;
-    await resetProfile(user.id);
-    window.location.reload();
   };
 
   const handleDeleteAccount = async () => {
@@ -116,16 +128,18 @@ export default function Settings() {
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="country">Country</Label>
-              <Input id="country" value={country} onChange={(e) => setCountry(e.target.value)} />
+              <select id="country" value={country} onChange={(e) => setCountry(e.target.value)} className={SELECT_CLASS}>
+                <option value="">Select a country</option>
+                {COUNTRIES.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="role">Role</Label>
-              <select
-                id="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
+              <select id="role" value={role} onChange={(e) => setRole(e.target.value)} className={SELECT_CLASS}>
                 <option value="">Prefer not to say</option>
                 {ROLE_OPTIONS.map((r) => (
                   <option key={r.id} value={r.id}>
@@ -134,6 +148,17 @@ export default function Settings() {
                 ))}
               </select>
             </div>
+            {role === "other" && (
+              <div className="space-y-1.5">
+                <Label htmlFor="role-other">Tell us more</Label>
+                <Input
+                  id="role-other"
+                  placeholder="e.g. Athletic trainer"
+                  value={roleOtherLabel}
+                  onChange={(e) => setRoleOtherLabel(e.target.value)}
+                />
+              </div>
+            )}
             {profileNotice && <p className="text-sm text-primary">{profileNotice}</p>}
             <Button type="submit" className="w-full" disabled={profileSaving}>
               {profileSaving ? "Saving…" : "Save"}
@@ -168,6 +193,17 @@ export default function Settings() {
         <CardContent>
           <form className="space-y-3" onSubmit={changePassword}>
             <div className="space-y-1.5">
+              <Label htmlFor="old-password">Current password</Label>
+              <Input
+                id="old-password"
+                type="password"
+                required
+                autoComplete="current-password"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+              />
+            </div>
+            <div className="space-y-1.5">
               <Label htmlFor="new-password">New password</Label>
               <Input
                 id="new-password"
@@ -187,10 +223,6 @@ export default function Settings() {
           </form>
         </CardContent>
       </Card>
-
-      <Button variant="outline" className="w-full" onClick={handleReset}>
-        Reset all progress
-      </Button>
 
       <Button variant="ghost" className="w-full" onClick={signOut}>
         Sign out
