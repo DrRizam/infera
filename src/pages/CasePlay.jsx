@@ -1,11 +1,14 @@
 import { useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { HeartCrack } from "lucide-react";
 import { getCase } from "@/data/cases";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
 import { scoreEncounter } from "@/lib/caseEngine";
 import { buildCaseAttemptRow } from "@/lib/caseAttempts";
+import { BREAKDOWN_TO_BUCKET_TYPE, bucketKey } from "@/lib/competency";
+import { Button } from "@/components/ui/button";
 import {
   ensureDailyFresh,
   heartsAfterCase,
@@ -62,6 +65,28 @@ export default function CasePlay() {
     );
   }
 
+  if ((profile.hearts ?? 5) <= 0) {
+    return (
+      <div className="mx-auto flex max-w-2xl flex-col items-center space-y-4 px-4 py-16 text-center">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent text-rose-600">
+          <HeartCrack className="h-7 w-7" />
+        </div>
+        <h1 className="text-2xl font-black tracking-tight">Out of hearts</h1>
+        <p className="text-sm text-muted-foreground">
+          You're out of hearts for today — they refill tomorrow. The speed round doesn't cost hearts if you want to keep practicing.
+        </p>
+        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+          <Button variant="outline" className="sm:w-auto" onClick={() => navigate("/")}>
+            Back to Learn
+          </Button>
+          <Button className="sm:w-auto" onClick={() => navigate("/speed")}>
+            Speed round
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   const stage = stages[stageIdx];
   const advance = () => setStageIdx((i) => Math.min(i + 1, stages.length - 1));
 
@@ -78,11 +103,18 @@ export default function CasePlay() {
     const prevProgress = next.caseProgress?.[clinicalCase.id];
     const attempts = (prevProgress?.attempts || 0) + 1;
 
+    let competency = next.competency || {};
+    for (const [dim, pct] of Object.entries(scored.breakdown)) {
+      const bucketType = BREAKDOWN_TO_BUCKET_TYPE[dim];
+      if (bucketType) competency = updateMastery(competency, bucketKey(clinicalCase.module, bucketType), pct);
+    }
+
     next = {
       ...next,
       xp: next.xp + xp,
       daily_xp: next.daily_xp + xp,
       mastery: updateMastery(next.mastery, clinicalCase.subject, scored.accuracy),
+      competency,
       total_cases_completed: (next.total_cases_completed || 0) + 1,
       perfect_cases: (next.perfect_cases || 0) + (scored.accuracy >= 100 ? 1 : 0),
       hearts: heartsAfterCase(next.hearts ?? 5, scored.accuracy),

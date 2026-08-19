@@ -105,10 +105,14 @@ export function rollStreak(profile, today = todayStr()) {
   };
 }
 
-/** Resets daily_xp when the calendar date has rolled over since last play. */
+/**
+ * Resets daily_xp and refills hearts to full when the calendar date has
+ * rolled over since last play. Hearts have no other regen mechanic, so a
+ * daily reset is what keeps a bad session from being a permanent lockout.
+ */
 export function ensureDailyFresh(profile, today = todayStr()) {
   if (profile.daily_goal_date === today) return profile;
-  return { ...profile, daily_xp: 0, daily_goal_date: today };
+  return { ...profile, daily_xp: 0, daily_goal_date: today, hearts: 5 };
 }
 
 /** Exponential moving average — recent performance matters more than history. */
@@ -138,6 +142,12 @@ export function xpForCase(reward, accuracy) {
 export function heartsAfterCase(hearts, accuracy) {
   const wrongs = Math.round(((100 - accuracy) / 100) * 5);
   return Math.min(5, Math.max(0, hearts - wrongs + 1));
+}
+
+/** Speed round timer: wrong answers cost 10s; a correct-answer streak of 2+ earns 5s each time. */
+export function speedRoundTimerDelta(isCorrect, comboAfter) {
+  if (!isCorrect) return -10;
+  return comboAfter >= 2 ? 5 : 0;
 }
 
 export function isAchievementEarned(achievement, profile) {

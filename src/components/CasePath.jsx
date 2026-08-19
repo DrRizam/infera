@@ -1,5 +1,9 @@
-import { Check, Lock, Star } from "lucide-react";
+import { Activity, Bone, Check, Dumbbell, Footprints, HeartPulse, Lock, Star, Stethoscope } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+// Cycled by node index, same as Duolingo repeats a small icon set along a
+// long skill path rather than having unique art per lesson.
+const NODE_ICONS = [Dumbbell, Activity, Bone, HeartPulse, Footprints, Stethoscope];
 
 /**
  * Staggered vertical path of case nodes, strictly sequential: a case stays
@@ -21,6 +25,7 @@ export default function CasePath({ cases, progressByCaseId, onOpen }) {
         const inProgress = progress?.status === "in_progress";
         const locked = !unlocked;
         if (!done) unlocked = false;
+        const NodeIcon = NODE_ICONS[i % NODE_ICONS.length];
 
         return (
           <button
@@ -29,12 +34,12 @@ export default function CasePath({ cases, progressByCaseId, onOpen }) {
             onClick={() => onOpen(c.id)}
             title={c.title}
             className={cn(
-              "relative flex h-16 w-16 items-center justify-center rounded-full border-4 shadow-sm transition-transform hover:scale-105",
+              "relative flex h-16 w-16 items-center justify-center rounded-full border-2 transition-transform active:translate-y-1",
               i % 2 === 0 ? "-translate-x-6" : "translate-x-6",
-              done && "bg-emerald-100 border-emerald-500 text-emerald-700",
-              inProgress && "bg-amber-100 border-amber-500 text-amber-700",
-              locked && "bg-muted border-border text-muted-foreground cursor-not-allowed hover:scale-100",
-              !done && !inProgress && !locked && "bg-primary/10 border-primary text-primary"
+              done && "bg-emerald-100 border-emerald-500 border-b-[6px] text-emerald-700",
+              inProgress && "bg-amber-100 border-amber-500 border-b-[6px] text-amber-700",
+              locked && "bg-muted border-border text-muted-foreground cursor-not-allowed",
+              !done && !inProgress && !locked && "bg-primary/10 border-primary border-b-[6px] text-primary"
             )}
           >
             {locked ? (
@@ -42,7 +47,7 @@ export default function CasePath({ cases, progressByCaseId, onOpen }) {
             ) : done ? (
               <Check className="h-6 w-6" />
             ) : (
-              <span className="text-sm font-extrabold">{i + 1}</span>
+              <NodeIcon className="h-6 w-6" />
             )}
             {done && progress?.accuracy >= 90 && (
               <Star className="absolute -top-2 -right-1 h-5 w-5 fill-amber-400 text-amber-500" />

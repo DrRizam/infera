@@ -1,36 +1,49 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
 import { levelFromXp } from "@/lib/gamification";
-import { resetProfile } from "@/lib/store";
+import { ACHIEVEMENTS } from "@/data/achievements";
 import LevelRing from "@/components/LevelRing";
-import MasteryBars from "@/components/MasteryBars";
+import AchievementBadge from "@/components/AchievementBadge";
+import CompetencyMap from "@/components/CompetencyMap";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 export default function Profile() {
   const { profile } = useProfile();
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const lvl = levelFromXp(profile.xp || 0);
 
-  const handleReset = async () => {
-    if (!window.confirm("Reset all progress? This can't be undone.")) return;
-    await resetProfile(user.id);
-    window.location.reload();
-  };
+  const [followerCount, setFollowerCount] = useState(0);
+  const [followingCount, setFollowingCount] = useState(0);
+  const [expanded, setExpanded] = useState(null); // "followers" | "following" | null
+  const [list, setList] = useState([]);
 
-  const handleDeleteAccount = async () => {
-    if (!window.confirm("Delete your account? This permanently erases all your progress and cannot be undone.")) return;
-    const { error } = await supabase.rpc("delete_own_account");
-    if (error) {
-      console.error("Failed to delete account", error);
-      window.alert("Something went wrong deleting your account. Please try again.");
+  useEffect(() => {
+    supabase
+      .from("follows")
+      .select("*", { count: "exact", head: true })
+      .eq("followee_id", user.id)
+      .then(({ count }) => setFollowerCount(count || 0));
+    supabase
+      .from("follows")
+      .select("*", { count: "exact", head: true })
+      .eq("follower_id", user.id)
+      .then(({ count }) => setFollowingCount(count || 0));
+  }, [user.id]);
+
+  const toggleExpanded = async (which) => {
+    if (expanded === which) {
+      setExpanded(null);
       return;
     }
-    await signOut();
-    navigate("/login", { replace: true });
+    setExpanded(which);
+    const { data, error } = await supabase.rpc(which === "followers" ? "list_followers" : "list_following");
+    if (error) console.error(`Failed to load ${which}`, error);
+    setList(data || []);
   };
 
   return (
@@ -38,8 +51,10 @@ export default function Profile() {
       <div className="flex items-center gap-4">
         <LevelRing level={lvl.level} progress={lvl.progress} size={72} />
         <div>
-          <h1 className="text-lg font-extrabold">{lvl.title}</h1>
-          <p className="text-sm text-muted-foreground">Level {lvl.level}</p>
+          <h1 className="text-lg font-extrabold">{profile.display_name || "Unnamed"}</h1>
+          <p className="text-sm text-muted-foreground">
+            {lvl.title} · Level {lvl.level}
+          </p>
         </div>
       </div>
 
@@ -66,25 +81,55 @@ export default function Profile() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Mastery</CardTitle>
+          <CardTitle>Competency map</CardTitle>
         </CardHeader>
         <CardContent>
-          <MasteryBars mastery={profile.mastery} />
+          <CompetencyMap competency={profile.competency} />
         </CardContent>
       </Card>
 
-      <p className="text-center text-xs text-muted-foreground">{user?.email}</p>
+      <Card>
+        <CardContent className="flex divide-x divide-border p-0">
+          <button className="flex-1 py-3 text-center" onClick={() => toggleExpanded("followers")}>
+            <div className="text-lg font-extrabold">{followerCount}</div>
+            <div className="text-xs text-muted-foreground">Followers</div>
+          </button>
+          <button className="flex-1 py-3 text-center" onClick={() => toggleExpanded("following")}>
+            <div className="text-lg font-extrabold">{followingCount}</div>
+            <div className="text-xs text-muted-foreground">Following</div>
+          </button>
+        </CardContent>
+        {expanded && (
+          <CardContent className="border-t border-border pt-3">
+            {list.length === 0 ? (
+              <p className="text-sm text-muted-foreground">Nobody here yet.</p>
+            ) : (
+              <ul className="space-y-1">
+                {list.map((p) => (
+                  <li key={p.user_id} className="flex items-center justify-between text-sm">
+                    <span>{p.display_name}</span>
+                    <span className="font-bold text-primary">{p.xp} XP</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </CardContent>
+        )}
+      </Card>
 
-      <Button variant="outline" className="w-full" onClick={handleReset}>
-        Reset all progress
-      </Button>
+      <Card>
+        <CardHeader>
+          <CardTitle>Achievements</CardTitle>
+        </CardHeader>
+        <CardContent className="grid grid-cols-2 gap-3">
+          {ACHIEVEMENTS.map((a) => (
+            <AchievementBadge key={a.code} achievement={a} profile={profile} />
+          ))}
+        </CardContent>
+      </Card>
 
-      <Button variant="ghost" className="w-full" onClick={signOut}>
-        Sign out
-      </Button>
-
-      <Button variant="destructive" className="w-full" onClick={handleDeleteAccount}>
-        Delete account
+      <Button variant="outline" className="w-full" onClick={() => navigate("/settings")}>
+        Settings
       </Button>
     </div>
   );

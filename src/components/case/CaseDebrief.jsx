@@ -84,6 +84,20 @@ export default function CaseDebrief({ clinicalCase, result, xpEarned, dailyBonus
         )}
       </div>
 
+      {result.citations?.length > 0 && (
+        <div className="rounded-lg border border-border bg-card p-4">
+          <h3 className="mb-2 font-bold">Evidence for what you got right</h3>
+          <ul className="space-y-2">
+            {result.citations.map((c, i) => (
+              <li key={i} className="text-sm">
+                <span className="font-semibold text-emerald-700">{c.label}</span>
+                <p className="text-xs text-muted-foreground">{c.detail}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className="rounded-lg border border-border bg-card p-4 text-center">
         <div className="text-2xl font-extrabold text-primary">+{xpEarned} XP</div>
         {dailyBonus && <p className="text-xs text-amber-600">Daily hard case bonus applied (+50%)</p>}

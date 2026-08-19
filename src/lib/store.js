@@ -17,12 +17,16 @@ const DEFAULT_PROFILE = {
   daily_goal_date: null,
   hearts: 5,
   mastery: {},
+  /** "{module}:{exam|red_flag|differential|disposition|history}" -> EMA accuracy 0-100 */
+  competency: {},
   total_cases_completed: 0,
   perfect_cases: 0,
   speed_rounds_played: 0,
   best_speed_score: 0,
   /** case id -> { status, accuracy, xp_earned, attempts, completed_date, next_review_date, last_played_date } */
   caseProgress: {},
+  /** recall item id -> { last_result, attempts, next_review_date, last_played_date } */
+  itemProgress: {},
   /** earned achievement codes */
   achievements: [],
   baseline_completed: false,
@@ -33,28 +37,41 @@ const DEFAULT_PROFILE = {
 
 /** Loads (and lazily creates) the given auth user's profile row. */
 export async function loadProfile(user) {
-  const { data, error } = await supabase.from("profiles").select("state").eq("user_id", user.id).maybeSingle();
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("state, display_name, clinic_name, country, role")
+    .eq("user_id", user.id)
+    .maybeSingle();
 
   if (error) {
     console.error("Failed to load profile, using a fresh in-memory default", error);
     return { ...DEFAULT_PROFILE };
   }
 
-  if (data) return { ...DEFAULT_PROFILE, ...data.state };
+  if (data) {
+    const { state, ...columns } = data;
+    return { ...DEFAULT_PROFILE, ...state, ...columns };
+  }
 
   const fresh = { ...DEFAULT_PROFILE };
+  const displayName = user.user_metadata?.full_name || null;
   const { error: insertError } = await supabase.from("profiles").insert({
     user_id: user.id,
-    display_name: user.user_metadata?.full_name || null,
+    display_name: displayName,
     state: fresh,
   });
   if (insertError) console.error("Failed to create profile row", insertError);
-  return fresh;
+  return { ...fresh, display_name: displayName, clinic_name: null, country: null, role: null };
 }
 
+// display_name/clinic_name/country/role are real columns, not part of the
+// jsonb `state` blob — pulled out here so they never get duplicated into it.
 export async function saveProfile(userId, profile) {
+  const { display_name, clinic_name, country, role, ...state } = profile;
   const write = () =>
-    supabase.from("profiles").upsert({ user_id: userId, state: profile, updated_at: new Date().toISOString() });
+    supabase
+      .from("profiles")
+      .upsert({ user_id: userId, state, display_name, clinic_name, country, role, updated_at: new Date().toISOString() });
 
   let { error } = await write();
   if (error) ({ error } = await write()); // one retry, network hiccups aren't worth a queue at this scale

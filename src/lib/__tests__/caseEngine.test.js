@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  collectCitations,
   scoreDifferential,
   scoreDisposition,
   scoreEncounter,
@@ -91,6 +92,11 @@ describe("scoreRedFlags", () => {
     expect(missed.missed.map((f) => f.id)).toEqual(["night-pain"]);
     expect(falsePositive.falsePos.map((f) => f.id)).toEqual(["trauma"]);
   });
+
+  it("reports correctly-caught flags as true positives", () => {
+    const r = scoreRedFlags(["night-pain"], redFlags);
+    expect(r.truePositives.map((f) => f.id)).toEqual(["night-pain"]);
+  });
 });
 
 describe("scoreDifferential", () => {
@@ -152,6 +158,20 @@ describe("scoreEncounter", () => {
     expect(result.errors).toEqual([]);
   });
 
+  it("cites evidence for what was caught correctly, not just errors", () => {
+    const answers = {
+      history: { q1: 0, q2: 0 },
+      redFlags: ["night-pain"],
+      differentialRanking: ["bone-stress", "pfp", "tendinopathy"],
+      examinations: ["hop-test", "mri"],
+      disposition: "investigate",
+    };
+    const result = scoreEncounter(answers, clinicalCase);
+    const kinds = result.citations.map((c) => c.kind);
+    expect(kinds).toContain("red_flag");
+    expect(kinds).toContain("disposition");
+  });
+
   it("flags under-escalation as a safety error on an unsafe encounter", () => {
     const answers = {
       history: {},
@@ -169,6 +189,34 @@ describe("scoreEncounter", () => {
     expect(kinds).toContain("over_investigation");
     expect(kinds).toContain("incomplete_exam");
     expect(kinds).toContain("history_gap");
+  });
+});
+
+describe("collectCitations", () => {
+  it("cites a true-positive red flag's rationale", () => {
+    const redFlagResult = scoreRedFlags(["night-pain"], redFlags);
+    const dispositionResult = scoreDisposition("treat", disposition);
+    const citations = collectCitations({ clinicalCase, redFlagResult, dispositionResult, disposition: "treat" });
+    expect(citations).toEqual([{ kind: "red_flag", label: "Night pain", detail: "Bone-stress hallmark." }]);
+  });
+
+  it("cites the disposition rationale only when the choice was correct", () => {
+    const redFlagResult = scoreRedFlags([], redFlags);
+    const wrong = collectCitations({
+      clinicalCase,
+      redFlagResult,
+      dispositionResult: scoreDisposition("treat", disposition),
+      disposition: "treat",
+    });
+    expect(wrong.some((c) => c.kind === "disposition")).toBe(false);
+
+    const right = collectCitations({
+      clinicalCase,
+      redFlagResult,
+      dispositionResult: scoreDisposition("investigate", disposition),
+      disposition: "investigate",
+    });
+    expect(right.some((c) => c.kind === "disposition")).toBe(true);
   });
 });
 

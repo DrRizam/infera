@@ -60,7 +60,7 @@ export function scoreRedFlags(selected, redFlags) {
   const precision = sel.length ? truePositives.length / sel.length : present.length ? 0 : 1;
   const score = recall * 0.8 + precision * 0.2;
 
-  return { score, missed, falsePos };
+  return { score, missed, falsePos, truePositives };
 }
 
 /** How close the true diagnosis landed to the learner's top, plus exact-order credit. */
@@ -112,6 +112,27 @@ export function scoreDisposition(choice, disposition) {
   const score = diff === 0 ? 1 : Math.abs(diff) === 1 ? 0.5 : 0.2;
 
   return { score, under: diff < 0, over: diff > 0 };
+}
+
+/**
+ * Evidence for what the learner got right, not just what they missed — a
+ * correct answer reveal should cite the same rationale/evidence an error
+ * would, not just a checkmark. Kept separate from detectErrors() since this
+ * is a citation list, not a reasoning-error list.
+ */
+export function collectCitations({ clinicalCase: c, redFlagResult, dispositionResult, disposition }) {
+  const citations = [];
+
+  for (const f of redFlagResult.truePositives) {
+    if (f.rationale) citations.push({ kind: "red_flag", label: f.label, detail: f.rationale });
+  }
+
+  if (dispositionResult.score === 1 && c.disposition?.rationale) {
+    const chosenOpt = c.disposition.options.find((o) => o.id === disposition);
+    citations.push({ kind: "disposition", label: chosenOpt?.label || "Disposition", detail: c.disposition.rationale });
+  }
+
+  return citations;
 }
 
 /** Named reasoning errors, not just a score — the debrief cites the actual decision. */
@@ -211,6 +232,7 @@ export function scoreEncounter(answers, clinicalCase) {
   const accuracy = Math.round(weighted * 100);
 
   const errors = detectErrors({ clinicalCase, answers, redFlagResult, dispositionResult });
+  const citations = collectCitations({ clinicalCase, redFlagResult, dispositionResult, disposition: answers.disposition });
 
   return {
     accuracy,
@@ -222,6 +244,7 @@ export function scoreEncounter(answers, clinicalCase) {
       disposition: Math.round(dispositionResult.score * 100),
     },
     errors,
+    citations,
     missedRedFlags: redFlagResult.missed,
     falsePositiveRedFlags: redFlagResult.falsePos,
   };

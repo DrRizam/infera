@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
+import { CheckCircle2, Timer, Trophy, Zap } from "lucide-react";
 import { CASES } from "@/data/cases";
 import { useProfile } from "@/lib/ProfileContext";
+import { speedRoundTimerDelta } from "@/lib/gamification";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +22,7 @@ export default function SpeedRound() {
   const [order, setOrder] = useState([]);
   const [idx, setIdx] = useState(0);
   const [correct, setCorrect] = useState(0);
+  const [combo, setCombo] = useState(0);
   const [picked, setPicked] = useState(null);
 
   useEffect(() => {
@@ -46,6 +49,7 @@ export default function SpeedRound() {
     setOrder([...pool].sort(() => Math.random() - 0.5));
     setIdx(0);
     setCorrect(0);
+    setCombo(0);
     setSecondsLeft(ROUND_SECONDS);
     setPicked(null);
     setFinished(false);
@@ -55,7 +59,13 @@ export default function SpeedRound() {
   const answer = (i) => {
     if (picked !== null) return;
     setPicked(i);
-    if (i === order[idx].correct) setCorrect((c) => c + 1);
+    const isCorrect = i === order[idx].correct;
+    if (isCorrect) setCorrect((c) => c + 1);
+    setCombo((prev) => {
+      const next = isCorrect ? prev + 1 : 0;
+      setSecondsLeft((s) => Math.max(0, s + speedRoundTimerDelta(isCorrect, next)));
+      return next;
+    });
     setTimeout(() => {
       setPicked(null);
       if (idx + 1 >= order.length) setFinished(true);
@@ -65,23 +75,33 @@ export default function SpeedRound() {
 
   if (!started) {
     return (
-      <div className="space-y-4 text-center">
-        <h1 className="text-xl font-bold">Speed round</h1>
+      <div className="flex flex-col items-center space-y-4 py-8 text-center">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent text-primary">
+          <Zap className="h-7 w-7" />
+        </div>
+        <h1 className="text-2xl font-black tracking-tight sm:text-3xl">Speed round</h1>
         <p className="text-sm text-muted-foreground">Sixty seconds, as many as you can answer.</p>
-        <Button onClick={start} disabled={!pool.length}>
-          Start
-        </Button>
+        {pool.length ? (
+          <Button size="lg" onClick={start}>
+            Start
+          </Button>
+        ) : (
+          <p className="text-sm text-muted-foreground">No speed questions available yet.</p>
+        )}
       </div>
     );
   }
 
   if (finished) {
     return (
-      <div className="space-y-4 text-center">
-        <h1 className="text-xl font-bold">Time's up</h1>
+      <div className="flex flex-col items-center space-y-4 py-8 text-center">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent text-primary">
+          <Trophy className="h-7 w-7" />
+        </div>
+        <h1 className="text-2xl font-black tracking-tight sm:text-3xl">Time's up</h1>
         <p className="text-3xl font-extrabold text-primary">{correct} correct</p>
         <p className="text-sm text-muted-foreground">Best: {Math.max(profile.best_speed_score || 0, correct)}</p>
-        <Button onClick={start}>Play again</Button>
+        <Button size="lg" onClick={start}>Play again</Button>
       </div>
     );
   }
@@ -91,9 +111,9 @@ export default function SpeedRound() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between text-sm font-bold">
-        <span>⏱ {secondsLeft}s</span>
-        <span>{correct} correct</span>
+      <div className="flex justify-between">
+        <span className="status-pill text-primary"><Timer className="h-3.5 w-3.5" />{secondsLeft}s</span>
+        <span className="status-pill text-emerald-600"><CheckCircle2 className="h-3.5 w-3.5" />{correct} correct</span>
       </div>
       <p className="font-semibold">{q.prompt}</p>
       <div className="space-y-2">
@@ -103,10 +123,10 @@ export default function SpeedRound() {
             onClick={() => answer(i)}
             disabled={picked !== null}
             className={cn(
-              "block w-full rounded-md border px-3 py-2 text-left text-sm",
+              "block w-full rounded-xl border-2 px-4 py-3 text-left text-sm",
               picked !== null && i === q.correct && "border-emerald-500 bg-emerald-50",
               picked === i && i !== q.correct && "border-destructive bg-destructive/10",
-              picked === null && "border-border hover:border-primary"
+              picked === null && "border-border bg-card hover:border-primary"
             )}
           >
             {opt}

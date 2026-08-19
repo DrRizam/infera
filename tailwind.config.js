@@ -19,14 +19,17 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          shade: "hsl(var(--primary-shade))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
+          shade: "hsl(var(--secondary-shade))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
+          shade: "hsl(var(--destructive-shade))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",

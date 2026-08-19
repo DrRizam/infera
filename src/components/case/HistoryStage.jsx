@@ -32,8 +32,9 @@ function HistoryQuestion({ caseId, question, picked, onPick }) {
         ))}
       </div>
       {answered && (
-        <div className="mt-3 rounded-md bg-muted p-2 text-sm">
+        <div className="mt-3 space-y-1.5 rounded-md bg-muted p-2 text-sm">
           <p className="italic">"{question.answer}"</p>
+          {question.rationale && <p className="text-xs text-muted-foreground">{question.rationale}</p>}
         </div>
       )}
     </div>

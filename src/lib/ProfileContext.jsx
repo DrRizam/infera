@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { loadProfile, saveProfile } from "@/lib/store";
 import { useAuth } from "@/lib/AuthContext";
+import { ensureDailyFresh, todayStr } from "@/lib/gamification";
 
 const ProfileContext = createContext(null);
 
@@ -19,7 +20,9 @@ export function ProfileProvider({ children }) {
     setLoading(true);
     loadProfile(user).then((loaded) => {
       if (!cancelled) {
-        setProfileState(loaded);
+        const fresh = ensureDailyFresh(loaded, todayStr());
+        if (fresh !== loaded) saveProfile(user.id, fresh);
+        setProfileState(fresh);
         setLoading(false);
       }
     });

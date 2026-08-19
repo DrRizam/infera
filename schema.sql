@@ -9,6 +9,9 @@
 create table public.profiles (
   user_id uuid primary key references auth.users(id) on delete cascade,
   display_name text,
+  clinic_name text,
+  country text,
+  role text check (role is null or role in ('dpt_student', 'new_grad', 'practicing_pt', 'other')),
   state jsonb not null default '{}'::jsonb,
   updated_at timestamptz not null default now()
 );
@@ -33,9 +36,20 @@ create table public.case_attempts (
 create index case_attempts_user_idx on public.case_attempts (user_id, played_at desc);
 create index case_attempts_module_idx on public.case_attempts (user_id, case_module);
 
+-- ── follows (one-way, Twitter-style — no approval needed) ───────────────
+create table public.follows (
+  follower_id uuid not null references auth.users(id) on delete cascade,
+  followee_id uuid not null references auth.users(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  primary key (follower_id, followee_id),
+  constraint follows_no_self_follow check (follower_id <> followee_id)
+);
+create index follows_followee_idx on public.follows (followee_id);
+
 -- ── RLS ───────────────────────────────────────────────────────────────
 alter table public.profiles      enable row level security;
 alter table public.case_attempts enable row level security;
+alter table public.follows       enable row level security;
 
 create policy profiles_select on public.profiles
   for select using (user_id = auth.uid());
@@ -49,6 +63,15 @@ create policy case_attempts_select on public.case_attempts
   for select using (user_id = auth.uid());
 create policy case_attempts_insert_own on public.case_attempts
   for insert with check (user_id = auth.uid());
+
+-- A user can see their own follows on either side (who they follow, who
+-- follows them), and can only create/remove rows where they're the follower.
+create policy follows_select on public.follows
+  for select using (follower_id = auth.uid() or followee_id = auth.uid());
+create policy follows_insert_own on public.follows
+  for insert with check (follower_id = auth.uid());
+create policy follows_delete_own on public.follows
+  for delete using (follower_id = auth.uid());
 
 -- ── Self-service account deletion ────────────────────────────────────
 -- security definer so this runs with the function owner's (postgres)
@@ -64,3 +87,91 @@ end;
 $$;
 
 grant execute on function public.delete_own_account() to authenticated;
+
+-- ── Leaderboard / social — narrow security-definer functions ────────────
+-- These never expose the `state` jsonb blob (mastery, caseProgress,
+-- achievements) to other users, only the whitelisted columns below. RLS on
+-- `profiles` stays fully self-scoped; these are the one deliberate, narrow
+-- exception to that, mirroring delete_own_account()'s pattern.
+--
+-- Windowed to the current calendar week (Mon-Sun, Postgres's default
+-- `date_trunc('week', ...)` boundary) and summed from `case_attempts`
+-- rather than lifetime `state->>xp` — a permanent global rank reads badly
+-- to a professional audience and goes stale; a weekly, cohort-scoped board
+-- resets the game every week instead of calcifying into a fixed pecking
+-- order. A user with no attempts this week simply doesn't appear.
+create or replace function public.leaderboard_weekly_global(limit_n int default 50)
+returns table(user_id uuid, display_name text, xp int)
+language sql security definer set search_path = public stable as $$
+  select p.user_id, coalesce(p.display_name, 'Anonymous'), sum(ca.xp_earned)::int as xp
+  from public.profiles p
+  join public.case_attempts ca on ca.user_id = p.user_id
+  where ca.played_at >= date_trunc('week', now())
+  group by p.user_id, p.display_name
+  order by xp desc
+  limit limit_n;
+$$;
+grant execute on function public.leaderboard_weekly_global(int) to authenticated;
+
+create or replace function public.leaderboard_weekly_friends(limit_n int default 50)
+returns table(user_id uuid, display_name text, xp int)
+language sql security definer set search_path = public stable as $$
+  select p.user_id, coalesce(p.display_name, 'Anonymous'), sum(ca.xp_earned)::int as xp
+  from public.profiles p
+  join public.case_attempts ca on ca.user_id = p.user_id
+  where ca.played_at >= date_trunc('week', now())
+    and (p.user_id = auth.uid() or p.user_id in (select followee_id from public.follows where follower_id = auth.uid()))
+  group by p.user_id, p.display_name
+  order by xp desc
+  limit limit_n;
+$$;
+grant execute on function public.leaderboard_weekly_friends(int) to authenticated;
+
+-- Cohort-scoped by specialty (case_module) rather than a global pool —
+-- "how am I doing against other people practicing Sports Physio this week."
+create or replace function public.leaderboard_weekly_specialty(module text, limit_n int default 50)
+returns table(user_id uuid, display_name text, xp int)
+language sql security definer set search_path = public stable as $$
+  select p.user_id, coalesce(p.display_name, 'Anonymous'), sum(ca.xp_earned)::int as xp
+  from public.profiles p
+  join public.case_attempts ca on ca.user_id = p.user_id
+  where ca.played_at >= date_trunc('week', now())
+    and ca.case_module = module
+  group by p.user_id, p.display_name
+  order by xp desc
+  limit limit_n;
+$$;
+grant execute on function public.leaderboard_weekly_specialty(text, int) to authenticated;
+
+create or replace function public.search_users(query text, limit_n int default 20)
+returns table(user_id uuid, display_name text, following boolean)
+language sql security definer set search_path = public stable as $$
+  select p.user_id, p.display_name,
+         exists(select 1 from public.follows f where f.follower_id = auth.uid() and f.followee_id = p.user_id)
+  from public.profiles p
+  where p.user_id <> auth.uid()
+    and p.display_name is not null
+    and p.display_name ilike '%' || query || '%'
+  limit limit_n;
+$$;
+grant execute on function public.search_users(text, int) to authenticated;
+
+create or replace function public.list_following()
+returns table(user_id uuid, display_name text, xp int)
+language sql security definer set search_path = public stable as $$
+  select p.user_id, coalesce(p.display_name, 'Anonymous'), coalesce((p.state->>'xp')::int, 0)
+  from public.follows f join public.profiles p on p.user_id = f.followee_id
+  where f.follower_id = auth.uid()
+  order by p.display_name;
+$$;
+grant execute on function public.list_following() to authenticated;
+
+create or replace function public.list_followers()
+returns table(user_id uuid, display_name text, xp int)
+language sql security definer set search_path = public stable as $$
+  select p.user_id, coalesce(p.display_name, 'Anonymous'), coalesce((p.state->>'xp')::int, 0)
+  from public.follows f join public.profiles p on p.user_id = f.follower_id
+  where f.followee_id = auth.uid()
+  order by p.display_name;
+$$;
+grant execute on function public.list_followers() to authenticated;
