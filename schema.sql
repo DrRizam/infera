@@ -39,6 +39,31 @@ create table public.case_attempts (
 create index case_attempts_user_idx on public.case_attempts (user_id, played_at desc);
 create index case_attempts_module_idx on public.case_attempts (user_id, case_module);
 
+-- ── notifications (persisted, per-user, read/unread) ─────────────────────
+-- Every row is owned by one user, even a future "broadcast" announcement
+-- would just insert one row per recipient — simpler than a shared-row +
+-- per-user-read-state join for the scale this app is at.
+create table public.notifications (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  type text not null default 'general',
+  title text not null,
+  body text,
+  read_at timestamptz,
+  created_at timestamptz not null default now()
+);
+create index notifications_user_idx on public.notifications (user_id, created_at desc);
+
+-- ── feedback (append-only, user -> founder) ──────────────────────────────
+-- No in-app reader needed yet — read via the Supabase table editor.
+create table public.feedback (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  message text not null,
+  created_at timestamptz not null default now()
+);
+create index feedback_user_idx on public.feedback (user_id, created_at desc);
+
 -- ── follows (one-way, Twitter-style — no approval needed) ───────────────
 create table public.follows (
   follower_id uuid not null references auth.users(id) on delete cascade,
@@ -52,6 +77,8 @@ create index follows_followee_idx on public.follows (followee_id);
 -- ── RLS ───────────────────────────────────────────────────────────────
 alter table public.profiles      enable row level security;
 alter table public.case_attempts enable row level security;
+alter table public.notifications enable row level security;
+alter table public.feedback      enable row level security;
 alter table public.follows       enable row level security;
 
 create policy profiles_select on public.profiles
@@ -65,6 +92,21 @@ create policy profiles_update_own on public.profiles
 create policy case_attempts_select on public.case_attempts
   for select using (user_id = auth.uid());
 create policy case_attempts_insert_own on public.case_attempts
+  for insert with check (user_id = auth.uid());
+
+-- Notifications: a user can only see/insert/mark-read their own. No delete
+-- policy — clearing is done by marking read, not removing the row.
+create policy notifications_select on public.notifications
+  for select using (user_id = auth.uid());
+create policy notifications_insert_own on public.notifications
+  for insert with check (user_id = auth.uid());
+create policy notifications_update_own on public.notifications
+  for update using (user_id = auth.uid()) with check (user_id = auth.uid());
+
+-- No update/delete policy on feedback either -- append-only.
+create policy feedback_select on public.feedback
+  for select using (user_id = auth.uid());
+create policy feedback_insert_own on public.feedback
   for insert with check (user_id = auth.uid());
 
 -- A user can see their own follows on either side (who they follow, who

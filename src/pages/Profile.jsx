@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { MessageSquare } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
@@ -23,6 +24,10 @@ export default function Profile() {
   const [list, setList] = useState([]);
   const [showAllAchievements, setShowAllAchievements] = useState(false);
 
+  const [feedback, setFeedback] = useState("");
+  const [feedbackSending, setFeedbackSending] = useState(false);
+  const [feedbackNotice, setFeedbackNotice] = useState("");
+
   useEffect(() => {
     supabase
       .from("follows")
@@ -35,6 +40,23 @@ export default function Profile() {
       .eq("follower_id", user.id)
       .then(({ count }) => setFollowingCount(count || 0));
   }, [user.id]);
+
+  const submitFeedback = async (e) => {
+    e.preventDefault();
+    const message = feedback.trim();
+    if (!message) return;
+    setFeedbackSending(true);
+    setFeedbackNotice("");
+    const { error } = await supabase.from("feedback").insert({ user_id: user.id, message });
+    setFeedbackSending(false);
+    if (error) {
+      console.error("Failed to send feedback", error);
+      setFeedbackNotice("Something went wrong sending that — try again?");
+      return;
+    }
+    setFeedback("");
+    setFeedbackNotice("Thanks — got it.");
+  };
 
   const toggleExpanded = async (which) => {
     if (expanded === which) {
@@ -174,6 +196,31 @@ export default function Profile() {
               {showAllAchievements ? "View less" : `View more (${ACHIEVEMENTS.length - 4})`}
             </Button>
           )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <MessageSquare className="h-4 w-4" />
+            Feedback
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form className="space-y-3" onSubmit={submitFeedback}>
+            <p className="text-sm text-muted-foreground">Anything feel off, missing, or worth improving? Tell us directly.</p>
+            <textarea
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+              placeholder="What's on your mind?"
+              rows={3}
+              className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            />
+            {feedbackNotice && <p className="text-sm text-primary">{feedbackNotice}</p>}
+            <Button type="submit" className="w-full" disabled={feedbackSending || !feedback.trim()}>
+              {feedbackSending ? "Sending…" : "Send feedback"}
+            </Button>
+          </form>
         </CardContent>
       </Card>
 

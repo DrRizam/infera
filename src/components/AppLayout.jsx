@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { Award, Flame, Home, LogOut, Shield, Trophy, User, Zap } from "lucide-react";
 import LevelRing from "@/components/LevelRing";
+import NotificationBell from "@/components/NotificationBell";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { levelFromXp } from "@/lib/gamification";
@@ -40,6 +41,7 @@ export default function AppLayout() {
             <span className="status-pill text-orange-600" title="Streak"><Flame className="h-3.5 w-3.5" />{profile.streak_count ?? 0}</span>
             <span className="status-pill hidden text-sky-600 sm:flex" title="Rest shields"><Shield className="h-3.5 w-3.5" />{profile.rest_shields ?? 0}</span>
             <span className="status-pill hidden text-amber-600 sm:flex" title="Total XP"><Zap className="h-3.5 w-3.5" />{profile.xp ?? 0}</span>
+            <NotificationBell />
             <button type="button" title="Sign out" aria-label="Sign out" onClick={signOut} className="ml-1 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
               <LogOut className="h-4 w-4" />
             </button>

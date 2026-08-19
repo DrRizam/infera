@@ -7,6 +7,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { scoreEncounter } from "@/lib/caseEngine";
 import { buildCaseAttemptRow } from "@/lib/caseAttempts";
 import { BREAKDOWN_TO_BUCKET_TYPE, bucketKey } from "@/lib/competency";
+import { createNotification } from "@/lib/notifications";
 import {
   classifyCalibration,
   ensureDailyFresh,
@@ -133,6 +134,11 @@ export default function CasePlay() {
       .then(({ error }) => {
         if (error) console.error("Failed to record case attempt", error);
       });
+
+    if (leveledUp) {
+      const { title } = levelFromXp(next.xp);
+      createNotification(user.id, { type: "level_up", title: "Level up!", body: `You're now a ${title}.` });
+    }
 
     setResult({ scored, xp, shieldUsed, leveledUp, streak: next.streak_count });
     setStageIdx(stages.length - 1);
