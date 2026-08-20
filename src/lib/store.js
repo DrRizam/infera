@@ -33,15 +33,18 @@ const DEFAULT_PROFILE = {
   baseline_completed: false,
   /** self-reported at onboarding: "student" | "some" | "experienced" */
   experience_level: null,
-  /** module id, or null for "Mixed" */
-  focus_module: null,
+  /** module ids; empty array means "Mixed" (no narrowing) */
+  focus_modules: [],
 };
 
 /** Loads (and lazily creates) the given auth user's profile row. */
 export async function loadProfile(user) {
   const { data, error } = await supabase
     .from("profiles")
-    .select("state, display_name, clinic_name, country, role, role_other_label, phone, email_opt_in")
+    .select(
+      "state, display_name, clinic_name, country, role, role_other_label, phone, email_opt_in, " +
+        "subscription_status, stripe_customer_id, stripe_subscription_id, subscription_current_period_end"
+    )
     .eq("user_id", user.id)
     .maybeSingle();
 
@@ -52,7 +55,13 @@ export async function loadProfile(user) {
 
   if (data) {
     const { state, ...columns } = data;
-    return { ...DEFAULT_PROFILE, ...state, ...columns };
+    const merged = { ...DEFAULT_PROFILE, ...state, ...columns };
+    // Migrate the old single-module field (pre multi-select) so an
+    // existing user's prior choice isn't silently dropped.
+    if (!state?.focus_modules && state?.focus_module) {
+      merged.focus_modules = [state.focus_module];
+    }
+    return merged;
   }
 
   const fresh = { ...DEFAULT_PROFILE };
@@ -72,6 +81,10 @@ export async function loadProfile(user) {
     role_other_label: null,
     phone: null,
     email_opt_in: false,
+    subscription_status: "free",
+    stripe_customer_id: null,
+    stripe_subscription_id: null,
+    subscription_current_period_end: null,
   };
 }
 
@@ -79,7 +92,28 @@ export async function loadProfile(user) {
 // are real columns, not part of the jsonb `state` blob — pulled out here so
 // they never get duplicated into it.
 export async function saveProfile(userId, profile) {
-  const { display_name, clinic_name, country, role, role_other_label, phone, email_opt_in, ...state } = profile;
+  const {
+    display_name,
+    clinic_name,
+    country,
+    role,
+    role_other_label,
+    phone,
+    email_opt_in,
+    // Real columns too, but deliberately never written back here — the
+    // Postgres column grant in schema.sql blocks the client from updating
+    // them at all; only the Stripe webhook (service-role key) may. Pulling
+    // them out just keeps a stale local copy from leaking into `state`.
+    // eslint-disable-next-line no-unused-vars
+    subscription_status,
+    // eslint-disable-next-line no-unused-vars
+    stripe_customer_id,
+    // eslint-disable-next-line no-unused-vars
+    stripe_subscription_id,
+    // eslint-disable-next-line no-unused-vars
+    subscription_current_period_end,
+    ...state
+  } = profile;
   const write = () =>
     supabase.from("profiles").upsert({
       user_id: userId,

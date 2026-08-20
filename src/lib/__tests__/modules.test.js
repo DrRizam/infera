@@ -28,13 +28,18 @@ describe("conditionOfTheDay", () => {
     expect(picks.size).toBeGreaterThan(1);
   });
 
-  it("respects focusModule when it has cases", () => {
-    const pick = conditionOfTheDay(cases, "msk", "2026-08-17");
+  it("respects focusModules when they have cases", () => {
+    const pick = conditionOfTheDay(cases, ["msk"], "2026-08-17");
     expect(pick.module).toBe("msk");
   });
 
-  it("falls back to the full pool when focusModule has no cases", () => {
-    const pick = conditionOfTheDay(cases, "cardio", "2026-08-17");
+  it("picks from any of several focus modules", () => {
+    const pick = conditionOfTheDay(cases, ["msk", "sports"], "2026-08-17");
+    expect(["msk", "sports"]).toContain(pick.module);
+  });
+
+  it("falls back to the full pool when focusModules have no cases", () => {
+    const pick = conditionOfTheDay(cases, ["cardio"], "2026-08-17");
     expect(pick).not.toBeNull();
   });
 

@@ -5,6 +5,11 @@ dev-dist/
 .env
 .DS_Store
 
+# Supabase CLI local cache — project ref, pooler connection string, tool
+# versions. Machine-local state, not source; supabase/functions/ is the
+# only part of supabase/ meant to be committed.
+supabase/.temp/
+
 # Scratch/reference material, not shipped assets — kept locally, never
 # meant to land in the repo via a broad `git add`.
 /New folder/

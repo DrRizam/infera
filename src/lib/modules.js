@@ -111,16 +111,19 @@ export function dailyHardCase(cases, moduleId, today) {
 /**
  * One educational card per day, independent of spaced-repetition review —
  * deterministic so it's the same pick all day and rotates tomorrow. Biased
- * toward the user's focus module when they have one and it has cases;
- * otherwise (or if that module is empty) falls back to the full case list.
+ * toward the user's focus modules (any number of them) when they have cases
+ * between them; otherwise (or if none of them have cases) falls back to the
+ * full case list.
  */
-export function conditionOfTheDay(cases, focusModule, today) {
+export function conditionOfTheDay(cases, focusModules, today) {
   const all = cases || [];
-  const filtered = focusModule ? all.filter((c) => c.module === focusModule) : all;
+  const focus = focusModules || [];
+  const filtered = focus.length ? all.filter((c) => focus.includes(c.module)) : all;
   const pool = filtered.length ? filtered : all;
   if (!pool.length) return null;
   const sorted = [...pool].sort((a, b) => a.id.localeCompare(b.id));
   const dayIndex = Math.floor(new Date(`${today}T00:00:00Z`).getTime() / 86400000);
-  const idx = (dayIndex + hashStr(focusModule || "mixed")) % sorted.length;
+  const hashKey = focus.length ? [...focus].sort().join(",") : "mixed";
+  const idx = (dayIndex + hashStr(hashKey)) % sorted.length;
   return sorted[idx];
 }

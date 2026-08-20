@@ -39,6 +39,15 @@ export function ProfileProvider({ children }) {
     });
   };
 
+  // Re-fetches from Supabase rather than trusting local state — needed
+  // right after a Stripe Checkout/Portal redirect back, since the webhook
+  // (not this client) is what actually wrote subscription_status.
+  const refreshProfile = async () => {
+    if (!user) return;
+    const loaded = await loadProfile(user);
+    setProfileState(loaded);
+  };
+
   // No signed-in user yet (e.g. on /login) — render children without a profile;
   // every consumer of useProfile() only mounts behind RequireAuth, where a user
   // is guaranteed by the time this resolves.
@@ -48,7 +57,7 @@ export function ProfileProvider({ children }) {
     return <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">Loading…</div>;
   }
 
-  return <ProfileContext.Provider value={{ profile, setProfile }}>{children}</ProfileContext.Provider>;
+  return <ProfileContext.Provider value={{ profile, setProfile, refreshProfile }}>{children}</ProfileContext.Provider>;
 }
 
 export function useProfile() {

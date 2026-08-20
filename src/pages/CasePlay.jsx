@@ -20,6 +20,7 @@ import {
   updateMastery,
   xpForCase,
 } from "@/lib/gamification";
+import { ensureDebriefPeriodFresh, hasFullDebriefsRemaining } from "@/lib/subscription";
 import CaseStageHeader from "@/components/case/CaseStageHeader";
 import PresentationStage from "@/components/case/PresentationStage";
 import HistoryStage from "@/components/case/HistoryStage";
@@ -85,6 +86,10 @@ export default function CasePlay() {
     let next = ensureDailyFresh(profile, todayStr());
     const { profile: streaked, shieldUsed } = rollStreak(next, todayStr());
     next = streaked;
+    next = ensureDebriefPeriodFresh(next);
+    // Decided before the counter increments below, so hitting the cap on
+    // THIS case still shows the limited debrief rather than the full one.
+    const debriefAllowed = hasFullDebriefsRemaining(next, user);
     const prevLevel = levelFromXp(next.xp).level;
 
     const prevProgress = next.caseProgress?.[clinicalCase.id];
@@ -111,6 +116,7 @@ export default function CasePlay() {
       calibration,
       total_cases_completed: (next.total_cases_completed || 0) + 1,
       perfect_cases: (next.perfect_cases || 0) + (scored.accuracy >= 100 ? 1 : 0),
+      debrief_count: (next.debrief_count || 0) + (debriefAllowed ? 1 : 0),
       caseProgress: {
         ...next.caseProgress,
         [clinicalCase.id]: {
@@ -142,7 +148,7 @@ export default function CasePlay() {
       createNotification(user.id, { type: "level_up", title: "Level up!", body: `You're now a ${title}.` });
     }
 
-    setResult({ scored, xp, shieldUsed, leveledUp, streak: next.streak_count });
+    setResult({ scored, xp, shieldUsed, leveledUp, streak: next.streak_count, debriefLimited: !debriefAllowed });
     setStageIdx(stages.length - 1);
   };
 
@@ -221,7 +227,9 @@ export default function CasePlay() {
           shieldUsed={result.shieldUsed}
           leveledUp={result.leveledUp}
           streak={result.streak}
+          debriefLimited={result.debriefLimited}
           onDone={() => navigate("/")}
+          onUpgrade={() => navigate("/settings")}
         />
       )}
     </div>

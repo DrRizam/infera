@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Brain, ChevronDown, Lightbulb, RotateCcw, Zap } from "lucide-react";
+import { Brain, Check, ChevronDown, Lightbulb, RotateCcw, Zap } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { CASES, getCase } from "@/data/cases";
@@ -24,7 +24,7 @@ export default function Home() {
 
   const firstName = (user?.user_metadata?.full_name || "").split(" ")[0] || "there";
   const progressByCaseId = profile.caseProgress || {};
-  const cotd = conditionOfTheDay(CASES, profile.focus_module, todayStr());
+  const cotd = conditionOfTheDay(CASES, profile.focus_modules, todayStr());
   const cotdModule = cotd && getModule(cotd.module);
 
   const today = todayStr();
@@ -51,12 +51,24 @@ export default function Home() {
 
   const dailyGameCaseNumber = currentCaseNumber();
 
-  const focusModule = profile.focus_module;
-  const moduleCases = focusModule ? CASES.filter((c) => c.module === focusModule) : CASES;
-  const pathHeading = (focusModule && getModule(focusModule)?.name) || "Reasoning path";
+  const focusModules = profile.focus_modules || [];
+  const moduleCases = focusModules.length ? CASES.filter((c) => focusModules.includes(c.module)) : CASES;
+  const pathHeading =
+    focusModules.length === 1
+      ? getModule(focusModules[0])?.name || "Reasoning path"
+      : focusModules.length > 1
+      ? `${focusModules.length} focus areas`
+      : "Reasoning path";
 
-  const pickModule = (id) => {
-    setProfile((prev) => ({ ...prev, focus_module: id }));
+  const toggleModule = (id) => {
+    setProfile((prev) => {
+      const current = prev.focus_modules || [];
+      const next = current.includes(id) ? current.filter((m) => m !== id) : [...current, id];
+      return { ...prev, focus_modules: next };
+    });
+  };
+  const clearModules = () => {
+    setProfile((prev) => ({ ...prev, focus_modules: [] }));
     setModuleMenuOpen(false);
   };
 
@@ -201,20 +213,34 @@ export default function Home() {
             <>
               <div className="fixed inset-0 z-10" onClick={() => setModuleMenuOpen(false)} />
               <div className="absolute left-0 top-full z-20 mt-2 w-72 max-h-80 overflow-y-auto rounded-2xl border-2 border-border bg-card p-2 shadow-elevated">
-                {MODULES.map((m) => (
+                <p className="px-3 pb-1 pt-1 text-[11px] font-semibold text-muted-foreground">Tap to select any number</p>
+                {MODULES.map((m) => {
+                  const selected = focusModules.includes(m.id);
+                  return (
+                    <button
+                      key={m.id}
+                      type="button"
+                      onClick={() => toggleModule(m.id)}
+                      className={cn(
+                        "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-bold hover:bg-muted",
+                        selected && "bg-accent text-primary"
+                      )}
+                    >
+                      <m.icon className="h-4 w-4 shrink-0" />
+                      <span className="flex-1">{m.name}</span>
+                      {selected && <Check className="h-4 w-4 shrink-0" />}
+                    </button>
+                  );
+                })}
+                <div className="mt-1 border-t border-border pt-1">
                   <button
-                    key={m.id}
                     type="button"
-                    onClick={() => pickModule(m.id)}
-                    className={cn(
-                      "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-bold hover:bg-muted",
-                      focusModule === m.id && "bg-accent text-primary"
-                    )}
+                    onClick={clearModules}
+                    className="flex w-full items-center rounded-xl px-3 py-2 text-left text-sm font-bold text-muted-foreground hover:bg-muted"
                   >
-                    <m.icon className="h-4 w-4 shrink-0" />
-                    {m.name}
+                    Mixed (clear all)
                   </button>
-                ))}
+                </div>
               </div>
             </>
           )}

@@ -20,19 +20,22 @@ export default function Onboarding() {
 
   const [stageIdx, setStageIdx] = useState(0);
   const [experienceLevel, setExperienceLevel] = useState(null);
-  const [focusModule, setFocusModule] = useState(null);
+  const [focusModules, setFocusModules] = useState([]);
 
   if (profile.baseline_completed) return <Navigate to="/" replace />;
 
   const stage = STAGES[stageIdx];
   const advance = () => setStageIdx((i) => Math.min(i + 1, STAGES.length - 1));
 
+  const toggleFocusModule = (id) =>
+    setFocusModules((prev) => (prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id]));
+
   const finish = () => {
     setProfile((prev) => ({
       ...prev,
       baseline_completed: true,
       experience_level: experienceLevel,
-      focus_module: focusModule,
+      focus_modules: focusModules,
     }));
     navigate("/", { replace: true });
   };
@@ -88,18 +91,18 @@ export default function Onboarding() {
           <>
             <CardHeader className="items-center text-center">
               <Mascot mood="cheerful" className="mb-1 h-14 w-14" />
-              <CardTitle>Pick a focus area</CardTitle>
-              <CardDescription>You can change this later. Choose Mixed if you'd rather not narrow it down.</CardDescription>
+              <CardTitle>Pick your focus areas</CardTitle>
+              <CardDescription>Tap as many as you like. You can change these later. Choose Mixed if you'd rather not narrow it down.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="grid grid-cols-3 gap-3">
                 {MODULES.map((m) => {
                   const Icon = m.icon;
-                  const selected = focusModule === m.id;
+                  const selected = focusModules.includes(m.id);
                   return (
                     <button
                       key={m.id}
-                      onClick={() => setFocusModule(m.id)}
+                      onClick={() => toggleFocusModule(m.id)}
                       className={`flex flex-col items-center gap-1 rounded-lg bg-gradient-to-br ${m.color} p-3 text-white ${
                         selected ? "ring-2 ring-offset-2 ring-primary" : ""
                       }`}
@@ -111,9 +114,9 @@ export default function Onboarding() {
                 })}
               </div>
               <Button
-                variant={focusModule === null ? "default" : "outline"}
+                variant={focusModules.length === 0 ? "default" : "outline"}
                 className="w-full"
-                onClick={() => setFocusModule(null)}
+                onClick={() => setFocusModules([])}
               >
                 Mixed (no focus)
               </Button>
@@ -131,8 +134,9 @@ export default function Onboarding() {
               <CardTitle>You're all set</CardTitle>
               <CardDescription>
                 We'll start you off around a {EXPERIENCE_LEVELS.find((l) => l.id === experienceLevel)?.label.toLowerCase()}{" "}
-                level{focusModule ? `, focused on ${MODULES.find((m) => m.id === focusModule)?.name}` : ""}. You can
-                change your focus area any time from Home. Flex will be around if you need him.
+                level{focusModules.length > 0
+                  ? `, focused on ${focusModules.map((id) => MODULES.find((m) => m.id === id)?.name).filter(Boolean).join(", ")}`
+                  : ""}. You can change your focus areas any time from Home. Flex will be around if you need him.
               </CardDescription>
             </CardHeader>
             <CardContent>

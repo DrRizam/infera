@@ -1,12 +1,14 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Settings as SettingsIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Settings as SettingsIcon, Sparkles } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
 import { ROLE_OPTIONS } from "@/lib/profileOptions";
 import { COUNTRIES } from "@/lib/countries";
 import { isSoundEnabled, setSoundEnabled } from "@/lib/sound";
+import { debriefsRemaining, FREE_DEBRIEF_LIMIT, isAdmin, isPremium } from "@/lib/subscription";
+import { openBillingPortal, startCheckout } from "@/lib/subscriptionStore";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,9 +20,27 @@ const SELECT_CLASS =
 
 export default function Settings() {
   useDocumentTitle("Settings");
-  const { profile, setProfile } = useProfile();
+  const { profile, setProfile, refreshProfile } = useProfile();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [checkoutNotice, setCheckoutNotice] = useState("");
+  const [billingBusy, setBillingBusy] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("checkout") === "success") {
+      refreshProfile();
+      setCheckoutNotice("You're subscribed — thanks!");
+      searchParams.delete("checkout");
+      setSearchParams(searchParams, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const admin = isAdmin(user);
+  const premium = isPremium(profile);
+  const remaining = debriefsRemaining(profile, user);
 
   const [displayName, setDisplayName] = useState(profile.display_name || "");
   const [clinicName, setClinicName] = useState(profile.clinic_name || "");
@@ -112,6 +132,18 @@ export default function Settings() {
     setNewPassword("");
   };
 
+  const handleSubscribe = async () => {
+    setBillingBusy(true);
+    const { error } = await startCheckout();
+    if (error) setBillingBusy(false);
+  };
+
+  const handleManage = async () => {
+    setBillingBusy(true);
+    const { error } = await openBillingPortal();
+    if (error) setBillingBusy(false);
+  };
+
   const handleDeleteAccount = async () => {
     if (!window.confirm("Delete your account? This permanently erases all your progress and cannot be undone.")) return;
     const { error } = await supabase.rpc("delete_own_account");
@@ -132,6 +164,38 @@ export default function Settings() {
         </div>
         <h1 className="text-2xl font-black tracking-tight sm:text-3xl">Settings</h1>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Sparkles className="h-4 w-4" />
+            Plan
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {checkoutNotice && <p className="text-sm text-primary">{checkoutNotice}</p>}
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-bold">{admin ? "Admin" : premium ? "Premium" : "Free"}</span>
+            {!admin && !premium && (
+              <span className="text-xs text-muted-foreground">
+                {remaining} of {FREE_DEBRIEF_LIMIT} debriefs left this month
+              </span>
+            )}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Practicing cases is always unlimited. Premium unlocks unlimited full case debriefs.
+          </p>
+          {admin ? null : premium ? (
+            <Button variant="outline" className="w-full" onClick={handleManage} disabled={billingBusy}>
+              {billingBusy ? "Opening…" : "Manage subscription"}
+            </Button>
+          ) : (
+            <Button className="w-full" onClick={handleSubscribe} disabled={billingBusy}>
+              {billingBusy ? "Redirecting…" : "Upgrade for unlimited debriefs"}
+            </Button>
+          )}
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>

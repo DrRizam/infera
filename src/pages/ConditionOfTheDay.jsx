@@ -13,7 +13,7 @@ export default function ConditionOfTheDay() {
   const { profile } = useProfile();
   const navigate = useNavigate();
 
-  const cotd = conditionOfTheDay(CASES, profile.focus_module, todayStr());
+  const cotd = conditionOfTheDay(CASES, profile.focus_modules, todayStr());
   const weekDays = weekStreakDays(profile);
 
   if (!cotd) {

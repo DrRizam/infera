@@ -22,7 +22,7 @@ export default function Leaderboard() {
   useDocumentTitle("Leaderboard");
   const { user } = useAuth();
   const { profile } = useProfile();
-  const focusModule = profile.focus_module;
+  const primaryFocusModule = profile.focus_modules?.[0] || null;
   const [scope, setScope] = useState("global"); // "global" | "specialty" | "friends"
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ export default function Leaderboard() {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    if (scope === "specialty" && !focusModule) {
+    if (scope === "specialty" && !primaryFocusModule) {
       setRows([]);
       setLoading(false);
       return;
@@ -40,14 +40,14 @@ export default function Leaderboard() {
       scope === "global"
         ? supabase.rpc("leaderboard_global", { limit_n: 50 })
         : scope === "specialty"
-        ? supabase.rpc("leaderboard_specialty", { module: focusModule, limit_n: 50 })
+        ? supabase.rpc("leaderboard_specialty", { module: primaryFocusModule, limit_n: 50 })
         : supabase.rpc("leaderboard_friends", { limit_n: 50 });
     call.then(({ data, error }) => {
       if (error) console.error("Failed to load leaderboard", error);
       setRows(data || []);
       setLoading(false);
     });
-  }, [scope, focusModule]);
+  }, [scope, primaryFocusModule]);
 
   useEffect(() => {
     if (!query.trim()) {
@@ -87,8 +87,8 @@ export default function Leaderboard() {
         <Button
           variant={scope === "specialty" ? "default" : "outline"}
           className="flex-1"
-          disabled={!focusModule}
-          title={focusModule ? undefined : "Pick a module on Home first"}
+          disabled={!primaryFocusModule}
+          title={primaryFocusModule ? undefined : "Pick a module on Home first"}
           onClick={() => setScope("specialty")}
         >
           My specialty
@@ -132,10 +132,10 @@ export default function Leaderboard() {
           <p className="text-sm text-muted-foreground">
             {scope === "friends"
               ? "Follow people to see them here."
-              : scope === "specialty" && !focusModule
+              : scope === "specialty" && !primaryFocusModule
               ? "Pick a module on Home to see your specialty leaderboard."
               : scope === "specialty"
-              ? `No one's practiced ${getModule(focusModule)?.name || "this specialty"} yet.`
+              ? `No one's practiced ${getModule(primaryFocusModule)?.name || "this specialty"} yet.`
               : "No one here yet."}
           </p>
         </div>

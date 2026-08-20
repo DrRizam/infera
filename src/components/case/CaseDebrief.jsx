@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
@@ -20,7 +21,18 @@ const STATUS_BADGE = {
   verified: { label: "✓ Clinician-verified", className: "bg-emerald-100 text-emerald-800" },
 };
 
-export default function CaseDebrief({ clinicalCase, result, xpEarned, dailyBonus, shieldUsed, leveledUp, streak, onDone }) {
+export default function CaseDebrief({
+  clinicalCase,
+  result,
+  xpEarned,
+  dailyBonus,
+  shieldUsed,
+  leveledUp,
+  streak,
+  debriefLimited,
+  onDone,
+  onUpgrade,
+}) {
   const [showSources, setShowSources] = useState(false);
   const status = STATUS_BADGE[clinicalCase.content_status] || STATUS_BADGE.demonstration;
 
@@ -52,50 +64,66 @@ export default function CaseDebrief({ clinicalCase, result, xpEarned, dailyBonus
         )}
       </div>
 
-      <div className="rounded-lg border border-border bg-card p-4">
-        <div className="mb-3 flex items-center justify-between">
-          <span className="font-bold">Accuracy</span>
-          <span className="text-lg font-extrabold text-primary">{result.accuracy}%</span>
+      {debriefLimited ? (
+        <div className="rounded-lg border-2 border-dashed border-primary/40 bg-accent p-5 text-center">
+          <Lock className="mx-auto mb-2 h-5 w-5 text-primary" />
+          <p className="font-bold text-primary">Full breakdown locked</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            You've used your free debriefs for this month — the accuracy breakdown, reasoning review, and
+            evidence citations are part of Premium. Practicing cases stays unlimited either way.
+          </p>
+          <Button className="mt-3 w-full" onClick={onUpgrade}>
+            See upgrade options
+          </Button>
         </div>
-        {Object.entries(result.breakdown).map(([k, v]) => (
-          <div key={k} className="mb-2">
-            <div className="mb-1 flex justify-between text-xs">
-              <span>{DIMENSION_LABELS[k]}</span>
-              <span>{v}%</span>
+      ) : (
+        <>
+          <div className="rounded-lg border border-border bg-card p-4">
+            <div className="mb-3 flex items-center justify-between">
+              <span className="font-bold">Accuracy</span>
+              <span className="text-lg font-extrabold text-primary">{result.accuracy}%</span>
             </div>
-            <Progress value={v} />
+            {Object.entries(result.breakdown).map(([k, v]) => (
+              <div key={k} className="mb-2">
+                <div className="mb-1 flex justify-between text-xs">
+                  <span>{DIMENSION_LABELS[k]}</span>
+                  <span>{v}%</span>
+                </div>
+                <Progress value={v} />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <div className="rounded-lg border border-border bg-card p-4">
-        <h3 className="mb-2 font-bold">How you reasoned</h3>
-        {result.errors.length === 0 ? (
-          <p className="text-sm text-emerald-600">Clean reasoning.</p>
-        ) : (
-          <ul className="space-y-2">
-            {result.errors.map((err, i) => (
-              <li key={i} className="text-sm">
-                <span className="font-semibold">{err.label}</span>
-                {err.detail && <p className="text-xs text-muted-foreground">{err.detail}</p>}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+          <div className="rounded-lg border border-border bg-card p-4">
+            <h3 className="mb-2 font-bold">How you reasoned</h3>
+            {result.errors.length === 0 ? (
+              <p className="text-sm text-emerald-600">Clean reasoning.</p>
+            ) : (
+              <ul className="space-y-2">
+                {result.errors.map((err, i) => (
+                  <li key={i} className="text-sm">
+                    <span className="font-semibold">{err.label}</span>
+                    {err.detail && <p className="text-xs text-muted-foreground">{err.detail}</p>}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
-      {result.citations?.length > 0 && (
-        <div className="rounded-lg border border-border bg-card p-4">
-          <h3 className="mb-2 font-bold">Evidence for what you got right</h3>
-          <ul className="space-y-2">
-            {result.citations.map((c, i) => (
-              <li key={i} className="text-sm">
-                <span className="font-semibold text-emerald-700">{c.label}</span>
-                <p className="text-xs text-muted-foreground">{c.detail}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
+          {result.citations?.length > 0 && (
+            <div className="rounded-lg border border-border bg-card p-4">
+              <h3 className="mb-2 font-bold">Evidence for what you got right</h3>
+              <ul className="space-y-2">
+                {result.citations.map((c, i) => (
+                  <li key={i} className="text-sm">
+                    <span className="font-semibold text-emerald-700">{c.label}</span>
+                    <p className="text-xs text-muted-foreground">{c.detail}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </>
       )}
 
       <div className="rounded-lg border border-border bg-card p-4 text-center">

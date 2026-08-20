@@ -15,6 +15,17 @@ create table public.profiles (
   role_other_label text,
   phone text,
   email_opt_in boolean not null default false,
+  -- Subscription columns are real Postgres columns, deliberately NOT part
+  -- of `state` — state is client-writable (see the profiles_update_own
+  -- policy + the column grant below), and letting a user set their own
+  -- subscription status would be a free-upgrade exploit. Only the Stripe
+  -- webhook Edge Function (service-role key, bypasses RLS) ever writes
+  -- these.
+  subscription_status text not null default 'free'
+    check (subscription_status in ('free', 'active', 'past_due', 'canceled')),
+  stripe_customer_id text,
+  stripe_subscription_id text,
+  subscription_current_period_end timestamptz,
   state jsonb not null default '{}'::jsonb,
   updated_at timestamptz not null default now()
 );
@@ -178,6 +189,16 @@ create policy profiles_insert_own on public.profiles
   for insert with check (user_id = auth.uid());
 create policy profiles_update_own on public.profiles
   for update using (user_id = auth.uid()) with check (user_id = auth.uid());
+
+-- RLS is row-scoped, not column-scoped -- profiles_update_own above would
+-- otherwise let a signed-in user set their own subscription_status via a
+-- raw .update() call from devtools. Column-level grants close that: an
+-- authenticated client can only ever touch the columns listed here. The
+-- subscription_* columns are deliberately absent -- only the service-role
+-- key (used by the Stripe webhook Edge Function) can write them.
+revoke update on public.profiles from authenticated;
+grant update (display_name, clinic_name, country, role, role_other_label, phone, email_opt_in, state)
+  on public.profiles to authenticated;
 
 -- No update/delete policy on case_attempts at all -- append-only.
 create policy case_attempts_select on public.case_attempts
