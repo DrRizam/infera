@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 
 export default function PrivacyPolicy() {
+  useDocumentTitle("Privacy Policy");
   return (
     <div className="mx-auto max-w-2xl space-y-4 px-4 py-8 text-sm">
       <Link to="/login" className="text-primary underline">
@@ -28,7 +30,13 @@ export default function PrivacyPolicy() {
       <p>Infera is free during the beta. No payment information is collected.</p>
 
       <h2 className="font-bold">Contact</h2>
-      <p>Questions about this policy can be sent to the app's founder.</p>
+      <p>
+        Questions about this policy can be sent to{" "}
+        <a href="mailto:rizamshaar2014@gmail.com" className="text-primary underline">
+          rizamshaar2014@gmail.com
+        </a>
+        .
+      </p>
     </div>
   );
 }

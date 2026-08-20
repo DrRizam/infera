@@ -6,8 +6,10 @@ import { conditionOfTheDay } from "@/lib/modules";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import StreakWeek from "@/components/StreakWeek";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 
 export default function ConditionOfTheDay() {
+  useDocumentTitle("Condition of the day");
   const { profile } = useProfile();
   const navigate = useNavigate();
 

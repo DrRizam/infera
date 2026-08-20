@@ -4,3 +4,9 @@ dev-dist/
 *.local
 .env
 .DS_Store
+
+# Scratch/reference material, not shipped assets — kept locally, never
+# meant to land in the repo via a broad `git add`.
+/New folder/
+/content-review/
+/Images/

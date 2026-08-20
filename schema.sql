@@ -142,13 +142,18 @@ grant execute on function public.delete_own_account() to authenticated;
 -- Lifetime, not windowed — a weekly reset looked empty/broken for a
 -- low-traffic early-stage app ("no one's practiced this week yet"), so this
 -- is back to a straightforward permanent ranking off `state->>xp`.
+--
+-- Every `limit limit_n` below is clamped with least(limit_n, 100) — the
+-- client passes this value, and nothing stopped it from requesting an
+-- unbounded result set otherwise. Low-risk (only display_name+XP), but free
+-- to close off.
 create or replace function public.leaderboard_global(limit_n int default 50)
 returns table(user_id uuid, display_name text, xp int)
 language sql security definer set search_path = public stable as $$
   select user_id, coalesce(display_name, 'Anonymous'), coalesce((state->>'xp')::int, 0)
   from public.profiles
   order by coalesce((state->>'xp')::int, 0) desc
-  limit limit_n;
+  limit least(limit_n, 100);
 $$;
 grant execute on function public.leaderboard_global(int) to authenticated;
 
@@ -160,7 +165,7 @@ language sql security definer set search_path = public stable as $$
   where user_id = auth.uid()
      or user_id in (select followee_id from public.follows where follower_id = auth.uid())
   order by coalesce((state->>'xp')::int, 0) desc
-  limit limit_n;
+  limit least(limit_n, 100);
 $$;
 grant execute on function public.leaderboard_friends(int) to authenticated;
 
@@ -176,7 +181,7 @@ language sql security definer set search_path = public stable as $$
   where ca.case_module = module
   group by p.user_id, p.display_name
   order by xp desc
-  limit limit_n;
+  limit least(limit_n, 100);
 $$;
 grant execute on function public.leaderboard_specialty(text, int) to authenticated;
 
@@ -189,7 +194,7 @@ language sql security definer set search_path = public stable as $$
   where p.user_id <> auth.uid()
     and p.display_name is not null
     and p.display_name ilike '%' || query || '%'
-  limit limit_n;
+  limit least(limit_n, 100);
 $$;
 grant execute on function public.search_users(text, int) to authenticated;
 

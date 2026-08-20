@@ -81,6 +81,18 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
         ))}
       </div>
 
+      <div className="mb-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+        <span className="flex items-center gap-1.5">
+          <span className="h-3 w-3 rounded-full border-2 border-primary bg-primary/40" /> Has cases
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="h-3 w-3 rounded-full border-2 border-primary bg-muted-foreground/20" /> No cases yet
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="h-3 w-3 rounded-full border-2 border-primary bg-primary" /> Selected
+        </span>
+      </div>
+
       <div className="relative mx-auto aspect-square w-full max-w-xl">
         <img src={muscularSystemImg} alt="Muscular system diagram, front and back view" className="h-full w-full object-contain" draggable={false} />
         {BODY_REGIONS.map((r) => {

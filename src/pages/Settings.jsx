@@ -6,15 +6,17 @@ import { useAuth } from "@/lib/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
 import { ROLE_OPTIONS } from "@/lib/profileOptions";
 import { COUNTRIES } from "@/lib/countries";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const SELECT_CLASS =
-  "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-ring";
 
 export default function Settings() {
+  useDocumentTitle("Settings");
   const { profile, setProfile } = useProfile();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();

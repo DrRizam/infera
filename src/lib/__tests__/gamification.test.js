@@ -7,6 +7,7 @@ import {
   isAchievementEarned,
   levelFromXp,
   nextReviewDate,
+  retentionStats,
   rollStreak,
   speedRoundTimerDelta,
   todayStr,
@@ -172,6 +173,31 @@ describe("xpForCase", () => {
     expect(xpForCase(40, 100)).toBe(40);
     expect(xpForCase(40, 50)).toBe(20);
     expect(xpForCase(40, 1)).toBe(5);
+  });
+});
+
+describe("retentionStats", () => {
+  it("returns null percent when nothing has been learned yet", () => {
+    expect(retentionStats({}, "2026-08-19")).toEqual({ retained: 0, overdue: 0, total: 0, percent: null });
+  });
+
+  it("counts overdue items against retention, not-yet-due items for it", () => {
+    const profile = {
+      caseProgress: {
+        a: { next_review_date: "2026-08-10" }, // overdue
+        b: { next_review_date: "2026-08-25" }, // still fresh
+      },
+      itemProgress: {
+        c: { next_review_date: "2026-08-19" }, // due today counts as overdue
+      },
+    };
+    const stats = retentionStats(profile, "2026-08-19");
+    expect(stats).toEqual({ retained: 1, overdue: 2, total: 3, percent: 33 });
+  });
+
+  it("reports 100% when nothing is currently overdue", () => {
+    const profile = { caseProgress: { a: { next_review_date: "2026-09-01" } } };
+    expect(retentionStats(profile, "2026-08-19").percent).toBe(100);
   });
 });
 

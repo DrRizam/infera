@@ -4,11 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#FBFAF7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141E24" media="(prefers-color-scheme: dark)" />
     <meta
       name="description"
       content="Infera — a gamified, diagnosis-last clinical-reasoning trainer for physical therapy professionals and students."
     />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>Infera</title>
+    <script>
+      // Applied before paint to avoid a flash of the wrong theme. Tailwind's
+      // darkMode is class-based (not the `media` strategy) so a future manual
+      // toggle can override system preference later; for now this just makes
+      // the .dark palette that already exists in index.css actually activate.
+      (function () {
+        var mq = window.matchMedia("(prefers-color-scheme: dark)");
+        var apply = function () {
+          document.documentElement.classList.toggle("dark", mq.matches);
+        };
+        apply();
+        mq.addEventListener("change", apply);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -6,13 +6,17 @@ import { useAuth } from "@/lib/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
 import { levelFromXp } from "@/lib/gamification";
 import { ACHIEVEMENTS } from "@/data/achievements";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import LevelRing from "@/components/LevelRing";
 import AchievementBadge from "@/components/AchievementBadge";
 import CompetencyMap from "@/components/CompetencyMap";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+const CALIBRATION_MIN_SAMPLE = 5;
+
 export default function Profile() {
+  useDocumentTitle("Profile");
   const { profile } = useProfile();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -97,7 +101,7 @@ export default function Profile() {
           </div>
           <div>
             <div className="text-xl font-extrabold text-primary">{profile.best_speed_score ?? 0}</div>
-            <div className="text-xs text-muted-foreground">Speed best</div>
+            <div className="text-xs text-muted-foreground">Correct in one speed round</div>
           </div>
         </CardContent>
       </Card>
@@ -106,7 +110,8 @@ export default function Profile() {
         <CardHeader>
           <CardTitle>Competency map</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-2">
+          <p className="text-xs text-muted-foreground">Across every specialty you've practiced — not just one.</p>
           <CompetencyMap competency={profile.competency} />
         </CardContent>
       </Card>
@@ -132,6 +137,11 @@ export default function Profile() {
                 <p className="text-sm text-muted-foreground">
                   How often your stated confidence matches whether you were actually right.
                 </p>
+                {total < CALIBRATION_MIN_SAMPLE && (
+                  <p className="text-xs text-amber-600">
+                    Based on only {total} case{total === 1 ? "" : "s"} so far — too early to call this a real pattern yet.
+                  </p>
+                )}
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div>
                     <div className="text-xl font-extrabold text-primary">{pct}%</div>
@@ -164,7 +174,7 @@ export default function Profile() {
           </button>
         </CardContent>
         {expanded && (
-          <CardContent className="border-t border-border pt-3">
+          <CardContent className="space-y-3 border-t border-border pt-3">
             {list.length === 0 ? (
               <p className="text-sm text-muted-foreground">Nobody here yet.</p>
             ) : (
@@ -177,6 +187,9 @@ export default function Profile() {
                 ))}
               </ul>
             )}
+            <Button variant="ghost" size="sm" className="w-full" onClick={() => navigate("/leaderboard")}>
+              Find people to follow
+            </Button>
           </CardContent>
         )}
       </Card>
@@ -214,7 +227,7 @@ export default function Profile() {
               onChange={(e) => setFeedback(e.target.value)}
               placeholder="What's on your mind?"
               rows={3}
-              className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-ring"
             />
             {feedbackNotice && <p className="text-sm text-primary">{feedbackNotice}</p>}
             <Button type="submit" className="w-full" disabled={feedbackSending || !feedback.trim()}>

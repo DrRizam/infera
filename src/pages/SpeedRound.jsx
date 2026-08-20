@@ -3,12 +3,14 @@ import { CheckCircle2, Timer, Trophy, Zap } from "lucide-react";
 import { CASES } from "@/data/cases";
 import { useProfile } from "@/lib/ProfileContext";
 import { speedRoundTimerDelta } from "@/lib/gamification";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const ROUND_SECONDS = 60;
 
 export default function SpeedRound() {
+  useDocumentTitle("Speed round");
   const { profile, setProfile } = useProfile();
 
   const pool = useMemo(

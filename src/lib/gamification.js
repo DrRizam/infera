@@ -160,6 +160,23 @@ export function xpForCase(reward, accuracy) {
 }
 
 /**
+ * Retention isn't "did you open the app today" — it's "of everything
+ * you've learned, how much is still fresh vs. overdue for review." Streaks
+ * built on daily activity alone don't mean anything clinically; this ties
+ * the number to real forgetting-debt, using the same next_review_date data
+ * that drives the review queue itself.
+ */
+export function retentionStats(profile, today = todayStr()) {
+  const learned = [...Object.values(profile?.caseProgress || {}), ...Object.values(profile?.itemProgress || {})];
+  const total = learned.length;
+  if (!total) return { retained: 0, overdue: 0, total: 0, percent: null };
+
+  const overdue = learned.filter((p) => p.next_review_date && p.next_review_date <= today).length;
+  const retained = total - overdue;
+  return { retained, overdue, total, percent: Math.round((retained / total) * 100) };
+}
+
+/**
  * Classifies a stated confidence level (0-100) against whether the call was
  * actually right — not a hard lives/hearts mechanic. Clinical answers are
  * rarely fully right or wrong, so what matters more than "wrong = penalty"

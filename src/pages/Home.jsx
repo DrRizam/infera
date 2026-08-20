@@ -4,16 +4,18 @@ import { Brain, ChevronDown, Lightbulb, RotateCcw, Zap } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { CASES, getCase } from "@/data/cases";
-import { todayStr } from "@/lib/gamification";
+import { retentionStats, todayStr } from "@/lib/gamification";
 import { conditionOfTheDay, getModule, MODULES } from "@/lib/modules";
 import { countDueRecallItems, generateRecallItems } from "@/lib/recallItems";
 import { suggestModuleFocus } from "@/lib/contextPrompt";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import CasePath from "@/components/CasePath";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export default function Home() {
+  useDocumentTitle("Learn");
   const { profile, setProfile } = useProfile();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -25,6 +27,8 @@ export default function Home() {
   const cotdModule = cotd && getModule(cotd.module);
 
   const today = todayStr();
+  const retention = retentionStats(profile, today);
+  const dailyGoalExceeded = (profile.daily_xp ?? 0) > (profile.daily_goal ?? 50);
   const dueReviews = Object.entries(progressByCaseId)
     .filter(([, p]) => p.next_review_date && p.next_review_date <= today)
     .map(([id, p]) => ({ case: getCase(id), dueDate: p.next_review_date }))
@@ -61,19 +65,30 @@ export default function Home() {
           <h1 className="text-2xl font-black tracking-tight sm:text-3xl">
             Good {new Date().getHours() < 12 ? "morning" : "day"}, {firstName}
           </h1>
-          <p className="mt-2 text-sm text-muted-foreground">Keep your reasoning sharp with one focused session today.</p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {retention.percent != null
+              ? `You've retained ${retention.percent}% of what you've learned so far.`
+              : "Keep your reasoning sharp with one focused session today."}
+          </p>
           <div className="mt-5">
             <div className="mb-2 flex items-center justify-between text-xs font-semibold">
               <span>Daily goal</span>
-              <span className="text-primary">{profile.daily_xp ?? 0}/{profile.daily_goal ?? 50} XP</span>
+              <span className={dailyGoalExceeded ? "text-emerald-600" : "text-primary"}>
+                {profile.daily_xp ?? 0}/{profile.daily_goal ?? 50} XP{dailyGoalExceeded ? " · goal smashed 🎉" : ""}
+              </span>
             </div>
             <div className="h-2.5 overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full rounded-full bg-primary transition-[width] duration-500"
+                className={cn("h-full rounded-full transition-[width] duration-500", dailyGoalExceeded ? "bg-emerald-500" : "bg-primary")}
                 style={{ width: `${Math.min(100, ((profile.daily_xp ?? 0) / (profile.daily_goal ?? 50)) * 100)}%` }}
               />
             </div>
           </div>
+          {retention.overdue > 0 && (
+            <p className="mt-3 text-xs font-semibold text-amber-600">
+              Skipping days piles up forgetting debt — {retention.overdue} thing{retention.overdue === 1 ? "" : "s"} slipping right now.
+            </p>
+          )}
         </div>
 
         {cotd && (
@@ -102,8 +117,8 @@ export default function Home() {
         >
           <Lightbulb className="h-4 w-4 shrink-0 text-primary" />
           <span className="flex-1 text-sm">
-            <span className="font-bold">You've been doing a lot of {focusSuggestionModule.name} lately.</span>{" "}
-            <span className="text-muted-foreground">Review {focusSuggestionModule.name} tests?</span>
+            <span className="font-bold">You've been drilling {focusSuggestionModule.name} recall lately.</span>{" "}
+            <span className="text-muted-foreground">Keep it going?</span>
           </span>
         </button>
       )}
@@ -152,6 +167,9 @@ export default function Home() {
         <div className="relative mb-3 flex items-end justify-between gap-3">
           <button
             type="button"
+            title="Switch specialty"
+            aria-haspopup="true"
+            aria-expanded={moduleMenuOpen}
             onClick={() => setModuleMenuOpen((o) => !o)}
             className="flex items-center gap-1 rounded-xl py-1 pl-0 pr-2 text-lg font-black tracking-tight hover:bg-muted"
           >

@@ -1,9 +1,6 @@
-import { Activity, Bone, Check, Dumbbell, Footprints, HeartPulse, Lock, Star, Stethoscope } from "lucide-react";
+import { Check, Lock, Star } from "lucide-react";
+import { getModule } from "@/lib/modules";
 import { cn } from "@/lib/utils";
-
-// Cycled by node index, same as Duolingo repeats a small icon set along a
-// long skill path rather than having unique art per lesson.
-const NODE_ICONS = [Dumbbell, Activity, Bone, HeartPulse, Footprints, Stethoscope];
 
 /**
  * Staggered vertical path of case nodes, strictly sequential: a case stays
@@ -32,7 +29,9 @@ export default function CasePath({ cases, progressByCaseId, onOpen }) {
         const inProgress = progress?.status === "in_progress";
         const locked = !unlocked;
         if (!done) unlocked = false;
-        const NodeIcon = NODE_ICONS[i % NODE_ICONS.length];
+        // Same icon the module uses everywhere else (dropdown, nav, header)
+        // rather than an arbitrary cycling set unrelated to the category.
+        const NodeIcon = getModule(c.module)?.icon || Star;
 
         return (
           <button

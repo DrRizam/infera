@@ -1,10 +1,10 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { Award, Flame, Home, LogOut, Shield, Trophy, User, Zap } from "lucide-react";
+import { Award, Brain, Flame, Home, LogOut, Shield, Trophy, User, Zap } from "lucide-react";
 import LevelRing from "@/components/LevelRing";
 import NotificationBell from "@/components/NotificationBell";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
-import { levelFromXp } from "@/lib/gamification";
+import { levelFromXp, retentionStats } from "@/lib/gamification";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -18,6 +18,7 @@ export default function AppLayout() {
   const { profile } = useProfile();
   const { signOut } = useAuth();
   const lvl = levelFromXp(profile.xp || 0);
+  const retention = retentionStats(profile);
 
   return (
     <div className="min-h-screen bg-background pb-20 lg:pb-24">
@@ -38,9 +39,40 @@ export default function AppLayout() {
             </div>
           </div>
           <div className="flex shrink-0 items-center gap-1.5 text-xs font-bold sm:gap-2">
-            <span className="status-pill text-orange-600" title="Streak"><Flame className="h-3.5 w-3.5" />{profile.streak_count ?? 0}</span>
-            <span className="status-pill hidden text-sky-600 sm:flex" title="Rest shields"><Shield className="h-3.5 w-3.5" />{profile.rest_shields ?? 0}</span>
-            <span className="status-pill hidden text-amber-600 sm:flex" title="Total XP"><Zap className="h-3.5 w-3.5" />{profile.xp ?? 0}</span>
+            <span
+              className="status-pill text-orange-600"
+              title={`${profile.streak_count ?? 0}-day streak`}
+              aria-label={`${profile.streak_count ?? 0}-day streak`}
+            >
+              <Flame className="h-3.5 w-3.5" aria-hidden="true" />{profile.streak_count ?? 0}
+            </span>
+            {retention.percent != null && (
+              <span
+                className={cn("status-pill", retention.overdue > 0 ? "text-amber-600" : "text-emerald-600")}
+                title={
+                  retention.overdue > 0
+                    ? `${retention.overdue} thing${retention.overdue === 1 ? "" : "s"} overdue for review — retention is dropping`
+                    : "Everything you've learned is still fresh"
+                }
+                aria-label={`Retention ${retention.percent} percent${retention.overdue > 0 ? `, ${retention.overdue} overdue for review` : ""}`}
+              >
+                <Brain className="h-3.5 w-3.5" aria-hidden="true" />{retention.percent}%
+              </span>
+            )}
+            <span
+              className="status-pill hidden text-sky-600 sm:flex"
+              title="Rest shields"
+              aria-label={`${profile.rest_shields ?? 0} rest shields`}
+            >
+              <Shield className="h-3.5 w-3.5" aria-hidden="true" />{profile.rest_shields ?? 0}
+            </span>
+            <span
+              className="status-pill hidden text-amber-600 sm:flex"
+              title="Total XP"
+              aria-label={`${profile.xp ?? 0} total XP`}
+            >
+              <Zap className="h-3.5 w-3.5" aria-hidden="true" />{profile.xp ?? 0}
+            </span>
             <NotificationBell />
             <button type="button" title="Sign out" aria-label="Sign out" onClick={signOut} className="ml-1 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
               <LogOut className="h-4 w-4" />

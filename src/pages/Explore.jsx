@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Compass } from "lucide-react";
 import { CASES } from "@/data/cases";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import BodyMapExplorer from "@/components/BodyMapExplorer";
 
 export default function Explore() {
+  useDocumentTitle("Explore");
   const navigate = useNavigate();
 
   return (

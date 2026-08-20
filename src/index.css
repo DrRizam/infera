@@ -72,6 +72,15 @@ textarea {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Belt-and-suspenders keyboard focus indicator: components already carry a
+   Tailwind ring via focus-visible:ring-*, but this guarantees a visible
+   outline everywhere (including plain links/buttons that don't) rather than
+   relying on every interactive element remembering to opt in. */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
 .status-pill {
   display: inline-flex;
   align-items: center;

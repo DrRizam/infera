@@ -7,6 +7,7 @@ import { getModule } from "@/lib/modules";
 import { nextReviewDate, todayStr, updateMastery } from "@/lib/gamification";
 import { generateRecallItems, selectRecallSession } from "@/lib/recallItems";
 import { bucketKey } from "@/lib/competency";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
@@ -14,6 +15,7 @@ import { cn } from "@/lib/utils";
 const SESSION_SIZE = 8;
 
 export default function Recall() {
+  useDocumentTitle("Recall drill");
   const { profile, setProfile } = useProfile();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();

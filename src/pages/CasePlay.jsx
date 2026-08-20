@@ -8,6 +8,7 @@ import { scoreEncounter } from "@/lib/caseEngine";
 import { buildCaseAttemptRow } from "@/lib/caseAttempts";
 import { BREAKDOWN_TO_BUCKET_TYPE, bucketKey } from "@/lib/competency";
 import { createNotification } from "@/lib/notifications";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import {
   classifyCalibration,
   ensureDailyFresh,
@@ -46,6 +47,7 @@ export default function CasePlay() {
   const navigate = useNavigate();
 
   const clinicalCase = useMemo(() => getCase(caseId), [caseId]);
+  useDocumentTitle(clinicalCase?.title || "Case");
 
   // Skip stages a case has no content for.
   const stages = useMemo(() => {

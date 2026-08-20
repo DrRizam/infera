@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 
 export default function Terms() {
+  useDocumentTitle("Terms of Service");
   return (
     <div className="mx-auto max-w-2xl space-y-4 px-4 py-8 text-sm">
       <Link to="/login" className="text-primary underline">

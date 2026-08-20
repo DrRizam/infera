@@ -4,17 +4,22 @@ import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/lib/AuthContext";
 import { useProfile } from "@/lib/ProfileContext";
 import { getModule } from "@/lib/modules";
+import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
+// Silver used to be a near-white slate-100 that blended into the card
+// background and read as visually identical to the unranked (4-10) rows —
+// bumped a shade darker so 2nd place is unmistakably a medal, not a miss.
 const RANK_STYLES = [
   "border-amber-400 bg-amber-100 text-amber-700",
-  "border-slate-300 bg-slate-100 text-slate-600",
+  "border-slate-400 bg-slate-200 text-slate-700",
   "border-orange-400 bg-orange-100 text-orange-700",
 ];
 
 export default function Leaderboard() {
+  useDocumentTitle("Leaderboard");
   const { user } = useAuth();
   const { profile } = useProfile();
   const focusModule = profile.focus_module;
