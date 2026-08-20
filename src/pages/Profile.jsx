@@ -181,7 +181,9 @@ export default function Profile() {
               <ul className="space-y-1">
                 {list.map((p) => (
                   <li key={p.user_id} className="flex items-center justify-between text-sm">
-                    <span>{p.display_name}</span>
+                    <button className="hover:underline" onClick={() => navigate(`/profile/${p.user_id}`)}>
+                      {p.display_name}
+                    </button>
                     <span className="font-bold text-primary">{p.xp} XP</span>
                   </li>
                 ))}

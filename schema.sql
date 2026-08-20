@@ -454,6 +454,47 @@ language sql security definer set search_path = public stable as $$
 $$;
 grant execute on function public.list_followers() to authenticated;
 
+-- A single user's public-facing profile — same whitelist discipline as the
+-- leaderboard functions above (never the raw `state` blob, only specific
+-- keys pulled out of it), plus follower/following counts and whether the
+-- caller already follows them, so a "visit profile" page needs exactly one
+-- RPC call. The metric columns are exactly the set isAchievementEarned()/
+-- achievementProgress() in gamification.js read (see ACHIEVEMENTS in
+-- data/achievements.js) — achievements aren't stored anywhere, they're
+-- computed live from these same stats, so the client can reuse
+-- AchievementBadge unchanged for someone else's profile too.
+create or replace function public.get_public_profile(target_user_id uuid)
+returns table(
+  user_id uuid,
+  display_name text,
+  xp int,
+  streak_count int,
+  longest_streak int,
+  total_cases_completed int,
+  perfect_cases int,
+  speed_rounds_played int,
+  follower_count int,
+  following_count int,
+  following boolean
+)
+language sql security definer set search_path = public stable as $$
+  select
+    p.user_id,
+    coalesce(p.display_name, 'Anonymous'),
+    coalesce((p.state->>'xp')::int, 0),
+    coalesce((p.state->>'streak_count')::int, 0),
+    coalesce((p.state->>'longest_streak')::int, 0),
+    coalesce((p.state->>'total_cases_completed')::int, 0),
+    coalesce((p.state->>'perfect_cases')::int, 0),
+    coalesce((p.state->>'speed_rounds_played')::int, 0),
+    (select count(*)::int from public.follows f where f.followee_id = p.user_id),
+    (select count(*)::int from public.follows f where f.follower_id = p.user_id),
+    exists(select 1 from public.follows f where f.follower_id = auth.uid() and f.followee_id = p.user_id)
+  from public.profiles p
+  where p.user_id = target_user_id;
+$$;
+grant execute on function public.get_public_profile(uuid) to authenticated;
+
 -- ── Daily diagnosis game — 5 launch cases, case_number 1-5 ───────────────
 -- Original write-ups (not copied from any external source), pre-approved
 -- so they're playable immediately. content is intentionally varied across

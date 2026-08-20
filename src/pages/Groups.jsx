@@ -154,7 +154,12 @@ export default function Groups() {
                           >
                             {i + 1}
                           </span>
-                          <span className="flex-1 truncate">{row.display_name}</span>
+                          <button
+                            className="flex-1 truncate text-left hover:underline"
+                            onClick={() => navigate(`/profile/${row.user_id}`)}
+                          >
+                            {row.display_name}
+                          </button>
                           {row.current_streak > 0 && (
                             <span className="flex items-center gap-0.5 text-xs font-bold text-orange-600">
                               <Flame className="h-3 w-3" />

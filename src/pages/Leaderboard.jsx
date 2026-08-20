@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Award, Search, Trophy } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/lib/AuthContext";
@@ -22,6 +23,7 @@ export default function Leaderboard() {
   useDocumentTitle("Leaderboard");
   const { user } = useAuth();
   const { profile } = useProfile();
+  const navigate = useNavigate();
   const primaryFocusModule = profile.focus_modules?.[0] || null;
   const [scope, setScope] = useState("global"); // "global" | "specialty" | "friends"
   const [rows, setRows] = useState([]);
@@ -115,7 +117,9 @@ export default function Leaderboard() {
               key={r.user_id}
               className="flex items-center justify-between rounded-xl border-2 border-border bg-card px-4 py-3 text-sm"
             >
-              <span className="font-medium">{r.display_name}</span>
+              <button className="font-medium hover:underline" onClick={() => navigate(`/profile/${r.user_id}`)}>
+                {r.display_name}
+              </button>
               <Button size="sm" variant={r.following ? "outline" : "default"} onClick={() => toggleFollow(r.user_id, r.following)}>
                 {r.following ? "Following" : "Follow"}
               </Button>
@@ -157,7 +161,9 @@ export default function Leaderboard() {
               >
                 {i + 1}
               </span>
-              <span className="flex-1 truncate">{r.display_name}</span>
+              <button className="flex-1 truncate text-left hover:underline" onClick={() => navigate(`/profile/${r.user_id}`)}>
+                {r.display_name}
+              </button>
               <span className="font-bold text-primary">{r.xp} XP</span>
             </li>
           ))}

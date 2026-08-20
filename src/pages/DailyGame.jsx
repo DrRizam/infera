@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CheckCircle2, Flame, HelpCircle, PenSquare, Share2, Stethoscope, Users, XCircle } from "lucide-react";
+import { CheckCircle2, Flame, PenSquare, Share2, Stethoscope, Users, XCircle } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
 import {
   ATTRIBUTE_KEYS,
@@ -54,7 +54,6 @@ export default function DailyGame() {
   const [attempt, setAttempt] = useState(null);
   const [stats, setStats] = useState(null);
   const [guessText, setGuessText] = useState("");
-  const [guessError, setGuessError] = useState("");
   const [shareCopied, setShareCopied] = useState(false);
 
   useEffect(() => {
@@ -82,20 +81,18 @@ export default function DailyGame() {
 
   const handleGuess = async (e) => {
     e.preventDefault();
-    setGuessError("");
     if (!attempt || !targetCase) return;
 
+    // Every submission counts now, recognized or not — an unrecognized
+    // guess just can't show attribute matches (attributeMatches handles a
+    // null guessedCase safely, all badges gray) but still uses up a guess
+    // and advances the clue, same as a recognized-but-wrong one.
     const matched = findMatchingCase(guessText, caseBank);
-    if (!matched) {
-      setGuessError("Not recognized as a diagnosis — try being more specific.");
-      return;
-    }
-
-    const correct = matched.id === targetCase.id;
+    const correct = !!matched && matched.id === targetCase.id;
     playFeedback(correct);
     const newGuess = {
       text: guessText.trim(),
-      matched_diagnosis: matched.diagnosis,
+      matched_diagnosis: matched?.diagnosis || null,
       correct,
       attributes: attributeMatches(matched, targetCase),
       at: new Date().toISOString(),
@@ -221,12 +218,6 @@ export default function DailyGame() {
             value={guessText}
             onChange={(e) => setGuessText(e.target.value)}
           />
-          {guessError && (
-            <p className="flex items-center gap-1.5 text-xs text-amber-600">
-              <HelpCircle className="h-3.5 w-3.5 shrink-0" />
-              {guessError}
-            </p>
-          )}
           <Button type="submit" className="w-full" disabled={!guessText.trim()}>
             Guess
           </Button>

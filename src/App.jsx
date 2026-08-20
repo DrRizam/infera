@@ -23,6 +23,7 @@ import ConditionInfo from "@/pages/ConditionInfo";
 import ModuleDetail from "@/pages/ModuleDetail";
 import Leaderboard from "@/pages/Leaderboard";
 import Profile from "@/pages/Profile";
+import PublicProfile from "@/pages/PublicProfile";
 import Settings from "@/pages/Settings";
 
 export default function App() {
@@ -53,6 +54,7 @@ export default function App() {
                   <Route path="/module/:id" element={<ModuleDetail />} />
                   <Route path="/leaderboard" element={<Leaderboard />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/profile/:userId" element={<PublicProfile />} />
                   <Route path="/settings" element={<Settings />} />
                 </Route>
 
