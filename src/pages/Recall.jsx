@@ -7,7 +7,9 @@ import { getModule } from "@/lib/modules";
 import { nextReviewDate, todayStr, updateMastery } from "@/lib/gamification";
 import { generateRecallItems, selectRecallSession } from "@/lib/recallItems";
 import { bucketKey } from "@/lib/competency";
+import { playFeedback } from "@/lib/sound";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
+import Mascot from "@/components/Mascot";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
@@ -32,7 +34,8 @@ export default function Recall() {
   if (!session.length) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-16 text-center">
-        <p className="text-sm text-muted-foreground">No recall items available yet.</p>
+        <Mascot mood="curious" className="mx-auto h-20 w-20" />
+        <p className="mt-2 text-sm text-muted-foreground">No recall items available yet.</p>
         <Button className="mt-4" onClick={() => navigate("/")}>Back to Learn</Button>
       </div>
     );
@@ -63,6 +66,7 @@ export default function Recall() {
   const answer = (optionIdx) => {
     if (answered) return;
     const correct = optionIdx === item.correctIndex;
+    playFeedback(correct);
     const today = todayStr();
     setProfile((prev) => {
       const prevItem = prev.itemProgress?.[item.id];

@@ -14,7 +14,9 @@ import {
   visibleClueCount,
 } from "@/lib/dailyGame";
 import { fetchApprovedCases, fetchGameStats, fetchOrCreateAttempt, saveAttempt, saveGameStats } from "@/lib/dailyGameStore";
+import { playFeedback } from "@/lib/sound";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
+import Mascot from "@/components/Mascot";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -90,6 +92,7 @@ export default function DailyGame() {
     }
 
     const correct = matched.id === targetCase.id;
+    playFeedback(correct);
     const newGuess = {
       text: guessText.trim(),
       matched_diagnosis: matched.diagnosis,
@@ -142,9 +145,7 @@ export default function DailyGame() {
   if (!targetCase) {
     return (
       <div className="mx-auto max-w-lg space-y-4 py-8 text-center">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-accent text-primary">
-          <Stethoscope className="h-7 w-7" />
-        </div>
+        <Mascot mood="curious" className="mx-auto h-24 w-24" />
         <h1 className="text-2xl font-black tracking-tight">Guess the Diagnosis</h1>
         <p className="text-sm text-muted-foreground">No case is live for today yet — check back soon.</p>
       </div>

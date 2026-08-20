@@ -29,6 +29,17 @@
      to match, so rounded-lg/md/sm-driven elements (inputs, selects) scale
      with the rest of the app instead of reading as a smaller, older era. */
   --radius: 1rem;
+
+  /* Flex, the mascot — a red fusiform-muscle shape, deliberately its own
+     palette rather than --primary, so it reads as a character/illustration
+     rather than just "a UI element colored teal." */
+  --flex-hi: 355 70% 62%;
+  --flex-mid: 355 65% 48%;
+  --flex-lo: 355 60% 34%;
+  --flex-tendon-hi: 195 35% 93%;
+  --flex-tendon-lo: 195 22% 80%;
+  --flex-metal-hi: 210 20% 96%;
+  --flex-metal-lo: 214 14% 70%;
 }
 
 .dark {
@@ -52,6 +63,14 @@
   --border: 222 20% 20%;
   --input: 222 20% 20%;
   --ring: 178 40% 55%;
+
+  --flex-hi: 355 75% 68%;
+  --flex-mid: 355 65% 52%;
+  --flex-lo: 355 55% 36%;
+  --flex-tendon-hi: 195 22% 64%;
+  --flex-tendon-lo: 195 18% 46%;
+  --flex-metal-hi: 214 14% 78%;
+  --flex-metal-lo: 214 10% 46%;
 }
 
 * {

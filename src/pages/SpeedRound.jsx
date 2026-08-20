@@ -3,6 +3,7 @@ import { CheckCircle2, Timer, Trophy, Zap } from "lucide-react";
 import { CASES } from "@/data/cases";
 import { useProfile } from "@/lib/ProfileContext";
 import { speedRoundTimerDelta } from "@/lib/gamification";
+import { playFeedback } from "@/lib/sound";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -62,6 +63,7 @@ export default function SpeedRound() {
     if (picked !== null) return;
     setPicked(i);
     const isCorrect = i === order[idx].correct;
+    playFeedback(isCorrect);
     if (isCorrect) setCorrect((c) => c + 1);
     setCombo((prev) => {
       const next = isCorrect ? prev + 1 : 0;

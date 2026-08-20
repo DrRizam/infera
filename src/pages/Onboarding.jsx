@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useProfile } from "@/lib/ProfileContext";
 import { MODULES } from "@/lib/modules";
+import Mascot from "@/components/Mascot";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -41,11 +42,13 @@ export default function Onboarding() {
       <Card className="w-full max-w-md">
         {stage === "intro" && (
           <>
-            <CardHeader>
-              <CardTitle>Welcome to Infera</CardTitle>
+            <CardHeader className="items-center text-center">
+              <Mascot mood="cheerful" className="mb-1 h-20 w-20" />
+              <CardTitle>Hi, I'm Flex 👋</CardTitle>
               <CardDescription>
-                Before we jump in, two quick questions about where you're coming from — not a test, no wrong
-                answers. It just helps us point you toward the right starting content instead of guessing.
+                Welcome to Infera. Before we jump in, two quick questions about where you're coming
+                from — not a test, no wrong answers. It just helps us point you toward the right
+                starting content instead of guessing.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -58,7 +61,8 @@ export default function Onboarding() {
 
         {stage === "assess" && (
           <>
-            <CardHeader>
+            <CardHeader className="items-center text-center">
+              <Mascot mood="curious" className="mb-1 h-14 w-14" />
               <CardTitle>How would you describe your experience?</CardTitle>
               <CardDescription>Be honest — this only shapes your starting point, not what you can access.</CardDescription>
             </CardHeader>
@@ -82,7 +86,8 @@ export default function Onboarding() {
 
         {stage === "focus" && (
           <>
-            <CardHeader>
+            <CardHeader className="items-center text-center">
+              <Mascot mood="cheerful" className="mb-1 h-14 w-14" />
               <CardTitle>Pick a focus area</CardTitle>
               <CardDescription>You can change this later. Choose Mixed if you'd rather not narrow it down.</CardDescription>
             </CardHeader>
@@ -121,12 +126,13 @@ export default function Onboarding() {
 
         {stage === "done" && (
           <>
-            <CardHeader>
+            <CardHeader className="items-center text-center">
+              <Mascot mood="cheerful" className="mb-1 h-20 w-20" />
               <CardTitle>You're all set</CardTitle>
               <CardDescription>
                 We'll start you off around a {EXPERIENCE_LEVELS.find((l) => l.id === experienceLevel)?.label.toLowerCase()}{" "}
                 level{focusModule ? `, focused on ${MODULES.find((m) => m.id === focusModule)?.name}` : ""}. You can
-                change your focus area any time from Home.
+                change your focus area any time from Home. Flex will be around if you need him.
               </CardDescription>
             </CardHeader>
             <CardContent>

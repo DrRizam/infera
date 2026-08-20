@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { shuffleSeed } from "@/lib/caseEngine";
+import { playFeedback } from "@/lib/sound";
 import { cn } from "@/lib/utils";
 
 function HistoryQuestion({ caseId, question, picked, onPick }) {
@@ -19,7 +20,10 @@ function HistoryQuestion({ caseId, question, picked, onPick }) {
           <button
             key={origIdx}
             disabled={answered}
-            onClick={() => onPick(origIdx)}
+            onClick={() => {
+              playFeedback(origIdx === question.correct);
+              onPick(origIdx);
+            }}
             className={cn(
               "block w-full rounded-md border px-3 py-2 text-left text-sm",
               answered && origIdx === question.correct && "border-emerald-500 bg-emerald-50",

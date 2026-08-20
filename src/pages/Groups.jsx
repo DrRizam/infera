@@ -4,6 +4,7 @@ import { Copy, Flame, Trophy, Users } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
 import { createGroup, fetchGroupStandings, fetchMyGroups, joinGroup } from "@/lib/dailyGameStore";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
+import Mascot from "@/components/Mascot";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -106,7 +107,10 @@ export default function Groups() {
       {loading ? (
         <p className="text-sm text-muted-foreground">Loading…</p>
       ) : groups.length === 0 ? (
-        <p className="text-sm text-muted-foreground">You're not in any groups yet — create one or join with a code below.</p>
+        <div className="flex flex-col items-center gap-2 py-4 text-center">
+          <Mascot mood="curious" className="h-20 w-20" />
+          <p className="text-sm text-muted-foreground">You're not in any groups yet — create one or join with a code below.</p>
+        </div>
       ) : (
         <div className="space-y-3">
           {groups.map((g) => (

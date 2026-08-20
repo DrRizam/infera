@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
 import { ROLE_OPTIONS } from "@/lib/profileOptions";
 import { COUNTRIES } from "@/lib/countries";
+import { isSoundEnabled, setSoundEnabled } from "@/lib/sound";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,12 @@ export default function Settings() {
   const [newPassword, setNewPassword] = useState("");
   const [passwordNotice, setPasswordNotice] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  const [soundEnabled, setSoundEnabledState] = useState(() => isSoundEnabled());
+  const toggleSound = (enabled) => {
+    setSoundEnabledState(enabled);
+    setSoundEnabled(enabled);
+  };
 
   const saveProfileFields = async (e) => {
     e.preventDefault();
@@ -249,6 +256,25 @@ export default function Settings() {
               Update password
             </Button>
           </form>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Sound &amp; haptics</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <label htmlFor="sound-enabled" className="flex items-center gap-2 text-sm">
+            <input
+              id="sound-enabled"
+              type="checkbox"
+              className="h-4 w-4 rounded border-input accent-primary"
+              checked={soundEnabled}
+              onChange={(e) => toggleSound(e.target.checked)}
+            />
+            Play a sound and vibration when I answer correctly or incorrectly
+          </label>
+          <p className="mt-1 text-xs text-muted-foreground">Only affects this device.</p>
         </CardContent>
       </Card>
 

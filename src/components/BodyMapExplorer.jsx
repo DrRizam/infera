@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Search } from "lucide-react";
 import { BODY_REGIONS, MODULES } from "@/lib/modules";
 import { cn } from "@/lib/utils";
+import Mascot from "@/components/Mascot";
 import { Input } from "@/components/ui/input";
 import muscularSystemImg from "@/assets/muscular-system.png";
 
@@ -135,7 +136,10 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
         <div className="mt-5">
           <h3 className="mb-2 text-lg font-black tracking-tight">Search results</h3>
           {searchMatches.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No conditions match "{query.trim()}".</p>
+            <div className="flex flex-col items-center gap-2 py-4 text-center">
+              <Mascot mood="curious" className="h-20 w-20" />
+              <p className="text-sm text-muted-foreground">No conditions match "{query.trim()}".</p>
+            </div>
           ) : (
             <ul className="space-y-2">
               {searchMatches.map((c) => (
@@ -157,7 +161,10 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
           <div className="mt-5">
             <h3 className="mb-2 text-lg font-black tracking-tight">{region.label}</h3>
             {regionMatches.length === 0 ? (
-              <p className="text-sm text-muted-foreground">No cases here yet.</p>
+              <div className="flex flex-col items-center gap-2 py-4 text-center">
+                <Mascot mood="curious" className="h-20 w-20" />
+                <p className="text-sm text-muted-foreground">No cases here yet.</p>
+              </div>
             ) : (
               <ul className="space-y-2">
                 {regionMatches.map((c) => (
