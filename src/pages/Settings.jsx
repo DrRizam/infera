@@ -34,6 +34,7 @@ export default function Settings() {
 
   const [checkoutNotice, setCheckoutNotice] = useState("");
   const [billingBusy, setBillingBusy] = useState(false);
+  const [billingError, setBillingError] = useState("");
 
   useEffect(() => {
     if (searchParams.get("checkout") === "success") {
@@ -142,14 +143,20 @@ export default function Settings() {
 
   const handleSubscribe = async () => {
     setBillingBusy(true);
+    setBillingError("");
     const { error } = await startCheckout();
-    if (error) setBillingBusy(false);
+    // Only reachable if it DIDN'T redirect — a successful call navigates
+    // away before this line would matter.
+    setBillingBusy(false);
+    if (error) setBillingError(error);
   };
 
   const handleManage = async () => {
     setBillingBusy(true);
+    setBillingError("");
     const { error } = await openBillingPortal();
-    if (error) setBillingBusy(false);
+    setBillingBusy(false);
+    if (error) setBillingError(error);
   };
 
   const handleDeleteAccount = async () => {
@@ -182,6 +189,7 @@ export default function Settings() {
         </CardHeader>
         <CardContent className="space-y-3">
           {checkoutNotice && <p className="text-sm text-primary">{checkoutNotice}</p>}
+          {billingError && <p className="text-sm text-destructive">{billingError}</p>}
           <div className="flex items-center justify-between">
             <span className="text-sm font-bold">{admin ? "Admin" : premium ? "Premium" : "Free"}</span>
             {!admin && !premium && (

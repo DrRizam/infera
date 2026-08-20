@@ -8,10 +8,28 @@ import { supabase } from "@/lib/supabaseClient";
 async function callFunction(name) {
   const { data, error } = await supabase.functions.invoke(name);
   if (error) {
-    console.error(`Failed to call ${name}`, error);
-    return { url: null, error };
+    // supabase-js's FunctionsHttpError carries the actual Response on
+    // `.context` — error.message alone is usually just "Edge Function
+    // returned a non-2xx status code," not the real reason. Both Edge
+    // Functions return { error: "..." } bodies specifically so this can
+    // surface something a user (or we, debugging) can actually act on.
+    let detail = error.message;
+    if (error.context && typeof error.context.json === "function") {
+      try {
+        const body = await error.context.json();
+        if (body?.error) detail = body.error;
+      } catch {
+        // Body wasn't JSON, or already consumed — fall back to error.message.
+      }
+    }
+    console.error(`Failed to call ${name}`, error, detail);
+    return { url: null, error: detail || "Something went wrong" };
   }
-  return { url: data?.url || null, error: null };
+  if (!data?.url) {
+    console.error(`${name} returned no url`, data);
+    return { url: null, error: "No redirect URL came back — try again?" };
+  }
+  return { url: data.url, error: null };
 }
 
 /** Redirects to Stripe Checkout to start a new subscription. */

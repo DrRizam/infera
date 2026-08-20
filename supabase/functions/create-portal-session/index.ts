@@ -5,7 +5,9 @@
 import Stripe from "npm:stripe@17.4.0";
 import { createClient } from "npm:@supabase/supabase-js@2.112.2";
 
-const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, { apiVersion: "2024-12-18.acacia" });
+// See create-checkout-session for why this is pinned here — the account
+// requires 2025-03-31.basil or newer.
+const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, { apiVersion: "2025-03-31.basil" });
 const APP_URL = Deno.env.get("APP_URL") ?? "http://localhost:5173";
 
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
