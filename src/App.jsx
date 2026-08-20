@@ -15,6 +15,7 @@ import ConditionOfTheDay from "@/pages/ConditionOfTheDay";
 import CasePlay from "@/pages/CasePlay";
 import SpeedRound from "@/pages/SpeedRound";
 import Recall from "@/pages/Recall";
+import DailyGame from "@/pages/DailyGame";
 import Explore from "@/pages/Explore";
 import ModuleDetail from "@/pages/ModuleDetail";
 import Leaderboard from "@/pages/Leaderboard";
@@ -41,6 +42,7 @@ export default function App() {
                   <Route path="/condition-of-the-day" element={<ConditionOfTheDay />} />
                   <Route path="/speed" element={<SpeedRound />} />
                   <Route path="/recall" element={<Recall />} />
+                  <Route path="/daily-game" element={<DailyGame />} />
                   <Route path="/explore" element={<Explore />} />
                   <Route path="/module/:id" element={<ModuleDetail />} />
                   <Route path="/leaderboard" element={<Leaderboard />} />

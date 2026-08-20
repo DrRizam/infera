@@ -8,6 +8,7 @@ import { retentionStats, todayStr } from "@/lib/gamification";
 import { conditionOfTheDay, getModule, MODULES } from "@/lib/modules";
 import { countDueRecallItems, generateRecallItems } from "@/lib/recallItems";
 import { suggestModuleFocus } from "@/lib/contextPrompt";
+import { currentCaseNumber } from "@/lib/dailyGame";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import CasePath from "@/components/CasePath";
 import { Card, CardContent } from "@/components/ui/card";
@@ -48,6 +49,8 @@ export default function Home() {
   );
   const focusSuggestionModule = focusSuggestion && getModule(focusSuggestion.moduleId);
 
+  const dailyGameCaseNumber = currentCaseNumber();
+
   const focusModule = profile.focus_module;
   const moduleCases = focusModule ? CASES.filter((c) => c.module === focusModule) : CASES;
   const pathHeading = (focusModule && getModule(focusModule)?.name) || "Reasoning path";
@@ -59,56 +62,72 @@ export default function Home() {
 
   return (
     <div className="space-y-8">
-      <div className="grid gap-5 lg:grid-cols-[1fr_0.8fr] lg:items-stretch">
-        <div className="flex flex-col justify-center rounded-2xl border-2 border-border bg-card p-5 sm:p-6">
-          <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">Your learning space</p>
-          <h1 className="text-2xl font-black tracking-tight sm:text-3xl">
-            Good {new Date().getHours() < 12 ? "morning" : "day"}, {firstName}
-          </h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {retention.percent != null
-              ? `You've retained ${retention.percent}% of what you've learned so far.`
-              : "Keep your reasoning sharp with one focused session today."}
-          </p>
-          <div className="mt-5">
-            <div className="mb-2 flex items-center justify-between text-xs font-semibold">
-              <span>Daily goal</span>
-              <span className={dailyGoalExceeded ? "text-emerald-600" : "text-primary"}>
-                {profile.daily_xp ?? 0}/{profile.daily_goal ?? 50} XP{dailyGoalExceeded ? " · goal smashed 🎉" : ""}
-              </span>
-            </div>
-            <div className="h-2.5 overflow-hidden rounded-full bg-muted">
-              <div
-                className={cn("h-full rounded-full transition-[width] duration-500", dailyGoalExceeded ? "bg-emerald-500" : "bg-primary")}
-                style={{ width: `${Math.min(100, ((profile.daily_xp ?? 0) / (profile.daily_goal ?? 50)) * 100)}%` }}
-              />
-            </div>
+      <div className="rounded-2xl border-2 border-border bg-card p-5 sm:p-6">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">Your learning space</p>
+        <h1 className="text-2xl font-black tracking-tight sm:text-3xl">
+          Good {new Date().getHours() < 12 ? "morning" : "day"}, {firstName}
+        </h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {retention.percent != null
+            ? `You've retained ${retention.percent}% of what you've learned so far.`
+            : "Keep your reasoning sharp with one focused session today."}
+        </p>
+        <div className="mt-5">
+          <div className="mb-2 flex items-center justify-between text-xs font-semibold">
+            <span>Daily goal</span>
+            <span className={dailyGoalExceeded ? "text-emerald-600" : "text-primary"}>
+              {profile.daily_xp ?? 0}/{profile.daily_goal ?? 50} XP{dailyGoalExceeded ? " · goal smashed 🎉" : ""}
+            </span>
           </div>
-          {retention.overdue > 0 && (
-            <p className="mt-3 text-xs font-semibold text-amber-600">
-              Skipping days piles up forgetting debt — {retention.overdue} thing{retention.overdue === 1 ? "" : "s"} slipping right now.
-            </p>
-          )}
+          <div className="h-2.5 overflow-hidden rounded-full bg-muted">
+            <div
+              className={cn("h-full rounded-full transition-[width] duration-500", dailyGoalExceeded ? "bg-emerald-500" : "bg-primary")}
+              style={{ width: `${Math.min(100, ((profile.daily_xp ?? 0) / (profile.daily_goal ?? 50)) * 100)}%` }}
+            />
+          </div>
         </div>
-
-        {cotd && (
-          <Card
-            className="group cursor-pointer overflow-hidden border-0 text-white shadow-md transition-transform hover:-translate-y-0.5"
-            onClick={() => navigate("/condition-of-the-day")}
-          >
-            <CardContent className={`flex h-full min-h-44 flex-col justify-between bg-gradient-to-br ${cotdModule?.color || "from-primary to-primary"} p-5`}>
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wide opacity-90">Condition of the day</span>
-                <span className="flex items-center gap-1 text-sm font-bold">🔥{profile.streak_count ?? 0}</span>
-              </div>
-              <div>
-                <p className="text-lg font-extrabold">Tap to reveal today's case</p>
-                <p className="mt-1 text-sm opacity-80 transition-opacity group-hover:opacity-100">A fresh challenge is waiting.</p>
-              </div>
-            </CardContent>
-          </Card>
+        {retention.overdue > 0 && (
+          <p className="mt-3 text-xs font-semibold text-amber-600">
+            Skipping days piles up forgetting debt — {retention.overdue} thing{retention.overdue === 1 ? "" : "s"} slipping right now.
+          </p>
         )}
       </div>
+
+      <Card
+        className="group cursor-pointer overflow-hidden border-0 text-white shadow-md transition-transform hover:-translate-y-0.5"
+        onClick={() => navigate("/daily-game")}
+      >
+        <CardContent className="flex min-h-32 flex-col justify-between bg-gradient-to-br from-violet-600 to-fuchsia-600 p-5">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wide opacity-90">Guess the Diagnosis</span>
+            <span className="rounded-full bg-white/20 px-2 py-0.5 text-xs font-bold">Case #{dailyGameCaseNumber}</span>
+          </div>
+          <div>
+            <p className="text-lg font-extrabold">One case, six guesses.</p>
+            <p className="mt-1 text-sm opacity-80 transition-opacity group-hover:opacity-100">
+              Everyone plays the same case today — 🔥{profile.streak_count ?? 0}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {cotd && (
+        <Card
+          className="group cursor-pointer overflow-hidden border-0 text-white shadow-md transition-transform hover:-translate-y-0.5"
+          onClick={() => navigate("/condition-of-the-day")}
+        >
+          <CardContent className={`flex min-h-32 flex-col justify-between bg-gradient-to-br ${cotdModule?.color || "from-primary to-primary"} p-5`}>
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wide opacity-90">Condition of the day</span>
+              <span className="flex items-center gap-1 text-sm font-bold">🔥{profile.streak_count ?? 0}</span>
+            </div>
+            <div>
+              <p className="text-lg font-extrabold">Tap to reveal today's case</p>
+              <p className="mt-1 text-sm opacity-80 transition-opacity group-hover:opacity-100">A fresh challenge is waiting.</p>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {focusSuggestionModule && (
         <button
