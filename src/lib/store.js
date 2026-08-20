@@ -35,6 +35,8 @@ const DEFAULT_PROFILE = {
   experience_level: null,
   /** module ids; empty array means "Mixed" (no narrowing) */
   focus_modules: [],
+  /** "{module}:{bossLevel}" -> true once that tree boss round is cleared */
+  bossRoundsCompleted: {},
 };
 
 /** Loads (and lazily creates) the given auth user's profile row. */

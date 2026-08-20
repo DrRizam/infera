@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ClipboardCheck, Lock } from "lucide-react";
 import { CASES } from "@/data/cases";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { buildCaseStages, scoreEncounter } from "@/lib/caseEngine";
 import { levelFromXp } from "@/lib/gamification";
-import { MODULES } from "@/lib/modules";
+import { getModule, MODULES } from "@/lib/modules";
 import { isAdmin, isPremium } from "@/lib/subscription";
 import { OSCE_TIME_BUDGET_SECONDS, scoreOsceSession, selectOsceCases, xpForOsceSession } from "@/lib/osce";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
+import Mascot from "@/components/Mascot";
 import CaseStageHeader from "@/components/case/CaseStageHeader";
 import PresentationStage from "@/components/case/PresentationStage";
 import HistoryStage from "@/components/case/HistoryStage";
@@ -43,10 +44,21 @@ export default function OsceCheckpoint() {
   const { profile, setProfile } = useProfile();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  const hasAccess = isAdmin(user) || isPremium(profile);
+  // A boss round reached by clearing 10 tree levels (see CasePath.jsx) is
+  // free for everyone — it gates core progression, not just deeper
+  // analysis, so it can't be paywalled without contradicting "practicing
+  // cases is always free." Only the standalone picker (this page reached
+  // directly, no boss params) stays Premium-gated.
+  const bossModuleId = searchParams.get("module");
+  const bossLevelParam = searchParams.get("bossLevel");
+  const isBossMode = bossLevelParam !== null;
+  const bossKey = isBossMode ? `${bossModuleId}:${bossLevelParam}` : null;
 
-  const [stage, setStage] = useState("picker"); // "picker" | "running" | "results"
+  const hasAccess = isBossMode || isAdmin(user) || isPremium(profile);
+
+  const [stage, setStage] = useState(isBossMode ? "boss-intro" : "picker"); // "boss-intro" | "picker" | "running" | "results"
   const [moduleId, setModuleId] = useState(null);
   const [osceCases, setOsceCases] = useState([]);
   const [caseIdx, setCaseIdx] = useState(0);
@@ -79,7 +91,7 @@ export default function OsceCheckpoint() {
   }
 
   const startCheckpoint = () => {
-    const picked = selectOsceCases(CASES, moduleId);
+    const picked = selectOsceCases(CASES, isBossMode ? bossModuleId : moduleId);
     setOsceCases(picked);
     setCaseIdx(0);
     setCaseStageIdx(0);
@@ -106,7 +118,11 @@ export default function OsceCheckpoint() {
       setAwardedXp(xp);
       setProfile((prev) => {
         const xpTotal = (prev.xp || 0) + xp;
-        return { ...prev, xp: xpTotal, daily_xp: (prev.daily_xp || 0) + xp, level: levelFromXp(xpTotal).level };
+        const next = { ...prev, xp: xpTotal, daily_xp: (prev.daily_xp || 0) + xp, level: levelFromXp(xpTotal).level };
+        if (isBossMode) {
+          next.bossRoundsCompleted = { ...prev.bossRoundsCompleted, [bossKey]: true };
+        }
+        return next;
       });
       setStage("results");
     } else {
@@ -115,6 +131,21 @@ export default function OsceCheckpoint() {
       setAnswers(EMPTY_ANSWERS);
     }
   };
+
+  if (stage === "boss-intro") {
+    const bossModule = getModule(bossModuleId);
+    return (
+      <div className="mx-auto max-w-lg space-y-4 py-8 text-center">
+        <Mascot mood="battle" className="mx-auto h-24 w-24" />
+        <h1 className="text-2xl font-black tracking-tight">Boss Round</h1>
+        <p className="text-sm text-muted-foreground">
+          Three {bossModule?.name || "mixed"} cases, back to back, one graded result at the end. Clear it to keep
+          moving down the path.
+        </p>
+        <Button onClick={startCheckpoint}>Begin</Button>
+      </div>
+    );
+  }
 
   if (stage === "picker") {
     return (
@@ -170,6 +201,7 @@ export default function OsceCheckpoint() {
     const { overallAccuracy, passed } = scoreOsceSession(caseResults);
     return (
       <div className="mx-auto max-w-lg space-y-4">
+        {passed && <Mascot mood="victorious" className="mx-auto h-24 w-24" />}
         <Card className={passed ? "border-emerald-500" : "border-destructive/40"}>
           <CardHeader>
             <CardTitle>{passed ? "Checkpoint passed" : "Checkpoint complete"}</CardTitle>

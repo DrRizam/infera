@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Brain, Check, ChevronDown, ClipboardCheck, Lightbulb, RotateCcw, Zap } from "lucide-react";
+import { Brain, Check, ChevronDown, Lightbulb, RotateCcw, Zap } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { CASES, getCase } from "@/data/cases";
@@ -9,9 +9,9 @@ import { conditionOfTheDay, getModule, MODULES } from "@/lib/modules";
 import { countDueRecallItems, generateRecallItems } from "@/lib/recallItems";
 import { suggestModuleFocus } from "@/lib/contextPrompt";
 import { currentCaseNumber } from "@/lib/dailyGame";
-import { isAdmin, isPremium } from "@/lib/subscription";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import CasePath from "@/components/CasePath";
+import Mascot from "@/components/Mascot";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -29,7 +29,6 @@ export default function Home() {
   const cotdModule = cotd && getModule(cotd.module);
 
   const today = todayStr();
-  const hasOsceAccess = isAdmin(user) || isPremium(profile);
   const retention = retentionStats(profile, today);
   const dailyGoalExceeded = (profile.daily_xp ?? 0) > (profile.daily_goal ?? 50);
   const dueReviews = Object.entries(progressByCaseId)
@@ -77,15 +76,20 @@ export default function Home() {
   return (
     <div className="space-y-8">
       <div className="rounded-2xl border-2 border-border bg-card p-5 sm:p-6">
-        <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">Your learning space</p>
-        <h1 className="text-2xl font-black tracking-tight sm:text-3xl">
-          Good {new Date().getHours() < 12 ? "morning" : "day"}, {firstName}
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {retention.percent != null
-            ? `You've retained ${retention.percent}% of what you've learned so far.`
-            : "Keep your reasoning sharp with one focused session today."}
-        </p>
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">Your learning space</p>
+            <h1 className="text-2xl font-black tracking-tight sm:text-3xl">
+              Good {new Date().getHours() < 12 ? "morning" : "day"}, {firstName}
+            </h1>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {retention.percent != null
+                ? `You've retained ${retention.percent}% of what you've learned so far.`
+                : "Keep your reasoning sharp with one focused session today."}
+            </p>
+          </div>
+          <Mascot mood="cheerful" className="h-14 w-14 shrink-0" />
+        </div>
         <div className="mt-5">
           <div className="mb-2 flex items-center justify-between text-xs font-semibold">
             <span>Daily goal</span>
@@ -170,14 +174,6 @@ export default function Home() {
         </Button>
       </div>
 
-      <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/osce")}>
-        <ClipboardCheck className="h-4 w-4" />
-        OSCE Checkpoint
-        {!hasOsceAccess && (
-          <span className="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">Premium</span>
-        )}
-      </Button>
-
       {dueReviews.length > 0 && (
         <div>
           <div className="mb-3 flex items-center gap-2">
@@ -255,7 +251,12 @@ export default function Home() {
             </>
           )}
         </div>
-        <CasePath cases={moduleCases} progressByCaseId={progressByCaseId} onOpen={(id) => navigate(`/case/${id}`)} />
+        <CasePath
+          cases={moduleCases}
+          progressByCaseId={progressByCaseId}
+          bossRoundsCompleted={profile.bossRoundsCompleted}
+          onOpen={(id) => navigate(`/case/${id}`)}
+        />
       </div>
     </div>
   );

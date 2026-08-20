@@ -227,6 +227,7 @@ export default function DailyGame() {
       {finished && (
         <Card className={attempt.status === "won" ? "border-emerald-500" : "border-destructive/40"}>
           <CardHeader>
+            {attempt.status === "won" && <Mascot mood="victorious" className="mx-auto h-20 w-20" />}
             <CardTitle>{attempt.status === "won" ? "Solved it!" : "Out of guesses"}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">

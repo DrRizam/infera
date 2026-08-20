@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
+import Mascot from "@/components/Mascot";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -63,7 +64,8 @@ export default function Login() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-sm">
-        <CardHeader>
+        <CardHeader className="items-center text-center">
+          <Mascot mood="cheerful" className="mb-1 h-16 w-16" />
           <h1 className="text-base font-bold leading-none">
             {mode === "sign_in" ? "Sign in to Infera" : mode === "sign_up" ? "Create your Infera account" : "Reset your password"}
           </h1>

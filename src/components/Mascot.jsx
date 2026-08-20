@@ -3,12 +3,18 @@ import { useId } from "react";
 /**
  * Infera's mascot — a fusiform-muscle silhouette (pale tendon tips, red
  * belly, faint fiber lines) with a face, a stethoscope, and small flexed
- * limbs. `mood="curious"` (raised brow, closed smile) reads as "nothing
- * here yet, go take a look" for empty states; `mood="cheerful"` (default)
- * is the open grin for positive moments. Colors come from the --flex-*
- * custom properties in index.css, so it themes automatically in dark mode.
- * Gradient/filter ids are per-instance (useId) so multiple mascots can be
- * mounted on the same page without id collisions.
+ * limbs (the flexed-arms pose alone already reads as "ready" for the more
+ * energetic moods, so only the face changes between them). Colors come
+ * from the --flex-* custom properties in index.css, so it themes
+ * automatically in dark mode. Gradient/filter ids are per-instance
+ * (useId) so multiple mascots can be mounted on the same page without id
+ * collisions.
+ *
+ * Moods:
+ * - "cheerful" (default) — open grin, positive moments.
+ * - "curious" — raised brow, closed smile: "nothing here yet, go take a look" for empty states.
+ * - "victorious" — closed happy eyes + sparkles: cleared a checkpoint, won the daily game.
+ * - "battle" — furrowed brow, firm mouth: about to start a boss round.
  */
 export default function Mascot({ mood = "cheerful", className = "h-24 w-24" }) {
   const uid = useId();
@@ -17,6 +23,8 @@ export default function Mascot({ mood = "cheerful", className = "h-24 w-24" }) {
   const metal = `flexMetal${uid}`;
   const soft = `flexSoft${uid}`;
   const curious = mood === "curious";
+  const victorious = mood === "victorious";
+  const battle = mood === "battle";
 
   return (
     <svg viewBox="-10 0 160 240" className={className} role="img" aria-hidden="true">
@@ -78,18 +86,41 @@ export default function Mascot({ mood = "cheerful", className = "h-24 w-24" }) {
       {/* face */}
       <ellipse cx="48" cy="116" rx="7.5" ry="5" fill="hsl(0 0% 100% / 0.35)" />
       <ellipse cx="92" cy="116" rx="7.5" ry="5" fill="hsl(0 0% 100% / 0.35)" />
-      <circle cx="58" cy="100" r="12" fill="white" />
-      <circle cx="82" cy="100" r="12" fill="white" />
-      <circle cx={curious ? 60 : 59} cy={curious ? 99 : 101} r="5.2" fill="hsl(var(--flex-lo))" />
-      <circle cx={curious ? 84 : 83} cy={curious ? 99 : 101} r="5.2" fill="hsl(var(--flex-lo))" />
-      <circle cx={curious ? 57.5 : 56.5} cy={curious ? 96.5 : 98.5} r="1.7" fill="white" />
-      <circle cx={curious ? 81.5 : 80.5} cy={curious ? 96.5 : 98.5} r="1.7" fill="white" />
 
-      {curious ? (
+      {victorious ? (
         <>
-          <path d="M78,86 Q88,80 98,85" fill="none" stroke="hsl(var(--flex-lo))" strokeWidth="3" strokeLinecap="round" opacity="0.7" />
-          <path d="M60,130 Q70,126 80,130" fill="none" stroke="hsl(var(--flex-lo))" strokeWidth="4.5" strokeLinecap="round" />
+          <path d="M50,100 Q58,91 66,100" fill="none" stroke="hsl(var(--flex-lo))" strokeWidth="4" strokeLinecap="round" />
+          <path d="M74,100 Q82,91 90,100" fill="none" stroke="hsl(var(--flex-lo))" strokeWidth="4" strokeLinecap="round" />
+          <path d="M28,58 L33,67 M39,54 L41,65" stroke="hsl(var(--flex-tendon-hi))" strokeWidth="2.5" strokeLinecap="round" />
+          <path d="M112,58 L107,67 M101,54 L99,65" stroke="hsl(var(--flex-tendon-hi))" strokeWidth="2.5" strokeLinecap="round" />
         </>
+      ) : (
+        <>
+          <circle cx="58" cy="100" r="12" fill="white" />
+          <circle cx="82" cy="100" r="12" fill="white" />
+          <circle cx={curious ? 60 : 59} cy={curious ? 99 : 101} r="5.2" fill="hsl(var(--flex-lo))" />
+          <circle cx={curious ? 84 : 83} cy={curious ? 99 : 101} r="5.2" fill="hsl(var(--flex-lo))" />
+          <circle cx={curious ? 57.5 : 56.5} cy={curious ? 96.5 : 98.5} r="1.7" fill="white" />
+          <circle cx={curious ? 81.5 : 80.5} cy={curious ? 96.5 : 98.5} r="1.7" fill="white" />
+        </>
+      )}
+
+      {curious && (
+        <path d="M78,86 Q88,80 98,85" fill="none" stroke="hsl(var(--flex-lo))" strokeWidth="3" strokeLinecap="round" opacity="0.7" />
+      )}
+      {battle && (
+        <>
+          <path d="M48,86 L68,92" stroke="hsl(var(--flex-lo))" strokeWidth="3.5" strokeLinecap="round" />
+          <path d="M92,86 L72,92" stroke="hsl(var(--flex-lo))" strokeWidth="3.5" strokeLinecap="round" />
+        </>
+      )}
+
+      {victorious ? (
+        <path d="M55,126 Q70,142 85,126" fill="none" stroke="hsl(var(--flex-lo))" strokeWidth="5" strokeLinecap="round" />
+      ) : battle ? (
+        <path d="M58,130 L82,130" fill="none" stroke="hsl(var(--flex-lo))" strokeWidth="4.5" strokeLinecap="round" />
+      ) : curious ? (
+        <path d="M60,130 Q70,126 80,130" fill="none" stroke="hsl(var(--flex-lo))" strokeWidth="4.5" strokeLinecap="round" />
       ) : (
         <path d="M58,128 Q70,138 82,128" fill="none" stroke="hsl(var(--flex-lo))" strokeWidth="4.5" strokeLinecap="round" />
       )}

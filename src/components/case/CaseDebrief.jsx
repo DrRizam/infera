@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Lock } from "lucide-react";
+import Mascot from "@/components/Mascot";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
@@ -35,9 +36,12 @@ export default function CaseDebrief({
 }) {
   const [showSources, setShowSources] = useState(false);
   const status = STATUS_BADGE[clinicalCase.content_status] || STATUS_BADGE.demonstration;
+  const reactionMood = result.accuracy >= 80 ? "victorious" : result.accuracy >= 50 ? "cheerful" : "curious";
 
   return (
     <div className="space-y-4">
+      <Mascot mood={reactionMood} className="mx-auto h-16 w-16" />
+
       <div className="rounded-lg border border-border bg-card p-4">
         <div className="mb-1 flex items-center justify-between gap-2">
           <p className="text-xs font-bold uppercase tracking-wide text-primary">Diagnosis</p>

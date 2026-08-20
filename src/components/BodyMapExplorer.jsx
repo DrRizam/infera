@@ -3,30 +3,30 @@ import { ChevronRight, Search } from "lucide-react";
 import { BODY_REGIONS, MODULES } from "@/lib/modules";
 import { cn } from "@/lib/utils";
 import Mascot from "@/components/Mascot";
+import BodyFigure from "@/components/BodyFigure";
 import { Input } from "@/components/ui/input";
-import muscularSystemImg from "@/assets/muscular-system.png";
 
-// Percentages positioned against the real muscular-system photo (front
-// view on the left, back view on the right). Everything sits on the front
-// figure except spine, which reads far more naturally on the back view.
-// Measured directly off the 740x740 source image's figure silhouette
-// (per-row pixel spans) rather than eyeballed — the previous values put
-// the leg dots in the gap between the legs instead of on a leg, and the
-// arm-chain dots off to the side of the actual arm.
+// Percentages computed directly from BodyFigure.jsx's own coordinates
+// (viewBox 0 0 300 640: left = x/300*100, top = y/640*100) rather than
+// measured off an external asset after the fact — the figure and its
+// hotspots are defined from the same numbers, so they can't drift out of
+// sync. One anterior view only; spine sits on the torso's vertical
+// midline (same x as chest/abdomen/pelvis), a bit above center so it
+// doesn't stack on the chest dot.
 const HOTSPOTS = {
-  head: { left: 27.7, top: 22.4 },
-  neck: { left: 27.7, top: 28.1 },
-  shoulder: { left: 18.6, top: 34.1 },
-  upper_limb: { left: 14.6, top: 43.4 },
-  wrist_hand: { left: 10.8, top: 49.9 },
-  chest: { left: 27.8, top: 39.5 },
-  abdomen: { left: 27.7, top: 45.0 },
-  pelvis: { left: 27.9, top: 49.9 },
-  hip: { left: 34.6, top: 49.9 },
-  knee: { left: 24.1, top: 61.5 },
-  lower_leg: { left: 23.5, top: 67.6 },
-  ankle_foot: { left: 23.2, top: 77.0 },
-  spine: { left: 71.1, top: 39.2 },
+  head: { left: 50.0, top: 6.3 },
+  neck: { left: 50.0, top: 13.4 },
+  spine: { left: 50.0, top: 28.9 },
+  shoulder: { left: 18.3, top: 16.9 },
+  upper_limb: { left: 13.0, top: 32.0 },
+  wrist_hand: { left: 14.0, top: 50.3 },
+  chest: { left: 50.0, top: 23.4 },
+  abdomen: { left: 50.0, top: 34.4 },
+  pelvis: { left: 50.0, top: 45.3 },
+  hip: { left: 40.0, top: 53.1 },
+  knee: { left: 40.7, top: 69.5 },
+  lower_leg: { left: 41.0, top: 79.7 },
+  ankle_foot: { left: 42.3, top: 91.4 },
 };
 
 // A joint/region tap browses conditions, not cases — several cases can
@@ -128,18 +128,8 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
         </span>
       </div>
 
-      <div className="relative mx-auto aspect-square w-full max-w-xl">
-        {/* The source asset is a photorealistic render, a hard tonal clash
-            against the app's flat/rounded UI — grayscale + a primary-tinted
-            multiply overlay turns it into a duotone that reads as designed,
-            without needing a new illustration asset. */}
-        <img
-          src={muscularSystemImg}
-          alt="Muscular system diagram, front and back view"
-          className="h-full w-full object-contain grayscale contrast-[1.05]"
-          draggable={false}
-        />
-        <div className="pointer-events-none absolute inset-0 bg-primary/20 mix-blend-multiply" />
+      <div className="relative mx-auto aspect-[15/32] w-full max-w-xs">
+        <BodyFigure className="h-full w-full" />
         {BODY_REGIONS.map((r) => {
           const p = HOTSPOTS[r.id];
           if (!p) return null;
