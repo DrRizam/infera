@@ -93,6 +93,46 @@ export async function joinGroup(code) {
   return { data, error: null };
 }
 
+/** Submits a new case for review — always lands as status 'pending', unscheduled. */
+export async function submitCase(userId, fields) {
+  const { diagnosis, synonyms, region, system, tissue, chronicity, mechanism, clues, explanation } = fields;
+  const { data, error } = await supabase
+    .from("daily_game_cases")
+    .insert({
+      submitted_by: userId,
+      diagnosis: diagnosis.trim(),
+      synonyms: (synonyms || []).map((s) => s.trim()).filter(Boolean),
+      region: region.trim(),
+      system: system.trim(),
+      tissue: tissue.trim(),
+      chronicity: chronicity.trim(),
+      mechanism: mechanism.trim(),
+      clues: clues.map((c) => c.trim()),
+      explanation: explanation.trim(),
+    })
+    .select()
+    .single();
+  if (error) {
+    console.error("Failed to submit case", error);
+    return { data: null, error };
+  }
+  return { data, error: null };
+}
+
+/** The current user's own submissions, whatever their review status. */
+export async function fetchMySubmissions(userId) {
+  const { data, error } = await supabase
+    .from("daily_game_cases")
+    .select("id, diagnosis, status, created_at")
+    .eq("submitted_by", userId)
+    .order("created_at", { ascending: false });
+  if (error) {
+    console.error("Failed to load your submissions", error);
+    return [];
+  }
+  return data || [];
+}
+
 export async function fetchGroupStandings(groupId) {
   const { data, error } = await supabase.rpc("daily_game_group_standings", { target_group_id: groupId });
   if (error) {

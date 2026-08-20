@@ -102,6 +102,29 @@ export function buildShareGrid(caseNumber, guesses, won) {
   return `Infera Daily #${caseNumber} ${result}\n${rows}`;
 }
 
+const REQUIRED_TEXT_FIELDS = ["diagnosis", "region", "system", "tissue", "chronicity", "mechanism", "explanation"];
+
+/**
+ * Validates a case-submission form before it's sent to the store — pure so
+ * it's testable and reusable if a review UI ever needs the same checks.
+ * Returns a field -> message map; empty means the submission is valid.
+ */
+export function validateCaseSubmission(fields) {
+  const errors = {};
+  const f = fields || {};
+
+  for (const key of REQUIRED_TEXT_FIELDS) {
+    if (!(f[key] || "").trim()) errors[key] = "Required.";
+  }
+
+  const clues = (f.clues || []).map((c) => (c || "").trim());
+  if (clues.length !== 6 || clues.some((c) => !c)) {
+    errors.clues = "All 6 clues are required.";
+  }
+
+  return errors;
+}
+
 const EMPTY_STATS = { current_streak: 0, longest_streak: 0, total_played: 0, total_won: 0, last_completed_case_number: null };
 
 /**

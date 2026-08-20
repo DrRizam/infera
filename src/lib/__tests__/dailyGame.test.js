@@ -8,6 +8,7 @@ import {
   normalizeGuess,
   scoreForResult,
   updateGameStreak,
+  validateCaseSubmission,
   visibleClueCount,
 } from "../dailyGame";
 
@@ -198,5 +199,41 @@ describe("updateGameStreak", () => {
     const prev = { current_streak: 3, longest_streak: 5, total_played: 4, total_won: 3, last_completed_case_number: 4 };
     const s = updateGameStreak(prev, 4, true);
     expect(s).toBe(prev);
+  });
+});
+
+const VALID_SUBMISSION = {
+  diagnosis: "Lateral epicondylalgia",
+  region: "elbow",
+  system: "musculoskeletal",
+  tissue: "tendon",
+  chronicity: "chronic",
+  mechanism: "overuse",
+  explanation: "An overuse tendinopathy of the common extensor origin.",
+  clues: ["a", "b", "c", "d", "e", "f"],
+};
+
+describe("validateCaseSubmission", () => {
+  it("returns no errors for a complete submission", () => {
+    expect(validateCaseSubmission(VALID_SUBMISSION)).toEqual({});
+  });
+
+  it("flags missing required text fields", () => {
+    const errors = validateCaseSubmission({ ...VALID_SUBMISSION, diagnosis: "  ", region: "" });
+    expect(errors.diagnosis).toBeTruthy();
+    expect(errors.region).toBeTruthy();
+    expect(errors.tissue).toBeUndefined();
+  });
+
+  it("requires exactly 6 non-empty clues", () => {
+    expect(validateCaseSubmission({ ...VALID_SUBMISSION, clues: ["a", "b"] }).clues).toBeTruthy();
+    expect(validateCaseSubmission({ ...VALID_SUBMISSION, clues: ["a", "b", "c", "d", "e", "  "] }).clues).toBeTruthy();
+    expect(validateCaseSubmission({ ...VALID_SUBMISSION, clues: ["a", "b", "c", "d", "e", "f", "g"] }).clues).toBeTruthy();
+  });
+
+  it("handles missing fields object gracefully", () => {
+    const errors = validateCaseSubmission(undefined);
+    expect(errors.diagnosis).toBeTruthy();
+    expect(errors.clues).toBeTruthy();
   });
 });

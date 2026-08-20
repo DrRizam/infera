@@ -17,6 +17,7 @@ import SpeedRound from "@/pages/SpeedRound";
 import Recall from "@/pages/Recall";
 import DailyGame from "@/pages/DailyGame";
 import Groups from "@/pages/Groups";
+import SubmitCase from "@/pages/SubmitCase";
 import Explore from "@/pages/Explore";
 import ConditionInfo from "@/pages/ConditionInfo";
 import ModuleDetail from "@/pages/ModuleDetail";
@@ -46,6 +47,7 @@ export default function App() {
                   <Route path="/recall" element={<Recall />} />
                   <Route path="/daily-game" element={<DailyGame />} />
                   <Route path="/groups" element={<Groups />} />
+                  <Route path="/submit-case" element={<SubmitCase />} />
                   <Route path="/explore" element={<Explore />} />
                   <Route path="/condition/:caseId" element={<ConditionInfo />} />
                   <Route path="/module/:id" element={<ModuleDetail />} />

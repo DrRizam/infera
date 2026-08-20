@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CheckCircle2, Flame, HelpCircle, Share2, Stethoscope, Users, XCircle } from "lucide-react";
+import { CheckCircle2, Flame, HelpCircle, PenSquare, Share2, Stethoscope, Users, XCircle } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
 import {
   ATTRIBUTE_KEYS,
@@ -165,10 +165,16 @@ export default function DailyGame() {
           <h1 className="text-2xl font-black tracking-tight sm:text-3xl">Guess the Diagnosis</h1>
           <p className="text-sm text-muted-foreground">Case #{targetCase.case_number} — {MAX_GUESSES - guesses.length} guesses left</p>
         </div>
-        <Button variant="outline" size="sm" className="shrink-0 gap-1.5" onClick={() => navigate("/groups")}>
-          <Users className="h-3.5 w-3.5" />
-          Groups
-        </Button>
+        <div className="flex shrink-0 gap-1.5">
+          <Button variant="outline" size="sm" className="gap-1.5" onClick={() => navigate("/groups")}>
+            <Users className="h-3.5 w-3.5" />
+            Groups
+          </Button>
+          <Button variant="outline" size="sm" className="gap-1.5" onClick={() => navigate("/submit-case")}>
+            <PenSquare className="h-3.5 w-3.5" />
+            Submit
+          </Button>
+        </div>
       </div>
 
       <Card>

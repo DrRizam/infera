@@ -75,7 +75,9 @@ create index feedback_user_idx on public.feedback (user_id, created_at desc);
 -- the SQL editor for now, same as everything else managed that way so far.
 create table public.daily_game_cases (
   id uuid primary key default gen_random_uuid(),
-  case_number int not null unique,
+  -- Null for a pending user submission — assigned only once it's approved
+  -- and scheduled into the rotation (still unique whenever it is set).
+  case_number int unique,
   diagnosis text not null,
   synonyms text[] not null default '{}',
   region text not null,
@@ -88,7 +90,8 @@ create table public.daily_game_cases (
   status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
   submitted_by uuid references auth.users(id) on delete set null,
   created_at timestamptz not null default now(),
-  constraint daily_game_cases_six_clues check (array_length(clues, 1) = 6)
+  constraint daily_game_cases_six_clues check (array_length(clues, 1) = 6),
+  constraint daily_game_cases_approved_has_number check (status <> 'approved' or case_number is not null)
 );
 create index daily_game_cases_number_idx on public.daily_game_cases (case_number);
 
@@ -198,11 +201,20 @@ create policy feedback_insert_own on public.feedback
   for insert with check (user_id = auth.uid());
 
 -- Anyone signed in can read an approved case (needed both to play today's
--- case and to build the guess-matching dictionary from the rest of the
--- bank) — no insert/update policy yet, since case authoring is founder-only
--- via the SQL editor until the Phase 3 submission form exists.
+-- case and to build the guess-matching dictionary from the rest of the bank).
 create policy daily_game_cases_select_approved on public.daily_game_cases
   for select using (status = 'approved');
+
+-- A submitter can also see their own case regardless of status, so the
+-- submission form can show "pending review" / "rejected" back to them.
+create policy daily_game_cases_select_own on public.daily_game_cases
+  for select using (submitted_by = auth.uid());
+
+-- Users can submit new cases, but never a self-approved or self-scheduled
+-- one: status must be 'pending' and case_number must be null. Review and
+-- scheduling stay founder-only via the SQL editor, same as approval.
+create policy daily_game_cases_insert_own on public.daily_game_cases
+  for insert with check (submitted_by = auth.uid() and status = 'pending' and case_number is null);
 
 -- A user can only see/create/update their own attempt rows. The
 -- (user_id, case_id) unique constraint is what actually prevents replaying
