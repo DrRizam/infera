@@ -2,12 +2,17 @@ import { describe, expect, it } from "vitest";
 import {
   ADMIN_EMAILS,
   FREE_DEBRIEF_LIMIT,
+  FREE_RECALL_SESSIONS_PER_WEEK,
   currentPeriodKey,
+  currentWeekKey,
   debriefsRemaining,
   ensureDebriefPeriodFresh,
+  ensureRecallPeriodFresh,
   hasFullDebriefsRemaining,
+  hasRecallSessionsRemaining,
   isAdmin,
   isPremium,
+  recallSessionsRemaining,
 } from "../subscription";
 
 const ADMIN_USER = { email: ADMIN_EMAILS[0] };
@@ -95,5 +100,52 @@ describe("debriefsRemaining", () => {
   it("is null (unlimited) for admin or premium", () => {
     expect(debriefsRemaining({ debrief_count: 0 }, ADMIN_USER)).toBeNull();
     expect(debriefsRemaining({ debrief_count: 0, subscription_status: "active" }, REGULAR_USER)).toBeNull();
+  });
+});
+
+describe("currentWeekKey", () => {
+  it("is stable within the same week", () => {
+    const a = currentWeekKey(new Date(2026, 7, 17)); // Monday
+    const b = currentWeekKey(new Date(2026, 7, 19)); // Wednesday, same week
+    expect(a).toBe(b);
+  });
+
+  it("changes after 7 days", () => {
+    const a = currentWeekKey(new Date(2026, 7, 17));
+    const b = currentWeekKey(new Date(2026, 7, 24));
+    expect(a).not.toBe(b);
+  });
+});
+
+describe("ensureRecallPeriodFresh", () => {
+  it("resets recall_session_count on a new week", () => {
+    const p = ensureRecallPeriodFresh(
+      { recall_period: currentWeekKey(new Date(2026, 7, 10)), recall_session_count: 4 },
+      new Date(2026, 7, 20)
+    );
+    expect(p.recall_session_count).toBe(0);
+  });
+
+  it("leaves recall_session_count alone within the same week", () => {
+    const now = new Date(2026, 7, 20);
+    const p = ensureRecallPeriodFresh({ recall_period: currentWeekKey(now), recall_session_count: 2 }, now);
+    expect(p.recall_session_count).toBe(2);
+  });
+});
+
+describe("hasRecallSessionsRemaining / recallSessionsRemaining", () => {
+  it("is true under the cap, false at it, for a free user", () => {
+    expect(hasRecallSessionsRemaining({ recall_session_count: FREE_RECALL_SESSIONS_PER_WEEK - 1 }, REGULAR_USER)).toBe(true);
+    expect(hasRecallSessionsRemaining({ recall_session_count: FREE_RECALL_SESSIONS_PER_WEEK }, REGULAR_USER)).toBe(false);
+  });
+
+  it("is always true for admin or premium", () => {
+    expect(hasRecallSessionsRemaining({ recall_session_count: 999 }, ADMIN_USER)).toBe(true);
+    expect(hasRecallSessionsRemaining({ recall_session_count: 999, subscription_status: "active" }, REGULAR_USER)).toBe(true);
+  });
+
+  it("counts down for a free user and is null (unlimited) for admin", () => {
+    expect(recallSessionsRemaining({ recall_session_count: 2 }, REGULAR_USER)).toBe(FREE_RECALL_SESSIONS_PER_WEEK - 2);
+    expect(recallSessionsRemaining({ recall_session_count: 0 }, ADMIN_USER)).toBeNull();
   });
 });

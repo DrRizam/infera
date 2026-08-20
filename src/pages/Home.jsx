@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Brain, Check, ChevronDown, Lightbulb, RotateCcw, Zap } from "lucide-react";
+import { Brain, Check, ChevronDown, ClipboardCheck, Lightbulb, RotateCcw, Zap } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { CASES, getCase } from "@/data/cases";
@@ -9,6 +9,7 @@ import { conditionOfTheDay, getModule, MODULES } from "@/lib/modules";
 import { countDueRecallItems, generateRecallItems } from "@/lib/recallItems";
 import { suggestModuleFocus } from "@/lib/contextPrompt";
 import { currentCaseNumber } from "@/lib/dailyGame";
+import { isAdmin, isPremium } from "@/lib/subscription";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import CasePath from "@/components/CasePath";
 import { Card, CardContent } from "@/components/ui/card";
@@ -28,6 +29,7 @@ export default function Home() {
   const cotdModule = cotd && getModule(cotd.module);
 
   const today = todayStr();
+  const hasOsceAccess = isAdmin(user) || isPremium(profile);
   const retention = retentionStats(profile, today);
   const dailyGoalExceeded = (profile.daily_xp ?? 0) > (profile.daily_goal ?? 50);
   const dueReviews = Object.entries(progressByCaseId)
@@ -167,6 +169,14 @@ export default function Home() {
           Speed round
         </Button>
       </div>
+
+      <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/osce")}>
+        <ClipboardCheck className="h-4 w-4" />
+        OSCE Checkpoint
+        {!hasOsceAccess && (
+          <span className="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">Premium</span>
+        )}
+      </Button>
 
       {dueReviews.length > 0 && (
         <div>

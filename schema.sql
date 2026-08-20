@@ -495,6 +495,22 @@ language sql security definer set search_path = public stable as $$
 $$;
 grant execute on function public.get_public_profile(uuid) to authenticated;
 
+-- Admin-only read across every user's feedback row — feedback_select above
+-- stays self-scoped (append-only, users only ever see their own), this is
+-- the one deliberate exception, gated on auth.email() rather than any
+-- client-supplied value. Keep this allowlist in sync with ADMIN_EMAILS in
+-- src/lib/subscription.js if it ever grows past one address.
+create or replace function public.admin_list_feedback()
+returns table(id uuid, user_id uuid, display_name text, message text, created_at timestamptz)
+language sql security definer set search_path = public stable as $$
+  select f.id, f.user_id, coalesce(p.display_name, 'Anonymous'), f.message, f.created_at
+  from public.feedback f
+  join public.profiles p on p.user_id = f.user_id
+  where auth.email() = 'rizamshaar2014@gmail.com'
+  order by f.created_at desc;
+$$;
+grant execute on function public.admin_list_feedback() to authenticated;
+
 -- ── Daily diagnosis game — 5 launch cases, case_number 1-5 ───────────────
 -- Original write-ups (not copied from any external source), pre-approved
 -- so they're playable immediately. content is intentionally varied across

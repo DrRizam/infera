@@ -25,6 +25,8 @@ import Leaderboard from "@/pages/Leaderboard";
 import Profile from "@/pages/Profile";
 import PublicProfile from "@/pages/PublicProfile";
 import Settings from "@/pages/Settings";
+import AdminFeedback from "@/pages/AdminFeedback";
+import OsceCheckpoint from "@/pages/OsceCheckpoint";
 
 export default function App() {
   return (
@@ -56,6 +58,8 @@ export default function App() {
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/profile/:userId" element={<PublicProfile />} />
                   <Route path="/settings" element={<Settings />} />
+                  <Route path="/admin/feedback" element={<AdminFeedback />} />
+                  <Route path="/osce" element={<OsceCheckpoint />} />
                 </Route>
 
                 <Route path="/case/:caseId" element={<CasePlay />} />

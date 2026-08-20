@@ -7,7 +7,14 @@ import { supabase } from "@/lib/supabaseClient";
 import { ROLE_OPTIONS } from "@/lib/profileOptions";
 import { COUNTRIES } from "@/lib/countries";
 import { isSoundEnabled, setSoundEnabled } from "@/lib/sound";
-import { debriefsRemaining, FREE_DEBRIEF_LIMIT, isAdmin, isPremium } from "@/lib/subscription";
+import {
+  debriefsRemaining,
+  FREE_DEBRIEF_LIMIT,
+  FREE_RECALL_SESSIONS_PER_WEEK,
+  isAdmin,
+  isPremium,
+  recallSessionsRemaining,
+} from "@/lib/subscription";
 import { openBillingPortal, startCheckout } from "@/lib/subscriptionStore";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -41,6 +48,7 @@ export default function Settings() {
   const admin = isAdmin(user);
   const premium = isPremium(profile);
   const remaining = debriefsRemaining(profile, user);
+  const recallRemaining = recallSessionsRemaining(profile, user);
 
   const [displayName, setDisplayName] = useState(profile.display_name || "");
   const [clinicName, setClinicName] = useState(profile.clinic_name || "");
@@ -182,10 +190,20 @@ export default function Settings() {
               </span>
             )}
           </div>
+          {!admin && !premium && (
+            <p className="text-right text-xs text-muted-foreground">
+              {recallRemaining} of {FREE_RECALL_SESSIONS_PER_WEEK} Recall sessions left this week
+            </p>
+          )}
           <p className="text-xs text-muted-foreground">
-            Practicing cases is always unlimited. Premium unlocks unlimited full case debriefs.
+            Practicing cases and the daily game are always unlimited. Premium unlocks unlimited full case debriefs
+            and Recall sessions.
           </p>
-          {admin ? null : premium ? (
+          {admin ? (
+            <Button variant="outline" className="w-full" onClick={() => navigate("/admin/feedback")}>
+              View feedback
+            </Button>
+          ) : premium ? (
             <Button variant="outline" className="w-full" onClick={handleManage} disabled={billingBusy}>
               {billingBusy ? "Opening…" : "Manage subscription"}
             </Button>

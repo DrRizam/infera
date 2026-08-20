@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Brain, CheckCircle2, XCircle } from "lucide-react";
+import { Brain, CheckCircle2, Lock, XCircle } from "lucide-react";
 import { CASES } from "@/data/cases";
 import { useProfile } from "@/lib/ProfileContext";
+import { useAuth } from "@/lib/AuthContext";
 import { getModule } from "@/lib/modules";
 import { nextReviewDate, todayStr, updateMastery } from "@/lib/gamification";
 import { generateRecallItems, selectRecallSession } from "@/lib/recallItems";
 import { bucketKey } from "@/lib/competency";
 import { playFeedback } from "@/lib/sound";
+import { ensureRecallPeriodFresh, hasRecallSessionsRemaining } from "@/lib/subscription";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import Mascot from "@/components/Mascot";
 import { Button } from "@/components/ui/button";
@@ -19,17 +21,50 @@ const SESSION_SIZE = 8;
 export default function Recall() {
   useDocumentTitle("Recall drill");
   const { profile, setProfile } = useProfile();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const moduleFilter = searchParams.get("module") || undefined;
 
+  // Defensive re-check — ProfileContext already freshens this on load, but
+  // a tab left open across the weekly rollover wouldn't otherwise notice.
+  const sessionAllowed = hasRecallSessionsRemaining(ensureRecallPeriodFresh(profile), user);
+
   const [session] = useState(() => {
+    if (!sessionAllowed) return [];
     const items = generateRecallItems(CASES);
     return selectRecallSession(items, profile.itemProgress, { today: todayStr(), size: SESSION_SIZE, moduleFilter });
   });
   const [idx, setIdx] = useState(0);
   const [picked, setPicked] = useState(null);
   const [results, setResults] = useState([]);
+
+  // Counts once per real session started, not per question — mirrors the
+  // "sessions/week" framing, not a question-level cap.
+  useEffect(() => {
+    if (!sessionAllowed || session.length === 0) return;
+    setProfile((prev) => {
+      const fresh = ensureRecallPeriodFresh(prev);
+      return { ...fresh, recall_session_count: (fresh.recall_session_count || 0) + 1 };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!sessionAllowed) {
+    return (
+      <div className="mx-auto max-w-2xl px-4 py-16 text-center">
+        <Lock className="mx-auto mb-2 h-6 w-6 text-primary" />
+        <h1 className="text-xl font-black tracking-tight">Weekly Recall sessions used up</h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          You've used your free Recall sessions for this week — Premium unlocks unlimited. Cases and the daily game
+          stay free either way.
+        </p>
+        <Button className="mt-4" onClick={() => navigate("/settings")}>
+          See upgrade options
+        </Button>
+      </div>
+    );
+  }
 
   if (!session.length) {
     return (

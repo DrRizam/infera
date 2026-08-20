@@ -4,7 +4,7 @@ import { getCase } from "@/data/cases";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
-import { scoreEncounter } from "@/lib/caseEngine";
+import { buildCaseStages, scoreEncounter } from "@/lib/caseEngine";
 import { buildCaseAttemptRow } from "@/lib/caseAttempts";
 import { BREAKDOWN_TO_BUCKET_TYPE, bucketKey } from "@/lib/competency";
 import { createNotification } from "@/lib/notifications";
@@ -50,17 +50,9 @@ export default function CasePlay() {
   const clinicalCase = useMemo(() => getCase(caseId), [caseId]);
   useDocumentTitle(clinicalCase?.title || "Case");
 
-  // Skip stages a case has no content for.
   const stages = useMemo(() => {
     if (!clinicalCase) return [];
-    const list = ["presentation"];
-    if (clinicalCase.history_questions?.length) list.push("history");
-    if (clinicalCase.red_flags?.length) list.push("red_flags");
-    if (clinicalCase.differentials?.length) list.push("differential");
-    if (clinicalCase.examinations?.length) list.push("examination");
-    if (clinicalCase.disposition?.options?.length) list.push("disposition");
-    list.push("debrief");
-    return list;
+    return [...buildCaseStages(clinicalCase), "debrief"];
   }, [clinicalCase]);
 
   const [stageIdx, setStageIdx] = useState(0);

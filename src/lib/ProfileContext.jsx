@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { loadProfile, saveProfile } from "@/lib/store";
 import { useAuth } from "@/lib/AuthContext";
 import { ensureDailyFresh, todayStr } from "@/lib/gamification";
+import { ensureDebriefPeriodFresh, ensureRecallPeriodFresh } from "@/lib/subscription";
 
 const ProfileContext = createContext(null);
 
@@ -20,7 +21,13 @@ export function ProfileProvider({ children }) {
     setLoading(true);
     loadProfile(user).then((loaded) => {
       if (!cancelled) {
-        const fresh = ensureDailyFresh(loaded, todayStr());
+        // Freshened once here so every page (Settings' remaining-count
+        // display included) reads an up-to-date counter immediately,
+        // rather than only after the next case/session that happens to
+        // touch it.
+        let fresh = ensureDailyFresh(loaded, todayStr());
+        fresh = ensureDebriefPeriodFresh(fresh);
+        fresh = ensureRecallPeriodFresh(fresh);
         if (fresh !== loaded) saveProfile(user.id, fresh);
         setProfileState(fresh);
         setLoading(false);

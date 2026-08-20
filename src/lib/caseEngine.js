@@ -273,3 +273,20 @@ export function scoreEncounter(answers, clinicalCase) {
     falsePositiveRedFlags: redFlagResult.falsePos,
   };
 }
+
+/**
+ * Which of a case's stages actually have content, in order — presentation
+ * always runs, the rest skip if the case has nothing for them. Doesn't
+ * include a terminal debrief/results stage; callers append their own
+ * (CasePlay wants a per-case debrief, an OSCE checkpoint doesn't).
+ */
+export function buildCaseStages(clinicalCase) {
+  if (!clinicalCase) return [];
+  const list = ["presentation"];
+  if (clinicalCase.history_questions?.length) list.push("history");
+  if (clinicalCase.red_flags?.length) list.push("red_flags");
+  if (clinicalCase.differentials?.length) list.push("differential");
+  if (clinicalCase.examinations?.length) list.push("examination");
+  if (clinicalCase.disposition?.options?.length) list.push("disposition");
+  return list;
+}

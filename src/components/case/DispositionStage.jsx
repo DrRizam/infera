@@ -7,7 +7,15 @@ const CONFIDENCE_LEVELS = [
   { value: 90, label: "Very confident" },
 ];
 
-export default function DispositionStage({ clinicalCase, choice, confidence, onChoose, onSetConfidence, onSubmit }) {
+export default function DispositionStage({
+  clinicalCase,
+  choice,
+  confidence,
+  onChoose,
+  onSetConfidence,
+  onSubmit,
+  submitLabel = "See debrief",
+}) {
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">What happens to this patient now?</p>
@@ -47,7 +55,7 @@ export default function DispositionStage({ clinicalCase, choice, confidence, onC
       )}
 
       <Button className="w-full" disabled={!choice || !confidence} onClick={onSubmit}>
-        See debrief
+        {submitLabel}
       </Button>
     </div>
   );

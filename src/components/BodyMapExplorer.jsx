@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { ChevronRight, Search } from "lucide-react";
 import { BODY_REGIONS, MODULES } from "@/lib/modules";
 import { cn } from "@/lib/utils";
 import Mascot from "@/components/Mascot";
@@ -28,6 +28,40 @@ const HOTSPOTS = {
   ankle_foot: { left: 23.2, top: 77.0 },
   spine: { left: 71.1, top: 39.2 },
 };
+
+// A joint/region tap browses conditions, not cases — several cases can
+// share a diagnosis, so this collapses to one row per distinct diagnosis
+// (keeping the first case as the representative to open), alphabetized
+// like a reference index rather than ordered by whatever the case data
+// happens to be sorted by.
+function toConditionList(cases) {
+  const seen = new Set();
+  const unique = [];
+  for (const c of cases) {
+    if (seen.has(c.diagnosis)) continue;
+    seen.add(c.diagnosis);
+    unique.push(c);
+  }
+  return unique.sort((a, b) => a.diagnosis.localeCompare(b.diagnosis));
+}
+
+function ConditionList({ cases, onOpenCase }) {
+  return (
+    <ul className="space-y-2">
+      {toConditionList(cases).map((c) => (
+        <li key={c.id}>
+          <button
+            onClick={() => onOpenCase(c.id)}
+            className="flex w-full items-center justify-between gap-2 rounded-xl border-2 border-border bg-card px-4 py-3 text-left text-sm font-semibold transition-colors hover:border-primary"
+          >
+            {c.diagnosis}
+            <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export default function BodyMapExplorer({ cases, onOpenCase }) {
   const [selectedRegion, setSelectedRegion] = useState(null);
@@ -141,19 +175,7 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
               <p className="text-sm text-muted-foreground">No conditions match "{query.trim()}".</p>
             </div>
           ) : (
-            <ul className="space-y-2">
-              {searchMatches.map((c) => (
-                <li key={c.id}>
-                  <button
-                    onClick={() => onOpenCase(c.id)}
-                    className="w-full rounded-xl border-2 border-border bg-card px-4 py-3 text-left text-sm transition-colors hover:border-primary"
-                  >
-                    <span className="font-semibold">{c.title}</span>
-                    <span className="ml-2 text-muted-foreground">{c.presenting_complaint}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <ConditionList cases={searchMatches} onOpenCase={onOpenCase} />
           )}
         </div>
       ) : (
@@ -163,22 +185,10 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
             {regionMatches.length === 0 ? (
               <div className="flex flex-col items-center gap-2 py-4 text-center">
                 <Mascot mood="curious" className="h-20 w-20" />
-                <p className="text-sm text-muted-foreground">No cases here yet.</p>
+                <p className="text-sm text-muted-foreground">No conditions here yet.</p>
               </div>
             ) : (
-              <ul className="space-y-2">
-                {regionMatches.map((c) => (
-                  <li key={c.id}>
-                    <button
-                      onClick={() => onOpenCase(c.id)}
-                      className="w-full rounded-xl border-2 border-border bg-card px-4 py-3 text-left text-sm transition-colors hover:border-primary"
-                    >
-                      <span className="font-semibold">{c.title}</span>
-                      <span className="ml-2 text-muted-foreground">{c.presenting_complaint}</span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
+              <ConditionList cases={regionMatches} onOpenCase={onOpenCase} />
             )}
           </div>
         )
