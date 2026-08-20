@@ -21,7 +21,7 @@ export default function Explore() {
       </div>
 
       <div className="rounded-2xl border-2 border-border bg-card p-5 sm:p-6">
-        <BodyMapExplorer cases={CASES} onOpenCase={(id) => navigate(`/case/${id}`)} />
+        <BodyMapExplorer cases={CASES} onOpenCase={(id) => navigate(`/condition/${id}`)} />
       </div>
     </div>
   );

@@ -42,7 +42,62 @@ export async function fetchOrCreateAttempt(userId, caseId) {
   return created;
 }
 
-export async function saveAttempt(attemptId, { guesses, status, completed_at }) {
-  const { error } = await supabase.from("daily_game_attempts").update({ guesses, status, completed_at }).eq("id", attemptId);
+export async function saveAttempt(attemptId, { guesses, status, score, completed_at }) {
+  const { error } = await supabase.from("daily_game_attempts").update({ guesses, status, score, completed_at }).eq("id", attemptId);
   if (error) console.error("Failed to save daily game attempt", error);
+}
+
+/** The player's streak row, or null if they've never completed a daily case. */
+export async function fetchGameStats(userId) {
+  const { data, error } = await supabase.from("daily_game_stats").select("*").eq("user_id", userId).maybeSingle();
+  if (error) {
+    console.error("Failed to load daily game stats", error);
+    return null;
+  }
+  return data;
+}
+
+export async function saveGameStats(userId, stats) {
+  const { error } = await supabase.from("daily_game_stats").upsert({ user_id: userId, ...stats, updated_at: new Date().toISOString() });
+  if (error) console.error("Failed to save daily game stats", error);
+}
+
+/** Groups the current user belongs to, with the group's name/join_code. */
+export async function fetchMyGroups(userId) {
+  const { data, error } = await supabase
+    .from("game_group_members")
+    .select("group:game_groups(id, name, join_code, created_by)")
+    .eq("user_id", userId);
+  if (error) {
+    console.error("Failed to load groups", error);
+    return [];
+  }
+  return (data || []).map((row) => row.group).filter(Boolean);
+}
+
+export async function createGroup(name) {
+  const { data, error } = await supabase.rpc("create_daily_game_group", { group_name: name }).single();
+  if (error) {
+    console.error("Failed to create group", error);
+    return { data: null, error };
+  }
+  return { data, error: null };
+}
+
+export async function joinGroup(code) {
+  const { data, error } = await supabase.rpc("join_daily_game_group", { code }).single();
+  if (error) {
+    console.error("Failed to join group", error);
+    return { data: null, error };
+  }
+  return { data, error: null };
+}
+
+export async function fetchGroupStandings(groupId) {
+  const { data, error } = await supabase.rpc("daily_game_group_standings", { target_group_id: groupId });
+  if (error) {
+    console.error("Failed to load group standings", error);
+    return [];
+  }
+  return data || [];
 }

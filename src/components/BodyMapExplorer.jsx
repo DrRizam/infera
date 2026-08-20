@@ -94,7 +94,17 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
       </div>
 
       <div className="relative mx-auto aspect-square w-full max-w-xl">
-        <img src={muscularSystemImg} alt="Muscular system diagram, front and back view" className="h-full w-full object-contain" draggable={false} />
+        {/* The source asset is a photorealistic render, a hard tonal clash
+            against the app's flat/rounded UI — grayscale + a primary-tinted
+            multiply overlay turns it into a duotone that reads as designed,
+            without needing a new illustration asset. */}
+        <img
+          src={muscularSystemImg}
+          alt="Muscular system diagram, front and back view"
+          className="h-full w-full object-contain grayscale contrast-[1.05]"
+          draggable={false}
+        />
+        <div className="pointer-events-none absolute inset-0 bg-primary/20 mix-blend-multiply" />
         {BODY_REGIONS.map((r) => {
           const p = HOTSPOTS[r.id];
           if (!p) return null;

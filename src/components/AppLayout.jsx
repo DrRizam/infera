@@ -86,7 +86,7 @@ export default function AppLayout() {
       </main>
 
       <nav className="fixed inset-x-0 bottom-0 z-20 border-t-2 border-border bg-card lg:bottom-6 lg:border-t-0 lg:bg-transparent">
-        <div className="mx-auto flex max-w-6xl lg:w-fit lg:justify-center lg:gap-1 lg:rounded-2xl lg:border-2 lg:border-border lg:bg-card lg:px-2 lg:py-2 lg:shadow-lg">
+        <div className="mx-auto flex max-w-6xl lg:w-fit lg:justify-center lg:gap-1 lg:rounded-2xl lg:border-2 lg:border-border lg:bg-card lg:px-2 lg:py-2 lg:shadow-elevated">
           {NAV.map((n) => (
             <NavLink
               key={n.to}

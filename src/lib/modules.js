@@ -124,15 +124,3 @@ export function conditionOfTheDay(cases, focusModule, today) {
   const idx = (dayIndex + hashStr(focusModule || "mixed")) % sorted.length;
   return sorted[idx];
 }
-
-/**
- * A fixed (not randomized) baseline quiz: the same N questions for every
- * user, drawn from each case's speed_questions and sorted by case id so the
- * selection is stable — a consistent baseline is what makes scores comparable.
- */
-export function selectBaselineQuestions(cases, n = 10) {
-  const pool = [...(cases || [])]
-    .sort((a, b) => a.id.localeCompare(b.id))
-    .flatMap((c) => (c.speed_questions || []).map((q) => ({ ...q, caseId: c.id })));
-  return pool.slice(0, n);
-}

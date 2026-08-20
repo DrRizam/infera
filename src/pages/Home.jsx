@@ -200,7 +200,7 @@ export default function Home() {
           {moduleMenuOpen && (
             <>
               <div className="fixed inset-0 z-10" onClick={() => setModuleMenuOpen(false)} />
-              <div className="absolute left-0 top-full z-20 mt-2 w-72 max-h-80 overflow-y-auto rounded-2xl border-2 border-border bg-card p-2 shadow-lg">
+              <div className="absolute left-0 top-full z-20 mt-2 w-72 max-h-80 overflow-y-auto rounded-2xl border-2 border-border bg-card p-2 shadow-elevated">
                 {MODULES.map((m) => (
                   <button
                     key={m.id}

@@ -23,7 +23,12 @@
   --border: 36 18% 87%;
   --input: 36 18% 87%;
   --ring: 178 45% 28%;
-  --radius: 0.5rem;
+  /* Was 0.5rem — every actual surface (cards, buttons, hero panels) had
+     already drifted to rounded-2xl (1rem) hardcoded, leaving this token
+     disconnected from the visual language it's supposed to define. Bumped
+     to match, so rounded-lg/md/sm-driven elements (inputs, selects) scale
+     with the rest of the app instead of reading as a smaller, older era. */
+  --radius: 1rem;
 }
 
 .dark {

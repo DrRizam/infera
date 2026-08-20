@@ -49,6 +49,14 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      // Warm-tinted (not default grayscale-black) elevation scale, used
+      // sparingly for things that genuinely float above content — dropdown
+      // panels, popovers — not general card styling, which stays flat by
+      // design (see the Duolingo-style pass earlier this project).
+      boxShadow: {
+        soft: "0 2px 8px -2px hsl(var(--foreground) / 0.08)",
+        elevated: "0 12px 32px -8px hsl(var(--foreground) / 0.22), 0 4px 12px -4px hsl(var(--foreground) / 0.12)",
+      },
     },
   },
   plugins: [tailwindcssAnimate],

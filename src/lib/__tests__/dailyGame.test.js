@@ -7,6 +7,7 @@ import {
   findMatchingCase,
   normalizeGuess,
   scoreForResult,
+  updateGameStreak,
   visibleClueCount,
 } from "../dailyGame";
 
@@ -150,5 +151,52 @@ describe("buildShareGrid", () => {
   it("shows X/6 for a loss", () => {
     const grid = buildShareGrid(1, [], false);
     expect(grid).toContain("X/6");
+  });
+});
+
+describe("updateGameStreak", () => {
+  it("starts a fresh streak at 1 on a first-ever win", () => {
+    const s = updateGameStreak(null, 1, true);
+    expect(s.current_streak).toBe(1);
+    expect(s.longest_streak).toBe(1);
+    expect(s.total_played).toBe(1);
+    expect(s.total_won).toBe(1);
+  });
+
+  it("extends the streak on a win on the very next case number", () => {
+    const prev = { current_streak: 3, longest_streak: 5, total_played: 4, total_won: 3, last_completed_case_number: 4 };
+    const s = updateGameStreak(prev, 5, true);
+    expect(s.current_streak).toBe(4);
+    expect(s.longest_streak).toBe(5);
+  });
+
+  it("resets the streak to 1 on a win after a gap", () => {
+    const prev = { current_streak: 3, longest_streak: 5, total_played: 4, total_won: 3, last_completed_case_number: 4 };
+    const s = updateGameStreak(prev, 8, true);
+    expect(s.current_streak).toBe(1);
+  });
+
+  it("breaks the streak to 0 on a loss, even mid-streak", () => {
+    const prev = { current_streak: 3, longest_streak: 5, total_played: 4, total_won: 3, last_completed_case_number: 4 };
+    const s = updateGameStreak(prev, 5, false);
+    expect(s.current_streak).toBe(0);
+    expect(s.longest_streak).toBe(5);
+    expect(s.total_played).toBe(5);
+    expect(s.total_won).toBe(3);
+  });
+
+  it("tracks longest_streak as the running max, not just the latest", () => {
+    let s = updateGameStreak(null, 1, true);
+    s = updateGameStreak(s, 2, true);
+    s = updateGameStreak(s, 3, false);
+    s = updateGameStreak(s, 4, true);
+    expect(s.current_streak).toBe(1);
+    expect(s.longest_streak).toBe(2);
+  });
+
+  it("is a no-op if the same case number is completed again", () => {
+    const prev = { current_streak: 3, longest_streak: 5, total_played: 4, total_won: 3, last_completed_case_number: 4 };
+    const s = updateGameStreak(prev, 4, true);
+    expect(s).toBe(prev);
   });
 });

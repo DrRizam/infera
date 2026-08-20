@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { CheckCircle2, HelpCircle, Share2, Stethoscope, XCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { CheckCircle2, Flame, HelpCircle, Share2, Stethoscope, Users, XCircle } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
 import {
   ATTRIBUTE_KEYS,
@@ -8,9 +9,11 @@ import {
   buildShareGrid,
   currentCaseNumber,
   findMatchingCase,
+  scoreForResult,
+  updateGameStreak,
   visibleClueCount,
 } from "@/lib/dailyGame";
-import { fetchApprovedCases, fetchOrCreateAttempt, saveAttempt } from "@/lib/dailyGameStore";
+import { fetchApprovedCases, fetchGameStats, fetchOrCreateAttempt, saveAttempt, saveGameStats } from "@/lib/dailyGameStore";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -41,11 +44,13 @@ function AttributeRow({ attributes }) {
 export default function DailyGame() {
   useDocumentTitle("Guess the Diagnosis");
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
   const [caseBank, setCaseBank] = useState([]);
   const [targetCase, setTargetCase] = useState(null);
   const [attempt, setAttempt] = useState(null);
+  const [stats, setStats] = useState(null);
   const [guessText, setGuessText] = useState("");
   const [guessError, setGuessError] = useState("");
   const [shareCopied, setShareCopied] = useState(false);
@@ -53,9 +58,10 @@ export default function DailyGame() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const bank = await fetchApprovedCases();
+      const [bank, currentStats] = await Promise.all([fetchApprovedCases(), fetchGameStats(user.id)]);
       if (cancelled) return;
       setCaseBank(bank);
+      setStats(currentStats);
 
       const caseNumber = currentCaseNumber();
       const target = bank.find((c) => c.case_number === caseNumber) || null;
@@ -94,18 +100,27 @@ export default function DailyGame() {
     const guesses = [...(attempt.guesses || []), newGuess];
     let status = attempt.status;
     let completed_at = attempt.completed_at;
+    let score = attempt.score || 0;
     if (correct) {
       status = "won";
       completed_at = new Date().toISOString();
+      score = scoreForResult("won", guesses.length);
     } else if (guesses.length >= MAX_GUESSES) {
       status = "lost";
       completed_at = new Date().toISOString();
+      score = 0;
     }
 
-    const updated = { ...attempt, guesses, status, completed_at };
+    const updated = { ...attempt, guesses, status, completed_at, score };
     setAttempt(updated);
     setGuessText("");
-    await saveAttempt(attempt.id, { guesses, status, completed_at });
+    await saveAttempt(attempt.id, { guesses, status, score, completed_at });
+
+    if (status === "won" || status === "lost") {
+      const newStats = updateGameStreak(stats, targetCase.case_number, status === "won");
+      setStats(newStats);
+      await saveGameStats(user.id, newStats);
+    }
   };
 
   const handleShare = async () => {
@@ -146,10 +161,14 @@ export default function DailyGame() {
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent text-primary">
           <Stethoscope className="h-5 w-5" />
         </div>
-        <div>
+        <div className="min-w-0 flex-1">
           <h1 className="text-2xl font-black tracking-tight sm:text-3xl">Guess the Diagnosis</h1>
           <p className="text-sm text-muted-foreground">Case #{targetCase.case_number} — {MAX_GUESSES - guesses.length} guesses left</p>
         </div>
+        <Button variant="outline" size="sm" className="shrink-0 gap-1.5" onClick={() => navigate("/groups")}>
+          <Users className="h-3.5 w-3.5" />
+          Groups
+        </Button>
       </div>
 
       <Card>
@@ -215,6 +234,13 @@ export default function DailyGame() {
           <CardContent className="space-y-3">
             <p className="text-sm font-bold text-primary">{targetCase.diagnosis}</p>
             <p className="text-sm text-muted-foreground">{targetCase.explanation}</p>
+            {stats && (
+              <p className="flex items-center gap-1.5 text-xs font-semibold text-orange-600">
+                <Flame className="h-3.5 w-3.5" />
+                {stats.current_streak}-day streak
+                {stats.longest_streak > stats.current_streak ? ` · best ${stats.longest_streak}` : ""}
+              </p>
+            )}
             <Button variant="outline" className="w-full gap-2" onClick={handleShare}>
               <Share2 className="h-4 w-4" />
               {shareCopied ? "Copied!" : "Share results"}

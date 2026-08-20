@@ -101,3 +101,28 @@ export function buildShareGrid(caseNumber, guesses, won) {
   const result = won ? `${guesses.length}/${MAX_GUESSES}` : `X/${MAX_GUESSES}`;
   return `Infera Daily #${caseNumber} ${result}\n${rows}`;
 }
+
+const EMPTY_STATS = { current_streak: 0, longest_streak: 0, total_played: 0, total_won: 0, last_completed_case_number: null };
+
+/**
+ * Streak continuation is checked against case_number, not a calendar date —
+ * consistent with the rest of the game treating case_number as the fair,
+ * per-player day index. Only a WIN extends the streak (a loss breaks it,
+ * same convention Wordle itself uses); replaying an already-completed case
+ * number is a no-op so this stays safe to call more than once.
+ */
+export function updateGameStreak(stats, caseNumber, won) {
+  const s = stats || EMPTY_STATS;
+  if (s.last_completed_case_number === caseNumber) return s;
+
+  const isConsecutive = s.last_completed_case_number === caseNumber - 1;
+  const current_streak = won ? (isConsecutive ? s.current_streak + 1 : 1) : 0;
+
+  return {
+    current_streak,
+    longest_streak: Math.max(s.longest_streak, current_streak),
+    total_played: s.total_played + 1,
+    total_won: s.total_won + (won ? 1 : 0),
+    last_completed_case_number: caseNumber,
+  };
+}

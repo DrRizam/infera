@@ -102,11 +102,50 @@ create table public.daily_game_attempts (
   case_id uuid not null references public.daily_game_cases(id) on delete cascade,
   guesses jsonb not null default '[]'::jsonb,
   status text not null default 'in_progress' check (status in ('in_progress', 'won', 'lost')),
+  score int not null default 0,
   started_at timestamptz not null default now(),
   completed_at timestamptz,
   unique (user_id, case_id)
 );
 create index daily_game_attempts_user_idx on public.daily_game_attempts (user_id);
+
+-- ── daily_game_stats (one row per user — streak state for the daily game) ─
+-- Deliberately separate from profile.streak_count: that tracks the main
+-- app's flexible practice cadence, this tracks the strict once-a-day daily
+-- game. `last_completed_case_number` (not a date) is what streak
+-- continuation is checked against, consistent with the rest of the game
+-- treating case_number as the day index rather than a calendar date.
+create table public.daily_game_stats (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  current_streak int not null default 0,
+  longest_streak int not null default 0,
+  total_played int not null default 0,
+  total_won int not null default 0,
+  last_completed_case_number int,
+  updated_at timestamptz not null default now()
+);
+
+-- ── game_groups / game_group_members (clinic/team groups for the daily game) ─
+-- Join-code + security-definer create/join RPC pattern, same shape as the
+-- clinic-org join flow from the earlier (since-reverted) B2B pivot — that
+-- mechanic was solid, just attached to a product direction that got rolled
+-- back. A plain client insert can't join a group by code (would need to
+-- SELECT the group by code first, which RLS doesn't allow pre-membership),
+-- hence the RPCs below.
+create table public.game_groups (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  join_code text not null unique,
+  created_by uuid not null references auth.users(id) on delete cascade,
+  created_at timestamptz not null default now()
+);
+
+create table public.game_group_members (
+  group_id uuid not null references public.game_groups(id) on delete cascade,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  joined_at timestamptz not null default now(),
+  primary key (group_id, user_id)
+);
 
 -- ── follows (one-way, Twitter-style — no approval needed) ───────────────
 create table public.follows (
@@ -123,9 +162,12 @@ alter table public.profiles           enable row level security;
 alter table public.case_attempts      enable row level security;
 alter table public.notifications      enable row level security;
 alter table public.feedback           enable row level security;
-alter table public.daily_game_cases   enable row level security;
+alter table public.daily_game_cases    enable row level security;
 alter table public.daily_game_attempts enable row level security;
-alter table public.follows            enable row level security;
+alter table public.daily_game_stats    enable row level security;
+alter table public.game_groups         enable row level security;
+alter table public.game_group_members  enable row level security;
+alter table public.follows             enable row level security;
 
 create policy profiles_select on public.profiles
   for select using (user_id = auth.uid());
@@ -172,6 +214,32 @@ create policy daily_game_attempts_insert_own on public.daily_game_attempts
 create policy daily_game_attempts_update_own on public.daily_game_attempts
   for update using (user_id = auth.uid()) with check (user_id = auth.uid());
 
+-- A user can read/write only their own streak row directly. The group
+-- standings RPC below reads across users' rows via security definer, which
+-- is the one deliberate exception, same pattern as the leaderboard functions.
+create policy daily_game_stats_select_own on public.daily_game_stats
+  for select using (user_id = auth.uid());
+create policy daily_game_stats_upsert_own on public.daily_game_stats
+  for insert with check (user_id = auth.uid());
+create policy daily_game_stats_update_own on public.daily_game_stats
+  for update using (user_id = auth.uid()) with check (user_id = auth.uid());
+
+-- A user can only see groups they're a member of — no insert/update policy,
+-- creation and joining both go through security-definer RPCs below so a
+-- join-by-code lookup doesn't need a pre-membership SELECT.
+create policy game_groups_select_member on public.game_groups
+  for select using (
+    exists (select 1 from public.game_group_members m where m.group_id = game_groups.id and m.user_id = auth.uid())
+  );
+
+-- A member can see every member row for groups they're in (not just their
+-- own), so a "who's in this group" list is possible without a separate RPC.
+create policy game_group_members_select on public.game_group_members
+  for select using (
+    user_id = auth.uid()
+    or exists (select 1 from public.game_group_members me where me.group_id = game_group_members.group_id and me.user_id = auth.uid())
+  );
+
 -- A user can see their own follows on either side (who they follow, who
 -- follows them), and can only create/remove rows where they're the follower.
 create policy follows_select on public.follows
@@ -195,6 +263,78 @@ end;
 $$;
 
 grant execute on function public.delete_own_account() to authenticated;
+
+-- ── Daily game groups — create/join by code, group standings ────────────
+-- security definer for the same reason as the org-join flow this pattern
+-- is borrowed from: joining by code needs to look up a group the caller
+-- isn't a member of yet, which plain RLS can't allow.
+create or replace function public.create_daily_game_group(group_name text)
+returns public.game_groups
+language plpgsql security definer set search_path = public as $$
+declare
+  new_group public.game_groups;
+  code text;
+begin
+  code := upper(substr(md5(random()::text || clock_timestamp()::text), 1, 8));
+  insert into public.game_groups (name, join_code, created_by)
+  values (group_name, code, auth.uid())
+  returning * into new_group;
+  insert into public.game_group_members (group_id, user_id) values (new_group.id, auth.uid());
+  return new_group;
+end;
+$$;
+grant execute on function public.create_daily_game_group(text) to authenticated;
+
+create or replace function public.join_daily_game_group(code text)
+returns public.game_groups
+language plpgsql security definer set search_path = public as $$
+declare
+  target public.game_groups;
+begin
+  select * into target from public.game_groups where join_code = upper(code);
+  if target.id is null then
+    raise exception 'No group found for that code';
+  end if;
+  insert into public.game_group_members (group_id, user_id)
+  values (target.id, auth.uid())
+  on conflict (group_id, user_id) do nothing;
+  return target;
+end;
+$$;
+grant execute on function public.join_daily_game_group(text) to authenticated;
+
+-- Lifetime standings (not weekly/monthly-windowed) — a windowed board looks
+-- empty/broken for small, low-traffic groups; revisit once there's enough
+-- real usage to sustain a window, same lesson learned on the main
+-- leaderboard earlier. Guards membership explicitly since security definer
+-- bypasses RLS — a non-member passing a guessed group_id gets nothing back.
+create or replace function public.daily_game_group_standings(target_group_id uuid)
+returns table(user_id uuid, display_name text, total_score int, total_won int, current_streak int)
+language plpgsql security definer set search_path = public stable as $$
+begin
+  if not exists (
+    select 1 from public.game_group_members where group_id = target_group_id and user_id = auth.uid()
+  ) then
+    return;
+  end if;
+
+  return query
+    select
+      m.user_id,
+      coalesce(p.display_name, 'Anonymous'),
+      coalesce(sum(a.score), 0)::int as total_score,
+      coalesce(count(*) filter (where a.status = 'won'), 0)::int as total_won,
+      coalesce(s.current_streak, 0) as current_streak
+    from public.game_group_members m
+    join public.profiles p on p.user_id = m.user_id
+    left join public.daily_game_attempts a on a.user_id = m.user_id
+    left join public.daily_game_stats s on s.user_id = m.user_id
+    where m.group_id = target_group_id
+    group by m.user_id, p.display_name, s.current_streak
+    order by total_score desc;
+end;
+$$;
+grant execute on function public.daily_game_group_standings(uuid) to authenticated;
 
 -- ── Leaderboard / social — narrow security-definer functions ────────────
 -- These never expose the `state` jsonb blob (mastery, caseProgress,

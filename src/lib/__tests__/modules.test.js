@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { conditionOfTheDay, selectBaselineQuestions } from "../modules";
+import { conditionOfTheDay } from "../modules";
 
 const cases = [
   { id: "b-case", module: "sports", speed_questions: [{ prompt: "b1", options: ["x", "y"], correct: 0 }] },
@@ -40,26 +40,5 @@ describe("conditionOfTheDay", () => {
 
   it("returns null for an empty case list", () => {
     expect(conditionOfTheDay([], null, "2026-08-17")).toBeNull();
-  });
-});
-
-describe("selectBaselineQuestions", () => {
-  it("returns the same fixed set on repeated calls", () => {
-    const a = selectBaselineQuestions(cases, 2);
-    const b = selectBaselineQuestions(cases, 2);
-    expect(a).toEqual(b);
-  });
-
-  it("sorts by case id before flattening, so the first case alphabetically comes first", () => {
-    const picks = selectBaselineQuestions(cases, 3);
-    expect(picks.map((q) => q.caseId)).toEqual(["a-case", "a-case", "b-case"]);
-  });
-
-  it("caps at n even if more questions are available", () => {
-    expect(selectBaselineQuestions(cases, 1)).toHaveLength(1);
-  });
-
-  it("returns fewer than n if the pool is smaller", () => {
-    expect(selectBaselineQuestions(cases, 100)).toHaveLength(3);
   });
 });

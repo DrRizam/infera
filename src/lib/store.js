@@ -31,7 +31,8 @@ const DEFAULT_PROFILE = {
   /** earned achievement codes */
   achievements: [],
   baseline_completed: false,
-  baseline_score: null,
+  /** self-reported at onboarding: "student" | "some" | "experienced" */
+  experience_level: null,
   /** module id, or null for "Mixed" */
   focus_module: null,
 };

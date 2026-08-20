@@ -1,22 +1,24 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useProfile } from "@/lib/ProfileContext";
-import { CASES } from "@/data/cases";
-import { MODULES, selectBaselineQuestions } from "@/lib/modules";
+import { MODULES } from "@/lib/modules";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-const STAGES = ["intro", "quiz", "focus", "done"];
+const STAGES = ["intro", "assess", "focus", "done"];
+
+const EXPERIENCE_LEVELS = [
+  { id: "student", label: "Student / new grad", blurb: "Still building the fundamentals." },
+  { id: "some", label: "Some clinical experience", blurb: "Comfortable with the basics, sharpening judgment." },
+  { id: "experienced", label: "Experienced clinician", blurb: "Confident day-to-day, here to stay sharp." },
+];
 
 export default function Onboarding() {
   const { profile, setProfile } = useProfile();
   const navigate = useNavigate();
 
-  const questions = useMemo(() => selectBaselineQuestions(CASES, 10), []);
-
   const [stageIdx, setStageIdx] = useState(0);
-  const [qIdx, setQIdx] = useState(0);
-  const [correctCount, setCorrectCount] = useState(0);
+  const [experienceLevel, setExperienceLevel] = useState(null);
   const [focusModule, setFocusModule] = useState(null);
 
   if (profile.baseline_completed) return <Navigate to="/" replace />;
@@ -24,17 +26,11 @@ export default function Onboarding() {
   const stage = STAGES[stageIdx];
   const advance = () => setStageIdx((i) => Math.min(i + 1, STAGES.length - 1));
 
-  const answerQuestion = (optionIdx) => {
-    if (optionIdx === questions[qIdx].correct) setCorrectCount((c) => c + 1);
-    if (qIdx + 1 >= questions.length) advance();
-    else setQIdx((i) => i + 1);
-  };
-
   const finish = () => {
     setProfile((prev) => ({
       ...prev,
       baseline_completed: true,
-      baseline_score: correctCount,
+      experience_level: experienceLevel,
       focus_module: focusModule,
     }));
     navigate("/", { replace: true });
@@ -48,34 +44,36 @@ export default function Onboarding() {
             <CardHeader>
               <CardTitle>Welcome to Infera</CardTitle>
               <CardDescription>
-                First, 10 quick questions to see where you're starting from. No pressure, no feedback as you go —
-                this is just a baseline.
+                Before we jump in, two quick questions about where you're coming from — not a test, no wrong
+                answers. It just helps us point you toward the right starting content instead of guessing.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Button className="w-full" onClick={advance}>
-                Start
+                Let's go
               </Button>
             </CardContent>
           </>
         )}
 
-        {stage === "quiz" && questions[qIdx] && (
+        {stage === "assess" && (
           <>
             <CardHeader>
-              <CardTitle>
-                Question {qIdx + 1} of {questions.length}
-              </CardTitle>
+              <CardTitle>How would you describe your experience?</CardTitle>
+              <CardDescription>Be honest — this only shapes your starting point, not what you can access.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-              <p className="mb-2 font-semibold">{questions[qIdx].prompt}</p>
-              {questions[qIdx].options.map((opt, i) => (
+              {EXPERIENCE_LEVELS.map((lvl) => (
                 <button
-                  key={i}
-                  onClick={() => answerQuestion(i)}
-                  className="block w-full rounded-md border border-border px-3 py-2 text-left text-sm hover:border-primary"
+                  key={lvl.id}
+                  onClick={() => {
+                    setExperienceLevel(lvl.id);
+                    advance();
+                  }}
+                  className="block w-full rounded-xl border-2 border-border px-4 py-3 text-left transition-colors hover:border-primary"
                 >
-                  {opt}
+                  <span className="block text-sm font-semibold">{lvl.label}</span>
+                  <span className="block text-xs text-muted-foreground">{lvl.blurb}</span>
                 </button>
               ))}
             </CardContent>
@@ -126,7 +124,9 @@ export default function Onboarding() {
             <CardHeader>
               <CardTitle>You're all set</CardTitle>
               <CardDescription>
-                Baseline: {correctCount} of {questions.length}. That's just your starting point — it'll only go up from here.
+                We'll start you off around a {EXPERIENCE_LEVELS.find((l) => l.id === experienceLevel)?.label.toLowerCase()}{" "}
+                level{focusModule ? `, focused on ${MODULES.find((m) => m.id === focusModule)?.name}` : ""}. You can
+                change your focus area any time from Home.
               </CardDescription>
             </CardHeader>
             <CardContent>
