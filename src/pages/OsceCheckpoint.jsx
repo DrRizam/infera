@@ -4,9 +4,10 @@ import { ClipboardCheck, Lock } from "lucide-react";
 import { CASES } from "@/data/cases";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
+import { supabase } from "@/lib/supabaseClient";
 import { buildCaseStages, scoreEncounter } from "@/lib/caseEngine";
 import { levelFromXp } from "@/lib/gamification";
-import { getModule, MODULES } from "@/lib/modules";
+import { BODY_REGIONS, bossRoundKey, getModule, MODULES } from "@/lib/modules";
 import { isAdmin, isPremium } from "@/lib/subscription";
 import { OSCE_TIME_BUDGET_SECONDS, scoreOsceSession, selectOsceCases, xpForOsceSession } from "@/lib/osce";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
@@ -52,9 +53,12 @@ export default function OsceCheckpoint() {
   // cases is always free." Only the standalone picker (this page reached
   // directly, no boss params) stays Premium-gated.
   const bossModuleId = searchParams.get("module");
+  const bossRegionId = searchParams.get("region");
   const bossLevelParam = searchParams.get("bossLevel");
   const isBossMode = bossLevelParam !== null;
-  const bossKey = isBossMode ? `${bossModuleId}:${bossLevelParam}` : null;
+  const bossAxis = bossRegionId ? "region" : "module";
+  const bossGroupId = bossRegionId || bossModuleId;
+  const bossKey = isBossMode ? bossRoundKey(bossAxis, bossGroupId, bossLevelParam) : null;
 
   const hasAccess = isBossMode || isAdmin(user) || isPremium(profile);
 
@@ -91,7 +95,7 @@ export default function OsceCheckpoint() {
   }
 
   const startCheckpoint = () => {
-    const picked = selectOsceCases(CASES, isBossMode ? bossModuleId : moduleId);
+    const picked = selectOsceCases(CASES, isBossMode ? bossGroupId : moduleId, isBossMode ? bossAxis : "module");
     setOsceCases(picked);
     setCaseIdx(0);
     setCaseStageIdx(0);
@@ -113,7 +117,7 @@ export default function OsceCheckpoint() {
     setCaseResults(nextResults);
 
     if (isLastCase) {
-      const { overallAccuracy } = scoreOsceSession(nextResults);
+      const { overallAccuracy, passed } = scoreOsceSession(nextResults);
       const xp = xpForOsceSession(overallAccuracy);
       setAwardedXp(xp);
       setProfile((prev) => {
@@ -124,6 +128,26 @@ export default function OsceCheckpoint() {
         }
         return next;
       });
+
+      // History/trend telemetry for Profile — never blocks or fails the
+      // results screen on this, same pattern as case_attempts in CasePlay.jsx.
+      supabase
+        .from("osce_attempts")
+        .insert({
+          user_id: user.id,
+          module_id: isBossMode ? (bossAxis === "module" ? bossGroupId : null) : moduleId,
+          region_id: isBossMode ? (bossAxis === "region" ? bossGroupId : null) : null,
+          is_boss: isBossMode,
+          boss_level: isBossMode ? Number(bossLevelParam) : null,
+          case_count: nextResults.length,
+          overall_accuracy: overallAccuracy,
+          passed,
+          xp_earned: xp,
+        })
+        .then(({ error }) => {
+          if (error) console.error("Failed to record OSCE attempt", error);
+        });
+
       setStage("results");
     } else {
       setCaseIdx((i) => i + 1);
@@ -133,13 +157,14 @@ export default function OsceCheckpoint() {
   };
 
   if (stage === "boss-intro") {
-    const bossModule = getModule(bossModuleId);
+    const bossGroupLabel =
+      bossAxis === "region" ? BODY_REGIONS.find((r) => r.id === bossGroupId)?.label : getModule(bossGroupId)?.name;
     return (
       <div className="mx-auto max-w-lg space-y-4 py-8 text-center">
         <Mascot mood="battle" className="mx-auto h-24 w-24" />
         <h1 className="text-2xl font-black tracking-tight">Boss Round</h1>
         <p className="text-sm text-muted-foreground">
-          Three {bossModule?.name || "mixed"} cases, back to back, one graded result at the end. Clear it to keep
+          Three {bossGroupLabel || "mixed"} cases, back to back, one graded result at the end. Clear it to keep
           moving down the path.
         </p>
         <Button onClick={startCheckpoint}>Begin</Button>

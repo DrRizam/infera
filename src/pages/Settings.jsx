@@ -17,6 +17,7 @@ import {
 } from "@/lib/subscription";
 import { openBillingPortal, startCheckout } from "@/lib/subscriptionStore";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
+import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,6 +36,7 @@ export default function Settings() {
   const [checkoutNotice, setCheckoutNotice] = useState("");
   const [billingBusy, setBillingBusy] = useState(false);
   const [billingError, setBillingError] = useState("");
+  const [billingPlan, setBillingPlan] = useState("monthly");
 
   useEffect(() => {
     if (searchParams.get("checkout") === "success") {
@@ -144,7 +146,7 @@ export default function Settings() {
   const handleSubscribe = async () => {
     setBillingBusy(true);
     setBillingError("");
-    const { error } = await startCheckout();
+    const { error } = await startCheckout(billingPlan);
     // Only reachable if it DIDN'T redirect — a successful call navigates
     // away before this line would matter.
     setBillingBusy(false);
@@ -208,17 +210,40 @@ export default function Settings() {
             and Recall sessions.
           </p>
           {admin ? (
-            <Button variant="outline" className="w-full" onClick={() => navigate("/admin/feedback")}>
-              View feedback
-            </Button>
+            <div className="space-y-2">
+              <Button variant="outline" className="w-full" onClick={() => navigate("/admin/feedback")}>
+                View feedback
+              </Button>
+              <Button variant="outline" className="w-full" onClick={() => navigate("/admin/daily-game")}>
+                Review case submissions
+              </Button>
+            </div>
           ) : premium ? (
             <Button variant="outline" className="w-full" onClick={handleManage} disabled={billingBusy}>
               {billingBusy ? "Opening…" : "Manage subscription"}
             </Button>
           ) : (
-            <Button className="w-full" onClick={handleSubscribe} disabled={billingBusy}>
-              {billingBusy ? "Redirecting…" : "Upgrade for unlimited debriefs"}
-            </Button>
+            <>
+              <div className="inline-flex w-full rounded-full border border-border bg-muted p-0.5 text-xs font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setBillingPlan("monthly")}
+                  className={cn("flex-1 rounded-full px-3 py-1.5", billingPlan === "monthly" && "bg-card text-primary shadow-sm")}
+                >
+                  Monthly
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBillingPlan("annual")}
+                  className={cn("flex-1 rounded-full px-3 py-1.5", billingPlan === "annual" && "bg-card text-primary shadow-sm")}
+                >
+                  Annual
+                </button>
+              </div>
+              <Button className="w-full" onClick={handleSubscribe} disabled={billingBusy}>
+                {billingBusy ? "Redirecting…" : "Upgrade for unlimited debriefs"}
+              </Button>
+            </>
           )}
         </CardContent>
       </Card>

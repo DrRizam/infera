@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { Check, Lock, Star, Swords } from "lucide-react";
-import { getModule } from "@/lib/modules";
+import { bossRoundKey, getModule, placementSkipCount } from "@/lib/modules";
 import Mascot from "@/components/Mascot";
 import { cn } from "@/lib/utils";
 
@@ -58,10 +58,11 @@ function BossNode({ locked, done, onOpen }) {
   );
 }
 
-export default function CasePath({ cases, progressByCaseId, bossRoundsCompleted, onOpen }) {
+export default function CasePath({ cases, progressByCaseId, bossRoundsCompleted, onOpen, experienceLevel, groupBy = "module" }) {
   const navigate = useNavigate();
   const sorted = [...cases].sort((a, b) => (a.order || 0) - (b.order || 0));
   const placeholderCount = Math.max(0, DEMO_MIN_NODES - sorted.length);
+  const skipCount = placementSkipCount(sorted, experienceLevel);
   let unlocked = true;
   // Flex stands once, right at the boundary between what's unlocked and
   // what's still locked — the natural "you are here, keep going" spot.
@@ -73,10 +74,14 @@ export default function CasePath({ cases, progressByCaseId, bossRoundsCompleted,
         const progress = progressByCaseId?.[c.id];
         const done = progress?.status === "completed";
         const inProgress = progress?.status === "in_progress";
-        const locked = !unlocked;
+        // Placement-skipped nodes are always playable without needing the
+        // chain above them completed — but they don't count as "done", so
+        // they don't falsely advance accuracy/progress stats.
+        const inSkipZone = i < skipCount;
+        const locked = inSkipZone ? false : !unlocked;
         const showFlex = locked && !flexPlaced;
         if (showFlex) flexPlaced = true;
-        if (!done) unlocked = false;
+        if (!inSkipZone && !done) unlocked = false;
         // Same icon the module uses everywhere else (dropdown, nav, header)
         // rather than an arbitrary cycling set unrelated to the category.
         const NodeIcon = getModule(c.module)?.icon || Star;
@@ -112,16 +117,18 @@ export default function CasePath({ cases, progressByCaseId, bossRoundsCompleted,
 
         if ((i + 1) % BOSS_INTERVAL === 0) {
           const bossLevel = Math.floor(i / BOSS_INTERVAL);
-          const bossKey = `${c.module}:${bossLevel}`;
+          const groupId = groupBy === "region" ? c.body_region : c.module;
+          const bossKey = bossRoundKey(groupBy, groupId, bossLevel);
           const bossDone = !!bossRoundsCompleted?.[bossKey];
           const bossLocked = !unlocked;
           if (!bossDone) unlocked = false;
+          const axisParam = groupBy === "region" ? "region" : "module";
           items.push(
             <BossNode
               key={`boss-${bossKey}`}
               locked={bossLocked}
               done={bossDone}
-              onOpen={() => navigate(`/osce?module=${c.module}&bossLevel=${bossLevel}`)}
+              onOpen={() => navigate(`/osce?${axisParam}=${groupId}&bossLevel=${bossLevel}`)}
             />
           );
         }

@@ -5,8 +5,10 @@ import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
 import { levelFromXp } from "@/lib/gamification";
+import { BODY_REGIONS, getModule } from "@/lib/modules";
 import { ACHIEVEMENTS } from "@/data/achievements";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
+import { cn } from "@/lib/utils";
 import LevelRing from "@/components/LevelRing";
 import AchievementBadge from "@/components/AchievementBadge";
 import CompetencyMap from "@/components/CompetencyMap";
@@ -31,6 +33,7 @@ export default function Profile() {
   const [feedback, setFeedback] = useState("");
   const [feedbackSending, setFeedbackSending] = useState(false);
   const [feedbackNotice, setFeedbackNotice] = useState("");
+  const [osceHistory, setOsceHistory] = useState([]);
 
   useEffect(() => {
     supabase
@@ -43,7 +46,23 @@ export default function Profile() {
       .select("*", { count: "exact", head: true })
       .eq("follower_id", user.id)
       .then(({ count }) => setFollowingCount(count || 0));
+    supabase
+      .from("osce_attempts")
+      .select("overall_accuracy, passed, module_id, region_id, played_at")
+      .eq("user_id", user.id)
+      .order("played_at", { ascending: false })
+      .limit(10)
+      .then(({ data, error }) => {
+        if (error) console.error("Failed to load OSCE history", error);
+        setOsceHistory(data || []);
+      });
   }, [user.id]);
+
+  const osceLabel = (attempt) => {
+    if (attempt.module_id) return getModule(attempt.module_id)?.name || attempt.module_id;
+    if (attempt.region_id) return BODY_REGIONS.find((r) => r.id === attempt.region_id)?.label || attempt.region_id;
+    return "Mixed";
+  };
 
   const submitFeedback = async (e) => {
     e.preventDefault();
@@ -113,6 +132,45 @@ export default function Profile() {
         <CardContent className="space-y-2">
           <p className="text-xs text-muted-foreground">Across every specialty you've practiced — not just one.</p>
           <CompetencyMap competency={profile.competency} />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>OSCE history</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {osceHistory.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              Complete an OSCE checkpoint or a tree boss round to start tracking your trend here.
+            </p>
+          ) : (
+            (() => {
+              const chronological = [...osceHistory].reverse();
+              const avg = Math.round(chronological.reduce((sum, a) => sum + a.overall_accuracy, 0) / chronological.length);
+              const passedCount = chronological.filter((a) => a.passed).length;
+              return (
+                <div className="space-y-3">
+                  <div className="flex h-20 items-end justify-center gap-2">
+                    {chronological.map((a, i) => (
+                      <div
+                        key={i}
+                        title={`${osceLabel(a)} — ${a.overall_accuracy}% (${a.passed ? "passed" : "not passed"})`}
+                        className={cn(
+                          "w-5 rounded-t-md",
+                          a.passed ? "bg-emerald-500" : "bg-rose-400"
+                        )}
+                        style={{ height: `${Math.max(8, a.overall_accuracy)}%` }}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-center text-xs text-muted-foreground">
+                    {avg}% average · {passedCount} of {chronological.length} passed — most recent {chronological.length} checkpoints
+                  </p>
+                </div>
+              );
+            })()
+          )}
         </CardContent>
       </Card>
 

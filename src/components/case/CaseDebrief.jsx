@@ -31,12 +31,13 @@ export default function CaseDebrief({
   leveledUp,
   streak,
   debriefLimited,
+  surpriseChest,
   onDone,
   onUpgrade,
 }) {
   const [showSources, setShowSources] = useState(false);
   const status = STATUS_BADGE[clinicalCase.content_status] || STATUS_BADGE.demonstration;
-  const reactionMood = result.accuracy >= 80 ? "victorious" : result.accuracy >= 50 ? "cheerful" : "curious";
+  const reactionMood = surpriseChest || result.accuracy >= 80 ? "victorious" : result.accuracy >= 50 ? "cheerful" : "curious";
 
   return (
     <div className="space-y-4">
@@ -131,6 +132,9 @@ export default function CaseDebrief({
       )}
 
       <div className="rounded-lg border border-border bg-card p-4 text-center">
+        {surpriseChest && (
+          <p className="mb-1 text-sm font-bold text-amber-600">🎁 Surprise chest! +{surpriseChest.bonusXp} bonus XP</p>
+        )}
         <div className="text-2xl font-extrabold text-primary">+{xpEarned} XP</div>
         {dailyBonus && <p className="text-xs text-amber-600">Daily hard case bonus applied (+50%)</p>}
         {shieldUsed && <p className="text-xs text-sky-600">A rest-day shield covered your gap — streak kept alive.</p>}

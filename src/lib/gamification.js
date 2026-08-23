@@ -203,6 +203,25 @@ export function speedRoundTimerDelta(isCorrect, comboAfter) {
   return comboAfter >= 2 ? 5 : 0;
 }
 
+// Every other reward in this app is deterministic (fixed XP for a given
+// accuracy, a streak shield earned on a known schedule) — the unpredictable
+// payoff is what a variable-ratio reward adds on top, not a bigger number.
+// Kept as its own low-odds roll on top of normal case XP rather than folded
+// into xpForCase, so it stays visibly a "surprise" and not just more grind.
+export const SURPRISE_CHEST_CHANCE = 0.15;
+export const SURPRISE_CHEST_XP_RANGE = [15, 40];
+
+/**
+ * Rolls for a bonus XP chest on a completed case. `rng` is injectable so
+ * this stays deterministic in tests; callers use the default Math.random.
+ */
+export function rollSurpriseChest(rng = Math.random) {
+  if (rng() >= SURPRISE_CHEST_CHANCE) return null;
+  const [min, max] = SURPRISE_CHEST_XP_RANGE;
+  const bonusXp = min + Math.floor(rng() * (max - min + 1));
+  return { bonusXp };
+}
+
 export function isAchievementEarned(achievement, profile) {
   const value = profile?.[achievement.metric] ?? 0;
   return value >= achievement.goal;

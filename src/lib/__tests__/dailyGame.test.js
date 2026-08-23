@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
   attributeMatches,
+  buildDiagnosisOptions,
   buildShareGrid,
   currentCaseNumber,
   editDistance,
+  filterDiagnosisOptions,
   findMatchingCase,
   normalizeGuess,
   scoreForResult,
@@ -93,6 +95,22 @@ describe("findMatchingCase", () => {
 
   it("returns null for an empty guess", () => {
     expect(findMatchingCase("   ", BANK)).toBeNull();
+  });
+
+  it("resolves a single distinctive word to the one case it belongs to", () => {
+    expect(findMatchingCase("acl", BANK)).toBe(CASE_B);
+  });
+
+  it("does not resolve a single word shared by more than one case", () => {
+    const ambiguousBank = [
+      { ...CASE_A, diagnosis: "Meniscus tear", synonyms: [] },
+      { ...CASE_B, diagnosis: "Rotator cuff tear", synonyms: [] },
+    ];
+    expect(findMatchingCase("tear", ambiguousBank)).toBeNull();
+  });
+
+  it("does not apply the single-word fallback to a multi-word guess", () => {
+    expect(findMatchingCase("acl syndrome", BANK)).toBeNull();
   });
 });
 
@@ -235,5 +253,48 @@ describe("validateCaseSubmission", () => {
     const errors = validateCaseSubmission(undefined);
     expect(errors.diagnosis).toBeTruthy();
     expect(errors.clues).toBeTruthy();
+  });
+});
+
+describe("buildDiagnosisOptions", () => {
+  it("includes each case's diagnosis and all its synonyms", () => {
+    const options = buildDiagnosisOptions(BANK);
+    const labels = options.map((o) => o.label);
+    expect(labels).toContain("Lateral epicondylalgia");
+    expect(labels).toContain("tennis elbow");
+    expect(labels).toContain("acl tear");
+  });
+
+  it("dedupes terms that normalize the same way, even across cases", () => {
+    const bank = [CASE_A, { ...CASE_B, synonyms: [...CASE_B.synonyms, "Lateral Epicondylalgia"] }];
+    const options = buildDiagnosisOptions(bank);
+    expect(options.filter((o) => o.label.toLowerCase() === "lateral epicondylalgia")).toHaveLength(1);
+  });
+
+  it("sorts alphabetically", () => {
+    const labels = buildDiagnosisOptions(BANK).map((o) => o.label);
+    expect(labels).toEqual([...labels].sort((a, b) => a.localeCompare(b)));
+  });
+
+  it("returns an empty list for an empty bank", () => {
+    expect(buildDiagnosisOptions([])).toEqual([]);
+  });
+});
+
+describe("filterDiagnosisOptions", () => {
+  const options = buildDiagnosisOptions(BANK);
+
+  it("matches a substring anywhere in the label, case-insensitively", () => {
+    const matches = filterDiagnosisOptions(options, "ACL");
+    expect(matches.map((o) => o.label)).toEqual(expect.arrayContaining(["acl tear", "acl rupture"]));
+  });
+
+  it("returns nothing for an empty query", () => {
+    expect(filterDiagnosisOptions(options, "")).toEqual([]);
+    expect(filterDiagnosisOptions(options, "   ")).toEqual([]);
+  });
+
+  it("caps results at the given limit", () => {
+    expect(filterDiagnosisOptions(options, "a", 2)).toHaveLength(2);
   });
 });

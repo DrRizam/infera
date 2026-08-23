@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Brain, Check, ChevronDown, Lightbulb, RotateCcw, Zap } from "lucide-react";
+import { Brain, Check, ChevronDown, Lightbulb, MapPin, RotateCcw, Zap } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { CASES, getCase } from "@/data/cases";
 import { retentionStats, todayStr } from "@/lib/gamification";
-import { conditionOfTheDay, getModule, MODULES } from "@/lib/modules";
+import { BODY_REGIONS, conditionOfTheDay, getModule, MODULES } from "@/lib/modules";
 import { countDueRecallItems, generateRecallItems } from "@/lib/recallItems";
 import { suggestModuleFocus } from "@/lib/contextPrompt";
 import { currentCaseNumber } from "@/lib/dailyGame";
@@ -22,6 +22,9 @@ export default function Home() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [moduleMenuOpen, setModuleMenuOpen] = useState(false);
+  // "specialty" mirrors the original module-based path exactly; "region"
+  // is the alternate body-region lens, same mechanism, different filter.
+  const [pathAxis, setPathAxis] = useState("specialty");
 
   const firstName = (user?.user_metadata?.full_name || "").split(" ")[0] || "there";
   const progressByCaseId = profile.caseProgress || {};
@@ -53,9 +56,23 @@ export default function Home() {
   const dailyGameCaseNumber = currentCaseNumber();
 
   const focusModules = profile.focus_modules || [];
-  const moduleCases = focusModules.length ? CASES.filter((c) => focusModules.includes(c.module)) : CASES;
+  const focusRegions = profile.focus_regions || [];
+  const moduleCases =
+    pathAxis === "region"
+      ? focusRegions.length
+        ? CASES.filter((c) => focusRegions.includes(c.body_region))
+        : CASES
+      : focusModules.length
+      ? CASES.filter((c) => focusModules.includes(c.module))
+      : CASES;
   const pathHeading =
-    focusModules.length === 1
+    pathAxis === "region"
+      ? focusRegions.length === 1
+        ? BODY_REGIONS.find((r) => r.id === focusRegions[0])?.label || "Reasoning path"
+        : focusRegions.length > 1
+        ? `${focusRegions.length} focus areas`
+        : "Reasoning path"
+      : focusModules.length === 1
       ? getModule(focusModules[0])?.name || "Reasoning path"
       : focusModules.length > 1
       ? `${focusModules.length} focus areas`
@@ -70,6 +87,17 @@ export default function Home() {
   };
   const clearModules = () => {
     setProfile((prev) => ({ ...prev, focus_modules: [] }));
+    setModuleMenuOpen(false);
+  };
+  const toggleRegion = (id) => {
+    setProfile((prev) => {
+      const current = prev.focus_regions || [];
+      const next = current.includes(id) ? current.filter((r) => r !== id) : [...current, id];
+      return { ...prev, focus_regions: next };
+    });
+  };
+  const clearRegions = () => {
+    setProfile((prev) => ({ ...prev, focus_regions: [] }));
     setModuleMenuOpen(false);
   };
 
@@ -201,10 +229,32 @@ export default function Home() {
       )}
 
       <div>
+        <div className="mb-2 inline-flex rounded-full border border-border bg-muted p-0.5 text-xs font-semibold">
+          <button
+            type="button"
+            onClick={() => {
+              setPathAxis("specialty");
+              setModuleMenuOpen(false);
+            }}
+            className={cn("rounded-full px-3 py-1", pathAxis === "specialty" && "bg-card text-primary shadow-sm")}
+          >
+            By specialty
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setPathAxis("region");
+              setModuleMenuOpen(false);
+            }}
+            className={cn("rounded-full px-3 py-1", pathAxis === "region" && "bg-card text-primary shadow-sm")}
+          >
+            By body region
+          </button>
+        </div>
         <div className="relative mb-3 flex items-end justify-between gap-3">
           <button
             type="button"
-            title="Switch specialty"
+            title={pathAxis === "region" ? "Switch body region" : "Switch specialty"}
             aria-haspopup="true"
             aria-expanded={moduleMenuOpen}
             onClick={() => setModuleMenuOpen((o) => !o)}
@@ -220,28 +270,47 @@ export default function Home() {
               <div className="fixed inset-0 z-10" onClick={() => setModuleMenuOpen(false)} />
               <div className="absolute left-0 top-full z-20 mt-2 w-72 max-h-80 overflow-y-auto rounded-2xl border-2 border-border bg-card p-2 shadow-elevated">
                 <p className="px-3 pb-1 pt-1 text-[11px] font-semibold text-muted-foreground">Tap to select any number</p>
-                {MODULES.map((m) => {
-                  const selected = focusModules.includes(m.id);
-                  return (
-                    <button
-                      key={m.id}
-                      type="button"
-                      onClick={() => toggleModule(m.id)}
-                      className={cn(
-                        "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-bold hover:bg-muted",
-                        selected && "bg-accent text-primary"
-                      )}
-                    >
-                      <m.icon className="h-4 w-4 shrink-0" />
-                      <span className="flex-1">{m.name}</span>
-                      {selected && <Check className="h-4 w-4 shrink-0" />}
-                    </button>
-                  );
-                })}
+                {pathAxis === "region"
+                  ? BODY_REGIONS.map((r) => {
+                      const selected = focusRegions.includes(r.id);
+                      return (
+                        <button
+                          key={r.id}
+                          type="button"
+                          onClick={() => toggleRegion(r.id)}
+                          className={cn(
+                            "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-bold hover:bg-muted",
+                            selected && "bg-accent text-primary"
+                          )}
+                        >
+                          <MapPin className="h-4 w-4 shrink-0" />
+                          <span className="flex-1">{r.label}</span>
+                          {selected && <Check className="h-4 w-4 shrink-0" />}
+                        </button>
+                      );
+                    })
+                  : MODULES.map((m) => {
+                      const selected = focusModules.includes(m.id);
+                      return (
+                        <button
+                          key={m.id}
+                          type="button"
+                          onClick={() => toggleModule(m.id)}
+                          className={cn(
+                            "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-bold hover:bg-muted",
+                            selected && "bg-accent text-primary"
+                          )}
+                        >
+                          <m.icon className="h-4 w-4 shrink-0" />
+                          <span className="flex-1">{m.name}</span>
+                          {selected && <Check className="h-4 w-4 shrink-0" />}
+                        </button>
+                      );
+                    })}
                 <div className="mt-1 border-t border-border pt-1">
                   <button
                     type="button"
-                    onClick={clearModules}
+                    onClick={pathAxis === "region" ? clearRegions : clearModules}
                     className="flex w-full items-center rounded-xl px-3 py-2 text-left text-sm font-bold text-muted-foreground hover:bg-muted"
                   >
                     Mixed (clear all)
@@ -255,6 +324,8 @@ export default function Home() {
           cases={moduleCases}
           progressByCaseId={progressByCaseId}
           bossRoundsCompleted={profile.bossRoundsCompleted}
+          experienceLevel={profile.experience_level}
+          groupBy={pathAxis === "region" ? "region" : "module"}
           onOpen={(id) => navigate(`/case/${id}`)}
         />
       </div>

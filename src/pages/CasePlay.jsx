@@ -15,6 +15,7 @@ import {
   levelFromXp,
   nextReviewDate,
   rollStreak,
+  rollSurpriseChest,
   todayStr,
   updateCalibration,
   updateMastery,
@@ -73,7 +74,9 @@ export default function CasePlay() {
   const finalize = (finalAnswers) => {
     const scored = scoreEncounter(finalAnswers, clinicalCase);
     const rawXp = xpForCase(clinicalCase.xp_reward || 40, scored.accuracy);
-    const xp = Math.round(rawXp * (isDaily ? 1.5 : 1));
+    const baseXp = Math.round(rawXp * (isDaily ? 1.5 : 1));
+    const surpriseChest = rollSurpriseChest();
+    const xp = baseXp + (surpriseChest?.bonusXp || 0);
 
     let next = ensureDailyFresh(profile, todayStr());
     const { profile: streaked, shieldUsed } = rollStreak(next, todayStr());
@@ -140,7 +143,7 @@ export default function CasePlay() {
       createNotification(user.id, { type: "level_up", title: "Level up!", body: `You're now a ${title}.` });
     }
 
-    setResult({ scored, xp, shieldUsed, leveledUp, streak: next.streak_count, debriefLimited: !debriefAllowed });
+    setResult({ scored, xp, shieldUsed, leveledUp, streak: next.streak_count, debriefLimited: !debriefAllowed, surpriseChest });
     setStageIdx(stages.length - 1);
   };
 
@@ -220,6 +223,7 @@ export default function CasePlay() {
           leveledUp={result.leveledUp}
           streak={result.streak}
           debriefLimited={result.debriefLimited}
+          surpriseChest={result.surpriseChest}
           onDone={() => navigate("/")}
           onUpgrade={() => navigate("/settings")}
         />

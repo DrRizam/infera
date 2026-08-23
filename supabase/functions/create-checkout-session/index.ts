@@ -11,7 +11,11 @@ import { createClient } from "npm:@supabase/supabase-js@2.112.2";
 // on API versions older than 2025-03-31.basil — Checkout Session creation
 // fails with a 400 on the pinned default otherwise.
 const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, { apiVersion: "2025-03-31.basil" });
-const PRICE_ID = Deno.env.get("STRIPE_PRICE_ID")!;
+const MONTHLY_PRICE_ID = Deno.env.get("STRIPE_PRICE_ID")!;
+// Optional — annual pricing is off until this secret is set (see
+// `supabase secrets set STRIPE_PRICE_ID_ANNUAL=price_...` after creating the
+// matching Price on the same Stripe product in the Dashboard).
+const ANNUAL_PRICE_ID = Deno.env.get("STRIPE_PRICE_ID_ANNUAL") ?? null;
 const APP_URL = Deno.env.get("APP_URL") ?? "http://localhost:5173";
 
 // SUPABASE_URL / SUPABASE_ANON_KEY / SUPABASE_SERVICE_ROLE_KEY are
@@ -41,6 +45,16 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: corsHeaders });
     }
 
+    const requestBody = await req.json().catch(() => ({}));
+    const wantsAnnual = requestBody?.plan === "annual";
+    if (wantsAnnual && !ANNUAL_PRICE_ID) {
+      return new Response(JSON.stringify({ error: "Annual billing isn't available yet — try monthly." }), {
+        status: 400,
+        headers: corsHeaders,
+      });
+    }
+    const priceId = wantsAnnual ? ANNUAL_PRICE_ID! : MONTHLY_PRICE_ID;
+
     // Service-role client: writing stripe_customer_id is exactly the kind
     // of subscription-column write the client itself is blocked from
     // making (see the column grant in schema.sql) — only this trusted
@@ -66,7 +80,7 @@ Deno.serve(async (req) => {
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       mode: "subscription",
-      line_items: [{ price: PRICE_ID, quantity: 1 }],
+      line_items: [{ price: priceId, quantity: 1 }],
       success_url: `${APP_URL}/settings?checkout=success`,
       cancel_url: `${APP_URL}/settings`,
     });

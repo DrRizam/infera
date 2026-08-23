@@ -50,6 +50,29 @@ create table public.case_attempts (
 create index case_attempts_user_idx on public.case_attempts (user_id, played_at desc);
 create index case_attempts_module_idx on public.case_attempts (user_id, case_module);
 
+-- ── osce_attempts (append-only per-checkpoint-session log) ───────────────
+-- One row per finished OSCE checkpoint (standalone or a tree boss round),
+-- added 2026-08-21 for the attempt-history/trend view on Profile — OSCE
+-- results themselves stay ephemeral in OsceCheckpoint.jsx's own state
+-- (shown once at the end of a session), this table is purely a read-only
+-- history log alongside it. Exactly one of module_id/region_id is set,
+-- matching the axis the session was run under (see bossRoundKey in
+-- modules.js); both null means a "Mixed" standalone checkpoint.
+create table public.osce_attempts (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  module_id text,
+  region_id text,
+  is_boss boolean not null default false,
+  boss_level int,
+  case_count int not null,
+  overall_accuracy int not null,
+  passed boolean not null,
+  xp_earned integer not null default 0,
+  played_at timestamptz not null default now()
+);
+create index osce_attempts_user_idx on public.osce_attempts (user_id, played_at desc);
+
 -- ── notifications (persisted, per-user, read/unread) ─────────────────────
 -- Every row is owned by one user, even a future "broadcast" announcement
 -- would just insert one row per recipient — simpler than a shared-row +
@@ -174,6 +197,7 @@ create index follows_followee_idx on public.follows (followee_id);
 -- ── RLS ───────────────────────────────────────────────────────────────
 alter table public.profiles           enable row level security;
 alter table public.case_attempts      enable row level security;
+alter table public.osce_attempts       enable row level security;
 alter table public.notifications      enable row level security;
 alter table public.feedback           enable row level security;
 alter table public.daily_game_cases    enable row level security;
@@ -204,6 +228,12 @@ grant update (display_name, clinic_name, country, role, role_other_label, phone,
 create policy case_attempts_select on public.case_attempts
   for select using (user_id = auth.uid());
 create policy case_attempts_insert_own on public.case_attempts
+  for insert with check (user_id = auth.uid());
+
+-- No update/delete policy on osce_attempts either -- append-only.
+create policy osce_attempts_select on public.osce_attempts
+  for select using (user_id = auth.uid());
+create policy osce_attempts_insert_own on public.osce_attempts
   for insert with check (user_id = auth.uid());
 
 -- Notifications: a user can only see/insert/mark-read their own. No delete
@@ -285,8 +315,9 @@ create policy follows_delete_own on public.follows
 -- ── Self-service account deletion ────────────────────────────────────
 -- security definer so this runs with the function owner's (postgres)
 -- privileges, letting an authenticated client delete their own auth.users
--- row without ever holding a service-role key. profiles/case_attempts both
--- cascade-delete via their FK to auth.users(id), so one call cleans up everything.
+-- row without ever holding a service-role key. profiles/case_attempts/
+-- osce_attempts all cascade-delete via their FK to auth.users(id), so one
+-- call cleans up everything.
 create or replace function public.delete_own_account()
 returns void
 language plpgsql security definer set search_path = public as $$
@@ -511,6 +542,54 @@ language sql security definer set search_path = public stable as $$
 $$;
 grant execute on function public.admin_list_feedback() to authenticated;
 
+-- ── Admin moderation queue for user-submitted daily game cases ───────────
+-- Added 2026-08-21 so review/approval doesn't require the Supabase table
+-- editor — same single-admin allowlist pattern as admin_list_feedback
+-- above (keep both in sync with ADMIN_EMAILS if it ever grows past one
+-- address). RLS alone can't let an admin see another user's pending row
+-- (daily_game_cases_select_own only covers the submitter themselves), so
+-- this has to be a security-definer RPC like admin_list_feedback.
+create or replace function public.admin_list_pending_daily_game_cases()
+returns table(
+  id uuid, diagnosis text, synonyms text[], region text, system text, tissue text,
+  chronicity text, mechanism text, clues text[], explanation text,
+  submitted_by_name text, created_at timestamptz
+)
+language sql security definer set search_path = public stable as $$
+  select c.id, c.diagnosis, c.synonyms, c.region, c.system, c.tissue, c.chronicity,
+         c.mechanism, c.clues, c.explanation, coalesce(p.display_name, 'Anonymous'), c.created_at
+  from public.daily_game_cases c
+  left join public.profiles p on p.user_id = c.submitted_by
+  where auth.email() = 'rizamshaar2014@gmail.com' and c.status = 'pending'
+  order by c.created_at asc;
+$$;
+grant execute on function public.admin_list_pending_daily_game_cases() to authenticated;
+
+-- Approve assigns the next sequential case_number (matching how cases 1-10
+-- were scheduled by hand); reject just flags the row. Re-running on an
+-- already-decided row is a no-op (the `and status = 'pending'` guard).
+create or replace function public.admin_review_daily_game_case(case_id uuid, decision text)
+returns void
+language plpgsql security definer set search_path = public as $$
+declare
+  next_number int;
+begin
+  if auth.email() <> 'rizamshaar2014@gmail.com' then
+    raise exception 'not authorized';
+  end if;
+  if decision = 'approved' then
+    select coalesce(max(case_number), 0) + 1 into next_number from public.daily_game_cases;
+    update public.daily_game_cases set status = 'approved', case_number = next_number
+      where id = case_id and status = 'pending';
+  elsif decision = 'rejected' then
+    update public.daily_game_cases set status = 'rejected' where id = case_id and status = 'pending';
+  else
+    raise exception 'invalid decision: %', decision;
+  end if;
+end;
+$$;
+grant execute on function public.admin_review_daily_game_case(uuid, text) to authenticated;
+
 -- ── Daily diagnosis game — 5 launch cases, case_number 1-5 ───────────────
 -- Original write-ups (not copied from any external source), pre-approved
 -- so they're playable immediately. content is intentionally varied across
@@ -597,5 +676,96 @@ values
     'A positive slump test alongside a positive straight leg raise strengthens the case for true nerve root tension rather than just hamstring tightness or nonspecific back pain — and the absence of saddle anesthesia or bowel/bladder change is what keeps this from being a cauda equina emergency.'
   ],
   'A posterolateral or paracentral disc herniation compressing an exiting nerve root produces radicular leg pain, often worse with flexion/sitting and relieved by extension/walking. Straight leg raise and slump testing assess neural tension, and red-flag screening for cauda equina (saddle anesthesia, bowel/bladder change) is essential before treating it as routine.',
+  'approved'
+);
+
+-- ── Daily diagnosis game — cases 6-10, added 2026-08-21 ──────────────────
+-- Grows the recognized-diagnosis dictionary past the original 5 launch
+-- cases (see the Phase-1 limitation note above findMatchingCase in
+-- dailyGame.js: an unrecognized guess still costs an attempt but can't
+-- show attribute matches). Chosen to overlap/contrast usefully with cases
+-- 1-5 — shared regions, tissues, or mechanisms — so badge feedback stays
+-- informative even on a wrong-but-recognized guess.
+insert into public.daily_game_cases
+  (case_number, diagnosis, synonyms, region, system, tissue, chronicity, mechanism, clues, explanation, status)
+values
+(
+  6,
+  'Meniscus tear',
+  array['meniscus tear', 'meniscal tear', 'torn meniscus', 'meniscus injury', 'torn cartilage in the knee'],
+  'knee', 'musculoskeletal', 'joint_cartilage', 'subacute', 'traumatic',
+  array[
+    '22-year-old recreational basketball player, twisting knee injury two days ago while landing awkwardly and pivoting on a planted foot.',
+    'Knee swelling built up gradually over the following day, not immediately; occasional catching and a sense of the knee locking when straightening it.',
+    'McMurray''s test reproduces a painful click along the joint line; joint line tenderness is present on palpation.',
+    'Terminal extension is mildly blocked and uncomfortable; there is no gross instability on Lachman or anterior drawer testing.',
+    'MRI shows a horizontal tear of the medial meniscus posterior horn, with an intact ACL.',
+    'A next-day, rather than within-the-hour, swelling pattern after a twisting injury points more toward an isolated meniscal tear than a ligament tear — the opposite timing pattern from an ACL rupture.'
+  ],
+  'An isolated meniscus tear typically follows a twisting or pivoting mechanism and produces joint-line tenderness, a positive McMurray''s test, and mechanical symptoms like catching or locking. The slower, next-day swelling pattern and a negative Lachman/anterior drawer help distinguish it from an ACL injury.',
+  'approved'
+),
+(
+  7,
+  'Achilles tendinopathy',
+  array['achilles tendinopathy', 'achilles tendinitis', 'achilles tendonitis', 'achilles tendon pain'],
+  'ankle_foot', 'musculoskeletal', 'tendon', 'chronic', 'overuse',
+  array[
+    '45-year-old recreational runner, 8 weeks of gradually worsening pain at the back of the heel after increasing weekly mileage.',
+    'Pain and stiffness are worst with the first steps out of bed in the morning, ease somewhat after warming up, then return after longer runs.',
+    'The area 2-6 cm above the heel bone is thickened and tender to palpation; resisted plantarflexion reproduces the pain.',
+    'The Thompson test is negative — squeezing the calf still produces plantarflexion, ruling out a complete rupture; ankle dorsiflexion is mildly restricted with the knee straight.',
+    'Ultrasound shows thickening and disorganized fibers within the mid-portion of the tendon, without a full-thickness tear.',
+    'A negative Thompson test is the key safety check here — it separates a painful but intact tendinopathy from a complete Achilles rupture, which needs a very different, urgent management pathway.'
+  ],
+  'Achilles tendinopathy is an overuse degeneration of the mid-portion tendon, classically triggered by a training-load spike. Morning stiffness that eases with movement, localized thickening/tenderness, and pain with resisted plantarflexion are typical; a negative Thompson test confirms the tendon is still in continuity.',
+  'approved'
+),
+(
+  8,
+  'Rotator cuff tear',
+  array['rotator cuff tear', 'rotator cuff tendinopathy', 'supraspinatus tear', 'torn rotator cuff'],
+  'shoulder', 'musculoskeletal', 'tendon', 'chronic', 'degenerative',
+  array[
+    '61-year-old retired painter, several months of aching shoulder pain and progressive weakness reaching overhead, with no single injury he can recall.',
+    'Pain is worse at night when lying on the shoulder; he has started avoiding overhead reaching because the arm gives way.',
+    'The empty can test and external rotation lag sign are both positive; the drop-arm test shows he cannot lower the arm smoothly from full abduction.',
+    'Active abduction is limited and painful, but passive range of motion is nearly full — the opposite pattern from a capsular restriction.',
+    'MRI confirms a full-thickness tear of the supraspinatus tendon with mild retraction.',
+    'Preserved passive range of motion despite major active weakness is the key discriminator from adhesive capsulitis, where both active AND passive motion are restricted.'
+  ],
+  'A degenerative rotator cuff tear presents with painful, weak active elevation — often with a positive drop-arm sign — while passive range of motion stays comparatively preserved, unlike the proportional active-and-passive restriction seen in adhesive capsulitis. MRI confirms tear size and retraction, which guides whether surgical repair is being considered.',
+  'approved'
+),
+(
+  9,
+  'Cervical radiculopathy',
+  array['cervical radiculopathy', 'pinched nerve in the neck', 'cervical nerve root compression', 'herniated cervical disc'],
+  'neck', 'neuro', 'nerve', 'subacute', 'nerve_compression',
+  array[
+    '48-year-old office worker, 10 days of neck pain radiating down the right arm into the thumb and index finger, after a weekend of heavy yard work.',
+    'Turning the head toward the painful side and looking up both sharply increase the arm pain; resting the hand on top of the head eases it somewhat.',
+    'Spurling''s test reproduces the radiating arm pain; the cervical distraction test relieves it.',
+    'Mild weakness of wrist extension and reduced biceps reflex on the right; sensation is diminished over the thumb and index finger, consistent with a C6 pattern.',
+    'MRI shows a right-sided C5-C6 disc herniation contacting the exiting C6 nerve root.',
+    'Relief with the shoulder-abduction (hand-on-head) maneuver and cervical distraction, alongside matching myotomal weakness and dermatomal sensory change, points to true nerve root involvement rather than a musculoskeletal neck strain radiating locally.'
+  ],
+  'Cervical radiculopathy results from nerve root compression, most often by disc herniation or foraminal narrowing, producing arm pain that follows a specific nerve root pattern. A positive Spurling''s test, relief with distraction or shoulder abduction, and matching myotomal/dermatomal findings support the diagnosis; MRI confirms the level and cause of compression.',
+  'approved'
+),
+(
+  10,
+  'Patellofemoral pain syndrome',
+  array['patellofemoral pain syndrome', 'runner''s knee', 'anterior knee pain', 'patellofemoral syndrome'],
+  'knee', 'musculoskeletal', 'joint_cartilage', 'chronic', 'overuse',
+  array[
+    '17-year-old cross-country runner, several months of a dull ache around and behind the kneecap that is worse with running and stairs.',
+    'Pain is aggravated by prolonged sitting with the knees bent and by descending stairs; there was no specific injury.',
+    'Pain is reproduced by resisted knee extension and by compressing the patella against the femur during a quad contraction, a positive patellar grind test.',
+    'The knee is stable on ligamentous testing with no effusion; there is mild weakness of hip abductor and external rotator strength on the affected side.',
+    'X-rays are unremarkable, ruling out significant patellofemoral osteoarthritis or a structural cause for the pain.',
+    'Reproducing pain with patellar compression during a quad contraction, in a knee that is otherwise stable with no swelling, points to a cartilage-loading problem at the patellofemoral joint rather than a meniscal or ligamentous injury.'
+  ],
+  'Patellofemoral pain syndrome is an overuse pattern of anterior knee pain from abnormal patellofemoral joint loading, often linked to proximal hip weakness that changes lower-limb mechanics. Pain with sitting, stairs, and a positive patellar compression/grind test in a stable, non-swollen knee are the classic picture; imaging mainly rules out other structural causes.',
   'approved'
 );

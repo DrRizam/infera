@@ -9,6 +9,7 @@ import {
   nextReviewDate,
   retentionStats,
   rollStreak,
+  rollSurpriseChest,
   speedRoundTimerDelta,
   todayStr,
   updateCalibration,
@@ -266,5 +267,29 @@ describe("speedRoundTimerDelta", () => {
     expect(speedRoundTimerDelta(true, 2)).toBe(5);
     expect(speedRoundTimerDelta(true, 3)).toBe(5);
     expect(speedRoundTimerDelta(true, 10)).toBe(5);
+  });
+});
+
+describe("rollSurpriseChest", () => {
+  it("returns null when the roll misses the chance window", () => {
+    expect(rollSurpriseChest(() => 0.99)).toBeNull();
+  });
+
+  it("returns a bonus within the configured XP range when the roll hits", () => {
+    const chest = rollSurpriseChest(() => 0);
+    expect(chest.bonusXp).toBe(15);
+  });
+
+  it("uses a second rng draw to vary the bonus amount within range", () => {
+    const draws = [0.01, 0.99];
+    const rng = () => draws.shift();
+    const chest = rollSurpriseChest(rng);
+    expect(chest.bonusXp).toBeGreaterThanOrEqual(15);
+    expect(chest.bonusXp).toBeLessThanOrEqual(40);
+  });
+
+  it("is deterministic for a given rng", () => {
+    const rng = () => 0.1;
+    expect(rollSurpriseChest(rng)).toEqual(rollSurpriseChest(rng));
   });
 });

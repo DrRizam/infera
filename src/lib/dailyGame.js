@@ -60,10 +60,38 @@ function fuzzyEquals(a, b) {
 }
 
 /**
+ * Maps each word (3+ chars) appearing across the case bank's diagnoses and
+ * synonyms to the one case it belongs to — or `null` if more than one case
+ * shares that word (e.g. "tear" shows up in several diagnoses), so a bare
+ * guess like "tear" can't ambiguously resolve to whichever case happens to
+ * come first. Self-maintaining: no hand-curated stoplist to keep in sync
+ * as cases are added, since ambiguity is detected from the data itself.
+ */
+function buildUniqueWordIndex(caseBank) {
+  const index = new Map();
+  for (const c of caseBank || []) {
+    const words = new Set();
+    for (const term of [c.diagnosis, ...(c.synonyms || [])]) {
+      for (const w of normalizeGuess(term).split(" ")) {
+        if (w.length >= 3) words.add(w);
+      }
+    }
+    for (const w of words) {
+      index.set(w, index.has(w) ? null : c);
+    }
+  }
+  return index;
+}
+
+/**
  * Resolves a free-text guess to a known case in the bank (today's case or
  * any other approved case), so an unrecognized/gibberish guess can be
  * rejected without consuming an attempt, and a recognized-but-wrong guess
- * still carries real attribute tags to compare against the target.
+ * still carries real attribute tags to compare against the target. A full
+ * diagnosis/synonym match (fuzzy, typo-tolerant) is tried first; a
+ * single-word guess that doesn't match any full term falls back to
+ * matching one distinctive word of a diagnosis (e.g. "meniscus" resolves
+ * to "Meniscus tear") as long as that word isn't shared by another case.
  */
 export function findMatchingCase(guess, caseBank) {
   const norm = normalizeGuess(guess);
@@ -72,7 +100,39 @@ export function findMatchingCase(guess, caseBank) {
     const candidates = [c.diagnosis, ...(c.synonyms || [])];
     if (candidates.some((term) => fuzzyEquals(norm, normalizeGuess(term)))) return c;
   }
+  if (!norm.includes(" ")) {
+    const match = buildUniqueWordIndex(caseBank).get(norm);
+    if (match) return match;
+  }
   return null;
+}
+
+/**
+ * Distinct guessable terms (diagnosis + synonyms) across the case bank —
+ * the same recognition dictionary findMatchingCase checks against,
+ * surfaced as autocomplete options so a spelling mistake can be avoided
+ * entirely by picking a suggestion instead of free-typing.
+ */
+export function buildDiagnosisOptions(caseBank) {
+  const seen = new Set();
+  const options = [];
+  for (const c of caseBank || []) {
+    for (const term of [c.diagnosis, ...(c.synonyms || [])]) {
+      if (!term) continue;
+      const key = normalizeGuess(term);
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      options.push({ label: term, caseId: c.id });
+    }
+  }
+  return options.sort((a, b) => a.label.localeCompare(b.label));
+}
+
+/** Case-insensitive substring filter, capped so the dropdown stays short. */
+export function filterDiagnosisOptions(options, query, limit = 8) {
+  const norm = normalizeGuess(query);
+  if (!norm) return [];
+  return (options || []).filter((o) => normalizeGuess(o.label).includes(norm)).slice(0, limit);
 }
 
 /** 5 green/gray booleans — the actual signal, shown even on a wrong guess. */

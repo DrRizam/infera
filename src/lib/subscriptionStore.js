@@ -5,8 +5,8 @@
 
 import { supabase } from "@/lib/supabaseClient";
 
-async function callFunction(name) {
-  const { data, error } = await supabase.functions.invoke(name);
+async function callFunction(name, body) {
+  const { data, error } = await supabase.functions.invoke(name, body ? { body } : undefined);
   if (error) {
     // supabase-js's FunctionsHttpError carries the actual Response on
     // `.context` — error.message alone is usually just "Edge Function
@@ -32,9 +32,9 @@ async function callFunction(name) {
   return { url: data.url, error: null };
 }
 
-/** Redirects to Stripe Checkout to start a new subscription. */
-export async function startCheckout() {
-  const { url, error } = await callFunction("create-checkout-session");
+/** Redirects to Stripe Checkout to start a new subscription. `plan` is "monthly" (default) or "annual". */
+export async function startCheckout(plan = "monthly") {
+  const { url, error } = await callFunction("create-checkout-session", { plan });
   if (url) window.location.href = url;
   return { error };
 }

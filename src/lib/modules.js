@@ -115,6 +115,40 @@ export function dailyHardCase(cases, moduleId, today) {
  * between them; otherwise (or if none of them have cases) falls back to the
  * full case list.
  */
+// Self-reported experience → how many leading (lowest-order) path nodes are
+// pre-unlocked without being marked complete, so an experienced learner
+// isn't forced to grind through intro-difficulty cases just to reach content
+// at their level. Capped so a run of easy cases can't skip an entire module,
+// and "student" gets no skip — the sequential walk is the point for them.
+const PLACEMENT_DIFFICULTY_CEILING = { some: 1, experienced: 2 };
+const PLACEMENT_SKIP_CAP = 5;
+
+/**
+ * Counts leading nodes (already sorted in path order) whose difficulty is at
+ * or below the ceiling for this experience level. Stops at the first node
+ * that exceeds the ceiling, so it only ever skips a contiguous intro run.
+ */
+export function placementSkipCount(sortedCases, experienceLevel) {
+  const ceiling = PLACEMENT_DIFFICULTY_CEILING[experienceLevel];
+  if (!ceiling) return 0;
+  let count = 0;
+  for (const c of sortedCases) {
+    if (count >= PLACEMENT_SKIP_CAP || (c.difficulty || 1) > ceiling) break;
+    count++;
+  }
+  return count;
+}
+
+/**
+ * Boss-round completion key, namespaced by axis so a module-organized path
+ * and a region-organized path can never collide. Module axis keeps the
+ * original unprefixed "{id}:{level}" format already stored in real
+ * profiles; region axis gets a "region:" prefix.
+ */
+export function bossRoundKey(axis, groupId, level) {
+  return axis === "region" ? `region:${groupId}:${level}` : `${groupId}:${level}`;
+}
+
 export function conditionOfTheDay(cases, focusModules, today) {
   const all = cases || [];
   const focus = focusModules || [];

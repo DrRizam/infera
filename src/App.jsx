@@ -26,6 +26,7 @@ import Profile from "@/pages/Profile";
 import PublicProfile from "@/pages/PublicProfile";
 import Settings from "@/pages/Settings";
 import AdminFeedback from "@/pages/AdminFeedback";
+import AdminDailyGameReview from "@/pages/AdminDailyGameReview";
 import OsceCheckpoint from "@/pages/OsceCheckpoint";
 
 export default function App() {
@@ -59,6 +60,7 @@ export default function App() {
                   <Route path="/profile/:userId" element={<PublicProfile />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/admin/feedback" element={<AdminFeedback />} />
+                  <Route path="/admin/daily-game" element={<AdminDailyGameReview />} />
                   <Route path="/osce" element={<OsceCheckpoint />} />
                 </Route>
 

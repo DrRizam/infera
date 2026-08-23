@@ -9,14 +9,15 @@ export const OSCE_TIME_BUDGET_SECONDS = 720; // 12 min, ~4 min/case
 export const OSCE_PASS_THRESHOLD = 70;
 
 /**
- * N random cases from a module (or the whole bank if moduleId is falsy,
- * i.e. "Mixed"). Every checkpoint attempt is personal, not a shared daily
- * event, so plain randomization is fine — no need for the date-seeded
- * determinism conditionOfTheDay/dailyHardCase use. Returns fewer than N if
- * the pool is smaller (the case bank is still small).
+ * N random cases from a module or body region (or the whole bank if
+ * groupId is falsy, i.e. "Mixed"). Every checkpoint attempt is personal,
+ * not a shared daily event, so plain randomization is fine — no need for
+ * the date-seeded determinism conditionOfTheDay/dailyHardCase use. Returns
+ * fewer than N if the pool is smaller (the case bank is still small).
  */
-export function selectOsceCases(cases, moduleId, count = OSCE_CASE_COUNT) {
-  const pool = moduleId ? (cases || []).filter((c) => c.module === moduleId) : cases || [];
+export function selectOsceCases(cases, groupId, axis = "module", count = OSCE_CASE_COUNT) {
+  const field = axis === "region" ? "body_region" : "module";
+  const pool = groupId ? (cases || []).filter((c) => c[field] === groupId) : cases || [];
   return [...pool].sort(() => Math.random() - 0.5).slice(0, count);
 }
 

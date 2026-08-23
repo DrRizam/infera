@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle2, Flame, PenSquare, Share2, Stethoscope, Users, XCircle } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
@@ -6,8 +6,10 @@ import {
   ATTRIBUTE_KEYS,
   MAX_GUESSES,
   attributeMatches,
+  buildDiagnosisOptions,
   buildShareGrid,
   currentCaseNumber,
+  filterDiagnosisOptions,
   findMatchingCase,
   scoreForResult,
   updateGameStreak,
@@ -55,6 +57,8 @@ export default function DailyGame() {
   const [stats, setStats] = useState(null);
   const [guessText, setGuessText] = useState("");
   const [shareCopied, setShareCopied] = useState(false);
+  const [suggestionsOpen, setSuggestionsOpen] = useState(false);
+  const [activeSuggestion, setActiveSuggestion] = useState(-1);
 
   useEffect(() => {
     let cancelled = false;
@@ -79,9 +83,35 @@ export default function DailyGame() {
     };
   }, [user.id]);
 
+  const diagnosisOptions = useMemo(() => buildDiagnosisOptions(caseBank), [caseBank]);
+  const suggestions = suggestionsOpen ? filterDiagnosisOptions(diagnosisOptions, guessText) : [];
+
+  const selectSuggestion = (option) => {
+    setGuessText(option.label);
+    setSuggestionsOpen(false);
+    setActiveSuggestion(-1);
+  };
+
+  const handleGuessKeyDown = (e) => {
+    if (!suggestionsOpen || suggestions.length === 0) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveSuggestion((i) => Math.min(i + 1, suggestions.length - 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveSuggestion((i) => Math.max(i - 1, 0));
+    } else if (e.key === "Enter" && activeSuggestion >= 0) {
+      e.preventDefault();
+      selectSuggestion(suggestions[activeSuggestion]);
+    } else if (e.key === "Escape") {
+      setSuggestionsOpen(false);
+    }
+  };
+
   const handleGuess = async (e) => {
     e.preventDefault();
     if (!attempt || !targetCase) return;
+    setSuggestionsOpen(false);
 
     // Every submission counts now, recognized or not — an unrecognized
     // guess just can't show attribute matches (attributeMatches handles a
@@ -212,12 +242,42 @@ export default function DailyGame() {
 
       {!finished && (
         <form className="space-y-2" onSubmit={handleGuess}>
-          <Input
-            aria-label="Your guess"
-            placeholder="Enter a diagnosis…"
-            value={guessText}
-            onChange={(e) => setGuessText(e.target.value)}
-          />
+          <div className="relative">
+            <Input
+              aria-label="Your guess"
+              placeholder="Enter a diagnosis…"
+              autoComplete="off"
+              value={guessText}
+              onChange={(e) => {
+                setGuessText(e.target.value);
+                setSuggestionsOpen(true);
+                setActiveSuggestion(-1);
+              }}
+              onFocus={() => setSuggestionsOpen(true)}
+              onKeyDown={handleGuessKeyDown}
+            />
+            {suggestions.length > 0 && (
+              <>
+                <div className="fixed inset-0 z-10" onClick={() => setSuggestionsOpen(false)} />
+                <div className="absolute left-0 right-0 top-full z-20 mt-1 max-h-56 overflow-y-auto rounded-xl border-2 border-border bg-card p-1 shadow-elevated">
+                  {suggestions.map((opt, i) => (
+                    <button
+                      key={opt.label}
+                      type="button"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => selectSuggestion(opt)}
+                      className={cn(
+                        "flex w-full items-center rounded-lg px-3 py-2 text-left text-sm font-semibold hover:bg-muted",
+                        i === activeSuggestion && "bg-accent text-primary"
+                      )}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
           <Button type="submit" className="w-full" disabled={!guessText.trim()}>
             Guess
           </Button>

@@ -133,6 +133,23 @@ export async function fetchMySubmissions(userId) {
   return data || [];
 }
 
+/** Admin-only: every pending case submission, oldest first. RLS-bypassing RPC, gated server-side on auth.email(). */
+export async function fetchPendingSubmissions() {
+  const { data, error } = await supabase.rpc("admin_list_pending_daily_game_cases");
+  if (error) {
+    console.error("Failed to load pending submissions", error);
+    return [];
+  }
+  return data || [];
+}
+
+/** Admin-only: approve (auto-assigns the next case_number) or reject a pending submission. */
+export async function reviewSubmission(caseId, decision) {
+  const { error } = await supabase.rpc("admin_review_daily_game_case", { case_id: caseId, decision });
+  if (error) console.error("Failed to review submission", error);
+  return { error };
+}
+
 export async function fetchGroupStandings(groupId) {
   const { data, error } = await supabase.rpc("daily_game_group_standings", { target_group_id: groupId });
   if (error) {

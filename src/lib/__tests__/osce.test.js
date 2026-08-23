@@ -2,11 +2,11 @@ import { describe, expect, it } from "vitest";
 import { OSCE_CASE_COUNT, OSCE_PASS_THRESHOLD, scoreOsceSession, selectOsceCases, xpForOsceSession } from "../osce";
 
 const CASES = [
-  { id: "a", module: "msk" },
-  { id: "b", module: "msk" },
-  { id: "c", module: "msk" },
-  { id: "d", module: "msk" },
-  { id: "e", module: "sports" },
+  { id: "a", module: "msk", body_region: "knee" },
+  { id: "b", module: "msk", body_region: "knee" },
+  { id: "c", module: "msk", body_region: "hip" },
+  { id: "d", module: "msk", body_region: "hip" },
+  { id: "e", module: "sports", body_region: "shoulder" },
 ];
 
 describe("selectOsceCases", () => {
@@ -29,6 +29,17 @@ describe("selectOsceCases", () => {
 
   it("returns an empty array for an empty bank", () => {
     expect(selectOsceCases([], "msk")).toHaveLength(0);
+  });
+
+  it("filters by body_region when axis is 'region'", () => {
+    const picked = selectOsceCases(CASES, "knee", "region");
+    expect(picked).toHaveLength(2);
+    expect(picked.every((c) => c.body_region === "knee")).toBe(true);
+  });
+
+  it("defaults to the module axis when none is given", () => {
+    const picked = selectOsceCases(CASES, "msk");
+    expect(picked.every((c) => c.module === "msk")).toBe(true);
   });
 });
 

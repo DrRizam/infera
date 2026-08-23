@@ -35,6 +35,8 @@ const DEFAULT_PROFILE = {
   experience_level: null,
   /** module ids; empty array means "Mixed" (no narrowing) */
   focus_modules: [],
+  /** body_region ids; empty array means "Mixed" (no narrowing) — Home's alternate path lens */
+  focus_regions: [],
   /** "{module}:{bossLevel}" -> true once that tree boss round is cleared */
   bossRoundsCompleted: {},
 };

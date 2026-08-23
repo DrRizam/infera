@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { conditionOfTheDay } from "../modules";
+import { bossRoundKey, conditionOfTheDay, placementSkipCount } from "../modules";
 
 const cases = [
   { id: "b-case", module: "sports", speed_questions: [{ prompt: "b1", options: ["x", "y"], correct: 0 }] },
@@ -45,5 +45,47 @@ describe("conditionOfTheDay", () => {
 
   it("returns null for an empty case list", () => {
     expect(conditionOfTheDay([], null, "2026-08-17")).toBeNull();
+  });
+});
+
+describe("placementSkipCount", () => {
+  const path = [
+    { id: "1", difficulty: 1 },
+    { id: "2", difficulty: 1 },
+    { id: "3", difficulty: 2 },
+    { id: "4", difficulty: 3 },
+    { id: "5", difficulty: 1 },
+  ];
+
+  it("never skips for a self-reported student", () => {
+    expect(placementSkipCount(path, "student")).toBe(0);
+  });
+
+  it("skips only leading difficulty-1 cases for some experience", () => {
+    expect(placementSkipCount(path, "some")).toBe(2);
+  });
+
+  it("skips leading difficulty <=2 cases for experienced, stopping at the first harder node", () => {
+    expect(placementSkipCount(path, "experienced")).toBe(3);
+  });
+
+  it("caps the skip so an all-easy run can't clear the whole path", () => {
+    const allEasy = Array.from({ length: 8 }, (_, i) => ({ id: String(i), difficulty: 1 }));
+    expect(placementSkipCount(allEasy, "some")).toBe(5);
+  });
+
+  it("returns 0 for unknown/missing experience level", () => {
+    expect(placementSkipCount(path, null)).toBe(0);
+    expect(placementSkipCount(path, "unknown")).toBe(0);
+  });
+});
+
+describe("bossRoundKey", () => {
+  it("keeps the original unprefixed format for the module axis (backward compat)", () => {
+    expect(bossRoundKey("module", "sports", 0)).toBe("sports:0");
+  });
+
+  it("namespaces the region axis so it can't collide with module keys", () => {
+    expect(bossRoundKey("region", "knee", 1)).toBe("region:knee:1");
   });
 });

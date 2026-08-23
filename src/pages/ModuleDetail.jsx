@@ -47,7 +47,12 @@ export default function ModuleDetail() {
         {moduleCases.length === 0 ? (
           <p className="text-sm text-muted-foreground">No cases in this module yet.</p>
         ) : (
-          <CasePath cases={moduleCases} progressByCaseId={progressByCaseId} onOpen={(caseId) => navigate(`/case/${caseId}`)} />
+          <CasePath
+            cases={moduleCases}
+            progressByCaseId={progressByCaseId}
+            experienceLevel={profile.experience_level}
+            onOpen={(caseId) => navigate(`/case/${caseId}`)}
+          />
         )}
       </div>
     </div>
