@@ -604,12 +604,12 @@ values
   array['lateral epicondylalgia', 'tennis elbow', 'lateral epicondylitis', 'lateral epicondyle tendinopathy', 'let'],
   'elbow', 'musculoskeletal', 'tendon', 'chronic', 'overuse',
   array[
-    '38-year-old office worker, 6 weeks of aching pain over the outer elbow that started gradually after switching to a new ergonomic mouse.',
-    'Pain worsens with gripping (opening jars, shaking hands) and repetitive typing; eases somewhat with rest overnight.',
+    '38-year-old, 6 weeks of gradually worsening pain near the elbow, with no specific injury they can recall.',
+    'The pain worsens with gripping tasks — opening jars, shaking hands, turning a key — and eases somewhat overnight.',
+    'The pain is localized to the outer side of the elbow, and it started not long after a change in a repetitive daily activity involving the hand and wrist.',
     'Resisted wrist extension reproduces the pain sharply; Cozen''s test is positive.',
     'Elbow flexion/extension and forearm rotation are full and pain-free; grip strength is reduced about 20% versus the unaffected side; no numbness or tingling.',
-    'Imaging not performed — the clinical picture is classic enough that it wasn''t indicated.',
-    'Only about 5% of people with this condition actually relate it to playing tennis — most cases come from repetitive occupational gripping and typing, not sport.'
+    'Imaging wasn''t needed — the clinical picture was classic enough. Only about 5% of people with this condition actually relate it to playing tennis; most cases come from repetitive occupational gripping and typing, not sport.'
   ],
   'Lateral epicondylalgia is an overuse tendinopathy of the common extensor origin (chiefly extensor carpi radialis brevis) at the lateral epicondyle. It is provoked by resisted wrist/finger extension and gripping, and — despite the name — the large majority of cases have nothing to do with tennis.',
   'approved'
@@ -620,8 +620,8 @@ values
   array['anterior cruciate ligament tear', 'acl tear', 'acl rupture', 'anterior cruciate ligament injury', 'torn acl'],
   'knee', 'musculoskeletal', 'ligament', 'acute', 'traumatic',
   array[
-    '19-year-old collegiate soccer player, sudden right knee injury during a match yesterday while cutting to change direction — no contact from another player.',
-    'Felt a pop at the moment of injury; the knee swelled up within the first hour; now feels unstable when trying to pivot.',
+    '19-year-old athlete, sudden knee injury during a change-of-direction movement in a team sport — no contact from another player.',
+    'Felt a pop at the moment of injury; the knee swelled up quickly, within the first hour; now feels unstable when trying to pivot.',
     'Lachman test is positive with a soft, mushy endpoint; anterior drawer is also positive but less pronounced.',
     'Knee range of motion is limited by swelling and guarding, with a block to full extension; quadriceps activation is inhibited.',
     'MRI confirms a complete tear, with a small associated lateral meniscal tear.',
@@ -636,12 +636,12 @@ values
   array['carpal tunnel syndrome', 'carpal tunnel', 'cts', 'median nerve entrapment', 'median nerve compression'],
   'wrist_hand', 'neuro', 'nerve', 'chronic', 'nerve_compression',
   array[
-    '52-year-old hairdresser, several months of numbness and tingling in the thumb, index, and middle fingers, worse at night.',
-    'Symptoms are eased by shaking the hand out; aggravated by prolonged gripping of scissors and hair dryers.',
+    '52-year-old, several months of numbness and tingling in the hand, worse at night.',
+    'Symptoms are eased by shaking the hand out and worsen with prolonged gripping tasks.',
+    'She works as a hairdresser, using scissors and a hair dryer for hours each day; the numbness and tingling are concentrated in the thumb, index, and middle fingers.',
     'Tinel''s sign is positive at the wrist; Phalen''s test reproduces symptoms within 30 seconds.',
     'Grip and pinch strength are mildly reduced on the affected side; early thenar eminence atrophy is present; sensation is diminished over the thumb, index, and middle fingers but the palm itself is spared.',
-    'Nerve conduction studies show prolonged median nerve latency across the wrist.',
-    'Sparing of sensation over the palm itself (not just the fingers) is a key discriminator — the palmar cutaneous branch splits off before the carpal tunnel, so palm numbness should point you toward a more proximal nerve problem instead.'
+    'Nerve conduction studies show prolonged median nerve latency across the wrist. Sparing of sensation over the palm itself (not just the fingers) is a key discriminator — the palmar cutaneous branch splits off before the carpal tunnel, so palm numbness should point you toward a more proximal nerve problem instead.'
   ],
   'Carpal tunnel syndrome is a compressive neuropathy of the median nerve at the wrist. Night-dominant symptoms eased by shaking the hand out, a positive Tinel''s/Phalen''s, and palm-sparing sensory loss are the classic clinical picture; nerve conduction studies confirm and grade severity.',
   'approved'
@@ -652,9 +652,9 @@ values
   array['adhesive capsulitis', 'frozen shoulder', 'shoulder capsulitis'],
   'shoulder', 'musculoskeletal', 'capsule', 'chronic', 'atraumatic',
   array[
-    '56-year-old with type 2 diabetes, 4 months of progressively worsening shoulder stiffness and aching pain, with no specific injury.',
+    '56-year-old, 4 months of progressively worsening shoulder stiffness and aching pain, with no specific injury.',
     'Pain is worse at night, especially lying on the affected side; stiffness has become the dominant complaint over pain.',
-    'Passive external rotation is markedly limited and reproduces pain — the hallmark finding.',
+    'The patient has type 2 diabetes; passive external rotation of the shoulder is markedly limited and reproduces pain — the hallmark finding on exam.',
     'Both active and passive range of motion are restricted in a capsular pattern (external rotation most limited, then abduction, then internal rotation); strength is difficult to assess given the pain-limited range.',
     'X-ray is unremarkable, ruling out glenohumeral osteoarthritis as the cause of the stiffness.',
     'Loss of passive (not just active) range of motion is what separates this from a simple rotator cuff problem — if only active motion is limited but passive motion is full, look elsewhere.'
@@ -668,9 +668,9 @@ values
   array['lumbar disc herniation', 'herniated disc', 'slipped disc', 'disc herniation', 'lumbar radiculopathy', 'herniated lumbar disc', 'l4-l5 disc herniation'],
   'lumbar_spine', 'neuro', 'joint_cartilage', 'subacute', 'degenerative',
   array[
-    '34-year-old warehouse worker, 2 weeks of low back pain that now radiates down the back of the left leg to below the knee.',
+    '34-year-old, 2 weeks of low back pain that now radiates down the back of one leg to below the knee.',
     'Pain is worse with sitting and forward bending, eases somewhat with walking and lying down; coughing and sneezing sharply increase the leg pain.',
-    'Straight leg raise on the left reproduces the radiating leg pain at 35 degrees; slump test is also positive.',
+    'He works in a physically demanding warehouse job; straight leg raise on the affected side reproduces the radiating leg pain at 35 degrees, and the slump test is also positive.',
     'Mild weakness of the left extensor hallucis longus (great toe extension); ankle reflexes are symmetric; no saddle anesthesia or bladder/bowel changes.',
     'MRI shows a left paracentral disc herniation at L4-L5 contacting the exiting nerve root.',
     'A positive slump test alongside a positive straight leg raise strengthens the case for true nerve root tension rather than just hamstring tightness or nonspecific back pain — and the absence of saddle anesthesia or bowel/bladder change is what keeps this from being a cauda equina emergency.'
@@ -711,9 +711,9 @@ values
   array['achilles tendinopathy', 'achilles tendinitis', 'achilles tendonitis', 'achilles tendon pain'],
   'ankle_foot', 'musculoskeletal', 'tendon', 'chronic', 'overuse',
   array[
-    '45-year-old recreational runner, 8 weeks of gradually worsening pain at the back of the heel after increasing weekly mileage.',
-    'Pain and stiffness are worst with the first steps out of bed in the morning, ease somewhat after warming up, then return after longer runs.',
-    'The area 2-6 cm above the heel bone is thickened and tender to palpation; resisted plantarflexion reproduces the pain.',
+    '45-year-old, 8 weeks of gradually worsening pain at the back of the heel, with no specific injury.',
+    'Pain and stiffness are worst with the first steps out of bed in the morning, ease somewhat after warming up, then return after being on his feet for a while.',
+    'He''s a recreational runner who recently increased his weekly mileage; the area 2-6 cm above the heel bone is thickened and tender to palpation, and resisted plantarflexion reproduces the pain.',
     'The Thompson test is negative — squeezing the calf still produces plantarflexion, ruling out a complete rupture; ankle dorsiflexion is mildly restricted with the knee straight.',
     'Ultrasound shows thickening and disorganized fibers within the mid-portion of the tendon, without a full-thickness tear.',
     'A negative Thompson test is the key safety check here — it separates a painful but intact tendinopathy from a complete Achilles rupture, which needs a very different, urgent management pathway.'
@@ -727,9 +727,9 @@ values
   array['rotator cuff tear', 'rotator cuff tendinopathy', 'supraspinatus tear', 'torn rotator cuff'],
   'shoulder', 'musculoskeletal', 'tendon', 'chronic', 'degenerative',
   array[
-    '61-year-old retired painter, several months of aching shoulder pain and progressive weakness reaching overhead, with no single injury he can recall.',
+    '61-year-old, several months of aching shoulder pain and progressive weakness reaching overhead, with no single injury he can recall.',
     'Pain is worse at night when lying on the shoulder; he has started avoiding overhead reaching because the arm gives way.',
-    'The empty can test and external rotation lag sign are both positive; the drop-arm test shows he cannot lower the arm smoothly from full abduction.',
+    'He spent his working life as a painter, with decades of repetitive overhead work; the empty can test and external rotation lag sign are both positive, and the drop-arm test shows he cannot lower the arm smoothly from full abduction.',
     'Active abduction is limited and painful, but passive range of motion is nearly full — the opposite pattern from a capsular restriction.',
     'MRI confirms a full-thickness tear of the supraspinatus tendon with mild retraction.',
     'Preserved passive range of motion despite major active weakness is the key discriminator from adhesive capsulitis, where both active AND passive motion are restricted.'
@@ -743,9 +743,9 @@ values
   array['cervical radiculopathy', 'pinched nerve in the neck', 'cervical nerve root compression', 'herniated cervical disc'],
   'neck', 'neuro', 'nerve', 'subacute', 'nerve_compression',
   array[
-    '48-year-old office worker, 10 days of neck pain radiating down the right arm into the thumb and index finger, after a weekend of heavy yard work.',
+    '48-year-old, 10 days of neck pain radiating down one arm into the thumb and index finger.',
     'Turning the head toward the painful side and looking up both sharply increase the arm pain; resting the hand on top of the head eases it somewhat.',
-    'Spurling''s test reproduces the radiating arm pain; the cervical distraction test relieves it.',
+    'Symptoms started after a weekend of unusually heavy yard work; Spurling''s test reproduces the radiating arm pain, and the cervical distraction test relieves it.',
     'Mild weakness of wrist extension and reduced biceps reflex on the right; sensation is diminished over the thumb and index finger, consistent with a C6 pattern.',
     'MRI shows a right-sided C5-C6 disc herniation contacting the exiting C6 nerve root.',
     'Relief with the shoulder-abduction (hand-on-head) maneuver and cervical distraction, alongside matching myotomal weakness and dermatomal sensory change, points to true nerve root involvement rather than a musculoskeletal neck strain radiating locally.'
@@ -759,9 +759,9 @@ values
   array['patellofemoral pain syndrome', 'runner''s knee', 'anterior knee pain', 'patellofemoral syndrome'],
   'knee', 'musculoskeletal', 'joint_cartilage', 'chronic', 'overuse',
   array[
-    '17-year-old cross-country runner, several months of a dull ache around and behind the kneecap that is worse with running and stairs.',
+    '17-year-old, several months of a dull ache around the front of the knee, worse with running and stairs.',
     'Pain is aggravated by prolonged sitting with the knees bent and by descending stairs; there was no specific injury.',
-    'Pain is reproduced by resisted knee extension and by compressing the patella against the femur during a quad contraction, a positive patellar grind test.',
+    'She''s a cross-country runner; pain is reproduced by resisted knee extension and by compressing the kneecap against the thigh bone during a quad contraction — a positive patellar grind test.',
     'The knee is stable on ligamentous testing with no effusion; there is mild weakness of hip abductor and external rotator strength on the affected side.',
     'X-rays are unremarkable, ruling out significant patellofemoral osteoarthritis or a structural cause for the pain.',
     'Reproducing pain with patellar compression during a quad contraction, in a knee that is otherwise stable with no swelling, points to a cartilage-loading problem at the patellofemoral joint rather than a meniscal or ligamentous injury.'

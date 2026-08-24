@@ -50,9 +50,9 @@ export default function NotificationBell() {
         title="Notifications"
         aria-label="Notifications"
         onClick={openPanel}
-        className="relative rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        className="notif-bell-btn relative rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
       >
-        <Bell className="h-4 w-4" />
+        <Bell className="bell-icon h-4 w-4" />
         {unreadCount > 0 && (
           <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-bold text-destructive-foreground">
             {unreadCount > 9 ? "9+" : unreadCount}

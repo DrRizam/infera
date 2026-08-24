@@ -26,6 +26,12 @@ import { cn } from "@/lib/utils";
 
 const ATTRIBUTE_LABELS = { region: "Region", system: "System", tissue: "Tissue", chronicity: "Chronicity", mechanism: "Mechanism" };
 
+const ATTRIBUTE_STATUS_CLASS = {
+  match: "bg-emerald-500",
+  mismatch: "bg-rose-500",
+  unknown: "bg-muted-foreground/40",
+};
+
 function AttributeRow({ attributes }) {
   return (
     <div className="flex gap-1">
@@ -35,7 +41,7 @@ function AttributeRow({ attributes }) {
           title={ATTRIBUTE_LABELS[key]}
           className={cn(
             "flex h-7 w-7 items-center justify-center rounded-md text-[10px] font-bold text-white",
-            attributes[key] ? "bg-emerald-500" : "bg-muted-foreground/40"
+            ATTRIBUTE_STATUS_CLASS[attributes[key]] || ATTRIBUTE_STATUS_CLASS.unknown
           )}
         >
           {ATTRIBUTE_LABELS[key][0]}
@@ -287,7 +293,7 @@ export default function DailyGame() {
       {finished && (
         <Card className={attempt.status === "won" ? "border-emerald-500" : "border-destructive/40"}>
           <CardHeader>
-            {attempt.status === "won" && <Mascot mood="victorious" className="mx-auto h-20 w-20" />}
+            {attempt.status === "won" && <Mascot mood="victorious" animation="complete" className="mx-auto h-20 w-20" />}
             <CardTitle>{attempt.status === "won" ? "Solved it!" : "Out of guesses"}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">

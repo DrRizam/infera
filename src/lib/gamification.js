@@ -33,6 +33,16 @@ export function addDays(iso, days) {
   return d.toISOString().slice(0, 10);
 }
 
+/** Elapsed duration as "m:ss" (or "h:mm:ss" past an hour) — for live/final session timers. */
+export function formatElapsedTime(ms) {
+  const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  if (hours > 0) return `${hours}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  return `${minutes}:${String(seconds).padStart(2, "0")}`;
+}
+
 const WEEK_DAY_LABELS = ["M", "T", "W", "T", "F", "S", "S"]; // Monday-first
 
 /**

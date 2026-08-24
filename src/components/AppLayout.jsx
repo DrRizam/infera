@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { Award, Brain, Flame, Home, LogOut, Shield, Trophy, User, Zap } from "lucide-react";
 import LevelRing from "@/components/LevelRing";
 import NotificationBell from "@/components/NotificationBell";
@@ -14,11 +15,35 @@ const NAV = [
   { to: "/profile", label: "Profile", icon: User },
 ];
 
+// Which bottom-nav tab a path belongs to, so the page transition can slide
+// left/right in the same direction as the tapped tab sits relative to the
+// one that was active before — -1 for anything not one of the four tabs
+// (a case page, /osce, /recall, etc.), which falls back to a plain
+// fade+scale instead of a directional slide.
+function navIndexForPath(pathname) {
+  return NAV.findIndex((n) => (n.to === "/" ? pathname === "/" : pathname.startsWith(n.to)));
+}
+
 export default function AppLayout() {
   const { profile } = useProfile();
   const { signOut } = useAuth();
+  const location = useLocation();
   const lvl = levelFromXp(profile.xp || 0);
   const retention = retentionStats(profile);
+
+  const navIndex = navIndexForPath(location.pathname);
+  const prevNavIndexRef = useRef(navIndex);
+  const direction =
+    navIndex === -1 || prevNavIndexRef.current === -1 || navIndex === prevNavIndexRef.current
+      ? null
+      : navIndex > prevNavIndexRef.current
+      ? "forward"
+      : "backward";
+  useEffect(() => {
+    prevNavIndexRef.current = navIndex;
+  }, [navIndex]);
+  const transitionClass =
+    direction === "forward" ? "tab-enter-forward" : direction === "backward" ? "tab-enter-backward" : "page-transition-enter";
 
   return (
     <div className="min-h-screen bg-background pb-20 lg:pb-24">
@@ -74,15 +99,17 @@ export default function AppLayout() {
               <Zap className="h-3.5 w-3.5" aria-hidden="true" />{profile.xp ?? 0}
             </span>
             <NotificationBell />
-            <button type="button" title="Sign out" aria-label="Sign out" onClick={signOut} className="ml-1 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
-              <LogOut className="h-4 w-4" />
+            <button type="button" title="Sign out" aria-label="Sign out" onClick={signOut} className="logout-btn ml-1 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+              <LogOut className="logout-icon h-4 w-4" />
             </button>
           </div>
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:py-8">
-        <Outlet />
+      <main className="mx-auto w-full max-w-6xl overflow-x-hidden px-4 py-6 sm:px-6 lg:py-8">
+        <div key={location.pathname} className={transitionClass}>
+          <Outlet />
+        </div>
       </main>
 
       <nav className="fixed inset-x-0 bottom-0 z-20 border-t-2 border-border bg-card lg:bottom-6 lg:border-t-0 lg:bg-transparent">
@@ -94,7 +121,7 @@ export default function AppLayout() {
               end={n.to === "/"}
               className={({ isActive }) =>
                 cn(
-                  "flex flex-1 flex-col items-center gap-0.5 rounded-xl py-2 text-[11px] font-bold transition-colors hover:bg-muted hover:text-foreground lg:flex-none lg:flex-row lg:gap-2 lg:px-3 lg:text-sm",
+                  "btn-hover flex flex-1 flex-col items-center gap-0.5 rounded-xl py-2 text-[11px] font-bold transition-colors hover:bg-muted hover:text-foreground lg:flex-none lg:flex-row lg:gap-2 lg:px-3 lg:text-sm",
                   isActive ? "border-b-4 border-primary bg-accent text-primary lg:border-b-0" : "border-b-4 border-transparent text-muted-foreground"
                 )
               }

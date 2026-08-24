@@ -135,11 +135,18 @@ export function filterDiagnosisOptions(options, query, limit = 8) {
   return (options || []).filter((o) => normalizeGuess(o.label).includes(norm)).slice(0, limit);
 }
 
-/** 5 green/gray booleans — the actual signal, shown even on a wrong guess. */
+/**
+ * Per-attribute status against the target — the actual signal, shown even
+ * on a wrong guess: "match" (green), "mismatch" (a recognized guess whose
+ * value differs — still real information, e.g. right system but wrong
+ * region), or "unknown" (the guess wasn't recognized at all, so there's
+ * nothing to compare — distinct from a confirmed mismatch).
+ */
 export function attributeMatches(guessedCase, targetCase) {
   const result = {};
   for (const key of ATTRIBUTE_KEYS) {
-    result[key] = !!guessedCase && !!targetCase && guessedCase[key] === targetCase[key];
+    if (!guessedCase || !targetCase) result[key] = "unknown";
+    else result[key] = guessedCase[key] === targetCase[key] ? "match" : "mismatch";
   }
   return result;
 }
@@ -156,8 +163,12 @@ export function scoreForResult(status, guessesUsed) {
 }
 
 /** Spoiler-safe share text: attribute badges only, never the diagnosis name. */
+const ATTRIBUTE_STATUS_EMOJI = { match: "🟢", mismatch: "🔴", unknown: "⚪" };
+
 export function buildShareGrid(caseNumber, guesses, won) {
-  const rows = (guesses || []).map((g) => ATTRIBUTE_KEYS.map((k) => (g.attributes?.[k] ? "🟢" : "⚪")).join("")).join("\n");
+  const rows = (guesses || [])
+    .map((g) => ATTRIBUTE_KEYS.map((k) => ATTRIBUTE_STATUS_EMOJI[g.attributes?.[k]] || "⚪").join(""))
+    .join("\n");
   const result = won ? `${guesses.length}/${MAX_GUESSES}` : `X/${MAX_GUESSES}`;
   return `Infera Daily #${caseNumber} ${result}\n${rows}`;
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Lock } from "lucide-react";
 import Mascot from "@/components/Mascot";
+import XpFloater from "@/components/XpFloater";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
@@ -32,16 +33,28 @@ export default function CaseDebrief({
   streak,
   debriefLimited,
   surpriseChest,
+  cotdElapsedLabel,
   onDone,
   onUpgrade,
 }) {
   const [showSources, setShowSources] = useState(false);
   const status = STATUS_BADGE[clinicalCase.content_status] || STATUS_BADGE.demonstration;
-  const reactionMood = surpriseChest || result.accuracy >= 80 ? "victorious" : result.accuracy >= 50 ? "cheerful" : "curious";
+  const bigWin = surpriseChest || result.accuracy >= 80;
+  const reactionMood = bigWin ? "victorious" : result.accuracy >= 50 ? "cheerful" : "curious";
+  // "complete"/"success" are celebratory jumps; a low-accuracy debrief gets
+  // the gentle "incorrect" tilt instead — reassuring, not a failure state.
+  const reactionAnimation = bigWin ? "complete" : result.accuracy >= 50 ? "success" : "incorrect";
 
   return (
     <div className="space-y-4">
-      <Mascot mood={reactionMood} className="mx-auto h-16 w-16" />
+      <div className="relative mx-auto h-16 w-16">
+        <Mascot mood={reactionMood} animation={reactionAnimation} className="h-16 w-16" />
+        <XpFloater
+          amount={xpEarned}
+          trigger={clinicalCase.id}
+          className="left-1/2 top-0 -translate-x-1/2 -translate-y-3"
+        />
+      </div>
 
       <div className="rounded-lg border border-border bg-card p-4">
         <div className="mb-1 flex items-center justify-between gap-2">
@@ -140,6 +153,7 @@ export default function CaseDebrief({
         {shieldUsed && <p className="text-xs text-sky-600">A rest-day shield covered your gap — streak kept alive.</p>}
         {leveledUp && <p className="mt-1 text-sm font-bold text-primary">Level up!</p>}
         <p className="mt-1 text-sm text-muted-foreground">🔥 {streak}-day streak</p>
+        {cotdElapsedLabel && <p className="mt-1 text-xs text-muted-foreground">⏱ Learned and practiced this one in {cotdElapsedLabel}</p>}
       </div>
 
       <Button className="w-full" onClick={onDone}>

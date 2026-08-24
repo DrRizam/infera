@@ -114,3 +114,195 @@ textarea {
   background: hsl(var(--card));
   padding: 0.3rem 0.55rem;
 }
+
+/* ── Flex mascot micro-animations ─────────────────────────────────────────
+   Small, purposeful motion layered on top of Flex's illustrated mood PNGs
+   (src/components/Mascot.jsx). transform/opacity only, never
+   layout-triggering properties. Disabled here AND in the component (which
+   checks prefers-reduced-motion itself before ever applying these classes)
+   — belt-and-suspenders, same as the :focus-visible rule above. */
+
+@keyframes flex-idle-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes flex-thinking-tilt {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+@keyframes flex-searching-tilt {
+  0% { transform: rotate(0) translateY(0); }
+  30% { transform: rotate(-8deg) translateY(-2px); }
+  60% { transform: rotate(6deg); }
+  100% { transform: rotate(0) translateY(0); }
+}
+@keyframes flex-success-jump {
+  0% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-11px) scale(1.06, 0.96); }
+  55% { transform: translateY(-15px) scale(0.97, 1.05); }
+  78% { transform: translateY(-3px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
+}
+@keyframes flex-complete-jump {
+  0% { transform: translateY(0) scale(1); }
+  25% { transform: translateY(-16px) scale(1.08, 0.94); }
+  45% { transform: translateY(-22px) scale(0.95, 1.08); }
+  65% { transform: translateY(-10px) scale(1.04, 0.98); }
+  82% { transform: translateY(-2px) scale(0.99); }
+  100% { transform: translateY(0) scale(1); }
+}
+@keyframes flex-incorrect-tilt {
+  0% { transform: rotate(0) translateY(0); }
+  25% { transform: rotate(-4deg) translateY(1px); }
+  50% { transform: rotate(3deg); }
+  75% { transform: rotate(-2deg); }
+  100% { transform: rotate(0) translateY(0); }
+}
+@keyframes flex-streak-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-8px) scale(1.04); }
+  70% { transform: translateY(-2px) scale(1.01); }
+}
+@keyframes flex-unlock-jump {
+  0% { transform: translateY(0) scale(1) rotate(0); }
+  20% { transform: translateY(2px) scale(0.97) rotate(-2deg); }
+  50% { transform: translateY(-14px) scale(1.07, 0.95) rotate(2deg); }
+  75% { transform: translateY(-4px) scale(1.02) rotate(0); }
+  100% { transform: translateY(0) scale(1) rotate(0); }
+}
+@keyframes flex-click-squash {
+  0% { transform: scale(1, 1); }
+  35% { transform: scale(1.06, 0.94); }
+  65% { transform: scale(0.97, 1.04); }
+  100% { transform: scale(1, 1); }
+}
+@keyframes flex-pop {
+  0% { opacity: 0; transform: scale(0.3) translateY(0); }
+  35% { opacity: 1; transform: scale(1) translateY(-2px); }
+  100% { opacity: 0; transform: scale(0.6) translateY(-10px); }
+}
+@keyframes flex-xp-float {
+  0% { opacity: 0; transform: translateY(8px) scale(0.85); }
+  20% { opacity: 1; transform: translateY(0) scale(1.05); }
+  75% { opacity: 1; transform: translateY(-16px) scale(1); }
+  100% { opacity: 0; transform: translateY(-24px) scale(1); }
+}
+@keyframes flex-thinking-dot {
+  0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-2px); }
+}
+
+.flex-anim-idle { animation: flex-idle-bob 2.8s ease-in-out infinite; }
+.flex-anim-thinking { animation: flex-thinking-tilt 1.6s ease-in-out infinite; }
+.flex-anim-searching { animation: flex-searching-tilt 600ms ease-in-out 1; }
+.flex-anim-locked { animation: flex-searching-tilt 500ms ease-in-out 1; }
+.flex-anim-success { animation: flex-success-jump 750ms cubic-bezier(0.34, 1.56, 0.64, 1) 1; }
+.flex-anim-complete { animation: flex-complete-jump 1000ms cubic-bezier(0.34, 1.56, 0.64, 1) 1; }
+.flex-anim-incorrect { animation: flex-incorrect-tilt 500ms ease-in-out 1; }
+.flex-anim-streak { animation: flex-streak-bounce 600ms ease-out 1; }
+.flex-anim-unlock { animation: flex-unlock-jump 900ms cubic-bezier(0.34, 1.56, 0.64, 1) 1; }
+.flex-anim-click { animation: flex-click-squash 400ms ease-out 1; }
+
+.flex-pop { animation: flex-pop 700ms ease-out both; }
+.flex-xp-float { animation: flex-xp-float 900ms ease-out both; }
+.flex-thinking-dot { animation: flex-thinking-dot 1.2s ease-in-out infinite; }
+
+.flex-hover-scale { transition: transform 200ms ease-out; }
+.flex-hover-scale:hover { transform: scale(1.03) rotate(-1deg); }
+
+/* ── Button hover lift ─────────────────────────────────────────────────────
+   Applied to the shared Button component and the bottom/side nav tabs.
+   `:hover:not(:active)` deliberately excludes the pressed state so this
+   never fights the existing "3D button" press-down effect
+   (active:translate-y-[3px] active:border-b-0) — during an actual click,
+   :active wins outright since this rule simply doesn't match. */
+.btn-hover { transition: transform 200ms ease-out; }
+.btn-hover:hover:not(:active) { transform: translateY(-2px); }
+
+/* ── Page/tab transition ──────────────────────────────────────────────────
+   Replays on every route change because AppLayout keys the wrapper on
+   location.pathname, forcing a fresh DOM node each time. */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.page-transition-enter { animation: page-enter 260ms ease-out both; }
+
+/* Directional variant used specifically when switching between the four
+   bottom/side nav tabs (Learn/Explore/Leaderboard/Profile) — slides in
+   from the side the destination tab sits on, so it reads as "moving
+   across a row of tabs" rather than a generic page fade. */
+@keyframes tab-enter-forward {
+  from { opacity: 0; transform: translateX(18px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes tab-enter-backward {
+  from { opacity: 0; transform: translateX(-18px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.tab-enter-forward { animation: tab-enter-forward 260ms ease-out both; }
+.tab-enter-backward { animation: tab-enter-backward 260ms ease-out both; }
+
+/* ── Notification bell hover ring ─────────────────────────────────────────
+   Same rotate wiggle as a common "bell ring" icon-hover pattern (the user
+   pasted a Framer Motion/animate-ui version of it) — reproduced in plain
+   CSS since this project has no animation library, rather than pulling in
+   `motion` plus its icon-wrapper helpers for one hover effect. Gated
+   entirely inside `no-preference` (rather than overridden afterward) since
+   it's pure CSS with no JS state to guard — the hover rule simply doesn't
+   exist under reduced motion. */
+@keyframes bell-ring {
+  0% { transform: rotate(0deg); }
+  16% { transform: rotate(14deg); }
+  33% { transform: rotate(-8deg); }
+  50% { transform: rotate(7deg); }
+  66% { transform: rotate(-4deg); }
+  83% { transform: rotate(2deg); }
+  100% { transform: rotate(0deg); }
+}
+.bell-icon { transform-origin: top center; }
+@media (prefers-reduced-motion: no-preference) {
+  /* linear, not ease-in-out: the keyframe stops are evenly spaced in time
+     but decreasing in swing size (14deg down to 2deg) — that decay is
+     already what makes it look like it's settling. Layering ease-in-out
+     on top compresses the biggest swings into the curve's fastest middle
+     segment, which is what was reading as a jumpy snap instead of a wiggle. */
+  .notif-bell-btn:hover .bell-icon { animation: bell-ring 0.7s linear; }
+}
+
+/* ── Sign-out icon hover nudge ─────────────────────────────────────────────
+   Same idea as the bell above, reproduced from a Framer Motion/animate-ui
+   LogOut icon: the arrow+line group nudges right on hover, as if sliding
+   out the door. Lucide only exposes the whole icon as one SVG (no access
+   to the individual arrow/line/frame paths the original animates
+   separately), so this nudges the whole icon — at a 2px shift the
+   difference is imperceptible anyway. */
+.logout-icon { transition: transform 200ms ease-in-out; }
+@media (prefers-reduced-motion: no-preference) {
+  .logout-btn:hover .logout-icon { transform: translateX(2px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flex-anim-idle,
+  .flex-anim-thinking,
+  .flex-anim-searching,
+  .flex-anim-locked,
+  .flex-anim-success,
+  .flex-anim-complete,
+  .flex-anim-incorrect,
+  .flex-anim-streak,
+  .flex-anim-unlock,
+  .flex-anim-click,
+  .flex-pop,
+  .flex-xp-float,
+  .flex-thinking-dot,
+  .flex-hover-scale,
+  .btn-hover,
+  .page-transition-enter,
+  .tab-enter-forward,
+  .tab-enter-backward {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}

@@ -1,32 +1,37 @@
 import { useState } from "react";
 import { ChevronRight, Search } from "lucide-react";
 import { BODY_REGIONS, MODULES } from "@/lib/modules";
+import { CONDITION_REFERENCE } from "@/data/conditionReference";
+import { referenceEntriesForRegion } from "@/lib/conditionReferenceRegions";
+import { findMatchingCase } from "@/lib/conditionReferenceMatch";
 import { cn } from "@/lib/utils";
 import Mascot from "@/components/Mascot";
 import BodyFigure from "@/components/BodyFigure";
 import { Input } from "@/components/ui/input";
 
-// Percentages computed directly from BodyFigure.jsx's own coordinates
-// (viewBox 0 0 300 640: left = x/300*100, top = y/640*100) rather than
-// measured off an external asset after the fact — the figure and its
-// hotspots are defined from the same numbers, so they can't drift out of
-// sync. One anterior view only; spine sits on the torso's vertical
-// midline (same x as chest/abdomen/pelvis), a bit above center so it
-// doesn't stack on the chest dot.
+// Percentages measured directly against src/assets/bodymap/figure.png
+// (887×1515, cropped from the user's supplied anatomy illustration) by
+// scanning the source image for contiguous non-transparent pixel segments
+// at many heights — finds each body part's actual x-center/edges rather
+// than eyeballing — then verified by rendering the computed dots back onto
+// the image before shipping. One anterior view only; hotspots for
+// paired/bilateral regions (shoulder, arm, hand, hip, knee, leg, ankle) sit
+// on the figure's left side; spine has no real anterior landmark, so it's
+// placed on the torso midline between neck and chest, same as the figure
+// it replaced.
 const HOTSPOTS = {
-  head: { left: 50.0, top: 6.3 },
-  neck: { left: 50.0, top: 13.4 },
-  spine: { left: 50.0, top: 28.9 },
-  shoulder: { left: 18.3, top: 16.9 },
-  upper_limb: { left: 13.0, top: 32.0 },
-  wrist_hand: { left: 14.0, top: 50.3 },
-  chest: { left: 50.0, top: 23.4 },
-  abdomen: { left: 50.0, top: 34.4 },
-  pelvis: { left: 50.0, top: 45.3 },
-  hip: { left: 40.0, top: 53.1 },
-  knee: { left: 40.7, top: 69.5 },
-  lower_leg: { left: 41.0, top: 79.7 },
-  ankle_foot: { left: 42.3, top: 91.4 },
+  head: { left: 49.7, top: 4.8 },
+  neck: { left: 49.9, top: 13.4 },
+  spine: { left: 49.9, top: 19.5 },
+  shoulder: { left: 30.6, top: 20.7 },
+  upper_limb: { left: 21.5, top: 36.5 },
+  wrist_hand: { left: 6.9, top: 52.3 },
+  chest: { left: 49.9, top: 25.9 },
+  pelvis: { left: 49.9, top: 49.7 },
+  hip: { left: 32.8, top: 53.7 },
+  knee: { left: 40.1, top: 68.8 },
+  lower_leg: { left: 38.8, top: 75.8 },
+  ankle_foot: { left: 39.2, top: 88.6 },
 };
 
 // A joint/region tap browses conditions, not cases — several cases can
@@ -45,7 +50,15 @@ function toConditionList(cases) {
   return unique.sort((a, b) => a.diagnosis.localeCompare(b.diagnosis));
 }
 
-function ConditionList({ cases, onOpenCase }) {
+/** Reference-doc entries for this region that don't already have a case above — shown as "coming soon," not clickable, and never duplicating a real listing. */
+function referenceOnlyEntries(regionId, allCases) {
+  return referenceEntriesForRegion(regionId, CONDITION_REFERENCE)
+    .filter((e) => !findMatchingCase(e.name, allCases))
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function ConditionList({ cases, referenceOnly, onOpenCase }) {
+  if (cases.length === 0 && referenceOnly.length === 0) return null;
   return (
     <ul className="space-y-2">
       {toConditionList(cases).map((c) => (
@@ -59,6 +72,17 @@ function ConditionList({ cases, onOpenCase }) {
           </button>
         </li>
       ))}
+      {referenceOnly.map((e, i) => (
+        <li key={`ref-${i}`}>
+          <div className="flex items-center justify-between gap-2 rounded-xl border-2 border-dashed border-border px-4 py-3 text-sm text-muted-foreground">
+            <span>
+              {e.name}
+              {e.redFlag && <span className="ml-1.5">🚩</span>}
+            </span>
+            <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold">Coming soon</span>
+          </div>
+        </li>
+      ))}
     </ul>
   );
 }
@@ -69,14 +93,24 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
   const [query, setQuery] = useState("");
 
   const scoped = selectedSpecialty ? (cases || []).filter((c) => c.module === selectedSpecialty) : cases || [];
-  const activeRegionIds = new Set(scoped.map((c) => c.body_region));
+  const activeRegionIds = new Set(scoped.map((c) => c.body_region).filter(Boolean));
+  // A hotspot also lights up if the reference doc has entries for it, even
+  // before any real case exists there — signals "there's real content to
+  // browse here," not just "there's something to practice."
+  for (const region of BODY_REGIONS) {
+    if (referenceEntriesForRegion(region.id, CONDITION_REFERENCE).length > 0) activeRegionIds.add(region.id);
+  }
 
   const region = BODY_REGIONS.find((r) => r.id === selectedRegion);
   const regionMatches = selectedRegion ? scoped.filter((c) => c.body_region === selectedRegion) : [];
+  const regionReferenceOnly = selectedRegion ? referenceOnlyEntries(selectedRegion, cases) : [];
 
   const trimmedQuery = query.trim().toLowerCase();
   const searchMatches = trimmedQuery
     ? scoped.filter((c) => `${c.title} ${c.presenting_complaint}`.toLowerCase().includes(trimmedQuery))
+    : [];
+  const searchReferenceOnly = trimmedQuery
+    ? CONDITION_REFERENCE.filter((e) => e.name.toLowerCase().includes(trimmedQuery) && !findMatchingCase(e.name, cases))
     : [];
 
   return (
@@ -118,17 +152,17 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
 
       <div className="mb-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
         <span className="flex items-center gap-1.5">
-          <span className="h-3 w-3 rounded-full border-2 border-primary bg-primary/40" /> Has cases
+          <span className="h-3 w-3 rounded-full border-2 border-primary bg-primary/40" /> Has content
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="h-3 w-3 rounded-full border-2 border-primary bg-muted-foreground/20" /> No cases yet
+          <span className="h-3 w-3 rounded-full border-2 border-primary bg-muted-foreground/20" /> No content yet
         </span>
         <span className="flex items-center gap-1.5">
           <span className="h-3 w-3 rounded-full border-2 border-primary bg-primary" /> Selected
         </span>
       </div>
 
-      <div className="relative mx-auto aspect-[15/32] w-full max-w-xs">
+      <div className="relative mx-auto aspect-[887/1515] w-full max-w-xs">
         <BodyFigure className="h-full w-full" />
         {BODY_REGIONS.map((r) => {
           const p = HOTSPOTS[r.id];
@@ -159,26 +193,26 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
       {trimmedQuery ? (
         <div className="mt-5">
           <h3 className="mb-2 text-lg font-black tracking-tight">Search results</h3>
-          {searchMatches.length === 0 ? (
+          {searchMatches.length === 0 && searchReferenceOnly.length === 0 ? (
             <div className="flex flex-col items-center gap-2 py-4 text-center">
-              <Mascot mood="curious" className="h-20 w-20" />
+              <Mascot mood="curious" animation="searching" className="h-20 w-20" />
               <p className="text-sm text-muted-foreground">No conditions match "{query.trim()}".</p>
             </div>
           ) : (
-            <ConditionList cases={searchMatches} onOpenCase={onOpenCase} />
+            <ConditionList cases={searchMatches} referenceOnly={searchReferenceOnly} onOpenCase={onOpenCase} />
           )}
         </div>
       ) : (
         region && (
           <div className="mt-5">
             <h3 className="mb-2 text-lg font-black tracking-tight">{region.label}</h3>
-            {regionMatches.length === 0 ? (
+            {regionMatches.length === 0 && regionReferenceOnly.length === 0 ? (
               <div className="flex flex-col items-center gap-2 py-4 text-center">
-                <Mascot mood="curious" className="h-20 w-20" />
+                <Mascot mood="curious" animation="searching" className="h-20 w-20" />
                 <p className="text-sm text-muted-foreground">No conditions here yet.</p>
               </div>
             ) : (
-              <ConditionList cases={regionMatches} onOpenCase={onOpenCase} />
+              <ConditionList cases={regionMatches} referenceOnly={regionReferenceOnly} onOpenCase={onOpenCase} />
             )}
           </div>
         )

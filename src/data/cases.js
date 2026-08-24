@@ -499,6 +499,7 @@ export const CASES = [
       { id: "anterior-drawer-knee", label: "Anterior drawer test", finding: "Positive but less pronounced than the Lachman", useful: true, cost: "low", rationale: "Confirmatory, though less sensitive than Lachman due to hamstring guarding acutely." },
       { id: "mcmurray-test", label: "McMurray's test", finding: "Equivocal, limited by acute swelling and guarding", useful: true, cost: "low", rationale: "Acute effusion and pain often limit its reliability in the first days after injury — a negative result here doesn't rule out a meniscal tear." },
       { id: "mri-knee", label: "MRI of the knee", finding: "Complete ACL rupture with a small associated lateral meniscal tear", useful: true, cost: "high", rationale: "Confirms the diagnosis and characterizes any concurrent meniscal or chondral injury, which shapes the surgical plan." },
+      { id: "patellar-apprehension", label: "Patellar apprehension test", finding: "Negative — no apprehension with lateral patellar translation", useful: false, cost: "low", rationale: "Tests for patellar instability, not cruciate ligament integrity — reasonable to consider given patellar dislocation is on the differential, but it doesn't help confirm or rule out an ACL tear." },
     ],
     disposition: {
       options: FULL_LADDER,
@@ -583,6 +584,7 @@ export const CASES = [
       { id: "palpation-adductor-origin", label: "Palpation of the adductor longus origin", finding: "Focal tenderness at the pubic origin", useful: true, cost: "low", rationale: "Localizes the pain generator to the adductor tendon origin rather than the inguinal canal or hip joint." },
       { id: "hip-impingement-test", label: "Hip flexion-adduction-internal rotation (FADIR) test", finding: "Negative", useful: true, cost: "low", rationale: "A negative FADIR makes hip-related (FAI) groin pain less likely as the primary driver." },
       { id: "cough-impulse", label: "Cough impulse / inguinal canal palpation", finding: "No palpable bulge or impulse", useful: true, cost: "low", rationale: "Screens out a true inguinal hernia as the cause of the pain." },
+      { id: "pelvis-xray", label: "Plain X-ray of the pelvis", finding: "Unremarkable", useful: false, cost: "moderate", rationale: "Not indicated as a first step here — no red flags point toward a femoral neck stress fracture, and X-ray has poor sensitivity for stress injury even when one is suspected; MRI would be the right escalation if red flags were present." },
     ],
     disposition: {
       options: FULL_LADDER,
@@ -751,6 +753,7 @@ export const CASES = [
       { id: "palpation-spine", label: "Palpation of the lumbar spinous processes", finding: "Focal tenderness at L5", useful: true, cost: "low", rationale: "Localizes the pain to a specific segment, consistent with a focal bony process." },
       { id: "neuro-screen-back", label: "Lower limb neurological screen", finding: "Normal power, sensation, and reflexes throughout", useful: true, cost: "low", rationale: "Reassuring against nerve root involvement, though it doesn't rule in or out spondylolysis itself." },
       { id: "spect-ct", label: "SPECT-CT or MRI of the lumbar spine", finding: "Stress reaction at the L5 pars interarticularis, no established defect yet", useful: true, cost: "high", rationale: "Imaging is what actually confirms a pars stress reaction and stages it — early stress reaction versus an established fracture changes the activity-modification timeline significantly." },
+      { id: "slr-back", label: "Straight leg raise", finding: "Negative", useful: false, cost: "low", rationale: "A neural-tension test more relevant to a disc-related or radicular pattern — a negative result here doesn't help confirm or rule out a pars stress reaction, which is a bony, extension-provoked problem rather than a neural-tension one." },
     ],
     disposition: {
       options: FULL_LADDER,
@@ -835,6 +838,7 @@ export const CASES = [
       { id: "palpation-supinator", label: "Palpation 3-5cm distal to the epicondyle, over the supinator", finding: "Non-tender", useful: true, cost: "low", rationale: "A non-tender supinator region makes radial tunnel syndrome less likely — tenderness there, rather than directly over the epicondyle, would flag the nerve entrapment instead." },
       { id: "middle-finger-test", label: "Resisted middle finger extension test", finding: "Negative", useful: true, cost: "low", rationale: "This test is more specific for radial tunnel syndrome than lateral epicondylalgia; a negative result supports the tendinopathy diagnosis." },
       { id: "cervical-spine-screen-elbow", label: "Cervical spine active range of motion screen", finding: "Full, pain-free, does not reproduce elbow symptoms", useful: true, cost: "low", rationale: "Screens out a cervical referral pattern as a contributor." },
+      { id: "elbow-xray", label: "X-ray of the elbow", finding: "Unremarkable", useful: false, cost: "moderate", rationale: "Not indicated — lateral epicondylalgia is a soft-tissue diagnosis made clinically; imaging adds cost without changing the conservative management plan here." },
     ],
     disposition: {
       options: FULL_LADDER,

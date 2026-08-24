@@ -4,6 +4,7 @@ import {
   classifyCalibration,
   daysBetween,
   ensureDailyFresh,
+  formatElapsedTime,
   isAchievementEarned,
   levelFromXp,
   nextReviewDate,
@@ -267,6 +268,24 @@ describe("speedRoundTimerDelta", () => {
     expect(speedRoundTimerDelta(true, 2)).toBe(5);
     expect(speedRoundTimerDelta(true, 3)).toBe(5);
     expect(speedRoundTimerDelta(true, 10)).toBe(5);
+  });
+});
+
+describe("formatElapsedTime", () => {
+  it("formats under a minute as 0:ss", () => {
+    expect(formatElapsedTime(45_000)).toBe("0:45");
+  });
+
+  it("formats minutes and seconds, zero-padded", () => {
+    expect(formatElapsedTime(4 * 60_000 + 5_000)).toBe("4:05");
+  });
+
+  it("switches to h:mm:ss past an hour", () => {
+    expect(formatElapsedTime(3661_000)).toBe("1:01:01");
+  });
+
+  it("clamps negative durations to zero", () => {
+    expect(formatElapsedTime(-500)).toBe("0:00");
   });
 });
 

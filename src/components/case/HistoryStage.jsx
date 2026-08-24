@@ -13,8 +13,13 @@ function HistoryQuestion({ caseId, question, picked, onPick }) {
 
   return (
     <div className="rounded-lg border border-border bg-card p-4">
-      {question.context && <p className="mb-2 text-sm text-muted-foreground">{question.context}</p>}
-      <p className="mb-2 font-semibold">Which question is most important to ask here?</p>
+      {question.context && (
+        <div className="mb-3">
+          <p className="text-[11px] font-bold uppercase tracking-wide text-primary">Your goal</p>
+          <p className="text-sm">{question.context}</p>
+        </div>
+      )}
+      <p className="mb-2 text-sm font-semibold text-muted-foreground">Pick the question that gets you there:</p>
       <div className="space-y-2">
         {order.map((origIdx) => (
           <button

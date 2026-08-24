@@ -226,7 +226,7 @@ export default function OsceCheckpoint() {
     const { overallAccuracy, passed } = scoreOsceSession(caseResults);
     return (
       <div className="mx-auto max-w-lg space-y-4">
-        {passed && <Mascot mood="victorious" className="mx-auto h-24 w-24" />}
+        {passed && <Mascot mood="victorious" animation="complete" className="mx-auto h-24 w-24" />}
         <Card className={passed ? "border-emerald-500" : "border-destructive/40"}>
           <CardHeader>
             <CardTitle>{passed ? "Checkpoint passed" : "Checkpoint complete"}</CardTitle>

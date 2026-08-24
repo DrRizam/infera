@@ -115,18 +115,23 @@ describe("findMatchingCase", () => {
 });
 
 describe("attributeMatches", () => {
-  it("flags every attribute true when comparing a case to itself", () => {
+  it("marks every attribute a match when comparing a case to itself", () => {
     const m = attributeMatches(CASE_A, CASE_A);
-    expect(Object.values(m).every(Boolean)).toBe(true);
+    expect(Object.values(m).every((v) => v === "match")).toBe(true);
   });
 
-  it("only flags the attributes that actually match between two different cases", () => {
+  it("marks a mismatch (not unknown) for a recognized guess with a different value", () => {
     const m = attributeMatches(CASE_A, CASE_B);
-    expect(m.system).toBe(true); // both musculoskeletal
-    expect(m.region).toBe(false);
-    expect(m.tissue).toBe(false);
-    expect(m.chronicity).toBe(false);
-    expect(m.mechanism).toBe(false);
+    expect(m.system).toBe("match"); // both musculoskeletal
+    expect(m.region).toBe("mismatch");
+    expect(m.tissue).toBe("mismatch");
+    expect(m.chronicity).toBe("mismatch");
+    expect(m.mechanism).toBe("mismatch");
+  });
+
+  it("marks every attribute unknown for an unrecognized guess", () => {
+    const m = attributeMatches(null, CASE_B);
+    expect(Object.values(m).every((v) => v === "unknown")).toBe(true);
   });
 });
 
@@ -158,13 +163,20 @@ describe("scoreForResult", () => {
 describe("buildShareGrid", () => {
   it("never includes the diagnosis text, only badges", () => {
     const guesses = [
-      { attributes: { region: true, system: true, tissue: false, chronicity: false, mechanism: false } },
-      { attributes: { region: true, system: true, tissue: true, chronicity: true, mechanism: true } },
+      { attributes: { region: "match", system: "match", tissue: "mismatch", chronicity: "mismatch", mechanism: "unknown" } },
+      { attributes: { region: "match", system: "match", tissue: "match", chronicity: "match", mechanism: "match" } },
     ];
     const grid = buildShareGrid(1, guesses, true);
     expect(grid).not.toMatch(/epicondylalgia|elbow/i);
     expect(grid).toContain("Infera Daily #1");
     expect(grid).toContain("2/6");
+  });
+
+  it("uses three distinct badges for match/mismatch/unknown", () => {
+    const guesses = [{ attributes: { region: "match", system: "mismatch", tissue: "unknown", chronicity: "match", mechanism: "mismatch" } }];
+    const grid = buildShareGrid(1, guesses, false);
+    const row = grid.split("\n")[1];
+    expect(row).toBe("🟢🔴⚪🟢🔴");
   });
 
   it("shows X/6 for a loss", () => {

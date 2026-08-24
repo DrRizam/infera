@@ -167,12 +167,21 @@ export default function Recall() {
       </div>
 
       {answered && (
-        <div className={cn("rounded-xl border-2 p-4", isCorrect ? "border-emerald-500 bg-emerald-50" : "border-destructive bg-destructive/10")}>
-          <div className="mb-1 flex items-center gap-2 font-bold">
-            {isCorrect ? <CheckCircle2 className="h-4 w-4 text-emerald-600" /> : <XCircle className="h-4 w-4 text-destructive" />}
-            {isCorrect ? "Correct" : "Not quite"}
+        <div className="flex items-start gap-3">
+          <Mascot
+            mood={isCorrect ? "celebrating" : "concerned"}
+            animation={isCorrect ? "success" : "incorrect"}
+            animationKey={idx}
+            interactive={false}
+            className="h-14 w-14 shrink-0"
+          />
+          <div className={cn("flex-1 rounded-xl border-2 p-4", isCorrect ? "border-emerald-500 bg-emerald-50" : "border-destructive bg-destructive/10")}>
+            <div className="mb-1 flex items-center gap-2 font-bold">
+              {isCorrect ? <CheckCircle2 className="h-4 w-4 text-emerald-600" /> : <XCircle className="h-4 w-4 text-destructive" />}
+              {isCorrect ? "Correct" : "Not quite"}
+            </div>
+            {item.evidence && <p className="text-sm text-muted-foreground">{item.evidence}</p>}
           </div>
-          {item.evidence && <p className="text-sm text-muted-foreground">{item.evidence}</p>}
         </div>
       )}
 

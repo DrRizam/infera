@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getCase } from "@/data/cases";
 import { useProfile } from "@/lib/ProfileContext";
@@ -12,6 +12,7 @@ import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import {
   classifyCalibration,
   ensureDailyFresh,
+  formatElapsedTime,
   levelFromXp,
   nextReviewDate,
   rollStreak,
@@ -44,6 +45,11 @@ export default function CasePlay() {
   const { caseId } = useParams();
   const [searchParams] = useSearchParams();
   const isDaily = searchParams.get("daily") === "1";
+  // Condition-of-the-day flow: startedAt carries the timestamp from when
+  // the user began reading the "Learn about X" screen, so the timer shown
+  // here (and the total logged at the debrief) covers learning + practice.
+  const isCotd = searchParams.get("cotd") === "1";
+  const cotdStartedAt = searchParams.get("startedAt");
   const { profile, setProfile } = useProfile();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -59,6 +65,15 @@ export default function CasePlay() {
   const [stageIdx, setStageIdx] = useState(0);
   const [answers, setAnswers] = useState(EMPTY_ANSWERS);
   const [result, setResult] = useState(null);
+  const [cotdElapsedMs, setCotdElapsedMs] = useState(0);
+
+  useEffect(() => {
+    if (!isCotd || !cotdStartedAt) return;
+    const tick = () => setCotdElapsedMs(Date.now() - Number(cotdStartedAt));
+    tick();
+    const t = setInterval(tick, 1000);
+    return () => clearInterval(t);
+  }, [isCotd, cotdStartedAt]);
 
   if (!clinicalCase) {
     return (
@@ -143,12 +158,20 @@ export default function CasePlay() {
       createNotification(user.id, { type: "level_up", title: "Level up!", body: `You're now a ${title}.` });
     }
 
-    setResult({ scored, xp, shieldUsed, leveledUp, streak: next.streak_count, debriefLimited: !debriefAllowed, surpriseChest });
+    const cotdElapsedLabel = isCotd && cotdStartedAt ? formatElapsedTime(Date.now() - Number(cotdStartedAt)) : null;
+    setResult({ scored, xp, shieldUsed, leveledUp, streak: next.streak_count, debriefLimited: !debriefAllowed, surpriseChest, cotdElapsedLabel });
     setStageIdx(stages.length - 1);
   };
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-6">
+      {isCotd && (
+        <div className="mb-2 flex justify-end">
+          <span className="flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-xs font-bold text-primary">
+            ⏱ {formatElapsedTime(cotdElapsedMs)}
+          </span>
+        </div>
+      )}
       <CaseStageHeader clinicalCase={clinicalCase} stageIndex={stageIdx} stageCount={stages.length} />
 
       {stage === "presentation" && <PresentationStage clinicalCase={clinicalCase} onContinue={advance} />}
@@ -224,6 +247,7 @@ export default function CasePlay() {
           streak={result.streak}
           debriefLimited={result.debriefLimited}
           surpriseChest={result.surpriseChest}
+          cotdElapsedLabel={result.cotdElapsedLabel}
           onDone={() => navigate("/")}
           onUpgrade={() => navigate("/settings")}
         />

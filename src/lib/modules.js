@@ -79,7 +79,6 @@ export const BODY_REGIONS = [
   { id: "upper_limb", label: "Upper limb" },
   { id: "wrist_hand", label: "Wrist & hand" },
   { id: "chest", label: "Chest" },
-  { id: "abdomen", label: "Abdomen" },
   { id: "spine", label: "Spine" },
   { id: "pelvis", label: "Pelvis" },
   { id: "hip", label: "Hip" },
