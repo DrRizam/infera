@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { CheckCircle2, Timer, Trophy, Zap } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { CheckCircle2, Lock, Timer, Trophy, Zap } from "lucide-react";
 import { CASES } from "@/data/cases";
 import { useProfile } from "@/lib/ProfileContext";
-import { speedRoundTimerDelta } from "@/lib/gamification";
+import { useAuth } from "@/lib/AuthContext";
+import { todayStr } from "@/lib/gamification";
+import { ensureDrillPeriodFresh, hasDrillsRemaining } from "@/lib/subscription";
 import { playFeedback } from "@/lib/sound";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Button } from "@/components/ui/button";
@@ -10,14 +13,29 @@ import { cn } from "@/lib/utils";
 
 const ROUND_SECONDS = 60;
 
+// Shuffle a question's options each round and re-point `correct`, so the
+// answer's position can't be learned and spam-tapped.
+function shuffleOptions(q) {
+  const idxs = q.options.map((_, i) => i);
+  for (let i = idxs.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
+  }
+  return { ...q, options: idxs.map((i) => q.options[i]), correct: idxs.indexOf(q.correct) };
+}
+
 export default function SpeedRound() {
   useDocumentTitle("Speed round");
   const { profile, setProfile } = useProfile();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const pool = useMemo(
     () => CASES.flatMap((c) => (c.speed_questions || []).map((q) => ({ ...q, caseId: c.id }))),
     []
   );
+
+  const drillAllowed = hasDrillsRemaining(ensureDrillPeriodFresh(profile, todayStr()), user);
 
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -25,7 +43,6 @@ export default function SpeedRound() {
   const [order, setOrder] = useState([]);
   const [idx, setIdx] = useState(0);
   const [correct, setCorrect] = useState(0);
-  const [combo, setCombo] = useState(0);
   const [picked, setPicked] = useState(null);
 
   useEffect(() => {
@@ -49,10 +66,14 @@ export default function SpeedRound() {
   }, [finished]);
 
   const start = () => {
-    setOrder([...pool].sort(() => Math.random() - 0.5));
+    if (!drillAllowed) return;
+    setProfile((prev) => {
+      const fresh = ensureDrillPeriodFresh(prev, todayStr());
+      return { ...fresh, drill_count: (fresh.drill_count || 0) + 1 };
+    });
+    setOrder([...pool].sort(() => Math.random() - 0.5).map(shuffleOptions));
     setIdx(0);
     setCorrect(0);
-    setCombo(0);
     setSecondsLeft(ROUND_SECONDS);
     setPicked(null);
     setFinished(false);
@@ -65,17 +86,31 @@ export default function SpeedRound() {
     const isCorrect = i === order[idx].correct;
     playFeedback(isCorrect);
     if (isCorrect) setCorrect((c) => c + 1);
-    setCombo((prev) => {
-      const next = isCorrect ? prev + 1 : 0;
-      setSecondsLeft((s) => Math.max(0, s + speedRoundTimerDelta(isCorrect, next)));
-      return next;
-    });
+    // Flat 60s — no time gained or lost per answer. Combined with shuffled
+    // option order, that removes the "keep the round alive by hammering the
+    // usual answer position" exploit.
     setTimeout(() => {
       setPicked(null);
       if (idx + 1 >= order.length) setFinished(true);
       else setIdx((n) => n + 1);
     }, 500);
   };
+
+  if (!started && !drillAllowed) {
+    return (
+      <div className="mx-auto max-w-2xl px-4 py-16 text-center">
+        <Lock className="mx-auto mb-2 h-6 w-6 text-primary" />
+        <h1 className="text-xl font-black tracking-tight">Daily drills used up</h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          You've used your free drills for today (Speed round + Recall share one daily limit) — Premium unlocks
+          unlimited. Cases and the daily game stay free either way.
+        </p>
+        <Button className="mt-4" onClick={() => navigate("/settings")}>
+          See upgrade options
+        </Button>
+      </div>
+    );
+  }
 
   if (!started) {
     return (
@@ -105,7 +140,14 @@ export default function SpeedRound() {
         <h1 className="text-2xl font-black tracking-tight sm:text-3xl">Time's up</h1>
         <p className="text-3xl font-extrabold text-primary">{correct} correct</p>
         <p className="text-sm text-muted-foreground">Best: {Math.max(profile.best_speed_score || 0, correct)}</p>
-        <Button size="lg" onClick={start}>Play again</Button>
+        {drillAllowed ? (
+          <Button size="lg" onClick={start}>Play again</Button>
+        ) : (
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">That was your last free drill for today.</p>
+            <Button size="lg" onClick={() => navigate("/settings")}>See upgrade options</Button>
+          </div>
+        )}
       </div>
     );
   }

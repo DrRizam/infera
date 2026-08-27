@@ -46,32 +46,25 @@ export function debriefsRemaining(profile, user) {
   return Math.max(0, effectiveDebriefLimit(profile) - (profile.debrief_count || 0));
 }
 
-// Second paywall lever (Phase 2, deferred at launch): the Recall drill is
-// study tooling, not raw case practice, so it's capped the same way full
-// debriefs are — a session limit per week rather than per month, since
-// Recall is meant to be a frequent short habit, not a monthly-scale thing.
-export const FREE_RECALL_SESSIONS_PER_WEEK = 5;
+// Second paywall lever: the drills (Recall + Speed round) are study tooling,
+// not raw case practice — practicing cases and the daily game stay free and
+// uncapped. One shared daily budget across both drill modes, since they're
+// the same kind of frequent short-session habit.
+export const FREE_DRILLS_PER_DAY = 5;
 
-/** A key that changes once every 7 days — not calendar-aligned to any particular start-of-week, just needs to roll over weekly. */
-export function currentWeekKey(now = new Date()) {
-  const msPerWeek = 7 * 24 * 60 * 60 * 1000;
-  return `w${Math.floor(now.getTime() / msPerWeek)}`;
+/** Resets the daily drill counter once the calendar day (local) has rolled over. `today` is a "YYYY-MM-DD" string (see gamification.todayStr). */
+export function ensureDrillPeriodFresh(profile, today) {
+  if (profile.drill_day === today) return profile;
+  return { ...profile, drill_day: today, drill_count: 0 };
 }
 
-/** Resets the weekly Recall-session counter once the week has rolled over. */
-export function ensureRecallPeriodFresh(profile, now = new Date()) {
-  const key = currentWeekKey(now);
-  if (profile.recall_period === key) return profile;
-  return { ...profile, recall_period: key, recall_session_count: 0 };
-}
-
-export function hasRecallSessionsRemaining(profile, user) {
+export function hasDrillsRemaining(profile, user) {
   if (isAdmin(user) || isPremium(profile)) return true;
-  return (profile.recall_session_count || 0) < FREE_RECALL_SESSIONS_PER_WEEK;
+  return (profile.drill_count || 0) < FREE_DRILLS_PER_DAY;
 }
 
-/** How many Recall sessions are left this week, or null if unlimited. */
-export function recallSessionsRemaining(profile, user) {
+/** How many drills (Recall + Speed, combined) are left today, or null if unlimited. */
+export function drillsRemaining(profile, user) {
   if (isAdmin(user) || isPremium(profile)) return null;
-  return Math.max(0, FREE_RECALL_SESSIONS_PER_WEEK - (profile.recall_session_count || 0));
+  return Math.max(0, FREE_DRILLS_PER_DAY - (profile.drill_count || 0));
 }

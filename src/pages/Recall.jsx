@@ -9,7 +9,7 @@ import { nextReviewDate, todayStr, updateMastery } from "@/lib/gamification";
 import { generateRecallItems, selectRecallSession } from "@/lib/recallItems";
 import { bucketKey } from "@/lib/competency";
 import { playFeedback } from "@/lib/sound";
-import { ensureRecallPeriodFresh, hasRecallSessionsRemaining } from "@/lib/subscription";
+import { ensureDrillPeriodFresh, hasDrillsRemaining } from "@/lib/subscription";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import Mascot from "@/components/Mascot";
 import { Button } from "@/components/ui/button";
@@ -27,8 +27,8 @@ export default function Recall() {
   const moduleFilter = searchParams.get("module") || undefined;
 
   // Defensive re-check — ProfileContext already freshens this on load, but
-  // a tab left open across the weekly rollover wouldn't otherwise notice.
-  const sessionAllowed = hasRecallSessionsRemaining(ensureRecallPeriodFresh(profile), user);
+  // a tab left open across the daily rollover wouldn't otherwise notice.
+  const sessionAllowed = hasDrillsRemaining(ensureDrillPeriodFresh(profile, todayStr()), user);
 
   const [session] = useState(() => {
     if (!sessionAllowed) return [];
@@ -39,13 +39,13 @@ export default function Recall() {
   const [picked, setPicked] = useState(null);
   const [results, setResults] = useState([]);
 
-  // Counts once per real session started, not per question — mirrors the
-  // "sessions/week" framing, not a question-level cap.
+  // Counts once per real session started, not per question. Shares the
+  // daily drill budget with Speed round.
   useEffect(() => {
     if (!sessionAllowed || session.length === 0) return;
     setProfile((prev) => {
-      const fresh = ensureRecallPeriodFresh(prev);
-      return { ...fresh, recall_session_count: (fresh.recall_session_count || 0) + 1 };
+      const fresh = ensureDrillPeriodFresh(prev, todayStr());
+      return { ...fresh, drill_count: (fresh.drill_count || 0) + 1 };
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -54,10 +54,10 @@ export default function Recall() {
     return (
       <div className="mx-auto max-w-2xl px-4 py-16 text-center">
         <Lock className="mx-auto mb-2 h-6 w-6 text-primary" />
-        <h1 className="text-xl font-black tracking-tight">Weekly Recall sessions used up</h1>
+        <h1 className="text-xl font-black tracking-tight">Daily drills used up</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          You've used your free Recall sessions for this week — Premium unlocks unlimited. Cases and the daily game
-          stay free either way.
+          You've used your free drills for today (Recall + Speed round share one daily limit) — Premium unlocks
+          unlimited. Cases and the daily game stay free either way.
         </p>
         <Button className="mt-4" onClick={() => navigate("/settings")}>
           See upgrade options

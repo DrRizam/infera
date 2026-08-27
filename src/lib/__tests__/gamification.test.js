@@ -11,7 +11,6 @@ import {
   retentionStats,
   rollStreak,
   rollSurpriseChest,
-  speedRoundTimerDelta,
   todayStr,
   updateCalibration,
   updateMastery,
@@ -251,23 +250,6 @@ describe("achievements", () => {
 describe("todayStr", () => {
   it("formats as UTC YYYY-MM-DD", () => {
     expect(todayStr(new Date("2026-08-06T23:59:00Z"))).toBe("2026-08-06");
-  });
-});
-
-describe("speedRoundTimerDelta", () => {
-  it("costs 10s on any wrong answer, regardless of combo", () => {
-    expect(speedRoundTimerDelta(false, 0)).toBe(-10);
-    expect(speedRoundTimerDelta(false, 5)).toBe(-10);
-  });
-
-  it("gives no bonus for a correct answer that hasn't reached a combo of 2", () => {
-    expect(speedRoundTimerDelta(true, 1)).toBe(0);
-  });
-
-  it("gives a 5s bonus starting at combo 2, and on every combo beyond it", () => {
-    expect(speedRoundTimerDelta(true, 2)).toBe(5);
-    expect(speedRoundTimerDelta(true, 3)).toBe(5);
-    expect(speedRoundTimerDelta(true, 10)).toBe(5);
   });
 });
 

@@ -207,12 +207,6 @@ export function updateCalibration(calibration, outcome) {
   return { ...c, [outcome]: (c[outcome] || 0) + 1 };
 }
 
-/** Speed round timer: wrong answers cost 10s; a correct-answer streak of 2+ earns 5s each time. */
-export function speedRoundTimerDelta(isCorrect, comboAfter) {
-  if (!isCorrect) return -10;
-  return comboAfter >= 2 ? 5 : 0;
-}
-
 // Every other reward in this app is deterministic (fixed XP for a given
 // accuracy, a streak shield earned on a known schedule) — the unpredictable
 // payoff is what a variable-ratio reward adds on top, not a bigger number.

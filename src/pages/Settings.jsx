@@ -10,11 +10,11 @@ import { COUNTRIES } from "@/lib/countries";
 import { isSoundEnabled, setSoundEnabled } from "@/lib/sound";
 import {
   debriefsRemaining,
+  drillsRemaining,
   FREE_DEBRIEF_LIMIT,
-  FREE_RECALL_SESSIONS_PER_WEEK,
+  FREE_DRILLS_PER_DAY,
   isAdmin,
   isPremium,
-  recallSessionsRemaining,
 } from "@/lib/subscription";
 import { openBillingPortal, startCheckout } from "@/lib/subscriptionStore";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
@@ -41,7 +41,7 @@ export default function Settings() {
   const admin = isAdmin(user);
   const premium = isPremium(profile);
   const remaining = debriefsRemaining(profile, user);
-  const recallRemaining = recallSessionsRemaining(profile, user);
+  const drillRemaining = drillsRemaining(profile, user);
 
   const [displayName, setDisplayName] = useState(profile.display_name || "");
   const [clinicName, setClinicName] = useState(profile.clinic_name || "");
@@ -193,12 +193,12 @@ export default function Settings() {
           </div>
           {!admin && !premium && (
             <p className="text-right text-xs text-muted-foreground">
-              {recallRemaining} of {FREE_RECALL_SESSIONS_PER_WEEK} Recall sessions left this week
+              {drillRemaining} of {FREE_DRILLS_PER_DAY} drills left today (Recall + Speed round)
             </p>
           )}
           <p className="text-xs text-muted-foreground">
             Practicing cases and the daily game are always unlimited. Premium unlocks unlimited full case debriefs
-            and Recall sessions.
+            and drills.
           </p>
           {admin ? (
             <div className="space-y-2">
