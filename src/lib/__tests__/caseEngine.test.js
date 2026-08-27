@@ -97,6 +97,25 @@ describe("scoreRedFlags", () => {
     const r = scoreRedFlags(["night-pain"], redFlags);
     expect(r.truePositives.map((f) => f.id)).toEqual(["night-pain"]);
   });
+
+  it("weights a missed red flag twice as hard as a missed yellow flag", () => {
+    const flags = [
+      { id: "r", label: "Red", present: true, severity: "red", rationale: "" },
+      { id: "y", label: "Yellow", present: true, severity: "yellow", rationale: "" },
+    ];
+    const missedYellow = scoreRedFlags(["r"], flags); // caught the red, missed the yellow
+    const missedRed = scoreRedFlags(["y"], flags); // caught the yellow, missed the red
+    expect(missedRed.score).toBeLessThan(missedYellow.score);
+    expect(missedRed.missedRed.map((f) => f.id)).toEqual(["r"]);
+    expect(missedYellow.missedYellow.map((f) => f.id)).toEqual(["y"]);
+  });
+
+  it("treats an entry with no severity as a red flag", () => {
+    const flags = [{ id: "x", label: "X", present: true, rationale: "" }];
+    const r = scoreRedFlags([], flags);
+    expect(r.missedRed.map((f) => f.id)).toEqual(["x"]);
+    expect(r.missedYellow).toEqual([]);
+  });
 });
 
 describe("scoreDifferential", () => {

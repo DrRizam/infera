@@ -4,7 +4,10 @@ import { cn } from "@/lib/utils";
 export default function RedFlagStage({ clinicalCase, selected, onToggle, onContinue }) {
   return (
     <div className="space-y-4">
-      <p className="text-sm text-muted-foreground">Select every red flag you believe is present.</p>
+      <p className="text-sm text-muted-foreground">
+        Select everything you'd act on in this patient — red flags (needs urgent action) and yellow flags
+        (caution signs: reason to slow down, screen further, or refer). Some listed here aren't present at all.
+      </p>
       <div className="space-y-2">
         {clinicalCase.red_flags.map((f) => {
           const picked = selected.includes(f.id);

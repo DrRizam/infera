@@ -46,7 +46,17 @@ export function scoreHistory(answers, questions) {
   return correct / questions.length;
 }
 
-/** Recall-weighted: missing a present red flag costs far more than an extra one. */
+/** An entry with no severity is a red flag — keeps older case data valid. */
+export function flagSeverity(f) {
+  return f.severity === "yellow" ? "yellow" : "red";
+}
+
+/**
+ * Recall-weighted, and severity-weighted: missing a present *red* flag (an
+ * emergency / must-not-miss) costs twice what missing a present *yellow*
+ * flag (a caution sign — reason to slow down or refer, not to stop) does,
+ * and both cost far more than flagging one that isn't there.
+ */
 export function scoreRedFlags(selected, redFlags) {
   const list = redFlags || [];
   const sel = selected || [];
@@ -56,11 +66,17 @@ export function scoreRedFlags(selected, redFlags) {
   const truePositives = present.filter((f) => selectedSet.has(f.id));
   const falsePos = list.filter((f) => !f.present && selectedSet.has(f.id));
 
-  const recall = present.length ? truePositives.length / present.length : 1;
+  const weight = (f) => (flagSeverity(f) === "red" ? 2 : 1);
+  const possible = present.reduce((s, f) => s + weight(f), 0);
+  const earned = truePositives.reduce((s, f) => s + weight(f), 0);
+  const recall = possible ? earned / possible : 1;
   const precision = sel.length ? truePositives.length / sel.length : present.length ? 0 : 1;
   const score = recall * 0.8 + precision * 0.2;
 
-  return { score, missed, falsePos, truePositives };
+  const missedRed = missed.filter((f) => flagSeverity(f) === "red");
+  const missedYellow = missed.filter((f) => flagSeverity(f) === "yellow");
+
+  return { score, missed, missedRed, missedYellow, falsePos, truePositives };
 }
 
 /** How close the true diagnosis landed to the learner's top, plus exact-order credit. */
@@ -139,11 +155,14 @@ export function collectCitations({ clinicalCase: c, redFlagResult, dispositionRe
 export function detectErrors({ clinicalCase: c, answers, redFlagResult, dispositionResult }) {
   const errors = [];
 
-  for (const f of redFlagResult.missed) {
+  for (const f of redFlagResult.missedRed) {
     errors.push({ kind: "missed_red_flag", label: `Missed red flag: ${f.label}`, detail: f.rationale });
   }
+  for (const f of redFlagResult.missedYellow) {
+    errors.push({ kind: "missed_yellow_flag", label: `Missed yellow flag: ${f.label}`, detail: f.rationale });
+  }
   for (const f of redFlagResult.falsePos) {
-    errors.push({ kind: "false_red_flag", label: `Flagged as a red flag: ${f.label}`, detail: f.rationale });
+    errors.push({ kind: "false_red_flag", label: `Flagged when it wasn't present: ${f.label}`, detail: f.rationale });
   }
 
   const trueDx = c.differentials.find((d) => d.correct_rank === 1);
@@ -269,7 +288,8 @@ export function scoreEncounter(answers, clinicalCase) {
     errors,
     citations,
     wrongCount,
-    missedRedFlags: redFlagResult.missed,
+    missedRedFlags: redFlagResult.missedRed,
+    missedYellowFlags: redFlagResult.missedYellow,
     falsePositiveRedFlags: redFlagResult.falsePos,
   };
 }

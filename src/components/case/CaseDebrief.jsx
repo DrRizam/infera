@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Lock } from "lucide-react";
+import { cn } from "@/lib/utils";
 import Mascot from "@/components/Mascot";
 import XpFloater from "@/components/XpFloater";
 import { Button } from "@/components/ui/button";
@@ -127,7 +128,15 @@ export default function CaseDebrief({
               <ul className="space-y-2">
                 {result.errors.map((err, i) => (
                   <li key={i} className="text-sm">
-                    <span className="font-semibold">{err.label}</span>
+                    <span
+                      className={cn(
+                        "font-semibold",
+                        err.kind === "missed_red_flag" && "text-destructive",
+                        err.kind === "missed_yellow_flag" && "text-amber-600"
+                      )}
+                    >
+                      {err.label}
+                    </span>
                     {err.detail && <p className="text-xs text-muted-foreground">{err.detail}</p>}
                   </li>
                 ))}
