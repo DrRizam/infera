@@ -1,14 +1,11 @@
-// Authenticated Edge Function — returns a Stripe Billing Portal URL for
-// the signed-in user's existing Stripe Customer, so they can update their
-// card, cancel, or resubscribe without any custom billing UI in the app.
+// Authenticated Edge Function — returns a Paddle customer-portal URL for
+// the signed-in user's existing Paddle subscription, so they can update
+// their card or cancel without any custom billing UI in the app.
 
-import Stripe from "npm:stripe@17.4.0";
+import { Paddle, Environment } from "npm:@paddle/paddle-node-sdk@3.10.0";
 import { createClient } from "npm:@supabase/supabase-js@2.112.2";
 
-// See create-checkout-session for why this is pinned here — the account
-// requires 2025-03-31.basil or newer.
-const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, { apiVersion: "2025-03-31.basil" });
-const APP_URL = Deno.env.get("APP_URL") ?? "http://localhost:5173";
+const paddle = new Paddle(Deno.env.get("paddle_api_key")!, { environment: Environment.production });
 
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
@@ -37,20 +34,19 @@ Deno.serve(async (req) => {
     const adminClient = createClient(supabaseUrl, serviceRoleKey);
     const { data: profileRow } = await adminClient
       .from("profiles")
-      .select("stripe_customer_id")
+      .select("paddle_customer_id, paddle_subscription_id")
       .eq("user_id", user.id)
       .maybeSingle();
 
-    if (!profileRow?.stripe_customer_id) {
+    if (!profileRow?.paddle_customer_id || !profileRow?.paddle_subscription_id) {
       return new Response(JSON.stringify({ error: "No subscription on file" }), { status: 400, headers: corsHeaders });
     }
 
-    const session = await stripe.billingPortal.sessions.create({
-      customer: profileRow.stripe_customer_id,
-      return_url: `${APP_URL}/settings`,
-    });
+    const session = await paddle.customerPortalSessions.create(profileRow.paddle_customer_id, [
+      profileRow.paddle_subscription_id,
+    ]);
 
-    return new Response(JSON.stringify({ url: session.url }), {
+    return new Response(JSON.stringify({ url: session.urls.general.overview }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (err) {

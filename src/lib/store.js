@@ -47,7 +47,7 @@ export async function loadProfile(user) {
     .from("profiles")
     .select(
       "state, display_name, clinic_name, country, role, role_other_label, phone, email_opt_in, " +
-        "subscription_status, stripe_customer_id, stripe_subscription_id, subscription_current_period_end"
+        "subscription_status, paddle_customer_id, paddle_subscription_id, subscription_current_period_end"
     )
     .eq("user_id", user.id)
     .maybeSingle();
@@ -86,8 +86,8 @@ export async function loadProfile(user) {
     phone: null,
     email_opt_in: false,
     subscription_status: "free",
-    stripe_customer_id: null,
-    stripe_subscription_id: null,
+    paddle_customer_id: null,
+    paddle_subscription_id: null,
     subscription_current_period_end: null,
   };
 }
@@ -106,33 +106,44 @@ export async function saveProfile(userId, profile) {
     email_opt_in,
     // Real columns too, but deliberately never written back here — the
     // Postgres column grant in schema.sql blocks the client from updating
-    // them at all; only the Stripe webhook (service-role key) may. Pulling
+    // them at all; only the Paddle webhook (service-role key) may. Pulling
     // them out just keeps a stale local copy from leaking into `state`.
     // eslint-disable-next-line no-unused-vars
     subscription_status,
     // eslint-disable-next-line no-unused-vars
-    stripe_customer_id,
+    paddle_customer_id,
     // eslint-disable-next-line no-unused-vars
-    stripe_subscription_id,
+    paddle_subscription_id,
     // eslint-disable-next-line no-unused-vars
     subscription_current_period_end,
     ...state
   } = profile;
+  // A plain update, not upsert — the row always already exists by the time
+  // this runs (loadProfile creates it first if missing), and upsert's
+  // ON CONFLICT DO UPDATE path sets every column in the payload including
+  // user_id, which the column grant below deliberately excludes from
+  // UPDATE — that silently failed every save past the first with
+  // "permission denied for table profiles" (42501).
   const write = () =>
-    supabase.from("profiles").upsert({
-      user_id: userId,
-      state,
-      display_name,
-      clinic_name,
-      country,
-      role,
-      role_other_label,
-      phone,
-      email_opt_in,
-      updated_at: new Date().toISOString(),
-    });
+    supabase
+      .from("profiles")
+      .update({
+        state,
+        display_name,
+        clinic_name,
+        country,
+        role,
+        role_other_label,
+        phone,
+        email_opt_in,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("user_id", userId);
 
   let { error } = await write();
   if (error) ({ error } = await write()); // one retry, network hiccups aren't worth a queue at this scale
-  if (error) console.error("Failed to save profile", error);
+  // Logged as fields, not the raw error object — Android's WebView console
+  // bridge stringifies objects as "[object Object]", which hid the actual
+  // cause here before.
+  if (error) console.error("Failed to save profile", error.message, error.code, error.details, error.hint);
 }

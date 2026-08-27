@@ -68,6 +68,11 @@ describe("ensureDebriefPeriodFresh", () => {
     const p = ensureDebriefPeriodFresh({ debrief_period: "2026-08", debrief_count: 4 }, new Date(2026, 7, 20));
     expect(p.debrief_count).toBe(4);
   });
+
+  it("resets debrief_bonus_count (rewarded-ad credit) on a new month too", () => {
+    const p = ensureDebriefPeriodFresh({ debrief_period: "2026-07", debrief_bonus_count: 2 }, new Date(2026, 7, 1));
+    expect(p.debrief_bonus_count).toBe(0);
+  });
 });
 
 describe("hasFullDebriefsRemaining", () => {
@@ -86,6 +91,11 @@ describe("hasFullDebriefsRemaining", () => {
   it("is always true for a premium user regardless of count", () => {
     expect(hasFullDebriefsRemaining({ debrief_count: 999, subscription_status: "active" }, REGULAR_USER)).toBe(true);
   });
+
+  it("extends the cap by a rewarded-ad bonus for a free user", () => {
+    expect(hasFullDebriefsRemaining({ debrief_count: FREE_DEBRIEF_LIMIT, debrief_bonus_count: 1 }, REGULAR_USER)).toBe(true);
+    expect(hasFullDebriefsRemaining({ debrief_count: FREE_DEBRIEF_LIMIT + 1, debrief_bonus_count: 1 }, REGULAR_USER)).toBe(false);
+  });
 });
 
 describe("debriefsRemaining", () => {
@@ -100,6 +110,10 @@ describe("debriefsRemaining", () => {
   it("is null (unlimited) for admin or premium", () => {
     expect(debriefsRemaining({ debrief_count: 0 }, ADMIN_USER)).toBeNull();
     expect(debriefsRemaining({ debrief_count: 0, subscription_status: "active" }, REGULAR_USER)).toBeNull();
+  });
+
+  it("counts a rewarded-ad bonus debrief on top of the base limit", () => {
+    expect(debriefsRemaining({ debrief_count: FREE_DEBRIEF_LIMIT, debrief_bonus_count: 1 }, REGULAR_USER)).toBe(1);
   });
 });
 

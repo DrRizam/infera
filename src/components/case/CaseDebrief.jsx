@@ -36,6 +36,8 @@ export default function CaseDebrief({
   cotdElapsedLabel,
   onDone,
   onUpgrade,
+  canWatchAdForDebrief,
+  onWatchAd,
 }) {
   const [showSources, setShowSources] = useState(false);
   const status = STATUS_BADGE[clinicalCase.content_status] || STATUS_BADGE.demonstration;
@@ -93,6 +95,11 @@ export default function CaseDebrief({
           <Button className="mt-3 w-full" onClick={onUpgrade}>
             See upgrade options
           </Button>
+          {canWatchAdForDebrief && (
+            <Button variant="outline" className="mt-2 w-full" onClick={onWatchAd}>
+              Watch an ad for this debrief
+            </Button>
+          )}
         </div>
       ) : (
         <>

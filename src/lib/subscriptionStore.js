@@ -1,9 +1,26 @@
-// ── Subscription persistence / Stripe entry points ───────────────────────
-// Thin wrappers around the two authenticated Edge Functions (see
-// supabase/functions/). Both just redirect the browser to a Stripe-hosted
-// page — no Stripe.js needed client-side for the Checkout redirect flow.
+// ── Subscription persistence / Paddle entry points ───────────────────────
+// Checkout is a client-side Paddle.js overlay (no server round-trip to
+// start it — Paddle matches/creates the Paddle Customer by email itself).
+// Managing an existing subscription still needs a server call, since
+// creating a customer-portal session requires the secret API key.
 
+import { initializePaddle } from "@paddle/paddle-js";
+import { Capacitor } from "@capacitor/core";
+import { Browser } from "@capacitor/browser";
 import { supabase } from "@/lib/supabaseClient";
+
+const PADDLE_PRICE_IDS = {
+  monthly: "pri_01m0xcfck0taak681jtzk6bv3c",
+  annual: "pri_01m0xcgd2gs5q4g0wzs8pb02s2",
+};
+
+async function openUrl(url) {
+  if (Capacitor.isNativePlatform()) {
+    await Browser.open({ url });
+  } else {
+    window.location.href = url;
+  }
+}
 
 async function callFunction(name, body) {
   const { data, error } = await supabase.functions.invoke(name, body ? { body } : undefined);
@@ -32,16 +49,49 @@ async function callFunction(name, body) {
   return { url: data.url, error: null };
 }
 
-/** Redirects to Stripe Checkout to start a new subscription. `plan` is "monthly" (default) or "annual". */
-export async function startCheckout(plan = "monthly") {
-  const { url, error } = await callFunction("create-checkout-session", { plan });
-  if (url) window.location.href = url;
-  return { error };
+// initializePaddle() only needs to run once per page load — eventCallback
+// is fixed at that point, so it's wired to call whichever "current"
+// completion handler startCheckout most recently registered, rather than
+// re-initializing Paddle.js per checkout.
+let paddleLoadPromise = null;
+let currentOnComplete = null;
+
+function loadPaddle() {
+  if (!paddleLoadPromise) {
+    paddleLoadPromise = initializePaddle({
+      token: import.meta.env.VITE_PADDLE_CLIENT_TOKEN,
+      environment: "production",
+      eventCallback: (event) => {
+        if (event.name === "checkout.completed") currentOnComplete?.();
+      },
+    });
+  }
+  return paddleLoadPromise;
 }
 
-/** Redirects to the Stripe Billing Portal to manage/cancel an existing subscription. */
+/**
+ * Opens the Paddle checkout overlay to start a new subscription. `plan` is
+ * "monthly" (default) or "annual". `onComplete` fires once the customer
+ * finishes paying (webhook may take a moment longer to flip
+ * subscription_status — caller should still refresh the profile here for
+ * immediate-feeling feedback).
+ */
+export async function startCheckout(plan, email, userId, onComplete) {
+  const paddle = await loadPaddle();
+  if (!paddle) return { error: "Checkout couldn't load — try again?" };
+
+  currentOnComplete = onComplete;
+  paddle.Checkout.open({
+    items: [{ priceId: PADDLE_PRICE_IDS[plan] ?? PADDLE_PRICE_IDS.monthly, quantity: 1 }],
+    customer: { email },
+    customData: { supabase_user_id: userId },
+  });
+  return { error: null };
+}
+
+/** Opens the Paddle customer portal to manage/cancel an existing subscription — in the system browser on native, since Android apps can't host a checkout/portal flow in-webview per Play Store policy. */
 export async function openBillingPortal() {
   const { url, error } = await callFunction("create-portal-session");
-  if (url) window.location.href = url;
+  if (url) await openUrl(url);
   return { error };
 }

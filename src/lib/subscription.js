@@ -23,22 +23,27 @@ export function currentPeriodKey(now = new Date()) {
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
 }
 
-/** Resets the monthly debrief counter once the calendar month has rolled over. */
+/** Resets the monthly debrief counter (and any ad-earned bonus) once the calendar month has rolled over. */
 export function ensureDebriefPeriodFresh(profile, now = new Date()) {
   const key = currentPeriodKey(now);
   if (profile.debrief_period === key) return profile;
-  return { ...profile, debrief_period: key, debrief_count: 0 };
+  return { ...profile, debrief_period: key, debrief_count: 0, debrief_bonus_count: 0 };
+}
+
+/** Total debriefs allowed this month for a free user — the base limit plus any earned by watching a rewarded ad (Android only, see useRewardedAd.js). */
+function effectiveDebriefLimit(profile) {
+  return FREE_DEBRIEF_LIMIT + (profile.debrief_bonus_count || 0);
 }
 
 export function hasFullDebriefsRemaining(profile, user) {
   if (isAdmin(user) || isPremium(profile)) return true;
-  return (profile.debrief_count || 0) < FREE_DEBRIEF_LIMIT;
+  return (profile.debrief_count || 0) < effectiveDebriefLimit(profile);
 }
 
 /** How many full debriefs are left this month, or null if unlimited. */
 export function debriefsRemaining(profile, user) {
   if (isAdmin(user) || isPremium(profile)) return null;
-  return Math.max(0, FREE_DEBRIEF_LIMIT - (profile.debrief_count || 0));
+  return Math.max(0, effectiveDebriefLimit(profile) - (profile.debrief_count || 0));
 }
 
 // Second paywall lever (Phase 2, deferred at launch): the Recall drill is

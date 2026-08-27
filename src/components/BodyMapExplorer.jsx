@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronRight, Search } from "lucide-react";
-import { BODY_REGIONS, MODULES } from "@/lib/modules";
+import { BODY_REGIONS } from "@/lib/modules";
 import { CONDITION_REFERENCE } from "@/data/conditionReference";
+import { CONDITION_ANNOTATIONS } from "@/data/conditionAnnotations";
 import { referenceEntriesForRegion } from "@/lib/conditionReferenceRegions";
-import { findMatchingCase } from "@/lib/conditionReferenceMatch";
+import { findAnnotation } from "@/lib/conditionAnnotations";
 import { cn } from "@/lib/utils";
 import Mascot from "@/components/Mascot";
 import BodyFigure from "@/components/BodyFigure";
@@ -34,83 +36,80 @@ const HOTSPOTS = {
   ankle_foot: { left: 39.2, top: 88.6 },
 };
 
-// A joint/region tap browses conditions, not cases — several cases can
-// share a diagnosis, so this collapses to one row per distinct diagnosis
-// (keeping the first case as the representative to open), alphabetized
-// like a reference index rather than ordered by whatever the case data
-// happens to be sorted by.
-function toConditionList(cases) {
-  const seen = new Set();
-  const unique = [];
-  for (const c of cases) {
-    if (seen.has(c.diagnosis)) continue;
-    seen.add(c.diagnosis);
-    unique.push(c);
-  }
-  return unique.sort((a, b) => a.diagnosis.localeCompare(b.diagnosis));
-}
-
-/** Reference-doc entries for this region that don't already have a case above — shown as "coming soon," not clickable, and never duplicating a real listing. */
-function referenceOnlyEntries(regionId, allCases) {
+// Explore is a reference library, not a case browser — every row here is a
+// condition from the taxonomy (src/data/conditionReference.js). Entries with
+// an annotated write-up open the cited reference page; the rest show as
+// "coming soon" so the full taxonomy stays visible.
+function referenceEntries(regionId) {
   return referenceEntriesForRegion(regionId, CONDITION_REFERENCE)
-    .filter((e) => !findMatchingCase(e.name, allCases))
+    .slice()
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-function ConditionList({ cases, referenceOnly, onOpenCase }) {
-  if (cases.length === 0 && referenceOnly.length === 0) return null;
+function regionHasAnnotatedEntry(regionId) {
+  return referenceEntriesForRegion(regionId, CONDITION_REFERENCE).some((e) =>
+    findAnnotation(e.name, CONDITION_ANNOTATIONS)
+  );
+}
+
+function ConditionList({ entries, onOpenReference }) {
+  if (entries.length === 0) return null;
   return (
     <ul className="space-y-2">
-      {toConditionList(cases).map((c) => (
-        <li key={c.id}>
-          <button
-            onClick={() => onOpenCase(c.id)}
-            className="flex w-full items-center justify-between gap-2 rounded-xl border-2 border-border bg-card px-4 py-3 text-left text-sm font-semibold transition-colors hover:border-primary"
-          >
-            {c.diagnosis}
-            <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
-          </button>
-        </li>
-      ))}
-      {referenceOnly.map((e, i) => (
-        <li key={`ref-${i}`}>
-          <div className="flex items-center justify-between gap-2 rounded-xl border-2 border-dashed border-border px-4 py-3 text-sm text-muted-foreground">
-            <span>
-              {e.name}
-              {e.redFlag && <span className="ml-1.5">🚩</span>}
-            </span>
-            <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold">Coming soon</span>
-          </div>
-        </li>
-      ))}
+      {entries.map((e, i) => {
+        const annotation = findAnnotation(e.name, CONDITION_ANNOTATIONS);
+        if (annotation) {
+          return (
+            <li key={`ref-${i}`}>
+              <button
+                onClick={() => onOpenReference(annotation.slug)}
+                className="flex w-full items-center justify-between gap-2 rounded-xl border-2 border-border bg-card px-4 py-3 text-left text-sm font-semibold transition-colors hover:border-primary"
+              >
+                <span>
+                  {e.name}
+                  {e.redFlag && <span className="ml-1.5">🚩</span>}
+                </span>
+                <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+              </button>
+            </li>
+          );
+        }
+        return (
+          <li key={`ref-${i}`}>
+            <div className="flex items-center justify-between gap-2 rounded-xl border-2 border-dashed border-border px-4 py-3 text-sm text-muted-foreground">
+              <span>
+                {e.name}
+                {e.redFlag && <span className="ml-1.5">🚩</span>}
+              </span>
+              <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold">Coming soon</span>
+            </div>
+          </li>
+        );
+      })}
     </ul>
   );
 }
 
-export default function BodyMapExplorer({ cases, onOpenCase }) {
+export default function BodyMapExplorer() {
+  const navigate = useNavigate();
+  const onOpenReference = (slug) => navigate(`/reference/${slug}`);
   const [selectedRegion, setSelectedRegion] = useState(null);
-  const [selectedSpecialty, setSelectedSpecialty] = useState(null);
   const [query, setQuery] = useState("");
 
-  const scoped = selectedSpecialty ? (cases || []).filter((c) => c.module === selectedSpecialty) : cases || [];
-  const activeRegionIds = new Set(scoped.map((c) => c.body_region).filter(Boolean));
-  // A hotspot also lights up if the reference doc has entries for it, even
-  // before any real case exists there — signals "there's real content to
-  // browse here," not just "there's something to practice."
-  for (const region of BODY_REGIONS) {
-    if (referenceEntriesForRegion(region.id, CONDITION_REFERENCE).length > 0) activeRegionIds.add(region.id);
-  }
+  // A hotspot lights up when the reference library has an annotated entry
+  // for it — signals "there's real content to read here."
+  const activeRegionIds = new Set(
+    BODY_REGIONS.filter((r) => regionHasAnnotatedEntry(r.id)).map((r) => r.id)
+  );
 
   const region = BODY_REGIONS.find((r) => r.id === selectedRegion);
-  const regionMatches = selectedRegion ? scoped.filter((c) => c.body_region === selectedRegion) : [];
-  const regionReferenceOnly = selectedRegion ? referenceOnlyEntries(selectedRegion, cases) : [];
+  const regionEntries = selectedRegion ? referenceEntries(selectedRegion) : [];
 
   const trimmedQuery = query.trim().toLowerCase();
-  const searchMatches = trimmedQuery
-    ? scoped.filter((c) => `${c.title} ${c.presenting_complaint}`.toLowerCase().includes(trimmedQuery))
-    : [];
-  const searchReferenceOnly = trimmedQuery
-    ? CONDITION_REFERENCE.filter((e) => e.name.toLowerCase().includes(trimmedQuery) && !findMatchingCase(e.name, cases))
+  const searchEntries = trimmedQuery
+    ? CONDITION_REFERENCE.filter((e) => e.name.toLowerCase().includes(trimmedQuery)).sort((a, b) =>
+        a.name.localeCompare(b.name)
+      )
     : [];
 
   return (
@@ -124,30 +123,6 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-      </div>
-
-      <div className="mb-3 flex flex-wrap justify-center gap-2">
-        <button
-          onClick={() => setSelectedSpecialty(null)}
-          className={cn(
-            "rounded-full border px-3 py-1 text-xs font-semibold",
-            !selectedSpecialty ? "border-primary bg-accent text-primary" : "border-border text-muted-foreground"
-          )}
-        >
-          All specialties
-        </button>
-        {MODULES.map((m) => (
-          <button
-            key={m.id}
-            onClick={() => setSelectedSpecialty(m.id)}
-            className={cn(
-              "rounded-full border px-3 py-1 text-xs font-semibold",
-              selectedSpecialty === m.id ? "border-primary bg-accent text-primary" : "border-border text-muted-foreground"
-            )}
-          >
-            {m.name}
-          </button>
-        ))}
       </div>
 
       <div className="mb-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
@@ -193,26 +168,26 @@ export default function BodyMapExplorer({ cases, onOpenCase }) {
       {trimmedQuery ? (
         <div className="mt-5">
           <h3 className="mb-2 text-lg font-black tracking-tight">Search results</h3>
-          {searchMatches.length === 0 && searchReferenceOnly.length === 0 ? (
+          {searchEntries.length === 0 ? (
             <div className="flex flex-col items-center gap-2 py-4 text-center">
               <Mascot mood="curious" animation="searching" className="h-20 w-20" />
               <p className="text-sm text-muted-foreground">No conditions match "{query.trim()}".</p>
             </div>
           ) : (
-            <ConditionList cases={searchMatches} referenceOnly={searchReferenceOnly} onOpenCase={onOpenCase} />
+            <ConditionList entries={searchEntries} onOpenReference={onOpenReference} />
           )}
         </div>
       ) : (
         region && (
           <div className="mt-5">
             <h3 className="mb-2 text-lg font-black tracking-tight">{region.label}</h3>
-            {regionMatches.length === 0 && regionReferenceOnly.length === 0 ? (
+            {regionEntries.length === 0 ? (
               <div className="flex flex-col items-center gap-2 py-4 text-center">
                 <Mascot mood="curious" animation="searching" className="h-20 w-20" />
                 <p className="text-sm text-muted-foreground">No conditions here yet.</p>
               </div>
             ) : (
-              <ConditionList cases={regionMatches} referenceOnly={regionReferenceOnly} onOpenCase={onOpenCase} />
+              <ConditionList entries={regionEntries} onOpenReference={onOpenReference} />
             )}
           </div>
         )

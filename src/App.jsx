@@ -1,6 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "@/lib/AuthContext";
 import { ProfileProvider } from "@/lib/ProfileContext";
+import { useAndroidBackButton } from "@/lib/useAndroidBackButton";
+import { useAdMobInit } from "@/lib/useAdMobInit";
 import ScrollToTop from "@/components/ScrollToTop";
 import AppLayout from "@/components/AppLayout";
 import RequireAuth, { RequireBaseline } from "@/components/RequireAuth";
@@ -20,6 +22,7 @@ import Groups from "@/pages/Groups";
 import SubmitCase from "@/pages/SubmitCase";
 import Explore from "@/pages/Explore";
 import ConditionInfo from "@/pages/ConditionInfo";
+import ConditionReferenceInfo from "@/pages/ConditionReferenceInfo";
 import ModuleDetail from "@/pages/ModuleDetail";
 import Leaderboard from "@/pages/Leaderboard";
 import Profile from "@/pages/Profile";
@@ -29,12 +32,19 @@ import AdminFeedback from "@/pages/AdminFeedback";
 import AdminDailyGameReview from "@/pages/AdminDailyGameReview";
 import OsceCheckpoint from "@/pages/OsceCheckpoint";
 
+function AndroidBackButton() {
+  useAndroidBackButton();
+  return null;
+}
+
 export default function App() {
+  useAdMobInit();
   return (
     <AuthProvider>
       <ProfileProvider>
         <BrowserRouter>
           <ScrollToTop />
+          <AndroidBackButton />
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -54,6 +64,7 @@ export default function App() {
                   <Route path="/submit-case" element={<SubmitCase />} />
                   <Route path="/explore" element={<Explore />} />
                   <Route path="/condition/:caseId" element={<ConditionInfo />} />
+                  <Route path="/reference/:slug" element={<ConditionReferenceInfo />} />
                   <Route path="/module/:id" element={<ModuleDetail />} />
                   <Route path="/leaderboard" element={<Leaderboard />} />
                   <Route path="/profile" element={<Profile />} />

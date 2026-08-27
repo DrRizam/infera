@@ -1,14 +1,16 @@
-// One-off icon generator — rasterizes scripts/flex-icon.svg into the PWA/
-// favicon PNGs the app already references (index.html, manifest.json).
-// Not part of the build; run manually whenever the source SVG changes:
+// One-off icon generator — resizes scripts/icon-source.png (a clean crop of
+// the flexing-mascot tile from Images/Icon.jpeg's contact sheet — see
+// generate-android-icons.mjs for how it was cropped) into the PWA/favicon
+// PNGs the app already references (index.html, manifest.json).
+// Not part of the build; run manually whenever the source image changes:
 //   node scripts/generate-icons.mjs
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { Resvg } from "@resvg/resvg-js";
+import sharp from "sharp";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const svg = readFileSync(join(__dirname, "flex-icon.svg"), "utf-8");
+const source = readFileSync(join(__dirname, "icon-source.png"));
 const publicDir = join(__dirname, "..", "public");
 
 const targets = [
@@ -19,8 +21,7 @@ const targets = [
 ];
 
 for (const { file, size } of targets) {
-  const resvg = new Resvg(svg, { fitTo: { mode: "width", value: size } });
-  const png = resvg.render().asPng();
+  const png = await sharp(source).resize(size, size).png().toBuffer();
   writeFileSync(join(publicDir, file), png);
   console.log(`wrote ${file} (${size}x${size})`);
 }

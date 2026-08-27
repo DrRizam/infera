@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Capacitor } from "@capacitor/core";
 import { Settings as SettingsIcon, Sparkles } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
@@ -31,22 +32,11 @@ export default function Settings() {
   const { profile, setProfile, refreshProfile } = useProfile();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const [checkoutNotice, setCheckoutNotice] = useState("");
   const [billingBusy, setBillingBusy] = useState(false);
   const [billingError, setBillingError] = useState("");
   const [billingPlan, setBillingPlan] = useState("monthly");
-
-  useEffect(() => {
-    if (searchParams.get("checkout") === "success") {
-      refreshProfile();
-      setCheckoutNotice("You're subscribed — thanks!");
-      searchParams.delete("checkout");
-      setSearchParams(searchParams, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const admin = isAdmin(user);
   const premium = isPremium(profile);
@@ -146,9 +136,10 @@ export default function Settings() {
   const handleSubscribe = async () => {
     setBillingBusy(true);
     setBillingError("");
-    const { error } = await startCheckout(billingPlan);
-    // Only reachable if it DIDN'T redirect — a successful call navigates
-    // away before this line would matter.
+    const { error } = await startCheckout(billingPlan, user.email, user.id, () => {
+      refreshProfile();
+      setCheckoutNotice("You're subscribed — thanks!");
+    });
     setBillingBusy(false);
     if (error) setBillingError(error);
   };
@@ -222,6 +213,12 @@ export default function Settings() {
             <Button variant="outline" className="w-full" onClick={handleManage} disabled={billingBusy}>
               {billingBusy ? "Opening…" : "Manage subscription"}
             </Button>
+          ) : Capacitor.isNativePlatform() ? (
+            <p className="text-xs text-muted-foreground">
+              Upgrades are handled on the web — sign in at{" "}
+              <span className="font-medium text-foreground">infera-app.com</span> to go Premium, then come
+              back here.
+            </p>
           ) : (
             <>
               <div className="inline-flex w-full rounded-full border border-border bg-muted p-0.5 text-xs font-semibold">

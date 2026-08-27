@@ -3,6 +3,7 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { Award, Brain, Flame, Home, LogOut, Shield, Trophy, User, Zap } from "lucide-react";
 import LevelRing from "@/components/LevelRing";
 import NotificationBell from "@/components/NotificationBell";
+import AdBanner from "@/components/AdBanner";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { levelFromXp, retentionStats } from "@/lib/gamification";
@@ -47,6 +48,7 @@ export default function AppLayout() {
 
   return (
     <div className="min-h-screen bg-background pb-20 lg:pb-24">
+      <AdBanner />
       <header className="sticky top-0 z-20 border-b-2 border-border bg-card px-4 py-3 sm:px-6">
         <div className="mx-auto flex max-w-6xl items-center gap-4">
           <div className="hidden shrink-0 items-center gap-2 lg:flex">

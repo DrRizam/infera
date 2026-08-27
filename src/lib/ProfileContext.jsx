@@ -36,7 +36,13 @@ export function ProfileProvider({ children }) {
     return () => {
       cancelled = true;
     };
-  }, [user]);
+    // Keyed on the user's id, not the `user` object itself — Supabase
+    // hands back a new session/user object on every token refresh
+    // (including the one it fires when a tab regains focus), which would
+    // otherwise re-trigger this fetch — and a "Loading…" flash — on every
+    // tab switch even though the signed-in user hasn't actually changed.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
   const setProfile = (update) => {
     setProfileState((prev) => {

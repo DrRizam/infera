@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Infera</string>
+    <string name="title_activity_main">Infera</string>
+    <string name="package_name">com.infera.app</string>
+    <string name="custom_url_scheme">com.infera.app</string>
+</resources>

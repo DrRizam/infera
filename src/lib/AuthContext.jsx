@@ -1,5 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { Capacitor } from "@capacitor/core";
+import { App as CapacitorApp } from "@capacitor/app";
+import { Browser } from "@capacitor/browser";
 import { supabase } from "@/lib/supabaseClient";
+
+// Custom scheme registered on the Android intent-filter (see
+// android/app/src/main/AndroidManifest.xml) so Supabase's OAuth redirect can
+// hand control back to the packaged app instead of Capacitor's internal
+// https://localhost origin.
+const NATIVE_OAUTH_REDIRECT = "com.infera.app://auth-callback";
 
 const AuthContext = createContext(null);
 
@@ -20,12 +29,37 @@ export function AuthProvider({ children }) {
     return () => listener.subscription.unsubscribe();
   }, []);
 
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) return;
+
+    const sub = CapacitorApp.addListener("appUrlOpen", async ({ url }) => {
+      if (!url.startsWith(NATIVE_OAUTH_REDIRECT)) return;
+      await supabase.auth.exchangeCodeForSession(url);
+      await Browser.close();
+    });
+
+    return () => {
+      sub.then((handle) => handle.remove());
+    };
+  }, []);
+
   const signUp = (email, password, fullName) =>
     supabase.auth.signUp({ email, password, options: { data: { full_name: fullName } } });
   const signIn = (email, password) => supabase.auth.signInWithPassword({ email, password });
   const signOut = () => supabase.auth.signOut();
-  const signInWithGoogle = () =>
-    supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin } });
+  const signInWithGoogle = async () => {
+    if (!Capacitor.isNativePlatform()) {
+      return supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin } });
+    }
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: NATIVE_OAUTH_REDIRECT, skipBrowserRedirect: true },
+    });
+    if (error) return { data, error };
+    await Browser.open({ url: data.url });
+    return { data, error };
+  };
 
   const value = { session, user: session?.user ?? null, loading, signUp, signIn, signOut, signInWithGoogle };
 

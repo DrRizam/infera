@@ -18,14 +18,20 @@ create table public.profiles (
   -- Subscription columns are real Postgres columns, deliberately NOT part
   -- of `state` — state is client-writable (see the profiles_update_own
   -- policy + the column grant below), and letting a user set their own
-  -- subscription status would be a free-upgrade exploit. Only the Stripe
-  -- webhook Edge Function (service-role key, bypasses RLS) ever writes
-  -- these.
+  -- subscription status would be a free-upgrade exploit. Only the Paddle
+  -- and RevenueCat webhook Edge Functions (service-role key, bypasses RLS)
+  -- ever write these.
   subscription_status text not null default 'free'
     check (subscription_status in ('free', 'active', 'past_due', 'canceled')),
-  stripe_customer_id text,
-  stripe_subscription_id text,
+  paddle_customer_id text,
+  paddle_subscription_id text,
   subscription_current_period_end timestamptz,
+  -- Which processor currently grants premium — null for free users. Needed
+  -- because "Manage subscription" has to send a Play Billing subscriber to
+  -- the Play Store's own subscription page, not Paddle's portal (a
+  -- play_store subscriber has no Paddle customer/subscription record).
+  subscription_source text
+    check (subscription_source is null or subscription_source in ('paddle', 'play_store')),
   state jsonb not null default '{}'::jsonb,
   updated_at timestamptz not null default now()
 );
@@ -219,9 +225,9 @@ create policy profiles_update_own on public.profiles
 -- raw .update() call from devtools. Column-level grants close that: an
 -- authenticated client can only ever touch the columns listed here. The
 -- subscription_* columns are deliberately absent -- only the service-role
--- key (used by the Stripe webhook Edge Function) can write them.
+-- key (used by the Paddle webhook Edge Function) can write them.
 revoke update on public.profiles from authenticated;
-grant update (display_name, clinic_name, country, role, role_other_label, phone, email_opt_in, state)
+grant update (display_name, clinic_name, country, role, role_other_label, phone, email_opt_in, state, updated_at)
   on public.profiles to authenticated;
 
 -- No update/delete policy on case_attempts at all -- append-only.
@@ -297,10 +303,25 @@ create policy game_groups_select_member on public.game_groups
 
 -- A member can see every member row for groups they're in (not just their
 -- own), so a "who's in this group" list is possible without a separate RPC.
+-- Routed through a security-definer helper rather than a plain EXISTS
+-- subquery on game_group_members itself -- a policy on a table can't query
+-- that same table directly, Postgres raises "infinite recursion detected
+-- in policy" (42P17) because evaluating the subquery re-triggers the
+-- policy. The helper function bypasses RLS internally, breaking the loop.
+create or replace function public.is_game_group_member(target_group_id uuid)
+returns boolean
+language sql security definer set search_path = public stable as $$
+  select exists (
+    select 1 from public.game_group_members
+    where group_id = target_group_id and user_id = auth.uid()
+  );
+$$;
+grant execute on function public.is_game_group_member(uuid) to authenticated;
+
 create policy game_group_members_select on public.game_group_members
   for select using (
     user_id = auth.uid()
-    or exists (select 1 from public.game_group_members me where me.group_id = game_group_members.group_id and me.user_id = auth.uid())
+    or public.is_game_group_member(group_id)
   );
 
 -- A user can see their own follows on either side (who they follow, who

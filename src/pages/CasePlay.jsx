@@ -22,7 +22,9 @@ import {
   updateMastery,
   xpForCase,
 } from "@/lib/gamification";
-import { ensureDebriefPeriodFresh, hasFullDebriefsRemaining } from "@/lib/subscription";
+import { ensureDebriefPeriodFresh, hasFullDebriefsRemaining, isPremium } from "@/lib/subscription";
+import { useRewardedAd } from "@/lib/useRewardedAd";
+import { Capacitor } from "@capacitor/core";
 import CaseStageHeader from "@/components/case/CaseStageHeader";
 import PresentationStage from "@/components/case/PresentationStage";
 import HistoryStage from "@/components/case/HistoryStage";
@@ -53,6 +55,7 @@ export default function CasePlay() {
   const { profile, setProfile } = useProfile();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const rewardedAd = useRewardedAd();
 
   const clinicalCase = useMemo(() => getCase(caseId), [caseId]);
   useDocumentTitle(clinicalCase?.title || "Case");
@@ -163,6 +166,17 @@ export default function CasePlay() {
     setStageIdx(stages.length - 1);
   };
 
+  // Rewarded-ad unlock for a limited debrief — grants +1 debrief for the
+  // rest of the month (see debrief_bonus_count in subscription.js) and
+  // unlocks the debrief already on screen immediately, no reload needed.
+  const canWatchAdForDebrief = Capacitor.isNativePlatform() && !isPremium(profile);
+  const handleWatchAdForDebrief = async () => {
+    const earned = await rewardedAd.show();
+    if (!earned) return;
+    setProfile((prev) => ({ ...prev, debrief_bonus_count: (prev.debrief_bonus_count || 0) + 1 }));
+    setResult((prev) => (prev ? { ...prev, debriefLimited: false } : prev));
+  };
+
   return (
     <div className="mx-auto max-w-2xl px-4 py-6">
       {isCotd && (
@@ -248,6 +262,8 @@ export default function CasePlay() {
           debriefLimited={result.debriefLimited}
           surpriseChest={result.surpriseChest}
           cotdElapsedLabel={result.cotdElapsedLabel}
+          canWatchAdForDebrief={canWatchAdForDebrief && rewardedAd.ready}
+          onWatchAd={handleWatchAdForDebrief}
           onDone={() => navigate("/")}
           onUpgrade={() => navigate("/settings")}
         />
