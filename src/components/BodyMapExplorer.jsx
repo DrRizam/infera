@@ -30,7 +30,9 @@ const HOTSPOTS = {
   wrist_hand: { left: 6.9, top: 52.3 },
   chest: { left: 49.9, top: 25.9 },
   pelvis: { left: 49.9, top: 49.7 },
-  hip: { left: 32.8, top: 53.7 },
+  // On the hip crease over the joint (anterior/lateral hip), not the upper
+  // thigh — level with the groin, above the quadriceps mass.
+  hip: { left: 35, top: 45 },
   knee: { left: 40.1, top: 68.8 },
   lower_leg: { left: 38.8, top: 75.8 },
   ankle_foot: { left: 39.2, top: 88.6 },
