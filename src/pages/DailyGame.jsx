@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
-import { CheckCircle2, Flame, PenSquare, Share2, Stethoscope, Users, XCircle } from "lucide-react";
+import { CheckCircle2, Flame, PenSquare, Search, Share2, Stethoscope, Users, X, XCircle } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
 import {
   ATTRIBUTE_KEYS,
@@ -16,6 +17,7 @@ import {
   visibleClueCount,
 } from "@/lib/dailyGame";
 import { fetchApprovedCases, fetchGameStats, fetchOrCreateAttempt, saveAttempt, saveGameStats } from "@/lib/dailyGameStore";
+import { CONDITION_REFERENCE } from "@/data/conditionReference";
 import { playFeedback } from "@/lib/sound";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import Mascot from "@/components/Mascot";
@@ -25,6 +27,94 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 const ATTRIBUTE_LABELS = { region: "Region", system: "System", tissue: "Tissue", chronicity: "Chronicity", mechanism: "Mechanism" };
+
+/**
+ * Full-screen diagnosis picker — search + the entire condition dictionary
+ * (case bank + reference taxonomy) as one scrollable list. A body portal so
+ * it's never trapped by the route-transition wrapper's transform, owns its
+ * own scroll, and can't extend the page.
+ */
+function ConditionPicker({ options, onPick, onClose }) {
+  const [query, setQuery] = useState("");
+  const searchRef = useRef(null);
+
+  useEffect(() => {
+    searchRef.current?.focus();
+    const onKey = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [onClose]);
+
+  const CAP = 300;
+  const results = useMemo(() => {
+    const q = query.trim();
+    return q ? filterDiagnosisOptions(options, q, CAP) : options.slice(0, CAP);
+  }, [query, options]);
+
+  return createPortal(
+    <div className="fixed inset-0 z-50 flex bg-black/40" onClick={onClose}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Choose a diagnosis"
+        onClick={(e) => e.stopPropagation()}
+        className="mx-auto mt-auto flex h-[85dvh] w-full max-w-md flex-col rounded-t-2xl border-2 border-border bg-card sm:my-auto sm:h-[80dvh] sm:rounded-2xl"
+      >
+        <div className="flex items-center gap-2 border-b-2 border-border p-3">
+          <div className="relative flex-1">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              ref={searchRef}
+              className="pl-9"
+              placeholder="Search all conditions…"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && results[0]) {
+                  e.preventDefault();
+                  onPick(results[0].label);
+                }
+              }}
+            />
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="shrink-0 rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        <div className="min-h-0 flex-1 overflow-y-auto p-1">
+          {results.length === 0 ? (
+            <p className="p-6 text-center text-sm text-muted-foreground">No conditions match "{query.trim()}".</p>
+          ) : (
+            results.map((o) => (
+              <button
+                key={o.label}
+                type="button"
+                onClick={() => onPick(o.label)}
+                className="block w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium hover:bg-muted"
+              >
+                {o.label}
+              </button>
+            ))
+          )}
+          {results.length === CAP && (
+            <p className="p-3 text-center text-xs text-muted-foreground">Showing the first {CAP} — keep typing to narrow it down.</p>
+          )}
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
 
 const ATTRIBUTE_STATUS_CLASS = {
   match: "bg-emerald-500",
@@ -63,8 +153,7 @@ export default function DailyGame() {
   const [stats, setStats] = useState(null);
   const [guessText, setGuessText] = useState("");
   const [shareCopied, setShareCopied] = useState(false);
-  const [suggestionsOpen, setSuggestionsOpen] = useState(false);
-  const [activeSuggestion, setActiveSuggestion] = useState(-1);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -89,35 +178,14 @@ export default function DailyGame() {
     };
   }, [user.id]);
 
-  const diagnosisOptions = useMemo(() => buildDiagnosisOptions(caseBank), [caseBank]);
-  const suggestions = suggestionsOpen ? filterDiagnosisOptions(diagnosisOptions, guessText) : [];
-
-  const selectSuggestion = (option) => {
-    setGuessText(option.label);
-    setSuggestionsOpen(false);
-    setActiveSuggestion(-1);
-  };
-
-  const handleGuessKeyDown = (e) => {
-    if (!suggestionsOpen || suggestions.length === 0) return;
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setActiveSuggestion((i) => Math.min(i + 1, suggestions.length - 1));
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setActiveSuggestion((i) => Math.max(i - 1, 0));
-    } else if (e.key === "Enter" && activeSuggestion >= 0) {
-      e.preventDefault();
-      selectSuggestion(suggestions[activeSuggestion]);
-    } else if (e.key === "Escape") {
-      setSuggestionsOpen(false);
-    }
-  };
+  const diagnosisOptions = useMemo(
+    () => buildDiagnosisOptions(caseBank, CONDITION_REFERENCE.map((e) => e.name)),
+    [caseBank]
+  );
 
   const handleGuess = async (e) => {
     e.preventDefault();
     if (!attempt || !targetCase) return;
-    setSuggestionsOpen(false);
 
     // Every submission counts now, recognized or not — an unrecognized
     // guess just can't show attribute matches (attributeMatches handles a
@@ -248,46 +316,32 @@ export default function DailyGame() {
 
       {!finished && (
         <form className="space-y-2" onSubmit={handleGuess}>
-          <div className="relative">
-            <Input
-              aria-label="Your guess"
-              placeholder="Enter a diagnosis…"
-              autoComplete="off"
-              value={guessText}
-              onChange={(e) => {
-                setGuessText(e.target.value);
-                setSuggestionsOpen(true);
-                setActiveSuggestion(-1);
-              }}
-              onFocus={() => setSuggestionsOpen(true)}
-              onKeyDown={handleGuessKeyDown}
-            />
-            {suggestions.length > 0 && (
-              <>
-                <div className="fixed inset-0 z-10" onClick={() => setSuggestionsOpen(false)} />
-                <div className="absolute left-0 right-0 top-full z-20 mt-1 max-h-56 overflow-y-auto rounded-xl border-2 border-border bg-card p-1 shadow-elevated">
-                  {suggestions.map((opt, i) => (
-                    <button
-                      key={opt.label}
-                      type="button"
-                      onMouseDown={(e) => e.preventDefault()}
-                      onClick={() => selectSuggestion(opt)}
-                      className={cn(
-                        "flex w-full items-center rounded-lg px-3 py-2 text-left text-sm font-semibold hover:bg-muted",
-                        i === activeSuggestion && "bg-accent text-primary"
-                      )}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-              </>
+          <button
+            type="button"
+            onClick={() => setPickerOpen(true)}
+            className={cn(
+              "flex h-11 w-full items-center justify-between gap-2 rounded-md border border-input bg-background px-3 text-left text-sm",
+              guessText ? "font-semibold" : "text-muted-foreground"
             )}
-          </div>
+          >
+            <span className="truncate">{guessText || "Choose a diagnosis…"}</span>
+            <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
+          </button>
           <Button type="submit" className="w-full" disabled={!guessText.trim()}>
             Guess
           </Button>
         </form>
+      )}
+
+      {pickerOpen && (
+        <ConditionPicker
+          options={diagnosisOptions}
+          onPick={(label) => {
+            setGuessText(label);
+            setPickerOpen(false);
+          }}
+          onClose={() => setPickerOpen(false)}
+        />
       )}
 
       {finished && (

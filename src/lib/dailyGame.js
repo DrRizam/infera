@@ -108,12 +108,18 @@ export function findMatchingCase(guess, caseBank) {
 }
 
 /**
- * Distinct guessable terms (diagnosis + synonyms) across the case bank —
- * the same recognition dictionary findMatchingCase checks against,
- * surfaced as autocomplete options so a spelling mistake can be avoided
- * entirely by picking a suggestion instead of free-typing.
+ * Distinct guessable terms surfaced as autocomplete options so a spelling
+ * mistake can be avoided by picking a suggestion instead of free-typing.
+ *
+ * Two sources: the case bank's diagnoses + synonyms (the recognition
+ * dictionary `findMatchingCase` checks against, so these carry a caseId),
+ * and — passed in by the caller — the full condition-reference taxonomy, so
+ * any real diagnosis can be picked even when there's no case behind it yet.
+ * Reference terms carry `caseId: null` (they're vocabulary, not answers —
+ * `findMatchingCase` still decides correctness) and never override a
+ * case-bank term that normalizes the same way.
  */
-export function buildDiagnosisOptions(caseBank) {
+export function buildDiagnosisOptions(caseBank, referenceTerms = []) {
   const seen = new Set();
   const options = [];
   for (const c of caseBank || []) {
@@ -124,6 +130,13 @@ export function buildDiagnosisOptions(caseBank) {
       seen.add(key);
       options.push({ label: term, caseId: c.id });
     }
+  }
+  for (const term of referenceTerms || []) {
+    if (!term) continue;
+    const key = normalizeGuess(term);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    options.push({ label: term, caseId: null });
   }
   return options.sort((a, b) => a.label.localeCompare(b.label));
 }
