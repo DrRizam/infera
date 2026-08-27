@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#FBFAF7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141E24" media="(prefers-color-scheme: dark)" />
+
+    <title>Infera — Clinical Reasoning Practice for Physical Therapy Students</title>
+    <meta
+      name="description"
+      content="Infera — a gamified, diagnosis-last clinical-reasoning trainer for physical therapy professionals and students."
+    />
+    <link rel="canonical" href="https://infera-app.com/" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <style>
+      /* Self-contained. No external fonts or assets — same system stack the
+         app's body uses (src/index.css). Palette mirrors the app's tokens. */
+      :root {
+        --bg: #faf8f5;
+        --surface: #ffffff;
+        --text: #171b27;
+        --text-muted: #52607a; /* darkened from the app's --muted-foreground (#65758b, 4.43:1) to clear AA on --bg */
+        --primary: #276865;
+        --primary-ink: #ffffff;
+        --accent: #e2f3f2;
+        --accent-ink: #1c4a48;
+        --border: #e4dfd8;
+        --radius: 16px;
+        --maxw: 62rem;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0e121b;
+          --surface: #171b27;
+          --text: #f3f5f7;
+          --text-muted: #9aa6b7;
+          --primary: #5ebab7;
+          --primary-ink: #0e121b;
+          --accent: #244241;
+          --accent-ink: #c9e8e7;
+          --border: #292f3d;
+        }
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Avenir Next", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a { color: inherit; }
+      img { max-width: 100%; height: auto; display: block; }
+
+      .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 1.25rem; }
+
+      /* ── Header ─────────────────────────────────────────────── */
+      header {
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.85rem 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        font-size: 1.15rem;
+        text-decoration: none;
+      }
+      .brand .glyph {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 10px;
+        background: var(--primary);
+        color: var(--primary-ink);
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+        font-size: 1rem;
+      }
+
+      /* ── Buttons ────────────────────────────────────────────── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0.7rem 1.35rem;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 1rem;
+        text-decoration: none;
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: transform 0.12s ease, background 0.12s ease;
+      }
+      @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+      .btn-primary { background: var(--primary); color: var(--primary-ink); }
+      .btn-primary:hover { transform: translateY(-1px); }
+      .btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+      .btn-ghost:hover { border-color: var(--primary); }
+      .btn-sm { min-height: 40px; padding: 0.5rem 1rem; font-size: 0.95rem; }
+
+      :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+
+      /* ── Hero ───────────────────────────────────────────────── */
+      .hero { padding: 4.5rem 0 3.5rem; }
+      .eyebrow {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+      h1 {
+        font-size: clamp(2rem, 6vw, 3.25rem);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        font-weight: 900;
+        margin: 0 0 1.1rem;
+        max-width: 20ch;
+      }
+      .lede {
+        font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+        color: var(--text-muted);
+        max-width: 46ch;
+        margin: 0 0 2rem;
+      }
+      .cta-row { display: flex; flex-wrap: wrap; gap: 0.85rem; align-items: center; }
+      .cta-note { font-size: 0.9rem; color: var(--text-muted); }
+
+      /* ── Sections ───────────────────────────────────────────── */
+      section { padding: 3.25rem 0; border-top: 1px solid var(--border); }
+      h2 {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        letter-spacing: -0.02em;
+        font-weight: 900;
+        margin: 0 0 0.6rem;
+      }
+      .section-lede { color: var(--text-muted); max-width: 52ch; margin: 0 0 2rem; }
+
+      .steps { display: grid; gap: 2.5rem; counter-reset: step; }
+      @media (min-width: 760px) { .steps { gap: 3.5rem; } }
+      .step {
+        display: grid;
+        gap: 1.25rem 2rem;
+        align-items: center;
+      }
+      @media (min-width: 760px) {
+        .step { grid-template-columns: 1fr 300px; }
+        .step:nth-child(even) { grid-template-columns: 300px 1fr; }
+        .step:nth-child(even) .step-copy { order: 2; }
+      }
+      .step-shot {
+        margin: 0;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: var(--bg);
+        box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.25);
+        max-width: 300px;
+        justify-self: center;
+      }
+      .step-shot img { width: 100%; height: auto; }
+      .step-copy h3 {
+        margin: 0 0 0.4rem;
+        font-size: 1.15rem;
+        font-weight: 800;
+        display: flex;
+        align-items: baseline;
+        gap: 0.55rem;
+      }
+      .step-copy h3::before {
+        counter-increment: step;
+        content: counter(step);
+        color: var(--primary-ink);
+        background: var(--primary);
+        font-size: 0.8rem;
+        font-weight: 900;
+        width: 1.6rem;
+        height: 1.6rem;
+        border-radius: 999px;
+        display: inline-grid;
+        place-items: center;
+        flex: none;
+        transform: translateY(0.2rem);
+      }
+      .step-copy p { margin: 0; color: var(--text-muted); }
+
+      .scored { display: grid; gap: 0.75rem; }
+      @media (min-width: 640px) { .scored { grid-template-columns: repeat(2, 1fr); } }
+      .scored li {
+        list-style: none;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 0.9rem 1.1rem;
+        font-size: 0.95rem;
+      }
+      .scored li strong { display: block; margin-bottom: 0.15rem; }
+      .scored ul { margin: 0; padding: 0; }
+
+      .who { display: grid; gap: 0.75rem; }
+      @media (min-width: 640px) { .who { grid-template-columns: repeat(3, 1fr); } }
+      .who div {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1rem 1.15rem;
+        background: var(--surface);
+      }
+      .who strong { display: block; }
+      .who span { font-size: 0.9rem; color: var(--text-muted); }
+
+      .note {
+        background: var(--accent);
+        color: var(--accent-ink);
+        border-radius: var(--radius);
+        padding: 1.25rem 1.4rem;
+        font-size: 0.95rem;
+      }
+      .note strong { font-weight: 800; }
+
+      .cta-band { text-align: center; }
+      .cta-band h2 { margin-bottom: 1.25rem; }
+
+      /* ── Footer ─────────────────────────────────────────────── */
+      footer {
+        border-top: 1px solid var(--border);
+        background: var(--surface);
+        padding: 2rem 0;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+      .foot {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem 1.5rem;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .foot nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+      .foot a { text-decoration: none; }
+      .foot a:hover { color: var(--primary); text-decoration: underline; }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="wrap bar">
+        <a class="brand" href="/">
+          <span class="glyph" aria-hidden="true">I</span>
+          <span>Infera</span>
+        </a>
+        <a class="btn btn-ghost btn-sm" id="nav-cta" href="/login">Log in</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" style="border-top: 0">
+        <div class="wrap">
+          <span class="eyebrow">Clinical reasoning practice for physical therapy</span>
+          <h1>You know the special tests. Can you sequence them?</h1>
+          <!-- H1 variants for testing:
+               "Reason like a clinician before you name the diagnosis."
+               "Train the half of the exam your textbook skips." -->
+          <p class="lede">
+            Infera gives you a real patient presentation and makes you commit — what you ask, what
+            you test, what you rule out. The diagnosis comes last, the way it does in clinic.
+          </p>
+          <!-- Lede variant: "Work through MSK and neuro presentations. Build the hypothesis, narrow
+               it, defend it. Get scored on your reasoning, not just your answer." -->
+          <div class="cta-row">
+            <a class="btn btn-primary" id="hero-cta" href="/login">Play your first case — free</a>
+            <!-- CTA variants: "Try a case (60 seconds)" / "Start with a knee case" -->
+            <span class="cta-note">Free during the beta. No card.</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="how-it-works">
+        <div class="wrap">
+          <h2>How a case works</h2>
+          <p class="section-lede">
+            Every case runs the same loop you run in clinic, not the one a multiple-choice question
+            tests. You never see the diagnosis until you've committed to your reasoning. Here's a real
+            one — a runner's knee that isn't what it looks like.
+          </p>
+          <div class="steps">
+            <div class="step">
+              <div class="step-copy">
+                <h3>Meet the patient</h3>
+                <p>
+                  You get the presentation and the complaint — nothing labelled. Anterior knee pain,
+                  six weeks, worse on stairs, still running on it. Where do you start?
+                </p>
+              </div>
+              <figure class="step-shot">
+                <img
+                  src="/marketing/step-presentation.webp"
+                  width="900"
+                  height="942"
+                  alt="A case opens with a patient card: a 27-year-old runner with six weeks of anterior knee pain, worse going down stairs, no injury, training through it."
+                  loading="lazy"
+                />
+              </figure>
+            </div>
+
+            <div class="step">
+              <div class="step-copy">
+                <h3>Commit to a differential</h3>
+                <p>
+                  Before you touch the patient, rank what this could be. This list is what every test
+                  you choose next gets measured against — get the order wrong and the debrief calls it
+                  anchoring.
+                </p>
+              </div>
+              <figure class="step-shot">
+                <img
+                  src="/marketing/step-differential.webp"
+                  width="900"
+                  height="942"
+                  alt="A ranked differential list: patellar tendinopathy, tibial bone-stress injury, meniscal tear, patellofemoral pain — reordered most-likely first."
+                  loading="lazy"
+                />
+              </figure>
+            </div>
+
+            <div class="step">
+              <div class="step-copy">
+                <h3>Test what discriminates</h3>
+                <p>
+                  Pick the examinations that actually separate your top hypotheses — findings reveal
+                  as you go. Ordering everything "to be safe" is scored as over-investigation.
+                </p>
+              </div>
+              <figure class="step-shot">
+                <img
+                  src="/marketing/step-examination.webp"
+                  width="900"
+                  height="1340"
+                  alt="Examination selection: single-leg hop test and focal tibial palpation chosen, each showing its finding and why it matters; unhelpful tests left unpicked."
+                  loading="lazy"
+                />
+              </figure>
+            </div>
+
+            <div class="step">
+              <div class="step-copy">
+                <h3>See the diagnosis — and your reasoning</h3>
+                <p>
+                  Now the answer: tibial bone-stress injury, masquerading as patellofemoral pain. And
+                  a breakdown of every decision — 58% on this attempt, with the differential and
+                  disposition where it slipped — cited to the sources the case was built from.
+                </p>
+              </div>
+              <figure class="step-shot">
+                <img
+                  src="/marketing/step-debrief.webp"
+                  width="900"
+                  height="1951"
+                  alt="The debrief: diagnosis revealed with a source-checked badge, an accuracy score of 58 percent broken down by history, red flags, differential, examinations and disposition, and a 'how you reasoned' list naming the specific errors."
+                  loading="lazy"
+                />
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="what-it-scores">
+        <div class="wrap">
+          <h2>It scores your reasoning, not your guess</h2>
+          <p class="section-lede">
+            A final-answer quiz can't tell anchoring from a lucky guess. Infera weights every
+            decision in the encounter and names the error when your reasoning breaks down.
+          </p>
+          <ul class="scored">
+            <li><strong>History (15%)</strong> Did you ask the discriminating question, or the obvious one?</li>
+            <li><strong>Red-flag screening (25%)</strong> Recall-weighted — a missed screen is the expensive mistake.</li>
+            <li><strong>Differential (20%)</strong> How close the true diagnosis landed to your top pick, and your ordering.</li>
+            <li><strong>Test selection (15%)</strong> Indicated tests raise your score; non-indicated ones cost you.</li>
+            <li><strong>Disposition (25%)</strong> The right level of care, on a five-rung escalation ladder.</li>
+          </ul>
+          <p class="section-lede" style="margin-top: 1.5rem">
+            The debrief names it directly: <em>anchoring</em>, <em>premature closure</em>,
+            <em>over-investigation</em>, <em>under- or over-escalation</em>, <em>incomplete
+            examination</em>. You leave knowing which reasoning habit to fix, not just which case
+            you got wrong.
+          </p>
+        </div>
+      </section>
+
+      <section id="who">
+        <div class="wrap">
+          <h2>Who it's for</h2>
+          <div class="who">
+            <div><strong>DPT students, P1–P3</strong><span>Bridge the gap between knowing tests and knowing when to use them.</span></div>
+            <div><strong>New-grad PTs</strong><span>Build reps on differential diagnosis before the patient is real.</span></div>
+            <div><strong>NPTE review</strong><span>Practice the clinical-decision reasoning the exam actually probes.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="honest">
+        <div class="wrap">
+          <div class="note">
+            <p style="margin: 0">
+              <strong>Where Infera is today.</strong> It's in active beta and free. Case content is
+              checked against clinical references but has not yet been reviewed by a licensed
+              clinician for this app specifically. Every case is a fictional teaching scenario —
+              Infera is a study tool, not a diagnostic tool, and must never be used for decisions
+              about a real patient.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-band">
+        <div class="wrap">
+          <h2>Work your first case now.</h2>
+          <a class="btn btn-primary" href="/login">Play your first case — free</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap foot">
+        <span>&copy; 2026 Infera</span>
+        <nav>
+          <a href="/login">Log in</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
+          <a href="mailto:rizamshaar2014@gmail.com">Contact</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script>
+      // Progressive enhancement only — the page is complete without it.
+      // If a Supabase session token is already in localStorage, this is a
+      // returning signed-in user; point the CTAs at their dashboard instead
+      // of the login screen.
+      (function () {
+        try {
+          var signedIn = Object.keys(localStorage).some(function (k) {
+            return /^sb-.*-auth-token$/.test(k) && localStorage.getItem(k);
+          });
+          if (!signedIn) return;
+          var nav = document.getElementById("nav-cta");
+          var hero = document.getElementById("hero-cta");
+          if (nav) { nav.textContent = "Go to your dashboard"; nav.href = "/home"; }
+          if (hero) { hero.textContent = "Go to your dashboard"; hero.href = "/home"; }
+        } catch (e) {}
+      })();
+    </script>
+  </body>
+</html>

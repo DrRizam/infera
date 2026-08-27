@@ -71,7 +71,7 @@ export default function Recall() {
       <div className="mx-auto max-w-2xl px-4 py-16 text-center">
         <Mascot mood="curious" className="mx-auto h-20 w-20" />
         <p className="mt-2 text-sm text-muted-foreground">No recall items available yet.</p>
-        <Button className="mt-4" onClick={() => navigate("/")}>Back to Learn</Button>
+        <Button className="mt-4" onClick={() => navigate("/home")}>Back to Learn</Button>
       </div>
     );
   }
@@ -88,7 +88,7 @@ export default function Recall() {
         <p className="text-sm text-muted-foreground">
           Items you missed will resurface sooner than the ones you nailed.
         </p>
-        <Button size="lg" onClick={() => navigate("/")}>Done</Button>
+        <Button size="lg" onClick={() => navigate("/home")}>Done</Button>
       </div>
     );
   }

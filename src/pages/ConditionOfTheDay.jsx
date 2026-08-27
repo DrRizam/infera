@@ -31,7 +31,7 @@ export default function ConditionOfTheDay() {
   if (!cotd) {
     return (
       <div className="space-y-4">
-        <Link to="/" className="text-sm text-primary underline">
+        <Link to="/home" className="text-sm text-primary underline">
           ← Back
         </Link>
         <StreakWeek days={weekDays} />
@@ -52,7 +52,7 @@ export default function ConditionOfTheDay() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-3">
-        <Link to="/" className="text-sm text-primary underline">
+        <Link to="/home" className="text-sm text-primary underline">
           ← Back
         </Link>
         <span className="flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-xs font-bold text-primary">

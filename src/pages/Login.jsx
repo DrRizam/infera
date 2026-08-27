@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
@@ -10,8 +10,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function Login() {
-  const { signIn, signUp, signInWithGoogle } = useAuth();
+  const { user, signIn, signUp, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
+
+  // Web OAuth and password-reset links now land back here (the root "/" is the
+  // static marketing page and can't run the Supabase callback). The Supabase
+  // client picks the session out of the URL on load; once `user` is set, move
+  // on. Also covers hitting /login while already signed in.
+  useEffect(() => {
+    if (user) navigate("/home", { replace: true });
+  }, [user, navigate]);
 
   const [mode, setMode] = useState("sign_in"); // "sign_in" | "sign_up" | "forgot_password"
   const [name, setName] = useState("");
@@ -31,7 +39,7 @@ export default function Login() {
 
     if (mode === "forgot_password") {
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin,
+        redirectTo: `${window.location.origin}/login`,
       });
       setSubmitting(false);
       if (resetError) {
@@ -58,7 +66,7 @@ export default function Login() {
       return;
     }
 
-    navigate("/", { replace: true });
+    navigate("/home", { replace: true });
   };
 
   return (

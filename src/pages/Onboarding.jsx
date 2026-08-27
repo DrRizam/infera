@@ -22,7 +22,7 @@ export default function Onboarding() {
   const [experienceLevel, setExperienceLevel] = useState(null);
   const [focusModules, setFocusModules] = useState([]);
 
-  if (profile.baseline_completed) return <Navigate to="/" replace />;
+  if (profile.baseline_completed) return <Navigate to="/home" replace />;
 
   const stage = STAGES[stageIdx];
   const advance = () => setStageIdx((i) => Math.min(i + 1, STAGES.length - 1));
@@ -37,7 +37,7 @@ export default function Onboarding() {
       experience_level: experienceLevel,
       focus_modules: focusModules,
     }));
-    navigate("/", { replace: true });
+    navigate("/home", { replace: true });
   };
 
   return (

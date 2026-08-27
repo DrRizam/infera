@@ -10,7 +10,7 @@ import { levelFromXp, retentionStats } from "@/lib/gamification";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { to: "/", label: "Learn", icon: Home },
+  { to: "/home", label: "Learn", icon: Home },
   { to: "/explore", label: "Explore", icon: Trophy },
   { to: "/leaderboard", label: "Leaderboard", icon: Award },
   { to: "/profile", label: "Profile", icon: User },
@@ -22,7 +22,7 @@ const NAV = [
 // (a case page, /osce, /recall, etc.), which falls back to a plain
 // fade+scale instead of a directional slide.
 function navIndexForPath(pathname) {
-  return NAV.findIndex((n) => (n.to === "/" ? pathname === "/" : pathname.startsWith(n.to)));
+  return NAV.findIndex((n) => (n.to === "/home" ? pathname === "/home" : pathname.startsWith(n.to)));
 }
 
 export default function AppLayout() {
@@ -120,7 +120,7 @@ export default function AppLayout() {
             <NavLink
               key={n.to}
               to={n.to}
-              end={n.to === "/"}
+              end={n.to === "/home"}
               className={({ isActive }) =>
                 cn(
                   "btn-hover flex flex-1 flex-col items-center gap-0.5 rounded-xl py-2 text-[11px] font-bold transition-colors hover:bg-muted hover:text-foreground lg:flex-none lg:flex-row lg:gap-2 lg:px-3 lg:text-sm",

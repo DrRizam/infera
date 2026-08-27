@@ -2,7 +2,7 @@
   "name": "Infera",
   "short_name": "Infera",
   "description": "Infera — a gamified, diagnosis-last clinical-reasoning trainer for physical therapy professionals and students.",
-  "start_url": "/",
+  "start_url": "/home",
   "display": "standalone",
   "background_color": "#FBFAF7",
   "theme_color": "#FBFAF7",

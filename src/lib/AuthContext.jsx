@@ -49,7 +49,13 @@ export function AuthProvider({ children }) {
   const signOut = () => supabase.auth.signOut();
   const signInWithGoogle = async () => {
     if (!Capacitor.isNativePlatform()) {
-      return supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin } });
+      // Back to /login, not "/" — the root is now the static marketing page
+      // and has no JS to complete the OAuth exchange. This URL must be in the
+      // Supabase project's Auth → URL Configuration redirect allowlist.
+      return supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: `${window.location.origin}/login` },
+      });
     }
 
     const { data, error } = await supabase.auth.signInWithOAuth({

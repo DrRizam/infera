@@ -264,7 +264,7 @@ export default function CasePlay() {
           cotdElapsedLabel={result.cotdElapsedLabel}
           canWatchAdForDebrief={canWatchAdForDebrief && rewardedAd.ready}
           onWatchAd={handleWatchAdForDebrief}
-          onDone={() => navigate("/")}
+          onDone={() => navigate("/home")}
           onUpgrade={() => navigate("/settings")}
         />
       )}

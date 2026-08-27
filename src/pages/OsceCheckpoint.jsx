@@ -240,7 +240,7 @@ export default function OsceCheckpoint() {
               </div>
             ))}
             <div className="pt-2 text-center text-sm font-bold text-primary">+{awardedXp} XP</div>
-            <Button className="w-full" onClick={() => navigate("/")}>
+            <Button className="w-full" onClick={() => navigate("/home")}>
               Done
             </Button>
           </CardContent>

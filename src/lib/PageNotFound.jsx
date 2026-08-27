@@ -8,7 +8,7 @@ export default function PageNotFound() {
         <Mascot mood="curious" className="mx-auto mb-3 h-24 w-24" />
         <h1 className="text-2xl font-bold mb-2">Page not found</h1>
         <p className="text-muted-foreground mb-6">That page doesn't exist.</p>
-        <Link to="/" className="text-primary font-semibold underline">
+        <Link to="/home" className="text-primary font-semibold underline">
           Back to Home
         </Link>
       </div>

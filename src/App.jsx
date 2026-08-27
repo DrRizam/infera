@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "@/lib/AuthContext";
 import { ProfileProvider } from "@/lib/ProfileContext";
 import { useAndroidBackButton } from "@/lib/useAndroidBackButton";
@@ -46,6 +46,10 @@ export default function App() {
           <ScrollToTop />
           <AndroidBackButton />
           <Routes>
+            {/* "/" is the static marketing page (served by the CF Worker / the
+                dev middleware) and normally never reaches the SPA. This keeps
+                a stray in-app hit on "/" pointed at the real dashboard. */}
+            <Route path="/" element={<Navigate to="/home" replace />} />
             <Route path="/login" element={<Login />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<Terms />} />
@@ -55,7 +59,7 @@ export default function App() {
                 <Route path="/onboarding" element={<Onboarding />} />
 
                 <Route element={<AppLayout />}>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/home" element={<Home />} />
                   <Route path="/condition-of-the-day" element={<ConditionOfTheDay />} />
                   <Route path="/speed" element={<SpeedRound />} />
                   <Route path="/recall" element={<Recall />} />
