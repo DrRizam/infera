@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { Award, Brain, Flame, Home, LogOut, Shield, Trophy, User, Zap } from "lucide-react";
 import LevelRing from "@/components/LevelRing";
 import NotificationBell from "@/components/NotificationBell";
@@ -55,8 +55,10 @@ export default function AppLayout() {
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-sm font-black text-primary-foreground shadow-sm">I</div>
             <span className="text-lg font-black tracking-tight">infera</span>
           </div>
-          <LevelRing level={lvl.level} progress={lvl.progress} size={48} />
-          <div className="min-w-0 flex-1">
+          <Link to="/profile" aria-label="Your profile" className="shrink-0 rounded-full transition-transform hover:scale-105">
+            <LevelRing level={lvl.level} progress={lvl.progress} size={48} />
+          </Link>
+          <Link to="/profile" className="min-w-0 flex-1 rounded-lg px-1 -mx-1 transition-colors hover:bg-muted">
             <div className="flex items-center justify-between gap-3">
               <div className="truncate text-sm font-bold">{lvl.title}</div>
               <span className="hidden shrink-0 text-xs font-medium text-muted-foreground sm:block">{Math.round(lvl.progress * 100)}% to next level</span>
@@ -64,42 +66,49 @@ export default function AppLayout() {
             <div className="mt-1.5 h-2 w-full rounded-full bg-muted">
               <div className="h-full rounded-full bg-primary transition-[width] duration-500" style={{ width: `${lvl.progress * 100}%` }} />
             </div>
-          </div>
+          </Link>
           <div className="flex shrink-0 items-center gap-1.5 text-xs font-bold sm:gap-2">
-            <span
-              className="status-pill text-orange-600"
-              title={`${profile.streak_count ?? 0}-day streak`}
-              aria-label={`${profile.streak_count ?? 0}-day streak`}
+            <Link
+              to="/profile"
+              className="status-pill text-orange-600 transition-colors hover:border-primary"
+              title={`${profile.streak_count ?? 0}-day streak — open profile`}
+              aria-label={`${profile.streak_count ?? 0}-day streak, open profile`}
             >
               <Flame className="h-3.5 w-3.5" aria-hidden="true" />{profile.streak_count ?? 0}
-            </span>
+            </Link>
             {retention.percent != null && (
-              <span
-                className={cn("status-pill", retention.overdue > 0 ? "text-amber-600" : "text-emerald-600")}
+              <Link
+                to="/recall"
+                className={cn(
+                  "status-pill transition-colors hover:border-primary",
+                  retention.overdue > 0 ? "text-amber-600" : "text-emerald-600"
+                )}
                 title={
                   retention.overdue > 0
-                    ? `${retention.overdue} thing${retention.overdue === 1 ? "" : "s"} overdue for review — retention is dropping`
-                    : "Everything you've learned is still fresh"
+                    ? `${retention.overdue} thing${retention.overdue === 1 ? "" : "s"} overdue — drill Recall`
+                    : "Everything you've learned is still fresh — drill Recall"
                 }
-                aria-label={`Retention ${retention.percent} percent${retention.overdue > 0 ? `, ${retention.overdue} overdue for review` : ""}`}
+                aria-label={`Retention ${retention.percent} percent${retention.overdue > 0 ? `, ${retention.overdue} overdue` : ""}, go to Recall`}
               >
                 <Brain className="h-3.5 w-3.5" aria-hidden="true" />{retention.percent}%
-              </span>
+              </Link>
             )}
-            <span
-              className="status-pill hidden text-sky-600 sm:flex"
-              title="Rest shields"
-              aria-label={`${profile.rest_shields ?? 0} rest shields`}
+            <Link
+              to="/profile"
+              className="status-pill hidden text-sky-600 transition-colors hover:border-primary sm:flex"
+              title={`${profile.rest_shields ?? 0} rest shield${(profile.rest_shields ?? 0) === 1 ? "" : "s"} — open profile`}
+              aria-label={`${profile.rest_shields ?? 0} rest shields, open profile`}
             >
               <Shield className="h-3.5 w-3.5" aria-hidden="true" />{profile.rest_shields ?? 0}
-            </span>
-            <span
-              className="status-pill hidden text-amber-600 sm:flex"
-              title="Total XP"
-              aria-label={`${profile.xp ?? 0} total XP`}
+            </Link>
+            <Link
+              to="/leaderboard"
+              className="status-pill hidden text-amber-600 transition-colors hover:border-primary sm:flex"
+              title={`${profile.xp ?? 0} total XP — open leaderboard`}
+              aria-label={`${profile.xp ?? 0} total XP, open leaderboard`}
             >
               <Zap className="h-3.5 w-3.5" aria-hidden="true" />{profile.xp ?? 0}
-            </span>
+            </Link>
             <NotificationBell />
             <button type="button" title="Sign out" aria-label="Sign out" onClick={signOut} className="logout-btn ml-1 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
               <LogOut className="logout-icon h-4 w-4" />
