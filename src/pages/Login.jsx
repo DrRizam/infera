@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
@@ -157,13 +157,13 @@ export default function Login() {
           </button>
 
           <p className="mt-4 text-center text-xs text-muted-foreground">
-            <Link to="/privacy" className="inline-block py-2 underline">
+            <a href="/privacy" className="inline-block py-2 underline">
               Privacy
-            </Link>{" "}
+            </a>{" "}
             ·{" "}
-            <Link to="/terms" className="inline-block py-2 underline">
+            <a href="/terms" className="inline-block py-2 underline">
               Terms
-            </Link>
+            </a>
           </p>
         </CardContent>
       </Card>

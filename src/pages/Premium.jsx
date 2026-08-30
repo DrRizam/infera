@@ -179,6 +179,14 @@ export default function Premium() {
       >
         Manage account in Settings
       </button>
+
+      <p className="text-center text-[11px] text-muted-foreground">
+        <a href="/terms" className="underline hover:text-foreground">Terms of Service</a>
+        {" · "}
+        <a href="/privacy" className="underline hover:text-foreground">Privacy Policy</a>
+        {" · "}
+        <a href="/refunds" className="underline hover:text-foreground">Refund Policy</a>
+      </p>
     </div>
   );
 }

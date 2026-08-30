@@ -7,18 +7,24 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
- * In production a Cloudflare Worker serves `marketing.html` at `/` (see
+ * In production a Cloudflare Worker serves static HTML for a few routes (see
  * worker/index.js). `vite dev` and `vite preview` don't run that Worker, so
- * this middleware reproduces it locally — `/` gets the static marketing page,
+ * this middleware reproduces it locally — those paths get the static page,
  * everything else stays on the SPA.
  */
-function serveMarketingAtRoot() {
+const STATIC_PAGES = {
+  "/": "marketing.html",
+  "/terms": "terms.html",
+  "/privacy": "privacy.html",
+  "/refunds": "refunds.html",
+};
+
+function serveStaticPages() {
   const middleware = (baseDir) => (req, res, next) => {
-    // Match only "/" — exactly what the production Worker's run_worker_first
-    // scope covers. "/index.html" stays the SPA shell, same as prod.
-    const url = (req.url || "").split("?")[0];
-    if (url === "/") {
-      const file = path.join(baseDir, "marketing.html");
+    const pathname = (req.url || "").split("?")[0].replace(/\/$/, "") || "/";
+    const name = STATIC_PAGES[pathname];
+    if (name) {
+      const file = path.join(baseDir, name);
       if (fs.existsSync(file)) {
         res.setHeader("Content-Type", "text/html; charset=utf-8");
         res.end(fs.readFileSync(file));
@@ -28,7 +34,7 @@ function serveMarketingAtRoot() {
     next();
   };
   return {
-    name: "serve-marketing-at-root",
+    name: "serve-static-pages",
     configureServer(server) {
       server.middlewares.use(middleware(path.resolve(__dirname, "public")));
     },
@@ -39,7 +45,7 @@ function serveMarketingAtRoot() {
 }
 
 export default defineConfig({
-  plugins: [react(), serveMarketingAtRoot()],
+  plugins: [react(), serveStaticPages()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

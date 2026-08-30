@@ -1,0 +1,117 @@
+/* Shared styling for the static legal pages (terms / privacy / refunds).
+   Self-contained, theme-aware, matches the marketing page palette. */
+:root {
+  --bg: #faf8f5;
+  --surface: #ffffff;
+  --text: #171b27;
+  --text-muted: #52607a;
+  --primary: #276865;
+  --border: #e4dfd8;
+  --maxw: 46rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e121b;
+    --surface: #171b27;
+    --text: #f3f5f7;
+    --text-muted: #9aa6b7;
+    --primary: #5ebab7;
+    --border: #292f3d;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Avenir Next", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--primary); }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 1.25rem; }
+
+header {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: var(--text);
+}
+.brand .glyph {
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 9px;
+  background: var(--primary);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 0.95rem;
+}
+.bar nav { display: flex; gap: 1rem; font-size: 0.85rem; }
+.bar nav a { color: var(--text-muted); text-decoration: none; }
+.bar nav a:hover { color: var(--primary); }
+
+main { padding: 2.5rem 0 4rem; }
+h1 {
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.25rem;
+}
+.updated { color: var(--text-muted); font-size: 0.85rem; margin: 0 0 2rem; }
+h2 {
+  font-size: 1.15rem;
+  margin: 2rem 0 0.5rem;
+  letter-spacing: -0.01em;
+}
+p, li { color: var(--text); }
+p { margin: 0.6rem 0; }
+ul { margin: 0.6rem 0; padding-left: 1.4rem; }
+li { margin: 0.35rem 0; }
+.note {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 1.25rem 0;
+}
+.disclaimer {
+  border: 2px solid #d97706;
+  background: #fffbeb;
+  color: #78350f;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+@media (prefers-color-scheme: dark) {
+  .disclaimer { background: rgba(217, 119, 6, 0.12); color: #fbbf24; }
+}
+footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1.75rem 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+footer nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; }
+footer a { text-decoration: none; }
+footer a:hover { text-decoration: underline; }

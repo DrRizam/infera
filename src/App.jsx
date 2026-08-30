@@ -9,8 +9,6 @@ import RequireAuth, { RequireBaseline } from "@/components/RequireAuth";
 import PageNotFound from "@/lib/PageNotFound";
 
 import Login from "@/pages/Login";
-import PrivacyPolicy from "@/pages/PrivacyPolicy";
-import Terms from "@/pages/Terms";
 import Onboarding from "@/pages/Onboarding";
 import Home from "@/pages/Home";
 import ConditionOfTheDay from "@/pages/ConditionOfTheDay";
@@ -53,8 +51,8 @@ export default function App() {
                 a stray in-app hit on "/" pointed at the real dashboard. */}
             <Route path="/" element={<Navigate to="/home" replace />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/terms" element={<Terms />} />
+            {/* /terms, /privacy, /refunds are static HTML served by the CF
+                Worker (worker/index.js) — not SPA routes. */}
 
             <Route element={<RequireAuth />}>
               <Route element={<RequireBaseline />}>
