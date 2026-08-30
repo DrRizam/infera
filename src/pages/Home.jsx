@@ -11,7 +11,8 @@ import { countDueRecallItems, generateRecallItems } from "@/lib/recallItems";
 import { suggestModuleFocus } from "@/lib/contextPrompt";
 import { currentCaseNumber } from "@/lib/dailyGame";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
-import CasePath from "@/components/CasePath";
+import ReasoningPanel from "@/components/ReasoningPanel";
+import CaseList from "@/components/CaseList";
 import Mascot from "@/components/Mascot";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -71,15 +72,15 @@ export default function Home() {
   const pathHeading =
     pathAxis === "region"
       ? focusRegions.length === 1
-        ? BODY_REGIONS.find((r) => r.id === focusRegions[0])?.label || "Reasoning path"
+        ? BODY_REGIONS.find((r) => r.id === focusRegions[0])?.label || "All body regions"
         : focusRegions.length > 1
         ? `${focusRegions.length} focus areas`
-        : "Reasoning path"
+        : "All body regions"
       : focusModules.length === 1
-      ? getModule(focusModules[0])?.name || "Reasoning path"
+      ? getModule(focusModules[0])?.name || "All specialties"
       : focusModules.length > 1
       ? `${focusModules.length} focus areas`
-      : "Reasoning path";
+      : "All specialties";
 
   const toggleModule = (id) => {
     setProfile((prev) => {
@@ -282,7 +283,7 @@ export default function Home() {
             {pathHeading}
             <ChevronDown className={cn("h-4 w-4 text-muted-foreground transition-transform", moduleMenuOpen && "rotate-180")} />
           </button>
-          <span className="text-xs font-semibold text-muted-foreground">Your progress</span>
+          <span className="text-xs font-semibold text-muted-foreground">Play in any order</span>
 
           {moduleMenuOpen && (
             <>
@@ -339,14 +340,19 @@ export default function Home() {
             </>
           )}
         </div>
-        <CasePath
-          cases={moduleCases}
-          progressByCaseId={progressByCaseId}
-          bossRoundsCompleted={profile.bossRoundsCompleted}
-          experienceLevel={profile.experience_level}
-          groupBy={pathAxis === "region" ? "region" : "module"}
-          onOpen={(id) => navigate(`/case/${id}`)}
-        />
+        <div className="space-y-6">
+          <ReasoningPanel
+            competency={profile.competency}
+            cases={moduleCases}
+            progressByCaseId={progressByCaseId}
+            moduleFilter={pathAxis === "specialty" ? focusModules : []}
+          />
+          <CaseList
+            cases={moduleCases}
+            progressByCaseId={progressByCaseId}
+            groupBy={pathAxis === "region" ? "region" : "module"}
+          />
+        </div>
       </div>
     </div>
   );
