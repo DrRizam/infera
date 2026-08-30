@@ -1,7 +1,11 @@
-import * as Icons from "lucide-react";
+import { Award, Flame, Footprints, GraduationCap, Star, Stethoscope, TrendingUp, Trophy, Zap } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { achievementProgress, isAchievementEarned } from "@/lib/gamification";
 import { cn } from "@/lib/utils";
+
+// Only the icons the achievement data actually names — a namespace import
+// (`import * as Icons`) pulls in the entire lucide set (~750 KB).
+const ICONS = { Award, Flame, Footprints, GraduationCap, Star, Stethoscope, TrendingUp, Trophy, Zap };
 
 // Full literal strings — see the same rule in lib/modules.js.
 const TIER_STYLES = {
@@ -14,7 +18,7 @@ const TIER_STYLES = {
 export default function AchievementBadge({ achievement, profile }) {
   const earned = isAchievementEarned(achievement, profile);
   const progress = achievementProgress(achievement, profile);
-  const Icon = Icons[achievement.icon] || Icons.Award;
+  const Icon = ICONS[achievement.icon] || Award;
 
   return (
     <div className={cn("rounded-lg border border-border p-4 text-center", !earned && "opacity-60")}>
