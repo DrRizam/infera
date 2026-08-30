@@ -2,15 +2,17 @@ import { describe, expect, it } from "vitest";
 import {
   ADMIN_EMAILS,
   FREE_CASES_PER_DAY,
-  FREE_DRILLS_PER_DAY,
+  FREE_SPEED_ROUNDS_PER_WEEK,
   casesRemaining,
-  drillsRemaining,
+  currentWeekKey,
   ensureCasePeriodFresh,
-  ensureDrillPeriodFresh,
+  ensureSpeedPeriodFresh,
   hasCasesRemaining,
-  hasDrillsRemaining,
+  hasFullAccess,
+  hasSpeedRoundsRemaining,
   isAdmin,
   isPremium,
+  speedRoundsRemaining,
 } from "../subscription";
 
 const ADMIN_USER = { email: ADMIN_EMAILS[0] };
@@ -91,32 +93,42 @@ describe("hasCasesRemaining / casesRemaining", () => {
   });
 });
 
-describe("ensureDrillPeriodFresh", () => {
-  it("resets drill_count on a new day", () => {
-    const p = ensureDrillPeriodFresh({ drill_day: "2026-08-25", drill_count: 4 }, "2026-08-26");
-    expect(p.drill_count).toBe(0);
-    expect(p.drill_day).toBe("2026-08-26");
-  });
-
-  it("leaves drill_count alone on the same day", () => {
-    const p = ensureDrillPeriodFresh({ drill_day: "2026-08-26", drill_count: 3 }, "2026-08-26");
-    expect(p.drill_count).toBe(3);
+describe("hasFullAccess", () => {
+  it("is true for admin or an active/past_due subscriber, false otherwise", () => {
+    expect(hasFullAccess({}, ADMIN_USER)).toBe(true);
+    expect(hasFullAccess({ subscription_status: "active" }, REGULAR_USER)).toBe(true);
+    expect(hasFullAccess({ subscription_status: "past_due" }, REGULAR_USER)).toBe(true);
+    expect(hasFullAccess({ subscription_status: "free" }, REGULAR_USER)).toBe(false);
   });
 });
 
-describe("hasDrillsRemaining / drillsRemaining", () => {
-  it("is true under the cap, false at it, for a free user", () => {
-    expect(hasDrillsRemaining({ drill_count: FREE_DRILLS_PER_DAY - 1 }, REGULAR_USER)).toBe(true);
-    expect(hasDrillsRemaining({ drill_count: FREE_DRILLS_PER_DAY }, REGULAR_USER)).toBe(false);
+describe("ensureSpeedPeriodFresh", () => {
+  it("resets speed_week_count when the week rolls over", () => {
+    const old = currentWeekKey(new Date(2026, 7, 1));
+    const p = ensureSpeedPeriodFresh({ speed_week: old, speed_week_count: 3 }, new Date(2026, 7, 20));
+    expect(p.speed_week_count).toBe(0);
+  });
+
+  it("leaves speed_week_count alone within the same week", () => {
+    const now = new Date(2026, 7, 20);
+    const p = ensureSpeedPeriodFresh({ speed_week: currentWeekKey(now), speed_week_count: 2 }, now);
+    expect(p.speed_week_count).toBe(2);
+  });
+});
+
+describe("hasSpeedRoundsRemaining / speedRoundsRemaining", () => {
+  it("is true under the weekly cap, false at it, for a free user", () => {
+    expect(hasSpeedRoundsRemaining({ speed_week_count: FREE_SPEED_ROUNDS_PER_WEEK - 1 }, REGULAR_USER)).toBe(true);
+    expect(hasSpeedRoundsRemaining({ speed_week_count: FREE_SPEED_ROUNDS_PER_WEEK }, REGULAR_USER)).toBe(false);
   });
 
   it("is always true for admin or premium", () => {
-    expect(hasDrillsRemaining({ drill_count: 999 }, ADMIN_USER)).toBe(true);
-    expect(hasDrillsRemaining({ drill_count: 999, subscription_status: "active" }, REGULAR_USER)).toBe(true);
+    expect(hasSpeedRoundsRemaining({ speed_week_count: 999 }, ADMIN_USER)).toBe(true);
+    expect(hasSpeedRoundsRemaining({ speed_week_count: 999, subscription_status: "active" }, REGULAR_USER)).toBe(true);
   });
 
-  it("counts down for a free user and is null (unlimited) for admin", () => {
-    expect(drillsRemaining({ drill_count: 2 }, REGULAR_USER)).toBe(FREE_DRILLS_PER_DAY - 2);
-    expect(drillsRemaining({ drill_count: 0 }, ADMIN_USER)).toBeNull();
+  it("counts down for a free user and is null (unlimited) for admin/premium", () => {
+    expect(speedRoundsRemaining({ speed_week_count: 1 }, REGULAR_USER)).toBe(FREE_SPEED_ROUNDS_PER_WEEK - 1);
+    expect(speedRoundsRemaining({ speed_week_count: 0 }, ADMIN_USER)).toBeNull();
   });
 });

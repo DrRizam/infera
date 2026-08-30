@@ -4,7 +4,7 @@ import { Capacitor } from "@capacitor/core";
 import { Check, Crown, Minus } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
-import { FREE_CASES_PER_DAY, FREE_DRILLS_PER_DAY, isAdmin, isPremium } from "@/lib/subscription";
+import { FREE_CASES_PER_DAY, FREE_SPEED_ROUNDS_PER_WEEK, isAdmin, isPremium } from "@/lib/subscription";
 import { openBillingPortal, PLAN_PRICING, startCheckout } from "@/lib/subscriptionStore";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,13 +14,15 @@ import { cn } from "@/lib/utils";
 // [free, premium] — a string is a value, true is a plain tick, "—" a dash.
 const FEATURES = [
   { label: "Practice cases (full: subjective → debrief)", free: `${FREE_CASES_PER_DAY} / day`, premium: "Unlimited" },
-  { label: "Reasoning breakdown + named-error debrief", free: true, premium: true },
+  { label: "Full reasoning breakdown + named-error debrief", free: true, premium: true },
   { label: "Guess the Diagnosis daily game", free: true, premium: true },
   { label: "Explore reference library", free: true, premium: true },
-  { label: "Drills — Recall, Speed round, Anatomy quiz", free: `${FREE_DRILLS_PER_DAY} / day (shared)`, premium: "Unlimited" },
-  { label: "Spaced-repetition review scheduling", free: true, premium: true },
-  { label: "OSCE checkpoints", free: true, premium: true },
-  { label: "Weak-spot targeting on your reasoning profile", free: true, premium: true },
+  { label: "Speed round", free: `${FREE_SPEED_ROUNDS_PER_WEEK} / week`, premium: "Unlimited" },
+  { label: "Recall drill (spaced repetition)", free: "—", premium: true },
+  { label: "Anatomy quiz", free: "—", premium: true },
+  { label: "Spaced-repetition review queue", free: "—", premium: true },
+  { label: "Weak-spot targeting on your reasoning profile", free: "—", premium: true },
+  { label: "OSCE checkpoints", free: "—", premium: true },
   { label: "Ads (mobile app)", free: "Occasional", premium: "None" },
 ];
 
@@ -78,13 +80,13 @@ export default function Premium() {
       <Card>
         <CardContent className="space-y-3 p-4 sm:p-5">
           <p className="text-sm">
-            The free tier is a real study tool — you get the full case, the full debrief, the daily game, and the
-            reference library every day. Premium is for the days you want to keep going: <strong>unlimited cases</strong>{" "}
-            and <strong>unlimited drills</strong>, with no ads.
+            Free lets you feel how Infera works: {FREE_CASES_PER_DAY} full cases a day — with the complete reasoning
+            debrief, never a stripped-down one — plus the daily game, Speed round, and the whole reference library.
           </p>
           <p className="text-sm text-muted-foreground">
-            Nothing is taken away from free to sell it back. Practicing a case and seeing your reasoning scored is free
-            forever — the cap is only on <em>how many</em> per day.
+            Premium is the study tool: <strong>unlimited cases</strong>, the <strong>Recall drill</strong> and its
+            spaced-repetition review queue, the <strong>Anatomy quiz</strong>, <strong>OSCE checkpoints</strong>, and
+            weak-spot targeting that picks your next case for you. No ads.
           </p>
         </CardContent>
       </Card>

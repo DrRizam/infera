@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { loadProfile, saveProfile } from "@/lib/store";
 import { useAuth } from "@/lib/AuthContext";
 import { ensureDailyFresh, todayStr } from "@/lib/gamification";
-import { ensureCasePeriodFresh, ensureDrillPeriodFresh } from "@/lib/subscription";
+import { ensureCasePeriodFresh, ensureSpeedPeriodFresh } from "@/lib/subscription";
 
 const ProfileContext = createContext(null);
 
@@ -27,7 +27,7 @@ export function ProfileProvider({ children }) {
         // touch it.
         let fresh = ensureDailyFresh(loaded, todayStr());
         fresh = ensureCasePeriodFresh(fresh, todayStr());
-        fresh = ensureDrillPeriodFresh(fresh, todayStr());
+        fresh = ensureSpeedPeriodFresh(fresh);
         if (fresh !== loaded) saveProfile(user.id, fresh);
         setProfileState(fresh);
         setLoading(false);

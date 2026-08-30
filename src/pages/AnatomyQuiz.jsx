@@ -5,8 +5,7 @@ import { MUSCLES } from "@/data/muscles";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { buildAnatomyPool, pickQuiz } from "@/lib/anatomyQuiz";
-import { todayStr } from "@/lib/gamification";
-import { ensureDrillPeriodFresh, hasDrillsRemaining } from "@/lib/subscription";
+import { hasFullAccess } from "@/lib/subscription";
 import { playFeedback } from "@/lib/sound";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Button } from "@/components/ui/button";
@@ -37,12 +36,12 @@ function MuscleImage({ src }) {
 
 export default function AnatomyQuiz() {
   useDocumentTitle("Anatomy quiz");
-  const { profile, setProfile } = useProfile();
+  const { profile } = useProfile();
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const pool = useMemo(() => buildAnatomyPool(MUSCLES), []);
-  const drillAllowed = hasDrillsRemaining(ensureDrillPeriodFresh(profile, todayStr()), user);
+  const allowed = hasFullAccess(profile, user);
 
   const [started, setStarted] = useState(false);
   const [questions, setQuestions] = useState([]);
@@ -52,11 +51,7 @@ export default function AnatomyQuiz() {
   const [finished, setFinished] = useState(false);
 
   const start = () => {
-    if (!drillAllowed) return;
-    setProfile((prev) => {
-      const fresh = ensureDrillPeriodFresh(prev, todayStr());
-      return { ...fresh, drill_count: (fresh.drill_count || 0) + 1 };
-    });
+    if (!allowed) return;
     setQuestions(pickQuiz(pool, { count: QUIZ_LENGTH }));
     setIdx(0);
     setPicked(null);
@@ -81,17 +76,17 @@ export default function AnatomyQuiz() {
     }
   };
 
-  if (!started && !drillAllowed) {
+  if (!allowed) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-16 text-center">
         <Lock className="mx-auto mb-2 h-6 w-6 text-primary" />
-        <h1 className="text-xl font-black tracking-tight">Daily drills used up</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The anatomy quiz shares the daily drill limit with Recall and Speed round — Premium unlocks unlimited.
-          Cases and the daily game stay free.
+        <h1 className="text-xl font-black tracking-tight">Anatomy quiz is Premium</h1>
+        <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
+          The anatomy quiz is part of Premium. On the free plan, Speed round and the daily game stay free, and every
+          practice case still gives you the full debrief.
         </p>
         <Button className="mt-4" onClick={() => navigate("/premium")}>
-          See upgrade options
+          See what Premium includes
         </Button>
       </div>
     );
@@ -126,18 +121,9 @@ export default function AnatomyQuiz() {
           {correct} / {questions.length}
         </h1>
         <p className="text-sm text-muted-foreground">{pct}% this round</p>
-        {drillAllowed ? (
-          <Button size="lg" onClick={start}>
-            Play again
-          </Button>
-        ) : (
-          <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">That was your last free drill for today.</p>
-            <Button size="lg" onClick={() => navigate("/premium")}>
-              See upgrade options
-            </Button>
-          </div>
-        )}
+        <Button size="lg" onClick={start}>
+          Play again
+        </Button>
       </div>
     );
   }

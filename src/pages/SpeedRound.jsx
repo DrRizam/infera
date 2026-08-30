@@ -4,8 +4,7 @@ import { CheckCircle2, Lock, Timer, Trophy, Zap } from "lucide-react";
 import { CASES } from "@/data/cases";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
-import { todayStr } from "@/lib/gamification";
-import { ensureDrillPeriodFresh, hasDrillsRemaining } from "@/lib/subscription";
+import { ensureSpeedPeriodFresh, FREE_SPEED_ROUNDS_PER_WEEK, hasSpeedRoundsRemaining, speedRoundsRemaining } from "@/lib/subscription";
 import { playFeedback } from "@/lib/sound";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Button } from "@/components/ui/button";
@@ -35,7 +34,9 @@ export default function SpeedRound() {
     []
   );
 
-  const drillAllowed = hasDrillsRemaining(ensureDrillPeriodFresh(profile, todayStr()), user);
+  const fresh = ensureSpeedPeriodFresh(profile);
+  const drillAllowed = hasSpeedRoundsRemaining(fresh, user);
+  const roundsLeft = speedRoundsRemaining(fresh, user);
 
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -68,8 +69,8 @@ export default function SpeedRound() {
   const start = () => {
     if (!drillAllowed) return;
     setProfile((prev) => {
-      const fresh = ensureDrillPeriodFresh(prev, todayStr());
-      return { ...fresh, drill_count: (fresh.drill_count || 0) + 1 };
+      const p = ensureSpeedPeriodFresh(prev);
+      return { ...p, speed_week_count: (p.speed_week_count || 0) + 1 };
     });
     setOrder([...pool].sort(() => Math.random() - 0.5).map(shuffleOptions));
     setIdx(0);
@@ -100,13 +101,13 @@ export default function SpeedRound() {
     return (
       <div className="mx-auto max-w-2xl px-4 py-16 text-center">
         <Lock className="mx-auto mb-2 h-6 w-6 text-primary" />
-        <h1 className="text-xl font-black tracking-tight">Daily drills used up</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          You've used your free drills for today (Speed round + Recall share one daily limit) — Premium unlocks
-          unlimited. Cases and the daily game stay free either way.
+        <h1 className="text-xl font-black tracking-tight">Speed rounds used up this week</h1>
+        <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
+          Free includes {FREE_SPEED_ROUNDS_PER_WEEK} Speed rounds a week. Premium is unlimited — plus the Recall drill
+          and the Anatomy quiz. The daily game and your free practice cases aren't affected.
         </p>
         <Button className="mt-4" onClick={() => navigate("/premium")}>
-          See upgrade options
+          See what Premium includes
         </Button>
       </div>
     );
@@ -120,6 +121,11 @@ export default function SpeedRound() {
         </div>
         <h1 className="text-2xl font-black tracking-tight sm:text-3xl">Speed round</h1>
         <p className="text-sm text-muted-foreground">Sixty seconds, as many as you can answer.</p>
+        {roundsLeft != null && (
+          <p className="text-xs font-semibold text-muted-foreground">
+            {roundsLeft} of {FREE_SPEED_ROUNDS_PER_WEEK} free this week
+          </p>
+        )}
         {pool.length ? (
           <Button size="lg" onClick={start}>
             Start

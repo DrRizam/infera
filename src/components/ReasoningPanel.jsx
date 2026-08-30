@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, Target } from "lucide-react";
+import { ArrowRight, Lock, Target } from "lucide-react";
 import { getModule } from "@/lib/modules";
 import { reasoningDimensions, recommendCasesFor, weakestDimension } from "@/lib/reasoningProfile";
 import { todayStr } from "@/lib/gamification";
@@ -15,7 +15,7 @@ function barColor(score) {
  * The weak-spot view — your five reasoning dimensions and the cases that
  * would move the weakest one. One card: bars, a rule, then the drill list.
  */
-export default function ReasoningPanel({ competency, cases, progressByCaseId, moduleFilter = [] }) {
+export default function ReasoningPanel({ competency, cases, progressByCaseId, moduleFilter = [], fullAccess = true }) {
   const navigate = useNavigate();
   const today = todayStr();
   const dims = reasoningDimensions(competency, moduleFilter);
@@ -71,7 +71,16 @@ export default function ReasoningPanel({ competency, cases, progressByCaseId, mo
             Weakest: <span className="font-bold text-orange-600">{weakest.label}</span>{" "}
             <span className="text-muted-foreground">— {weakest.blurb}</span>
           </p>
-          {recs.length > 0 ? (
+          {!fullAccess ? (
+            <button
+              type="button"
+              onClick={() => navigate("/premium")}
+              className="mt-2 flex w-full items-center gap-2 rounded-lg border-2 border-dashed border-border px-3 py-2 text-left text-xs font-semibold text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+            >
+              <Lock className="h-3.5 w-3.5 shrink-0" />
+              Premium picks the cases that fix your weak spot and schedules your reviews.
+            </button>
+          ) : recs.length > 0 ? (
             <ul className="mt-2 space-y-1.5">
               {recs.map((c) => {
                 const mod = getModule(c.module);

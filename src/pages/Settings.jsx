@@ -10,11 +10,11 @@ import { COUNTRIES } from "@/lib/countries";
 import { isSoundEnabled, setSoundEnabled } from "@/lib/sound";
 import {
   casesRemaining,
-  drillsRemaining,
   FREE_CASES_PER_DAY,
-  FREE_DRILLS_PER_DAY,
+  FREE_SPEED_ROUNDS_PER_WEEK,
   isAdmin,
   isPremium,
+  speedRoundsRemaining,
 } from "@/lib/subscription";
 import { openBillingPortal, startCheckout } from "@/lib/subscriptionStore";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
@@ -41,7 +41,7 @@ export default function Settings() {
   const admin = isAdmin(user);
   const premium = isPremium(profile);
   const caseRemaining = casesRemaining(profile, user);
-  const drillRemaining = drillsRemaining(profile, user);
+  const speedRemaining = speedRoundsRemaining(profile, user);
 
   const [displayName, setDisplayName] = useState(profile.display_name || "");
   const [clinicName, setClinicName] = useState(profile.clinic_name || "");
@@ -193,12 +193,12 @@ export default function Settings() {
           </div>
           {!admin && !premium && (
             <p className="text-right text-xs text-muted-foreground">
-              {drillRemaining} of {FREE_DRILLS_PER_DAY} drills left today (Recall + Speed round)
+              {speedRemaining} of {FREE_SPEED_ROUNDS_PER_WEEK} Speed rounds left this week
             </p>
           )}
           <p className="text-xs text-muted-foreground">
-            The daily game and the Explore library are always free. Premium removes the daily limit on practice
-            cases and drills.{" "}
+            The daily game, Speed round, and the Explore library are on the free plan. Premium unlocks unlimited
+            cases, the Recall drill, the Anatomy quiz, OSCE checkpoints, and spaced-repetition review.{" "}
             {!admin && !premium && (
               <button type="button" onClick={() => navigate("/premium")} className="font-semibold text-primary underline">
                 Compare plans →

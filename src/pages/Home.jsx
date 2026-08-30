@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Bone, Brain, Check, ChevronDown, ChevronRight, Lightbulb, MapPin, RotateCcw, Zap } from "lucide-react";
+import { Bone, Brain, Check, ChevronDown, ChevronRight, Lightbulb, Lock, MapPin, RotateCcw, Zap } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
-import { casesRemaining } from "@/lib/subscription";
+import { casesRemaining, hasFullAccess } from "@/lib/subscription";
 import { CASES, getCase } from "@/data/cases";
 import { retentionStats, todayStr } from "@/lib/gamification";
 import { BODY_REGIONS, conditionOfTheDay, getModule, MODULES } from "@/lib/modules";
@@ -39,6 +39,7 @@ export default function Home() {
   const retention = retentionStats(profile, today);
   const dailyGoalExceeded = (profile.daily_xp ?? 0) > (profile.daily_goal ?? 50);
   const casesLeft = casesRemaining(profile, user);
+  const fullAccess = hasFullAccess(profile, user);
   const dueReviews = Object.entries(progressByCaseId)
     .filter(([, p]) => p.next_review_date && p.next_review_date <= today)
     .map(([id, p]) => ({ case: getCase(id), dueDate: p.next_review_date }))
@@ -187,7 +188,7 @@ export default function Home() {
         </Card>
       )}
 
-      {focusSuggestionModule && (
+      {fullAccess && focusSuggestionModule && (
         <button
           onClick={() => navigate(`/recall?module=${focusSuggestion.moduleId}`)}
           className="flex w-full items-center gap-3 rounded-xl border-2 border-primary/40 bg-accent px-4 py-3 text-left transition-colors hover:border-primary"
@@ -201,24 +202,29 @@ export default function Home() {
       )}
 
       <div className="grid gap-3 sm:grid-cols-3">
-        <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/recall")}>
-          <Brain className="h-4 w-4" />
-          Recall drill
-          {recallDue > 0 && (
-            <span className="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">{recallDue} due</span>
-          )}
-        </Button>
         <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/speed")}>
           <Zap className="h-4 w-4" />
           Speed round
         </Button>
+        <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/recall")}>
+          <Brain className="h-4 w-4" />
+          Recall drill
+          {fullAccess ? (
+            recallDue > 0 && (
+              <span className="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">{recallDue} due</span>
+            )
+          ) : (
+            <Lock className="ml-auto h-3.5 w-3.5 text-muted-foreground" />
+          )}
+        </Button>
         <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/anatomy")}>
           <Bone className="h-4 w-4" />
           Anatomy quiz
+          {!fullAccess && <Lock className="ml-auto h-3.5 w-3.5 text-muted-foreground" />}
         </Button>
       </div>
 
-      {dueReviews.length > 0 && (
+      {fullAccess && dueReviews.length > 0 && (
         <div>
           <div className="mb-3 flex items-center gap-2">
             <RotateCcw className="h-4 w-4 text-primary" />
@@ -258,6 +264,7 @@ export default function Home() {
           competency={profile.competency}
           cases={moduleCases}
           progressByCaseId={progressByCaseId}
+          fullAccess={fullAccess}
           moduleFilter={pathAxis === "specialty" ? focusModules : []}
         />
 
