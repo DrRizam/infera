@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { Award, Brain, Flame, Home, LogOut, Shield, Trophy, User, Zap } from "lucide-react";
+import { Award, Brain, Crown, Flame, Home, LogOut, Shield, Trophy, User, Zap } from "lucide-react";
 import LevelRing from "@/components/LevelRing";
 import NotificationBell from "@/components/NotificationBell";
 import AdBanner from "@/components/AdBanner";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
+import { isAdmin, isPremium } from "@/lib/subscription";
 import { levelFromXp, retentionStats } from "@/lib/gamification";
 import { cn } from "@/lib/utils";
 
@@ -27,10 +28,11 @@ function navIndexForPath(pathname) {
 
 export default function AppLayout() {
   const { profile } = useProfile();
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const location = useLocation();
   const lvl = levelFromXp(profile.xp || 0);
   const retention = retentionStats(profile);
+  const showUpgrade = !isAdmin(user) && !isPremium(profile);
 
   const navIndex = navIndexForPath(location.pathname);
   const prevNavIndexRef = useRef(navIndex);
@@ -109,6 +111,16 @@ export default function AppLayout() {
             >
               <Zap className="h-3.5 w-3.5" aria-hidden="true" />{profile.xp ?? 0}
             </Link>
+            {showUpgrade && (
+              <Link
+                to="/premium"
+                title="Go Premium"
+                className="flex items-center gap-1 rounded-full border-2 border-amber-400 bg-amber-50 px-2 py-1 text-amber-700 transition-colors hover:bg-amber-100 dark:bg-amber-500/10 dark:text-amber-400"
+              >
+                <Crown className="h-3.5 w-3.5" aria-hidden="true" />
+                <span className="hidden sm:inline">Premium</span>
+              </Link>
+            )}
             <NotificationBell />
             <button type="button" title="Sign out" aria-label="Sign out" onClick={signOut} className="logout-btn ml-1 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
               <LogOut className="logout-icon h-4 w-4" />

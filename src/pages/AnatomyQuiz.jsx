@@ -90,7 +90,7 @@ export default function AnatomyQuiz() {
           The anatomy quiz shares the daily drill limit with Recall and Speed round — Premium unlocks unlimited.
           Cases and the daily game stay free.
         </p>
-        <Button className="mt-4" onClick={() => navigate("/settings")}>
+        <Button className="mt-4" onClick={() => navigate("/premium")}>
           See upgrade options
         </Button>
       </div>
@@ -133,7 +133,7 @@ export default function AnatomyQuiz() {
         ) : (
           <div className="space-y-2">
             <p className="text-sm text-muted-foreground">That was your last free drill for today.</p>
-            <Button size="lg" onClick={() => navigate("/settings")}>
+            <Button size="lg" onClick={() => navigate("/premium")}>
               See upgrade options
             </Button>
           </div>

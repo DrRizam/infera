@@ -105,7 +105,7 @@ export default function SpeedRound() {
           You've used your free drills for today (Speed round + Recall share one daily limit) — Premium unlocks
           unlimited. Cases and the daily game stay free either way.
         </p>
-        <Button className="mt-4" onClick={() => navigate("/settings")}>
+        <Button className="mt-4" onClick={() => navigate("/premium")}>
           See upgrade options
         </Button>
       </div>
@@ -145,7 +145,7 @@ export default function SpeedRound() {
         ) : (
           <div className="space-y-2">
             <p className="text-sm text-muted-foreground">That was your last free drill for today.</p>
-            <Button size="lg" onClick={() => navigate("/settings")}>See upgrade options</Button>
+            <Button size="lg" onClick={() => navigate("/premium")}>See what Premium includes</Button>
           </div>
         )}
       </div>

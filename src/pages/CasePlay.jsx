@@ -113,7 +113,7 @@ export default function CasePlay() {
           free either way. Premium removes the cap.
         </p>
         <div className="mt-5 flex flex-col items-center gap-2">
-          <Button onClick={() => navigate("/settings")}>See upgrade options</Button>
+          <Button onClick={() => navigate("/premium")}>See what Premium includes</Button>
           {canWatchAdForCase && rewardedAd.ready && (
             <Button variant="outline" onClick={handleWatchAdForCase}>
               Watch an ad for one more case

@@ -14,6 +14,14 @@ const PADDLE_PRICE_IDS = {
   annual: "pri_01m0xcgd2gs5q4g0wzs8pb02s2",
 };
 
+// Display only — the actual charge, currency, and tax come from Paddle at
+// checkout. Keep these in sync with the Paddle prices above; they're
+// placeholders until confirmed.
+export const PLAN_PRICING = {
+  monthly: { label: "Monthly", amount: "$7.99", per: "/ month" },
+  annual: { label: "Annual", amount: "$59.99", per: "/ year", note: "≈ $5/mo — 2 months free" },
+};
+
 async function openUrl(url) {
   if (Capacitor.isNativePlatform()) {
     await Browser.open({ url });

@@ -198,7 +198,12 @@ export default function Settings() {
           )}
           <p className="text-xs text-muted-foreground">
             The daily game and the Explore library are always free. Premium removes the daily limit on practice
-            cases and drills.
+            cases and drills.{" "}
+            {!admin && !premium && (
+              <button type="button" onClick={() => navigate("/premium")} className="font-semibold text-primary underline">
+                Compare plans →
+              </button>
+            )}
           </p>
           {admin ? (
             <div className="space-y-2">

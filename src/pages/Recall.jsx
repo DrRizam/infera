@@ -59,7 +59,7 @@ export default function Recall() {
           You've used your free drills for today (Recall + Speed round share one daily limit) — Premium unlocks
           unlimited. Cases and the daily game stay free either way.
         </p>
-        <Button className="mt-4" onClick={() => navigate("/settings")}>
+        <Button className="mt-4" onClick={() => navigate("/premium")}>
           See upgrade options
         </Button>
       </div>
