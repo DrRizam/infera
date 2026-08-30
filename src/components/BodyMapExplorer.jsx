@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight, Search } from "lucide-react";
 import { BODY_REGIONS } from "@/lib/modules";
@@ -92,11 +92,19 @@ function ConditionList({ entries, onOpenReference }) {
   );
 }
 
+const LIST_CAP = 250;
+
 export default function BodyMapExplorer() {
   const navigate = useNavigate();
   const onOpenReference = (slug) => navigate(`/reference/${slug}`);
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [query, setQuery] = useState("");
+  const [view, setView] = useState("map"); // "map" | "list"
+
+  const allEntries = useMemo(
+    () => [...CONDITION_REFERENCE].sort((a, b) => a.name.localeCompare(b.name)),
+    []
+  );
 
   // A hotspot lights up when the reference library has an annotated entry
   // for it — signals "there's real content to read here."
@@ -114,6 +122,8 @@ export default function BodyMapExplorer() {
       )
     : [];
 
+  const listEntries = trimmedQuery ? searchEntries : allEntries;
+
   return (
     <div>
       <div className="relative mb-3">
@@ -127,6 +137,49 @@ export default function BodyMapExplorer() {
         />
       </div>
 
+      <div className="mb-3 flex justify-center">
+        <div className="inline-flex rounded-full border border-border bg-muted p-0.5 text-xs font-semibold">
+          <button
+            type="button"
+            onClick={() => setView("map")}
+            className={cn("rounded-full px-3 py-1", view === "map" && "bg-card text-primary shadow-sm")}
+          >
+            Body map
+          </button>
+          <button
+            type="button"
+            onClick={() => setView("list")}
+            className={cn("rounded-full px-3 py-1", view === "list" && "bg-card text-primary shadow-sm")}
+          >
+            All conditions
+          </button>
+        </div>
+      </div>
+
+      {view === "list" ? (
+        <div className="mt-1">
+          <h3 className="mb-2 text-lg font-black tracking-tight">
+            {trimmedQuery ? "Search results" : "All conditions"}
+            <span className="ml-2 text-sm font-semibold text-muted-foreground">{listEntries.length}</span>
+          </h3>
+          {listEntries.length === 0 ? (
+            <div className="flex flex-col items-center gap-2 py-4 text-center">
+              <Mascot mood="curious" animation="searching" className="h-20 w-20" />
+              <p className="text-sm text-muted-foreground">No conditions match "{query.trim()}".</p>
+            </div>
+          ) : (
+            <>
+              <ConditionList entries={listEntries.slice(0, LIST_CAP)} onOpenReference={onOpenReference} />
+              {listEntries.length > LIST_CAP && (
+                <p className="mt-3 text-center text-xs text-muted-foreground">
+                  Showing the first {LIST_CAP} — search to narrow it down.
+                </p>
+              )}
+            </>
+          )}
+        </div>
+      ) : (
+        <>
       <div className="mb-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
         <span className="flex items-center gap-1.5">
           <span className="h-3 w-3 rounded-full border-2 border-primary bg-primary/40" /> Has content
@@ -193,6 +246,8 @@ export default function BodyMapExplorer() {
             )}
           </div>
         )
+      )}
+        </>
       )}
     </div>
   );

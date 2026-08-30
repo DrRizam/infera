@@ -13,7 +13,7 @@ export default function Explore() {
         </div>
         <div>
           <h1 className="text-2xl font-black tracking-tight sm:text-3xl">Explore</h1>
-          <p className="text-sm text-muted-foreground">Tap a region, or search, to read up on conditions relevant there.</p>
+          <p className="text-sm text-muted-foreground">Tap a region, browse A–Z, or search — read up on any condition.</p>
         </div>
       </div>
 
