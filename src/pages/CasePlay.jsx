@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Lock } from "lucide-react";
 import { getCase } from "@/data/cases";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
@@ -22,9 +23,10 @@ import {
   updateMastery,
   xpForCase,
 } from "@/lib/gamification";
-import { ensureDebriefPeriodFresh, hasFullDebriefsRemaining, isPremium } from "@/lib/subscription";
+import { casesRemaining, ensureCasePeriodFresh, FREE_CASES_PER_DAY, hasCasesRemaining, isPremium } from "@/lib/subscription";
 import { useRewardedAd } from "@/lib/useRewardedAd";
 import { Capacitor } from "@capacitor/core";
+import { Button } from "@/components/ui/button";
 import CaseStageHeader from "@/components/case/CaseStageHeader";
 import PresentationStage from "@/components/case/PresentationStage";
 import HistoryStage from "@/components/case/HistoryStage";
@@ -78,10 +80,49 @@ export default function CasePlay() {
     return () => clearInterval(t);
   }, [isCotd, cotdStartedAt]);
 
+  // Native-only: trade a rewarded ad for one extra case today.
+  const canWatchAdForCase = Capacitor.isNativePlatform() && !isPremium(profile);
+  const handleWatchAdForCase = async () => {
+    const earned = await rewardedAd.show();
+    if (!earned) return;
+    setProfile((prev) => {
+      const fresh = ensureCasePeriodFresh(prev, todayStr());
+      return { ...fresh, case_bonus_count: (fresh.case_bonus_count || 0) + 1 };
+    });
+  };
+
   if (!clinicalCase) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-6">
         <p className="text-sm text-muted-foreground">Case not found.</p>
+      </div>
+    );
+  }
+
+  // The daily game never counts; a case already finished this session (result
+  // set) always shows its debrief.
+  const outOfCases =
+    !isDaily && !result && !hasCasesRemaining(ensureCasePeriodFresh(profile, todayStr()), user);
+  if (outOfCases) {
+    return (
+      <div className="mx-auto max-w-2xl px-4 py-16 text-center">
+        <Lock className="mx-auto mb-2 h-6 w-6 text-primary" />
+        <h1 className="text-xl font-black tracking-tight">That's today's free cases</h1>
+        <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
+          Free practice is {FREE_CASES_PER_DAY} full cases a day — the daily game and the Explore library stay
+          free either way. Premium removes the cap.
+        </p>
+        <div className="mt-5 flex flex-col items-center gap-2">
+          <Button onClick={() => navigate("/settings")}>See upgrade options</Button>
+          {canWatchAdForCase && rewardedAd.ready && (
+            <Button variant="outline" onClick={handleWatchAdForCase}>
+              Watch an ad for one more case
+            </Button>
+          )}
+          <button className="mt-1 text-sm text-muted-foreground underline" onClick={() => navigate("/home")}>
+            Back to Learn
+          </button>
+        </div>
       </div>
     );
   }
@@ -99,10 +140,7 @@ export default function CasePlay() {
     let next = ensureDailyFresh(profile, todayStr());
     const { profile: streaked, shieldUsed } = rollStreak(next, todayStr());
     next = streaked;
-    next = ensureDebriefPeriodFresh(next);
-    // Decided before the counter increments below, so hitting the cap on
-    // THIS case still shows the limited debrief rather than the full one.
-    const debriefAllowed = hasFullDebriefsRemaining(next, user);
+    next = ensureCasePeriodFresh(next, todayStr());
     const prevLevel = levelFromXp(next.xp).level;
 
     const prevProgress = next.caseProgress?.[clinicalCase.id];
@@ -129,7 +167,8 @@ export default function CasePlay() {
       calibration,
       total_cases_completed: (next.total_cases_completed || 0) + 1,
       perfect_cases: (next.perfect_cases || 0) + (scored.accuracy >= 100 ? 1 : 0),
-      debrief_count: (next.debrief_count || 0) + (debriefAllowed ? 1 : 0),
+      // The daily game is free and doesn't spend a slot.
+      case_count: (next.case_count || 0) + (isDaily ? 0 : 1),
       caseProgress: {
         ...next.caseProgress,
         [clinicalCase.id]: {
@@ -162,19 +201,8 @@ export default function CasePlay() {
     }
 
     const cotdElapsedLabel = isCotd && cotdStartedAt ? formatElapsedTime(Date.now() - Number(cotdStartedAt)) : null;
-    setResult({ scored, xp, shieldUsed, leveledUp, streak: next.streak_count, debriefLimited: !debriefAllowed, surpriseChest, cotdElapsedLabel });
+    setResult({ scored, xp, shieldUsed, leveledUp, streak: next.streak_count, surpriseChest, cotdElapsedLabel });
     setStageIdx(stages.length - 1);
-  };
-
-  // Rewarded-ad unlock for a limited debrief — grants +1 debrief for the
-  // rest of the month (see debrief_bonus_count in subscription.js) and
-  // unlocks the debrief already on screen immediately, no reload needed.
-  const canWatchAdForDebrief = Capacitor.isNativePlatform() && !isPremium(profile);
-  const handleWatchAdForDebrief = async () => {
-    const earned = await rewardedAd.show();
-    if (!earned) return;
-    setProfile((prev) => ({ ...prev, debrief_bonus_count: (prev.debrief_bonus_count || 0) + 1 }));
-    setResult((prev) => (prev ? { ...prev, debriefLimited: false } : prev));
   };
 
   return (
@@ -259,13 +287,9 @@ export default function CasePlay() {
           shieldUsed={result.shieldUsed}
           leveledUp={result.leveledUp}
           streak={result.streak}
-          debriefLimited={result.debriefLimited}
           surpriseChest={result.surpriseChest}
           cotdElapsedLabel={result.cotdElapsedLabel}
-          canWatchAdForDebrief={canWatchAdForDebrief && rewardedAd.ready}
-          onWatchAd={handleWatchAdForDebrief}
           onDone={() => navigate("/home")}
-          onUpgrade={() => navigate("/settings")}
         />
       )}
     </div>

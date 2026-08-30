@@ -1,15 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
   ADMIN_EMAILS,
-  FREE_DEBRIEF_LIMIT,
+  FREE_CASES_PER_DAY,
   FREE_DRILLS_PER_DAY,
-  currentPeriodKey,
-  debriefsRemaining,
+  casesRemaining,
   drillsRemaining,
-  ensureDebriefPeriodFresh,
+  ensureCasePeriodFresh,
   ensureDrillPeriodFresh,
+  hasCasesRemaining,
   hasDrillsRemaining,
-  hasFullDebriefsRemaining,
   isAdmin,
   isPremium,
 } from "../subscription";
@@ -50,69 +49,45 @@ describe("isPremium", () => {
   });
 });
 
-describe("currentPeriodKey", () => {
-  it("formats as YYYY-MM", () => {
-    expect(currentPeriodKey(new Date(2026, 7, 20))).toBe("2026-08");
+describe("ensureCasePeriodFresh", () => {
+  it("resets case_count on a new day", () => {
+    const p = ensureCasePeriodFresh({ case_day: "2026-08-25", case_count: 3 }, "2026-08-26");
+    expect(p.case_count).toBe(0);
+    expect(p.case_day).toBe("2026-08-26");
+  });
+
+  it("leaves case_count alone on the same day", () => {
+    const p = ensureCasePeriodFresh({ case_day: "2026-08-26", case_count: 2 }, "2026-08-26");
+    expect(p.case_count).toBe(2);
+  });
+
+  it("resets case_bonus_count (rewarded-ad credit) on a new day too", () => {
+    const p = ensureCasePeriodFresh({ case_day: "2026-08-25", case_bonus_count: 2 }, "2026-08-26");
+    expect(p.case_bonus_count).toBe(0);
   });
 });
 
-describe("ensureDebriefPeriodFresh", () => {
-  it("resets debrief_count on a new month", () => {
-    const p = ensureDebriefPeriodFresh({ debrief_period: "2026-07", debrief_count: 9 }, new Date(2026, 7, 1));
-    expect(p.debrief_count).toBe(0);
-    expect(p.debrief_period).toBe("2026-08");
+describe("hasCasesRemaining / casesRemaining", () => {
+  it("is true under the cap, false at it, for a free user", () => {
+    expect(hasCasesRemaining({ case_count: FREE_CASES_PER_DAY - 1 }, REGULAR_USER)).toBe(true);
+    expect(hasCasesRemaining({ case_count: FREE_CASES_PER_DAY }, REGULAR_USER)).toBe(false);
   });
 
-  it("leaves debrief_count alone within the same month", () => {
-    const p = ensureDebriefPeriodFresh({ debrief_period: "2026-08", debrief_count: 4 }, new Date(2026, 7, 20));
-    expect(p.debrief_count).toBe(4);
-  });
-
-  it("resets debrief_bonus_count (rewarded-ad credit) on a new month too", () => {
-    const p = ensureDebriefPeriodFresh({ debrief_period: "2026-07", debrief_bonus_count: 2 }, new Date(2026, 7, 1));
-    expect(p.debrief_bonus_count).toBe(0);
-  });
-});
-
-describe("hasFullDebriefsRemaining", () => {
-  it("is true under the cap for a free user", () => {
-    expect(hasFullDebriefsRemaining({ debrief_count: FREE_DEBRIEF_LIMIT - 1 }, REGULAR_USER)).toBe(true);
-  });
-
-  it("is false at the cap for a free user", () => {
-    expect(hasFullDebriefsRemaining({ debrief_count: FREE_DEBRIEF_LIMIT }, REGULAR_USER)).toBe(false);
-  });
-
-  it("is always true for an admin regardless of count", () => {
-    expect(hasFullDebriefsRemaining({ debrief_count: 999 }, ADMIN_USER)).toBe(true);
-  });
-
-  it("is always true for a premium user regardless of count", () => {
-    expect(hasFullDebriefsRemaining({ debrief_count: 999, subscription_status: "active" }, REGULAR_USER)).toBe(true);
+  it("is always true for an admin or premium user regardless of count", () => {
+    expect(hasCasesRemaining({ case_count: 999 }, ADMIN_USER)).toBe(true);
+    expect(hasCasesRemaining({ case_count: 999, subscription_status: "active" }, REGULAR_USER)).toBe(true);
   });
 
   it("extends the cap by a rewarded-ad bonus for a free user", () => {
-    expect(hasFullDebriefsRemaining({ debrief_count: FREE_DEBRIEF_LIMIT, debrief_bonus_count: 1 }, REGULAR_USER)).toBe(true);
-    expect(hasFullDebriefsRemaining({ debrief_count: FREE_DEBRIEF_LIMIT + 1, debrief_bonus_count: 1 }, REGULAR_USER)).toBe(false);
-  });
-});
-
-describe("debriefsRemaining", () => {
-  it("counts down for a free user", () => {
-    expect(debriefsRemaining({ debrief_count: 3 }, REGULAR_USER)).toBe(FREE_DEBRIEF_LIMIT - 3);
+    expect(hasCasesRemaining({ case_count: FREE_CASES_PER_DAY, case_bonus_count: 1 }, REGULAR_USER)).toBe(true);
+    expect(hasCasesRemaining({ case_count: FREE_CASES_PER_DAY + 1, case_bonus_count: 1 }, REGULAR_USER)).toBe(false);
   });
 
-  it("never goes negative past the cap", () => {
-    expect(debriefsRemaining({ debrief_count: FREE_DEBRIEF_LIMIT + 5 }, REGULAR_USER)).toBe(0);
-  });
-
-  it("is null (unlimited) for admin or premium", () => {
-    expect(debriefsRemaining({ debrief_count: 0 }, ADMIN_USER)).toBeNull();
-    expect(debriefsRemaining({ debrief_count: 0, subscription_status: "active" }, REGULAR_USER)).toBeNull();
-  });
-
-  it("counts a rewarded-ad bonus debrief on top of the base limit", () => {
-    expect(debriefsRemaining({ debrief_count: FREE_DEBRIEF_LIMIT, debrief_bonus_count: 1 }, REGULAR_USER)).toBe(1);
+  it("counts down for a free user, never negative, and is null for admin/premium", () => {
+    expect(casesRemaining({ case_count: 1 }, REGULAR_USER)).toBe(FREE_CASES_PER_DAY - 1);
+    expect(casesRemaining({ case_count: FREE_CASES_PER_DAY + 5 }, REGULAR_USER)).toBe(0);
+    expect(casesRemaining({ case_count: 0 }, ADMIN_USER)).toBeNull();
+    expect(casesRemaining({ case_count: 0, subscription_status: "active" }, REGULAR_USER)).toBeNull();
   });
 });
 

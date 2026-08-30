@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Brain, Check, ChevronDown, Lightbulb, MapPin, RotateCcw, Zap } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
+import { casesRemaining } from "@/lib/subscription";
 import { CASES, getCase } from "@/data/cases";
 import { retentionStats, todayStr } from "@/lib/gamification";
 import { BODY_REGIONS, conditionOfTheDay, getModule, MODULES } from "@/lib/modules";
@@ -35,6 +36,7 @@ export default function Home() {
   const today = todayStr();
   const retention = retentionStats(profile, today);
   const dailyGoalExceeded = (profile.daily_xp ?? 0) > (profile.daily_goal ?? 50);
+  const casesLeft = casesRemaining(profile, user);
   const dueReviews = Object.entries(progressByCaseId)
     .filter(([, p]) => p.next_review_date && p.next_review_date <= today)
     .map(([id, p]) => ({ case: getCase(id), dueDate: p.next_review_date }))
@@ -136,6 +138,13 @@ export default function Home() {
         {retention.overdue > 0 && (
           <p className="mt-3 text-xs font-semibold text-amber-600">
             Skipping days piles up forgetting debt — {retention.overdue} thing{retention.overdue === 1 ? "" : "s"} slipping right now.
+          </p>
+        )}
+        {casesLeft != null && (
+          <p className="mt-3 text-xs font-semibold text-muted-foreground">
+            {casesLeft > 0
+              ? `${casesLeft} free practice case${casesLeft === 1 ? "" : "s"} left today`
+              : "Today's free practice cases are used up — the daily game stays free."}
           </p>
         )}
       </div>

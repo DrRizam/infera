@@ -9,9 +9,9 @@ import { ROLE_OPTIONS } from "@/lib/profileOptions";
 import { COUNTRIES } from "@/lib/countries";
 import { isSoundEnabled, setSoundEnabled } from "@/lib/sound";
 import {
-  debriefsRemaining,
+  casesRemaining,
   drillsRemaining,
-  FREE_DEBRIEF_LIMIT,
+  FREE_CASES_PER_DAY,
   FREE_DRILLS_PER_DAY,
   isAdmin,
   isPremium,
@@ -40,7 +40,7 @@ export default function Settings() {
 
   const admin = isAdmin(user);
   const premium = isPremium(profile);
-  const remaining = debriefsRemaining(profile, user);
+  const caseRemaining = casesRemaining(profile, user);
   const drillRemaining = drillsRemaining(profile, user);
 
   const [displayName, setDisplayName] = useState(profile.display_name || "");
@@ -187,7 +187,7 @@ export default function Settings() {
             <span className="text-sm font-bold">{admin ? "Admin" : premium ? "Premium" : "Free"}</span>
             {!admin && !premium && (
               <span className="text-xs text-muted-foreground">
-                {remaining} of {FREE_DEBRIEF_LIMIT} debriefs left this month
+                {caseRemaining} of {FREE_CASES_PER_DAY} practice cases left today
               </span>
             )}
           </div>
@@ -197,8 +197,8 @@ export default function Settings() {
             </p>
           )}
           <p className="text-xs text-muted-foreground">
-            Practicing cases and the daily game are always unlimited. Premium unlocks unlimited full case debriefs
-            and drills.
+            The daily game and the Explore library are always free. Premium removes the daily limit on practice
+            cases and drills.
           </p>
           {admin ? (
             <div className="space-y-2">
@@ -238,7 +238,7 @@ export default function Settings() {
                 </button>
               </div>
               <Button className="w-full" onClick={handleSubscribe} disabled={billingBusy}>
-                {billingBusy ? "Redirecting…" : "Upgrade for unlimited debriefs"}
+                {billingBusy ? "Redirecting…" : "Upgrade for unlimited practice"}
               </Button>
             </>
           )}
