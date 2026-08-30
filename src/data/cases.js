@@ -1,11 +1,17 @@
 // ── Clinical case content ───────────────────────────────────────────────
-// Five demonstration cases, all content_status: "demonstration" — none are
-// clinician-signed-off. The flagship teaching pattern is the masquerade
-// (the knee case): a common diagnosis behaving atypically, where anchoring
-// on the label and loading harder is the trap.
+// The hand-authored set below is a mix of "demonstration" and
+// "source-checked" content — none is clinician-signed-off. The flagship
+// teaching pattern is the masquerade (the knee case): a common diagnosis
+// behaving atypically, where anchoring on the label and loading harder is
+// the trap.
+//
+// Additional AI-drafted cases live in ./casesDraft.js (all "demonstration",
+// all flagged NEEDS_CLINICAL_REVIEW) and are appended to CASES below.
 //
 // Local content now, not a Base44 entity — everything lives in the browser,
 // same as the rest of the app's state (see src/lib/store.js).
+
+import { DRAFT_CASES } from "./casesDraft.js";
 
 const FULL_LADDER = [
   { id: "monitor", label: "Monitor — no active intervention needed", escalation: "monitor" },
@@ -15,7 +21,7 @@ const FULL_LADDER = [
   { id: "refer_urgent", label: "Refer urgently / same-day", escalation: "refer_urgent" },
 ];
 
-export const CASES = [
+const AUTHORED_CASES = [
   {
     id: "knee-runners-persistent",
     title: "The Runner's Persistent Knee",
@@ -1629,6 +1635,8 @@ export const CASES = [
     content_status: "source-checked",
   },
 ];
+
+export const CASES = [...AUTHORED_CASES, ...DRAFT_CASES];
 
 export function getCase(id) {
   return CASES.find((c) => c.id === id);
