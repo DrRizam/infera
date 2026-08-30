@@ -7,10 +7,10 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
- * In production a Cloudflare Worker serves static HTML for a few routes (see
- * worker/index.js). `vite dev` and `vite preview` don't run that Worker, so
- * this middleware reproduces it locally — those paths get the static page,
- * everything else stays on the SPA.
+ * In production Cloudflare Pages serves static HTML for a few routes via
+ * public/_redirects (200 rewrites). `vite dev` / `vite preview` don't read
+ * _redirects, so this middleware reproduces it locally — those paths get
+ * the static page, everything else stays on the SPA.
  */
 const STATIC_PAGES = {
   "/": "marketing.html",

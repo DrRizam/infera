@@ -1,0 +1,10 @@
+# Cloudflare Pages serves the SPA (dist/index.html) for unmatched routes.
+# These rules serve the hand-authored static HTML at their real URLs — a
+# 200 (rewrite), NOT a redirect, so /terms shows terms.html without the
+# .html pretty-URL loop, and / shows the marketing page instead of the
+# empty app shell.
+
+/          /marketing.html   200
+/terms     /terms.html       200
+/privacy   /privacy.html     200
+/refunds   /refunds.html     200
