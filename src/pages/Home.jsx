@@ -22,6 +22,7 @@ export default function Home() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [moduleMenuOpen, setModuleMenuOpen] = useState(false);
+  const [showAllReviews, setShowAllReviews] = useState(false);
   // "specialty" mirrors the original module-based path exactly; "region"
   // is the alternate body-region lens, same mechanism, different filter.
   const [pathAxis, setPathAxis] = useState("specialty");
@@ -210,7 +211,7 @@ export default function Home() {
             <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">{dueReviews.length}</span>
           </div>
           <div className="space-y-2">
-            {dueReviews.map(({ case: c }) => {
+            {(showAllReviews ? dueReviews : dueReviews.slice(0, 2)).map(({ case: c }) => {
               const mod = getModule(c.module);
               return (
                 <button
@@ -225,6 +226,15 @@ export default function Home() {
               );
             })}
           </div>
+          {dueReviews.length > 2 && (
+            <button
+              type="button"
+              onClick={() => setShowAllReviews((v) => !v)}
+              className="mt-2 text-xs font-bold text-primary hover:underline"
+            >
+              {showAllReviews ? "Show less" : `Show ${dueReviews.length - 2} more`}
+            </button>
+          )}
         </div>
       )}
 
