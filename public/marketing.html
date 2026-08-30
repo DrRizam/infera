@@ -9,13 +9,54 @@
     <title>Infera — Clinical Reasoning Practice for Physical Therapy Students</title>
     <meta
       name="description"
-      content="Infera — a gamified, diagnosis-last clinical-reasoning trainer for physical therapy professionals and students."
+      content="Infera is a diagnosis-last clinical-reasoning trainer for physical therapy students and clinicians. Work real patient presentations, commit your reasoning, get scored on the process — the diagnosis comes last."
     />
     <link rel="canonical" href="https://infera-app.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Infera" />
+    <meta property="og:title" content="You know the special tests. Can you sequence them?" />
+    <meta
+      property="og:description"
+      content="Infera gives you a real patient presentation and makes you commit — what you ask, what you test, what you rule out. The diagnosis comes last, the way it does in clinic."
+    />
+    <meta property="og:url" content="https://infera-app.com/" />
+    <meta property="og:image" content="https://infera-app.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="You know the special tests. Can you sequence them?" />
+    <meta
+      name="twitter:description"
+      content="A diagnosis-last clinical-reasoning trainer for physical therapy. Get scored on your reasoning, not just your answer."
+    />
+    <meta name="twitter:image" content="https://infera-app.com/og-image.jpg" />
+
     <link rel="manifest" href="/manifest.json" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Infera",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web",
+        "url": "https://infera-app.com/",
+        "description": "A diagnosis-last clinical-reasoning trainer for physical therapy students and clinicians. Work real patient presentations, commit your reasoning, and get scored on the process.",
+        "offers": [
+          { "@type": "Offer", "price": "0", "priceCurrency": "USD", "name": "Free" },
+          { "@type": "Offer", "price": "7.99", "priceCurrency": "USD", "name": "Premium (monthly)" }
+        ],
+        "audience": {
+          "@type": "EducationalAudience",
+          "educationalRole": "student",
+          "audienceType": "Physical therapy students, new-grad physical therapists, NPTE candidates"
+        }
+      }
+    </script>
 
     <style>
       /* Self-contained. No external fonts or assets — same system stack the
@@ -293,7 +334,7 @@
           <div class="cta-row">
             <a class="btn btn-primary" id="hero-cta" href="/login">Play your first case — free</a>
             <!-- CTA variants: "Try a case (60 seconds)" / "Start with a knee case" -->
-            <span class="cta-note">Free during the beta. No card.</span>
+            <span class="cta-note">Free to start — no card. Two cases a day, with the full debrief.</span>
           </div>
         </div>
       </section>
@@ -426,11 +467,12 @@
         <div class="wrap">
           <div class="note">
             <p style="margin: 0">
-              <strong>Where Infera is today.</strong> It's in active beta and free. Case content is
-              checked against clinical references but has not yet been reviewed by a licensed
-              clinician for this app specifically. Every case is a fictional teaching scenario —
-              Infera is a study tool, not a diagnostic tool, and must never be used for decisions
-              about a real patient.
+              <strong>Where Infera is today.</strong> Early and improving. The free plan gives you two
+              full cases a day — debrief included — plus the daily game and the reference library;
+              <a href="/premium">Premium</a> removes the limit. Case content is checked against clinical
+              references but has not yet been reviewed by a licensed clinician for this app
+              specifically. Every case is a fictional teaching scenario — Infera is a study tool, not a
+              diagnostic tool, and must never be used for decisions about a real patient.
             </p>
           </div>
         </div>

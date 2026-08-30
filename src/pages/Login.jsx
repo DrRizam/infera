@@ -9,6 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+// Google sign-in is hidden until Supabase's Google provider is verified and
+// configured — flip VITE_ENABLE_GOOGLE_AUTH=true to show it.
+const GOOGLE_AUTH_ENABLED = import.meta.env.VITE_ENABLE_GOOGLE_AUTH === "true";
+
 export default function Login() {
   const { user, signIn, signUp, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
@@ -134,7 +138,7 @@ export default function Login() {
             </Button>
           </form>
 
-          {mode !== "forgot_password" && (
+          {mode !== "forgot_password" && GOOGLE_AUTH_ENABLED && (
             <Button type="button" variant="outline" className="mt-4 w-full" onClick={signInWithGoogle}>
               Continue with Google
             </Button>
