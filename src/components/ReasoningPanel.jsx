@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Target } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
 import { getModule } from "@/lib/modules";
 import { reasoningDimensions, recommendCasesFor, weakestDimension } from "@/lib/reasoningProfile";
 import { todayStr } from "@/lib/gamification";
@@ -14,8 +13,7 @@ function barColor(score) {
 
 /**
  * The weak-spot view — your five reasoning dimensions and the cases that
- * would move the weakest one. Replaced the linear locked case path: order
- * doesn't matter here, your reasoning profile does.
+ * would move the weakest one. One card: bars, a rule, then the drill list.
  */
 export default function ReasoningPanel({ competency, cases, progressByCaseId, moduleFilter = [] }) {
   const navigate = useNavigate();
@@ -23,84 +21,83 @@ export default function ReasoningPanel({ competency, cases, progressByCaseId, mo
   const dims = reasoningDimensions(competency, moduleFilter);
   const weakest = weakestDimension(dims);
   const scoredCount = dims.filter((d) => d.score != null).length;
-
   const recs = weakest ? recommendCasesFor(weakest.type, cases, progressByCaseId, today, 3) : [];
 
   return (
-    <div className="space-y-4">
-      <div className="rounded-2xl border-2 border-border bg-card p-4 sm:p-5">
-        <div className="mb-3 flex items-center gap-2">
-          <Target className="h-4 w-4 text-primary" />
-          <h3 className="text-sm font-black uppercase tracking-wide text-primary">Your reasoning</h3>
-        </div>
-
-        {scoredCount === 0 ? (
-          <p className="text-sm text-muted-foreground">
-            Work a full case and this fills in — one bar for each part of the encounter, so you can see which kind of
-            reasoning to sharpen.
-          </p>
-        ) : (
-          <div className="space-y-3">
-            {dims.map((d) => (
-              <div key={d.type}>
-                <div className="mb-1 flex items-baseline justify-between text-sm">
-                  <span className={cn("font-semibold", weakest?.type === d.type && "text-orange-600")}>{d.label}</span>
-                  <span className="text-xs text-muted-foreground">{d.score == null ? "—" : `${d.score}%`}</span>
-                </div>
-                <Progress value={d.score ?? 0} indicatorClassName={d.score == null ? "bg-muted-foreground/30" : barColor(d.score)} />
-              </div>
-            ))}
-          </div>
+    <div className="rounded-2xl border-2 border-border bg-card p-4 sm:p-5">
+      <div className="mb-3 flex items-center gap-2">
+        <Target className="h-4 w-4 text-primary" />
+        <h3 className="text-xs font-black uppercase tracking-wide text-primary">Your reasoning</h3>
+        {scoredCount >= 3 && (
+          <button
+            type="button"
+            onClick={() => navigate("/osce")}
+            className="ml-auto text-[11px] font-bold text-muted-foreground hover:text-primary"
+          >
+            OSCE checkpoint →
+          </button>
         )}
       </div>
 
+      {scoredCount === 0 ? (
+        <p className="text-sm text-muted-foreground">
+          Work a full case and this fills in — one bar per part of the encounter, so you can see which kind of
+          reasoning to sharpen.
+        </p>
+      ) : (
+        <div className="space-y-2">
+          {dims.map((d) => (
+            <div key={d.type} className="flex items-center gap-3">
+              <span className={cn("w-36 shrink-0 text-xs font-semibold", weakest?.type === d.type && "text-orange-600")}>
+                {d.label}
+              </span>
+              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
+                <div
+                  className={cn("h-full rounded-full", d.score == null ? "bg-muted-foreground/30" : barColor(d.score))}
+                  style={{ width: `${d.score ?? 3}%` }}
+                />
+              </div>
+              <span className="w-8 shrink-0 text-right text-xs text-muted-foreground">
+                {d.score == null ? "—" : `${d.score}%`}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+
       {weakest && (
-        <div className="rounded-2xl border-2 border-orange-500/40 bg-orange-50/60 p-4 sm:p-5 dark:bg-orange-500/10">
+        <div className="mt-4 border-t border-border pt-3">
           <p className="text-sm">
-            <span className="font-bold">{weakest.label}</span> is your weakest at{" "}
-            <span className="font-bold text-orange-600">{weakest.score}%</span>. {weakest.blurb}
+            Weakest: <span className="font-bold text-orange-600">{weakest.label}</span>{" "}
+            <span className="text-muted-foreground">— {weakest.blurb}</span>
           </p>
           {recs.length > 0 ? (
-            <>
-              <p className="mt-3 mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">Drill it</p>
-              <ul className="space-y-2">
-                {recs.map((c) => {
-                  const mod = getModule(c.module);
-                  const p = progressByCaseId?.[c.id];
-                  const due = p?.next_review_date && p.next_review_date <= today;
-                  return (
-                    <li key={c.id}>
-                      <button
-                        onClick={() => navigate(`/case/${c.id}`)}
-                        className="flex w-full items-center gap-3 rounded-xl border-2 border-border bg-card px-4 py-3 text-left transition-colors hover:border-primary"
-                      >
-                        {mod && <mod.icon className="h-4 w-4 shrink-0 text-primary" />}
-                        <span className="flex-1 truncate text-sm font-semibold">{c.title}</span>
-                        {due && <span className="shrink-0 text-[10px] font-bold text-amber-600">REVIEW</span>}
-                        <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground" />
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </>
+            <ul className="mt-2 space-y-1.5">
+              {recs.map((c) => {
+                const mod = getModule(c.module);
+                const p = progressByCaseId?.[c.id];
+                const due = p?.next_review_date && p.next_review_date <= today;
+                return (
+                  <li key={c.id}>
+                    <button
+                      onClick={() => navigate(`/case/${c.id}`)}
+                      className="flex w-full items-center gap-2.5 rounded-lg px-2 py-1.5 text-left transition-colors hover:bg-muted"
+                    >
+                      {mod && <mod.icon className="h-3.5 w-3.5 shrink-0 text-primary" />}
+                      <span className="flex-1 truncate text-sm font-medium">{c.title}</span>
+                      {due && <span className="shrink-0 text-[10px] font-bold text-amber-600">REVIEW</span>}
+                      <ArrowRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
           ) : (
-            <p className="mt-2 text-xs text-muted-foreground">
+            <p className="mt-1 text-xs text-muted-foreground">
               You've worked every case that targets this — recall drills keep it sharp between new cases.
             </p>
           )}
         </div>
-      )}
-
-      {scoredCount >= 3 && (
-        <button
-          type="button"
-          onClick={() => navigate("/osce")}
-          className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border px-4 py-2.5 text-sm font-bold text-muted-foreground transition-colors hover:border-primary hover:text-primary"
-        >
-          Test all five at once — OSCE checkpoint
-          <ArrowRight className="h-4 w-4" />
-        </button>
       )}
     </div>
   );

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Brain, Check, ChevronDown, Lightbulb, MapPin, RotateCcw, Zap } from "lucide-react";
+import { Brain, Check, ChevronDown, ChevronRight, Lightbulb, MapPin, RotateCcw, Zap } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { casesRemaining } from "@/lib/subscription";
@@ -25,6 +25,7 @@ export default function Home() {
   const navigate = useNavigate();
   const [moduleMenuOpen, setModuleMenuOpen] = useState(false);
   const [showAllReviews, setShowAllReviews] = useState(false);
+  const [showCaseList, setShowCaseList] = useState(false);
   // "specialty" mirrors the original module-based path exactly; "region"
   // is the alternate body-region lens, same mechanism, different filter.
   const [pathAxis, setPathAxis] = useState("specialty");
@@ -249,6 +250,24 @@ export default function Home() {
       )}
 
       <div>
+        <ReasoningPanel
+          competency={profile.competency}
+          cases={moduleCases}
+          progressByCaseId={progressByCaseId}
+          moduleFilter={pathAxis === "specialty" ? focusModules : []}
+        />
+
+        <button
+          type="button"
+          onClick={() => setShowCaseList((v) => !v)}
+          className="mt-3 flex w-full items-center gap-1.5 text-sm font-bold tracking-tight text-muted-foreground hover:text-foreground"
+        >
+          <ChevronRight className={cn("h-4 w-4 transition-transform", showCaseList && "rotate-90")} />
+          Browse all {moduleCases.length} cases
+        </button>
+
+        {!showCaseList ? null : (
+        <div className="mt-3">
         <div className="mb-2 inline-flex rounded-full border border-border bg-muted p-0.5 text-xs font-semibold">
           <button
             type="button"
@@ -271,19 +290,18 @@ export default function Home() {
             By body region
           </button>
         </div>
-        <div className="relative mb-3 flex items-end justify-between gap-3">
+        <div className="relative mb-3 flex items-center justify-between gap-3">
           <button
             type="button"
             title={pathAxis === "region" ? "Switch body region" : "Switch specialty"}
             aria-haspopup="true"
             aria-expanded={moduleMenuOpen}
             onClick={() => setModuleMenuOpen((o) => !o)}
-            className="flex items-center gap-1 rounded-xl py-1 pl-0 pr-2 text-lg font-black tracking-tight hover:bg-muted"
+            className="flex items-center gap-1 rounded-xl py-1 pl-0 pr-2 text-base font-black tracking-tight hover:bg-muted"
           >
             {pathHeading}
             <ChevronDown className={cn("h-4 w-4 text-muted-foreground transition-transform", moduleMenuOpen && "rotate-180")} />
           </button>
-          <span className="text-xs font-semibold text-muted-foreground">Play in any order</span>
 
           {moduleMenuOpen && (
             <>
@@ -340,19 +358,13 @@ export default function Home() {
             </>
           )}
         </div>
-        <div className="space-y-6">
-          <ReasoningPanel
-            competency={profile.competency}
-            cases={moduleCases}
-            progressByCaseId={progressByCaseId}
-            moduleFilter={pathAxis === "specialty" ? focusModules : []}
-          />
-          <CaseList
-            cases={moduleCases}
-            progressByCaseId={progressByCaseId}
-            groupBy={pathAxis === "region" ? "region" : "module"}
-          />
+        <CaseList
+          cases={moduleCases}
+          progressByCaseId={progressByCaseId}
+          groupBy={pathAxis === "region" ? "region" : "module"}
+        />
         </div>
+        )}
       </div>
     </div>
   );
