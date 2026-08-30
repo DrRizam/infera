@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Brain, Check, ChevronDown, ChevronRight, Lightbulb, MapPin, RotateCcw, Zap } from "lucide-react";
+import { Bone, Brain, Check, ChevronDown, ChevronRight, Lightbulb, MapPin, RotateCcw, Zap } from "lucide-react";
 import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { casesRemaining } from "@/lib/subscription";
@@ -200,7 +200,7 @@ export default function Home() {
         </button>
       )}
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-3">
         <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/recall")}>
           <Brain className="h-4 w-4" />
           Recall drill
@@ -211,6 +211,10 @@ export default function Home() {
         <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/speed")}>
           <Zap className="h-4 w-4" />
           Speed round
+        </Button>
+        <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/anatomy")}>
+          <Bone className="h-4 w-4" />
+          Anatomy quiz
         </Button>
       </div>
 

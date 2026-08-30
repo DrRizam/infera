@@ -17,6 +17,7 @@ import ConditionOfTheDay from "@/pages/ConditionOfTheDay";
 import CasePlay from "@/pages/CasePlay";
 import SpeedRound from "@/pages/SpeedRound";
 import Recall from "@/pages/Recall";
+import AnatomyQuiz from "@/pages/AnatomyQuiz";
 import DailyGame from "@/pages/DailyGame";
 import Groups from "@/pages/Groups";
 import SubmitCase from "@/pages/SubmitCase";
@@ -63,6 +64,7 @@ export default function App() {
                   <Route path="/condition-of-the-day" element={<ConditionOfTheDay />} />
                   <Route path="/speed" element={<SpeedRound />} />
                   <Route path="/recall" element={<Recall />} />
+                  <Route path="/anatomy" element={<AnatomyQuiz />} />
                   <Route path="/daily-game" element={<DailyGame />} />
                   <Route path="/groups" element={<Groups />} />
                   <Route path="/submit-case" element={<SubmitCase />} />
