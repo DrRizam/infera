@@ -26,12 +26,26 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const key = url.pathname.replace(/\/+$/, "") || "/";
-    const file = STATIC_PAGES[key];
 
+    const file = STATIC_PAGES[key];
     if (file) {
       return env.ASSETS.fetch(new Request(new URL(file, url), request));
     }
 
-    return env.ASSETS.fetch(request);
+    const res = await env.ASSETS.fetch(request);
+
+    // not_found_handling serves the SPA shell (200 text/html) for anything
+    // unmatched. Right for client routes like /explore, wrong for a missing
+    // static file like /favicon.ico — a browser or crawler asking for one
+    // should get a 404, not an HTML document it can't decode.
+    const looksLikeFile = /\.[a-z0-9]+$/i.test(key) && !key.endsWith(".html");
+    const isSpaShell =
+      res.status === 200 &&
+      (res.headers.get("content-type") || "").includes("text/html");
+    if (looksLikeFile && isSpaShell) {
+      return new Response("Not found", { status: 404 });
+    }
+
+    return res;
   },
 };
