@@ -93,21 +93,28 @@ function parseBoldFormat(bodyPart) {
   };
   for (const raw of bodyPart.split("\n")) {
     const line = raw.trim();
+    // A "## …" subheading is a framing/intro section, never a condition —
+    // end the current entry so its bullets don't attach to the last one.
+    if (line.startsWith("## ")) {
+      flush();
+      current = null;
+      continue;
+    }
     const header = line.match(/^\*\*(.+?)\*\*(.*)$/);
     if (header && !line.startsWith("- ")) {
       flush();
-      // A header can be split into several bold runs by flag emoji, e.g.
-      // "**Scaphoid fracture** 🚩 **(nonunion, AVN risk)**" — rejoin them
-      // so the name still matches its taxonomy entry.
-      const rest = header[2] || "";
-      const name = /\*\*/.test(rest)
-        ? stripBold(line).replace(/[🚩⚕️]/gu, "").replace(/\s+/g, " ").trim()
-        : stripBold(header[1]);
-      const flags = rest;
+      // The header can be split into several bold runs by a flag emoji, e.g.
+      // "**Scaphoid fracture** 🚩 **(nonunion, AVN risk)**" — take the whole
+      // line, strip bold + flag emoji, so the name matches its taxonomy
+      // entry. Flags can sit anywhere on the line (inside the parens too).
+      const name = stripBold(line)
+        .replace(/[🚩⚕️]/gu, "")
+        .replace(/\s+/g, " ")
+        .trim();
       current = {
         name,
-        redFlag: flags.includes("🚩"),
-        comorbidity: flags.includes("⚕️"),
+        redFlag: line.includes("🚩"),
+        comorbidity: line.includes("⚕️"),
         description: "",
         details: [],
       };
@@ -182,9 +189,14 @@ function parseFile(filePath) {
 
   return rawEntries
     .filter((e) => e.description || e.details.length > 0)
-    // Drop the plain-format file preamble ("<Part N — …>", the doc title,
-    // the "Status:"/"Conditions:" lines) that isn't a real condition.
-    .filter((e) => !/^(Part\s|Physical Therapist'?s Master Condition Reference$)/i.test(e.name))
+    // Drop file-preamble lines that aren't real conditions: "<Part N — …>",
+    // the doc title, the "Status:" / "Conditions:" metadata lines.
+    .filter(
+      (e) =>
+        !/^(Part\s|Physical Therapist'?s Master Condition Reference$|Status:|Conditions:)/i.test(
+          e.name
+        )
+    )
     .map((e) => {
       const allCited = new Set();
       for (const d of e.details) for (const n of citedNumbers(d.text)) allCited.add(n);

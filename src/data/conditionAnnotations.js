@@ -5341,8 +5341,8 @@ export const CONDITION_ANNOTATIONS = [
     ]
   },
   {
-    "name": "Ehlers-Danlos syndromes (hypermobile, classical, vascular 🚩)",
-    "redFlag": false,
+    "name": "Ehlers-Danlos syndromes (hypermobile, classical, vascular )",
+    "redFlag": true,
     "comorbidity": false,
     "description": "Clinically and genetically heterogeneous group of heritable connective tissue disorders characterised by joint hypermobility, skin hyperextensibility, and tissue fragility [6]. The vascular type is red-flagged for arterial, intestinal, and uterine rupture risk.",
     "details": [
@@ -6015,5 +6015,6494 @@ export const CONDITION_ANNOTATIONS = [
       "Barrett, A. M., Goedert, K. M., & Basso, J. C. (2012). Prism adaptation for spatial neglect after stroke: Translational practice gaps. *Nature Reviews Neurology, 8*(10), 567–577. https://doi.org/10.1038/nrneurol.2012.170 (PMID: 22926312)",
       "Kim, Y. H., Jung, S. J., Yang, E. J., & Paik, N. J. (2014). Clinical and sonographic risk factors for hemiplegic shoulder pain: A longitudinal observational study. *Journal of Rehabilitation Medicine, 46*(1), 81–87. https://doi.org/10.2340/16501977-1238 (PMID: 24129640)"
     ]
+  },
+  {
+    "name": "Concussion / mild traumatic brain injury",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "A traumatically induced transient disturbance of brain function from biomechanical forces, with no structural abnormality on conventional imaging. Symptoms may be physical, cognitive, emotional, or sleep-related, and loss of consciousness occurs in a minority.",
+    "details": [
+      {
+        "label": "Current framework",
+        "text": "The 6th International Conference on Concussion in Sport (Amsterdam, October 2022) produced the current consensus statement, informed by 10 systematic reviews conducted over 3½ years. It yielded revised tools — the Concussion Recognition Tool-6 (CRT6) and Sport Concussion Assessment Tool-6 (SCAT6, Child SCAT6) — plus a new Sport Concussion Office Assessment Tool-6 (SCOAT6, Child SCOAT6) for use beyond the sideline [1]."
+      },
+      {
+        "label": "New areas of emphasis",
+        "text": "The 6th statement added focus on the para athlete, the athlete's perspective, concussion-specific medical ethics, athlete retirement, and potential long-term effects including neurodegenerative disease [1]."
+      },
+      {
+        "label": "Scale",
+        "text": "An estimated 1.6–3.8 million sport-related concussions occur annually in the United States [2]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "CRT6 is for immediate recognition by any observer; SCAT6 for acute sideline assessment; SCOAT6 for office evaluation days later. Using a sideline tool in the clinic days post-injury is a common misapplication [1]."
+      }
+    ],
+    "section": "Traumatic Brain Injury & Concussion",
+    "slug": "concussion-mild-traumatic-brain-injury",
+    "references": [
+      "Patricios, J. S., Schneider, K. J., Dvorak, J., Ahmed, O. H., Blauwet, C., Cantu, R. C., Davis, G. A., Echemendia, R. J., Makdissi, M., McNamee, M., Broglio, S., Emery, C. A., Feddermann-Demont, N., Fuller, G. W., Giza, C. C., Guskiewicz, K. M., Hainline, B., Iverson, G. L., Kutcher, J. S., … Meeuwisse, W. (2023). Consensus statement on concussion in sport: The 6th International Conference on Concussion in Sport — Amsterdam, October 2022. *British Journal of Sports Medicine, 57*(11), 695–711. https://doi.org/10.1136/bjsports-2023-106898 (PMID: 37316210)",
+      "Charek, D. B., Collins, M., & Kontos, A. (2018). Office-based concussion evaluation, diagnosis, and management: Adult. *Handbook of Clinical Neurology, 158*, 91–105. https://doi.org/10.1016/B978-0-444-63954-7.00010-0 (PMID: 30482379)"
+    ]
+  },
+  {
+    "name": "Post-concussion syndrome; persistent post-concussive symptoms",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Symptoms persisting beyond the expected recovery window. The terminology has shifted away from \"syndrome\" toward \"persistent post-concussive symptoms,\" reflecting that the persisting symptoms are typically driven by identifiable and treatable clinical profiles rather than a single unitary disorder.",
+    "details": [
+      {
+        "label": "Frequency",
+        "text": "Although the majority of injured athletes recover within 7–21 days, 20–30% experience protracted recovery spanning more than a month — suggesting as many as 320,000–760,000 athletes annually in the US may experience prolonged symptoms [2]."
+      },
+      {
+        "label": "Why the framing matters",
+        "text": "Concussion was historically conceptualised as a homogeneous injury; a more nuanced understanding has led to categorising concussions into clinical trajectories or symptom profiles, each corresponding with targeted rehabilitation strategies focused on specific symptom clusters and deficits [2]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Persistent symptoms are a prompt to profile the patient, not to prescribe further rest. The heterogeneity of the injury is the reason multidisciplinary teams — neuropsychology, neurology, sports medicine, athletic training, and physical therapy — are valuable [2]."
+      }
+    ],
+    "section": "Traumatic Brain Injury & Concussion",
+    "slug": "post-concussion-syndrome-persistent-post-concussive-symptoms",
+    "references": [
+      "Charek, D. B., Collins, M., & Kontos, A. (2018). Office-based concussion evaluation, diagnosis, and management: Adult. *Handbook of Clinical Neurology, 158*, 91–105. https://doi.org/10.1016/B978-0-444-63954-7.00010-0 (PMID: 30482379)"
+    ]
+  },
+  {
+    "name": "Concussion subtypes: vestibular, ocular-motor, cervicogenic, migraine, anxiety/mood, cognitive/fatigue",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Clinical profiles that guide targeted treatment. Vestibular — dizziness, imbalance, symptom provocation with head motion or busy environments. Ocular-motor — difficulty with convergence, accommodation, saccades, and reading. Cervicogenic — neck pain, headache of cervical origin, and dizziness from cervical proprioceptive disturbance. Migraine — headache with photophobia, phonophobia, nausea. Anxiety/mood — worry, rumination, avoidance. Cognitive/fatigue — slowed processing, mental fatigue, sleep disruption.",
+    "details": [
+      {
+        "label": "Cervicovestibular rehabilitation — RCT evidence",
+        "text": "In 31 patients aged 12–30 with persistent dizziness, neck pain, and/or headaches after sport-related concussion, 73% (11/15) of the treatment group were medically cleared within 8 weeks versus 7% (1/14) of controls. On intention-to-treat analysis, the treatment group was 3.91 times more likely to be cleared (95% CI 1.34–11.34) [4]."
+      },
+      {
+        "label": "What both groups received",
+        "text": "Postural education, range of motion exercises, cognitive and physical rest until asymptomatic, then graded exertion. The intervention group additionally received cervical spine and vestibular rehabilitation — that addition is what the effect is attributable to [4]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "This is among the strongest evidence for physical therapy in concussion management, and it is directly within scope of practice. Note the small sample (n=31) and wide confidence interval [4]."
+      }
+    ],
+    "section": "Traumatic Brain Injury & Concussion",
+    "slug": "concussion-subtypes-vestibular-ocular-motor-cervicogenic-migraine-anxiety-mood-cognitive-fatigue",
+    "references": [
+      "Schneider, K. J., Meeuwisse, W. H., Nettel-Aguirre, A., Barlow, K., Boyd, L., Kang, J., & Emery, C. A. (2014). Cervicovestibular rehabilitation in sport-related concussion: A randomised controlled trial. *British Journal of Sports Medicine, 48*(17), 1294–1298. https://doi.org/10.1136/bjsports-2013-093267 (PMID: 24855132)"
+    ]
+  },
+  {
+    "name": "Second impact syndrome",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Catastrophic diffuse cerebral swelling following a second head impact sustained before recovery from an initial concussion, described predominantly in adolescents and young adults. Rapidly progressive with high mortality and morbidity. The existence and mechanism of the entity remain debated, but the precautionary principle underlying return-to-play protocols rests on it.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "This is the reason graduated return-to-play exists and why an athlete with ongoing symptoms should not return to contact. The uncertainty in the literature does not lower the threshold — it is a rare event with a catastrophic outcome."
+      }
+    ],
+    "section": "Traumatic Brain Injury & Concussion",
+    "slug": "second-impact-syndrome",
+    "references": []
+  },
+  {
+    "name": "Moderate and severe TBI — diffuse axonal injury, contusion, epidural/subdural hematoma",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Classified by Glasgow Coma Scale — moderate GCS 9–12, severe GCS 3–8. Diffuse axonal injury results from rotational acceleration shearing axons at grey–white junctions, corpus callosum, and brainstem, often with imaging findings disproportionately mild relative to the clinical state. Contusion is focal cortical bruising, classically orbitofrontal and anterior temporal from coup-contrecoup. Epidural haematoma is typically arterial (middle meningeal artery), with a classic lucid interval and rapid deterioration. Acute subdural haematoma is typically venous from bridging vein rupture and carries worse outcomes than epidural.",
+    "details": [],
+    "section": "Traumatic Brain Injury & Concussion",
+    "slug": "moderate-and-severe-tbi-diffuse-axonal-injury-contusion-epidural-subdural-hematoma",
+    "references": []
+  },
+  {
+    "name": "Chronic subdural hematoma",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Collection of blood and blood breakdown products in the subdural space developing over weeks, most common in older adults and often following trivial or unrecalled trauma. Presents insidiously with headache, cognitive change, gait disturbance, falls, or fluctuating focal deficit — frequently mistaken for dementia, stroke, or normal ageing.",
+    "details": [
+      {
+        "label": "Epidemiology",
+        "text": "Overall incidence 1.7–20.6 per 100,000 persons per year, more common in the elderly population [5]."
+      },
+      {
+        "label": "Pathogenesis",
+        "text": "Involves traumatic and inflammatory components promoting formation of membranes with permeable neovessels — which is why the collection expands rather than resorbs [5]."
+      },
+      {
+        "label": "Treatment and recurrence",
+        "text": "Burr hole craniostomy is the most commonly used evacuation procedure with generally favourable outcomes, but recurrence occurs in 10–20% and is associated with several clinical and radiographic predictors. Middle meningeal artery embolisation is a recent addition under active trial evaluation [5]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "An older adult on anticoagulation with new gait decline, falls, or cognitive change — with or without recalled head injury — warrants imaging rather than a balance programme. Recurrence in up to a fifth means a patient who deteriorates after apparently successful surgery needs re-referral, not more rehabilitation [5]."
+      }
+    ],
+    "section": "Traumatic Brain Injury & Concussion",
+    "slug": "chronic-subdural-hematoma",
+    "references": [
+      "Feghali, J., Yang, W., & Huang, J. (2020). Updates in chronic subdural hematoma: Epidemiology, etiology, pathogenesis, treatment, and outcome. *World Neurosurgery, 141*, 339–345. https://doi.org/10.1016/j.wneu.2020.06.140 (PMID: 32593768)"
+    ]
+  },
+  {
+    "name": "Disorders of consciousness — coma, vegetative/unresponsive wakefulness, minimally conscious state",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Coma is absence of both wakefulness and awareness. Vegetative state / unresponsive wakefulness syndrome (VS/UWS) is wakefulness without awareness — eyes open, sleep-wake cycles present, no reproducible purposeful response. Minimally conscious state (MCS) shows inconsistent but reproducible evidence of awareness such as command following or visual pursuit.",
+    "details": [
+      {
+        "label": "Diagnostic accuracy",
+        "text": "Clinicians should identify and treat confounding conditions, optimise arousal, and perform serial standardised assessments to improve diagnostic accuracy in adults and children (Level B) [6]."
+      },
+      {
+        "label": "Prognosis counselling",
+        "text": "Families should be counselled that for adults, MCS (versus VS/UWS) and traumatic (versus nontraumatic) aetiology are associated with more favourable outcomes (Level B). When prognosis is poor, long-term care must be discussed (Level A), while acknowledging that prognosis is not universally poor (Level B) [6]."
+      },
+      {
+        "label": "Assessment tools",
+        "text": "Structural MRI, SPECT, and the Coma Recovery Scale–Revised can assist prognostication in adults (Level B). No tests are shown to improve prognostic accuracy in children [6]."
+      },
+      {
+        "label": "Pain and pharmacology",
+        "text": "Pain should always be assessed and treated (Level B). Clinicians should prescribe amantadine 100–200 mg twice daily for adults with traumatic VS/UWS or MCS at 4–16 weeks post-injury to hasten functional recovery and reduce disability (Level B) [6]."
+      },
+      {
+        "label": "Terminology change",
+        "text": "Recent evidence indicates the term chronic VS/UWS should replace \"permanent VS,\" with duration specified (Level B) [6]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The shift away from \"permanent\" is not semantic — it reflects that late recovery occurs and that prognostic certainty was previously overstated. Serial standardised assessment by a therapist may be the mechanism by which emergence into MCS is detected [6]."
+      }
+    ],
+    "section": "Traumatic Brain Injury & Concussion",
+    "slug": "disorders-of-consciousness-coma-vegetative-unresponsive-wakefulness-minimally-conscious-state",
+    "references": [
+      "Giacino, J. T., Katz, D. I., Schiff, N. D., Whyte, J., Ashman, E. J., Ashwal, S., Barbano, R., Hammond, F. M., Laureys, S., Ling, G. S. F., Nakase-Richardson, R., Seel, R. T., Yablon, S., Getchius, T. S. D., Gronseth, G. S., & Armstrong, M. J. (2018). Practice guideline update recommendations summary: Disorders of consciousness. *Neurology, 91*(10), 450–460. https://doi.org/10.1212/WNL.0000000000005926 (PMID: 30089618)"
+    ]
+  },
+  {
+    "name": "Post-traumatic amnesia; Rancho Los Amigos levels I–X",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Post-traumatic amnesia (PTA) is the period after injury during which the patient cannot form continuous day-to-day memory; its duration is among the best predictors of long-term outcome and is measured with tools such as the GOAT or Westmead PTA Scale. Rancho Los Amigos Levels of Cognitive Functioning describe a behavioural progression from I (no response) through IV (confused-agitated) to X (purposeful, appropriate), used to match environmental and therapeutic demands to cognitive capacity.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Level IV agitation is a stage to be managed environmentally — reduced stimulation, consistent staff, structured routine — rather than treated as behavioural non-compliance. Therapy during PTA should prioritise orientation, safety, and routine over new learning, since carryover is limited by definition."
+      }
+    ],
+    "section": "Traumatic Brain Injury & Concussion",
+    "slug": "post-traumatic-amnesia-rancho-los-amigos-levels-i-x",
+    "references": []
+  },
+  {
+    "name": "Chronic traumatic encephalopathy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "A neurodegenerative tauopathy associated with repetitive head impacts, currently diagnosable only at post-mortem. Proposed clinical features include mood and behavioural change, cognitive decline, and motor features, but the relationship between pathology and clinical syndrome remains unsettled, and prevalence in exposed populations is unknown.",
+    "details": [
+      {
+        "label": "Consensus position",
+        "text": "The potential long-term effects of sport-related concussion, including neurodegenerative disease, were explicitly integrated into the 6th consensus process alongside athlete retirement considerations [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Athletes and families frequently raise CTE. The honest position is that repetitive head impact exposure is a risk factor under active investigation, that no in-life diagnosis exists, and that individual risk cannot currently be quantified — which is neither reassurance nor alarm."
+      }
+    ],
+    "section": "Traumatic Brain Injury & Concussion",
+    "slug": "chronic-traumatic-encephalopathy",
+    "references": [
+      "Patricios, J. S., Schneider, K. J., Dvorak, J., Ahmed, O. H., Blauwet, C., Cantu, R. C., Davis, G. A., Echemendia, R. J., Makdissi, M., McNamee, M., Broglio, S., Emery, C. A., Feddermann-Demont, N., Fuller, G. W., Giza, C. C., Guskiewicz, K. M., Hainline, B., Iverson, G. L., Kutcher, J. S., … Meeuwisse, W. (2023). Consensus statement on concussion in sport: The 6th International Conference on Concussion in Sport — Amsterdam, October 2022. *British Journal of Sports Medicine, 57*(11), 695–711. https://doi.org/10.1136/bjsports-2023-106898 (PMID: 37316210)"
+    ]
+  },
+  {
+    "name": "Anoxic/hypoxic brain injury",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Diffuse brain injury from oxygen deprivation — cardiac arrest, drowning, strangulation, respiratory failure, carbon monoxide poisoning. Watershed regions, hippocampus, cerebellum, and basal ganglia are selectively vulnerable. Characteristically produces severe memory impairment, cerebellar ataxia, movement disorders including myoclonus, and often a worse cognitive-to-motor ratio than traumatic injury of comparable severity.",
+    "details": [
+      {
+        "label": "Prognostic context",
+        "text": "Nontraumatic aetiology — which includes anoxic injury — is associated with less favourable outcomes than traumatic aetiology among patients with prolonged disorders of consciousness [6]."
+      }
+    ],
+    "section": "Traumatic Brain Injury & Concussion",
+    "slug": "anoxic-hypoxic-brain-injury",
+    "references": [
+      "Giacino, J. T., Katz, D. I., Schiff, N. D., Whyte, J., Ashman, E. J., Ashwal, S., Barbano, R., Hammond, F. M., Laureys, S., Ling, G. S. F., Nakase-Richardson, R., Seel, R. T., Yablon, S., Getchius, T. S. D., Gronseth, G. S., & Armstrong, M. J. (2018). Practice guideline update recommendations summary: Disorders of consciousness. *Neurology, 91*(10), 450–460. https://doi.org/10.1212/WNL.0000000000005926 (PMID: 30089618)"
+    ]
+  },
+  {
+    "name": "Post-craniotomy / decompressive craniectomy status",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Status following surgical opening of the skull, either with bone flap replacement (craniotomy) or with the flap left out to accommodate swelling (decompressive craniectomy). The unprotected brain requires helmet protection during mobilisation and a documented positioning protocol. Patients may develop \"syndrome of the trephined\" (sinking skin flap syndrome) — neurological decline attributable to the cranial defect itself, improving after cranioplasty. Positioning restrictions, shunt status, and hydrocephalus must be confirmed before upright activity.",
+    "details": [],
+    "section": "Traumatic Brain Injury & Concussion",
+    "slug": "post-craniotomy-decompressive-craniectomy-status",
+    "references": []
+  },
+  {
+    "name": "Traumatic spinal cord injury — complete and incomplete (ASIA A–E)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Injury to the spinal cord producing motor, sensory, and autonomic impairment below the neurological level. Classified by the International Standards for Neurological Classification of Spinal Cord Injury (ISNCSCI) using the ASIA Impairment Scale: A — complete, no sensory or motor function in S4-5; B — sensory incomplete; C — motor incomplete, more than half of key muscles below the level grade <3; D — motor incomplete, at least half grade ≥3; E — normal. Sacral sparing determines completeness.",
+    "details": [
+      {
+        "label": "Locomotor training outcomes",
+        "text": "In 225 individuals with chronic motor-incomplete SCI (AIS C or D) completing locomotor training, 70% showed significantly improved gait speed, but only 8% showed AIS category conversion [1]."
+      },
+      {
+        "label": "What the ASIA examination misses",
+        "text": "Significant gains occurred in lower extremity motor scores but not sensory scores, and these were only weakly related to gait speed and distance. The authors conclude that changes in motor and sensory scores do not capture the full extent of functional recovery, nor predict responsiveness to locomotor training [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Functional classification based on gait speed may be a more effective measure of treatment efficacy than AIS conversion. A patient can gain community ambulation without changing AIS grade — worth explaining to patients and funders who equate \"no AIS change\" with \"no progress\" [1]."
+      }
+    ],
+    "section": "Spinal Cord",
+    "slug": "traumatic-spinal-cord-injury-complete-and-incomplete-asia-a-e",
+    "references": [
+      "Buehner, J. J., Forrest, G. F., Schmidt-Read, M., White, S., Tansey, K., & Basso, D. M. (2012). Relationship between ASIA examination and functional outcomes in the NeuroRecovery Network Locomotor Training Program. *Archives of Physical Medicine and Rehabilitation, 93*(9), 1530–1540. https://doi.org/10.1016/j.apmr.2012.02.035 (PMID: 22920450)"
+    ]
+  },
+  {
+    "name": "Central cord syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "The most common incomplete SCI syndrome, classically from hyperextension in an older adult with pre-existing cervical stenosis. Produces upper extremity weakness disproportionately greater than lower extremity, with variable sensory loss and bladder dysfunction. Hand function is typically most affected and slowest to recover.",
+    "details": [
+      {
+        "label": "Mechanism and demographics",
+        "text": "In a Northern Ireland population cohort, average age was 62 years and the mechanism was a fall with neck hyperextension in 81% [2]."
+      },
+      {
+        "label": "Natural history",
+        "text": "Surgical patients' ASIA motor scores improved from 51 at injury through 81 preoperatively, 83 postoperatively, 90 at 6 months, to 96 at 3 years. Conservative patients improved from 57 to 86 by day 10, dipped to 84 at 6 months, and recovered to 91 by 3 years [2]."
+      },
+      {
+        "label": "Surgical versus conservative",
+        "text": "No statistically significant difference in motor score, change in motor score, or percentage motor deficit resolution between groups at 3 years. However, patients treated surgically had better Rotterdam functional independence scores at 3 years (p=0.05) [2]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Substantial spontaneous motor recovery occurs in both groups, and the early conservative dip at 6 months recovers by 3 years — so a plateau at 6 months should not be read as the endpoint. Note the small cohort (27 patients) [2]."
+      }
+    ],
+    "section": "Spinal Cord",
+    "slug": "central-cord-syndrome",
+    "references": [
+      "Stevenson, C. M., Dargan, D. P., Warnock, J., Sloan, S., Espey, R., Maguire, S., & Eames, N. (2016). Traumatic central cord syndrome: Neurological and functional outcome at 3 years. *Spinal Cord, 54*(11), 1010–1015. https://doi.org/10.1038/sc.2016.34 (PMID: 27020670)"
+    ]
+  },
+  {
+    "name": "Brown-Séquard syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Hemisection of the cord producing ipsilateral motor loss and proprioceptive/vibration loss below the level, with contralateral pain and temperature loss beginning one to two segments below — because the spinothalamic tracts decussate near their level of entry while the dorsal columns and corticospinal tracts do not. Most often from penetrating trauma, but also tumour, disc herniation, or demyelination. Carries the best prognosis for ambulation of the incomplete syndromes.",
+    "details": [],
+    "section": "Spinal Cord",
+    "slug": "brown-s-quard-syndrome",
+    "references": []
+  },
+  {
+    "name": "Anterior cord syndrome; posterior cord syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Anterior cord syndrome follows anterior spinal artery territory infarction or flexion injury, producing loss of motor function and pain/temperature sensation with preserved proprioception, vibration, and light touch (dorsal columns spared). Carries the poorest prognosis of the incomplete syndromes. Posterior cord syndrome is rare, producing loss of proprioception and vibration with preserved motor and pain/temperature — resulting in profound sensory ataxia and a positive Romberg despite preserved strength.",
+    "details": [],
+    "section": "Spinal Cord",
+    "slug": "anterior-cord-syndrome-posterior-cord-syndrome",
+    "references": []
+  },
+  {
+    "name": "Conus medullaris and cauda equina syndromes",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Conus medullaris syndrome involves the terminal cord (T12–L2), producing a mixed upper and lower motor neuron picture with early, symmetrical bladder and bowel involvement and relatively less radicular pain. Cauda equina syndrome involves the lumbosacral nerve roots below the conus, producing an asymmetrical lower motor neuron picture, saddle anaesthesia, and bladder/bowel dysfunction, usually with more radicular pain.",
+    "details": [
+      {
+        "label": "Diagnostic difficulty",
+        "text": "In 79 patients warranting urgent MRI, no individual clinical feature predicted established CES — decreased anal tone (p=0.282), faecal incontinence (p=0.648), urinary retention (p=0.510), bladder incontinence (p=0.474), and saddle anaesthesia (p=0.368) were all non-predictive [3]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The absence of a discriminating clinical sign is the argument for low-threshold urgent referral, not against it. The classic features cannot rule the diagnosis out. Small retrospective series (n=79) — see P01-03, where this condition is also entered [3]."
+      }
+    ],
+    "section": "Spinal Cord",
+    "slug": "conus-medullaris-and-cauda-equina-syndromes",
+    "references": [
+      "Ahad, A., Elsayed, M., & Tohid, H. (2015). The accuracy of clinical symptoms in detecting cauda equina syndrome in patients undergoing acute MRI of the spine. *The Neuroradiology Journal, 28*(4), 438–442. https://doi.org/10.1177/1971400915598074 (PMID: 26306934)"
+    ]
+  },
+  {
+    "name": "Non-traumatic SCI — tumor, abscess, transverse myelitis, spinal AVM, vascular infarct",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Myelopathy from non-traumatic causes. Presentation is typically more gradual than traumatic injury (except vascular infarct), and prognosis and rehabilitation trajectory vary by aetiology.",
+    "details": [
+      {
+        "label": "Acute transverse myelitis",
+        "text": "A clinical syndrome characterised by acute onset of motor, sensory, and autonomic dysfunction. Approximately 20% of cases occur in children [4]."
+      },
+      {
+        "label": "Initial evaluation and classification",
+        "text": "Centres on differentiating from other causes of myelopathy, then dividing cases into idiopathic or disease-associated transverse myelitis — correct classification matters for treatment and prognosis [4]."
+      },
+      {
+        "label": "Acute priority",
+        "text": "Treatment begins with intensive surveillance for acute life-threatening respiratory or autonomic complications, with immunomodulating therapy (high-dose IV corticosteroids or plasma exchange) for noninfectious causes [4]."
+      },
+      {
+        "label": "Prognosis and evolution",
+        "text": "The majority of children have a good outcome. A small percentage are later diagnosed with other demyelinating diseases, especially neuromyelitis optica or multiple sclerosis. Most common long-term complications are urinary, motor, or sensory dysfunction [4]."
+      }
+    ],
+    "section": "Spinal Cord",
+    "slug": "non-traumatic-sci-tumor-abscess-transverse-myelitis-spinal-avm-vascular-infarct",
+    "references": [
+      "Wolf, V. L., Lupo, P. J., & Lotze, T. E. (2012). Pediatric acute transverse myelitis overview and differential diagnosis. *Journal of Child Neurology, 27*(11), 1426–1436. https://doi.org/10.1177/0883073812452916 (PMID: 22914370)"
+    ]
+  },
+  {
+    "name": "Syringomyelia / syringobulbia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Fluid-filled cavity within the spinal cord (syringomyelia) or brainstem (syringobulbia). Associated with Chiari malformation, post-traumatic cord injury, tethered cord, and tumour. Classically produces a \"cape\" distribution suspended sensory loss — pain and temperature lost across the shoulders and arms with preserved light touch and proprioception — from interruption of decussating spinothalamic fibres, with later lower motor neuron weakness and scoliosis.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Post-traumatic syringomyelia is a recognised cause of late neurological deterioration in a previously stable SCI patient, sometimes years after injury. New ascending sensory loss, increasing spasticity, or new pain in an established SCI warrants imaging rather than an assumption of overuse."
+      }
+    ],
+    "section": "Spinal Cord",
+    "slug": "syringomyelia-syringobulbia",
+    "references": []
+  },
+  {
+    "name": "Tethered cord syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Abnormal fixation of the conus limiting its normal ascent, producing progressive traction injury. May be congenital (lipomyelomeningocele, thickened filum, dermal sinus) or acquired after myelomeningocele repair. Presents with progressive weakness, sensory change, bladder deterioration, scoliosis, foot deformity, and back or leg pain — often triggered by growth spurts.",
+    "details": [
+      {
+        "label": "Related population data",
+        "text": "In children with sacral-level lesions, muscle strength and motor performance were significantly lower in the myelomeningocele group than the lipomyelomeningocele group (p<0.05), though ambulation levels did not differ significantly [5]."
+      }
+    ],
+    "section": "Spinal Cord",
+    "slug": "tethered-cord-syndrome",
+    "references": [
+      "Schoenmakers, M. A. G. C., Gulmans, V. A. M., Gooskens, R. H. J. M., & Helders, P. J. M. (2004). Spina bifida at the sacral level: More than minor gait disturbances. *Clinical Rehabilitation, 18*(2), 178–185. https://doi.org/10.1191/0269215504cr718oa (PMID: 15053127)"
+    ]
+  },
+  {
+    "name": "Spina bifida — occulta, meningocele, myelomeningocele",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Neural tube defect spectrum. Occulta is a vertebral arch defect without neural involvement, usually incidental. Meningocele herniates meninges without neural tissue. Myelomeningocele includes neural tissue and produces motor, sensory, bladder, and bowel impairment, frequently with hydrocephalus and Chiari II malformation.",
+    "details": [
+      {
+        "label": "Ambulation predictors",
+        "text": "Among children with sacral-level lesions, the majority were normal ambulant — 67% of myelomeningocele and 64% of lipomyelomeningocele. Ambulation was strongly associated with hip abductor strength (OR 13.5, 95% CI 2.5–73.7) and ankle dorsiflexor strength (OR 110, 95% CI 8.9–135.9) [5]."
+      },
+      {
+        "label": "What actually limits function",
+        "text": "Most problems were in mobility skills and caregiver assistance for self-care, especially bladder and bowel management, with caregiver assistance needed for a prolonged period in both groups. The authors flag this as needing special attention particularly in children attending mainstream schools [5]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Even \"sacral level\" spina bifida — often assumed to be mild — produces meaningful functional burden, and continence management may matter more to participation than gait does [5]."
+      }
+    ],
+    "section": "Spinal Cord",
+    "slug": "spina-bifida-occulta-meningocele-myelomeningocele",
+    "references": [
+      "Schoenmakers, M. A. G. C., Gulmans, V. A. M., Gooskens, R. H. J. M., & Helders, P. J. M. (2004). Spina bifida at the sacral level: More than minor gait disturbances. *Clinical Rehabilitation, 18*(2), 178–185. https://doi.org/10.1191/0269215504cr718oa (PMID: 15053127)"
+    ]
+  },
+  {
+    "name": "Autonomic dysreflexia",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Paroxysmal hypertension elicited by sensory stimuli below the level of lesion, occurring in injuries at or above T6. Presents with severe headache, sudden blood pressure rise, bradycardia, flushing and sweating above the lesion, and pallor below. A medical emergency — untreated it can cause seizure, intracranial haemorrhage, or death. Immediate management is to sit the patient upright, loosen constrictive clothing, and find and remove the trigger — most often bladder distension, then bowel.",
+    "details": [
+      {
+        "label": "Bowel care as a trigger",
+        "text": "In 13 participants with SCI at C3–T4 performing normal at-home bowel care, all participants experienced autonomic dysreflexia on both study days — confirming bowel care as a potent trigger [6]."
+      },
+      {
+        "label": "A finding that contradicts guidance",
+        "text": "Lidocaine lubricant is recommended during bowel care with the rationale of reducing sensory stimulus and therefore AD. In this randomised crossover trial, lidocaine increased bowel care duration (79.1 vs 57.7 minutes, p=0.018), produced higher maximum systolic pressure (214.3 vs 196.7 mmHg, p=0.046), and a higher overall burden of AD (p=0.018) than placebo lubricant. Heart rate and rhythm disturbances were increased during AD, particularly with lidocaine [6]."
+      },
+      {
+        "label": "Authors' conclusion",
+        "text": "The findings contradict recommendations for lidocaine use during bowel care, suggesting anaesthetic lubricants impair reflex bowel emptying, producing longer routines with greater AD burden [6]. Note n=13 — small, but a within-subject crossover design."
+      }
+    ],
+    "section": "Spinal Cord",
+    "slug": "autonomic-dysreflexia",
+    "references": [
+      "Lucci, V.-E. M., McGrath, M. S., Inskip, J. A., Sarveswaran, S., Willms, R., & Claydon, V. E. (2020). Clinical recommendations for use of lidocaine lubricant during bowel care after spinal cord injury prolong care routines and worsen autonomic dysreflexia: Results from a randomised clinical trial. *Spinal Cord, 58*(4), 430–440. https://doi.org/10.1038/s41393-019-0381-2 (PMID: 31767947)"
+    ]
+  },
+  {
+    "name": "Neurogenic shock; spinal shock",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Neurogenic shock is a haemodynamic phenomenon — loss of sympathetic tone below the lesion (typically T6 and above) producing hypotension with bradycardia (distinguishing it from hypovolaemic shock, where tachycardia is expected) and warm, dry peripheries. Spinal shock is a neurological phenomenon — transient loss of all reflex activity below the lesion, with flaccidity and areflexia, resolving over days to weeks as reflexes return and spasticity emerges. The two terms are frequently confused; they describe different systems and different timelines.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Return of the bulbocavernosus reflex conventionally marks the end of spinal shock, after which an AIS examination is more reliable for classification and prognosis."
+      }
+    ],
+    "section": "Spinal Cord",
+    "slug": "neurogenic-shock-spinal-shock",
+    "references": []
+  },
+  {
+    "name": "Neurogenic bladder and bowel",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Neurogenic bladder is broadly divided into upper motor neuron (reflex/spastic, small capacity, risk of detrusor-sphincter dyssynergia and upper tract damage) and lower motor neuron (flaccid, large capacity, overflow). Neurogenic bowel similarly divides into reflex (UMN, managed by digital stimulation and suppositories) and areflexic (LMN, managed by manual evacuation).",
+    "details": [
+      {
+        "label": "Burden and risk",
+        "text": "At-home bowel care is a potent trigger for autonomic dysreflexia, with all participants in one study experiencing AD during routine care, and mean routine durations of 58–79 minutes [6]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Bowel care is not a peripheral nursing matter — it is a recurring cardiovascular stress and a major time burden for the patient. Scheduling therapy around bowel routines, and recognising AD during them, are directly relevant to rehabilitation [6]."
+      }
+    ],
+    "section": "Spinal Cord",
+    "slug": "neurogenic-bladder-and-bowel",
+    "references": [
+      "Lucci, V.-E. M., McGrath, M. S., Inskip, J. A., Sarveswaran, S., Willms, R., & Claydon, V. E. (2020). Clinical recommendations for use of lidocaine lubricant during bowel care after spinal cord injury prolong care routines and worsen autonomic dysreflexia: Results from a randomised clinical trial. *Spinal Cord, 58*(4), 430–440. https://doi.org/10.1038/s41393-019-0381-2 (PMID: 31767947)"
+    ]
+  },
+  {
+    "name": "Pressure injury secondary to SCI",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Localised skin and underlying tissue damage from sustained pressure, shear, and moisture over bony prominences — sacrum, ischial tuberosities, greater trochanters, heels. Risk is compounded by loss of protective sensation, impaired mobility, altered perfusion, moisture from incontinence, and reduced tissue tolerance.",
+    "details": [
+      {
+        "label": "Scale of the problem in rehabilitation",
+        "text": "Across 2371 inpatients at six Canadian SCI rehabilitation centres, 22% had a pressure injury at rehabilitation admission, 14% developed a new one during rehabilitation, and overall prevalence was 30%. Considering only stage 2 or greater, prevalence was 21% and incidence 7% [7]."
+      },
+      {
+        "label": "An honest implementation finding",
+        "text": "Risk assessment completion improved from 46% to 94% and patient education documentation to 86% — yet there were no statistically significant differences in pressure injury incidence between pre- and post-implementation [7]."
+      },
+      {
+        "label": "Authors' conclusion",
+        "text": "Achieving a reduction in incidence will require additional measures, and \"there is an ongoing need to strengthen the evidence base underpinning pressure injury prevention guidelines\" [7]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Improving documentation and completing risk assessments did not, on its own, reduce injuries. That is a sobering result worth knowing before assuming a completed Braden score constitutes prevention [7]."
+      }
+    ],
+    "section": "Spinal Cord",
+    "slug": "pressure-injury-secondary-to-sci",
+    "references": [
+      "Scovil, C. Y., Delparte, J. J., Walia, S., Flett, H. M., Guy, S. D., Wallace, M., Burns, A. S., & Wolfe, D. L. (2019). Implementation of pressure injury prevention best practices across 6 Canadian rehabilitation sites: Results from the Spinal Cord Injury Knowledge Mobilization Network. *Archives of Physical Medicine and Rehabilitation, 100*(2), 327–335. https://doi.org/10.1016/j.apmr.2018.07.444 (PMID: 30419231)"
+    ]
+  },
+  {
+    "name": "Spasticity, clonus, heterotopic ossification post SCI",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Spasticity emerges as spinal shock resolves and is velocity-dependent resistance to passive stretch from loss of descending inhibition. It is not uniformly harmful — some patients use extensor tone functionally for transfers and standing, so reduction is not automatically the goal. Clonus is rhythmic involuntary contraction on rapid stretch. Heterotopic ossification after SCI occurs below the neurological level, most commonly at the hip, presenting with warmth, swelling, and progressive range loss — often mistaken for deep vein thrombosis, which is the critical differential.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "A sudden increase in spasticity in a previously stable patient is a signal to look for a noxious stimulus below the lesion — urinary tract infection, pressure injury, ingrown toenail, fracture, or syrinx — rather than simply to escalate antispasticity medication."
+      }
+    ],
+    "section": "Spinal Cord",
+    "slug": "spasticity-clonus-heterotopic-ossification-post-sci",
+    "references": []
+  },
+  {
+    "name": "Parkinson disease (Hoehn & Yahr I–V)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Progressive neurodegenerative disease with loss of dopaminergic neurons in the substantia nigra. Motor parkinsonism is the core feature, defined as bradykinesia plus rest tremor or rigidity [1]. Hoehn & Yahr stages I–V describe progression from unilateral involvement (I) through bilateral with postural instability (III) to wheelchair-bound or bedridden (V). Non-motor features — hyposmia, REM sleep behaviour disorder, constipation, depression — often precede motor onset by years.",
+    "details": [
+      {
+        "label": "Diagnostic framework",
+        "text": "The MDS criteria retain motor parkinsonism as the core feature, then apply three categories: absolute exclusion criteria (which rule out PD), red flags (which must be counterbalanced by supportive criteria), and supportive criteria (which increase diagnostic confidence). Two certainty levels are defined — clinically established PD (maximising specificity at the expense of sensitivity) and probable PD (balancing both) [1]."
+      },
+      {
+        "label": "Why criteria exist",
+        "text": "The benchmark is expert clinical diagnosis; the criteria aim to systematise the process, make it reproducible across centres, and make it applicable by clinicians with less PD expertise [1]."
+      },
+      {
+        "label": "Physical therapy guidance",
+        "text": "The APTA clinical practice guideline on physical therapist management of Parkinson disease (2022) was developed by a guideline development group of physical therapists and a neurologist, based on systematic reviews. A Spanish version is available as a supplement [2]."
+      },
+      {
+        "label": "Group-based intervention evidence",
+        "text": "In 24 participants randomised to guideline-based versatile group physiotherapy (16 one-hour sessions over 10 weeks) versus control, the intervention improved gait speed, hip flexion range of motion, and reduced freezing of gait scores [5]. Note the very small sample."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Increasing recognition has been given to non-motor manifestations, which are incorporated into both the current criteria and separate criteria for prodromal PD — meaning constipation, anosmia, and REM sleep behaviour disorder are diagnostically relevant, not incidental [1]."
+      }
+    ],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "parkinson-disease-hoehn-yahr-i-v",
+    "references": [
+      "Postuma, R. B., Berg, D., Stern, M., Poewe, W., Olanow, C. W., Oertel, W., Obeso, J., Marek, K., Litvan, I., Lang, A. E., Halliday, G., Goetz, C. G., Gasser, T., Dubois, B., Chan, P., Bloem, B. R., Adler, C. H., & Deuschl, G. (2015). MDS clinical diagnostic criteria for Parkinson's disease. *Movement Disorders, 30*(12), 1591–1601. https://doi.org/10.1002/mds.26424 (PMID: 26474316)",
+      "Osborne, J. A., Botkin, R., Colon-Semenza, C., DeAngelis, T. R., Gallardo, O. G., Kosakowski, H., Martello, J., Pradhan, S., Rafferty, M., Readinger, J. L., Whitt, A. L., & Ellis, T. D. (2022). Physical therapist management of Parkinson disease: A clinical practice guideline from the American Physical Therapy Association. *Physical Therapy, 102*(4), pzab302. https://doi.org/10.1093/ptj/pzab302 (PMID: 34963139)",
+      "Medijainen, K., Pääsuke, M., Lukmann, A., & Taba, P. (2019). Versatile guideline-based physiotherapy intervention in groups to improve gait speed in Parkinson's disease patients. *NeuroRehabilitation, 44*(4), 579–586. https://doi.org/10.3233/NRE-192723 (PMID: 31256094)"
+    ]
+  },
+  {
+    "name": "Atypical parkinsonism — progressive supranuclear palsy, multiple system atrophy, corticobasal degeneration, Lewy body dementia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Parkinsonian syndromes that differ from idiopathic PD in progression, levodopa responsiveness, and associated features. PSP — early postural instability with backward falls, vertical supranuclear gaze palsy, axial rigidity. MSA — prominent autonomic failure (orthostatic hypotension, urinary dysfunction) with either cerebellar or parkinsonian predominance. CBD — markedly asymmetric rigidity and apraxia, alien limb phenomenon, cortical sensory loss. Lewy body dementia — fluctuating cognition, visual hallucinations, and parkinsonism, with characteristic neuroleptic sensitivity.",
+    "details": [
+      {
+        "label": "Diagnostic relevance",
+        "text": "These conditions supply many of the red flags in the MDS criteria — features that argue against idiopathic PD and must be counterbalanced by supportive criteria before a PD diagnosis is made [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Early falls, early autonomic failure, symmetrical onset, poor levodopa response, and rapid progression should all prompt reconsideration of the diagnosis. Prognosis and rehabilitation expectations differ substantially — PSP in particular carries high falls risk from the outset."
+      }
+    ],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "atypical-parkinsonism-progressive-supranuclear-palsy-multiple-system-atrophy-corticobasal-degeneration-lewy-body-dementia",
+    "references": [
+      "Postuma, R. B., Berg, D., Stern, M., Poewe, W., Olanow, C. W., Oertel, W., Obeso, J., Marek, K., Litvan, I., Lang, A. E., Halliday, G., Goetz, C. G., Gasser, T., Dubois, B., Chan, P., Bloem, B. R., Adler, C. H., & Deuschl, G. (2015). MDS clinical diagnostic criteria for Parkinson's disease. *Movement Disorders, 30*(12), 1591–1601. https://doi.org/10.1002/mds.26424 (PMID: 26474316)"
+    ]
+  },
+  {
+    "name": "Drug-induced parkinsonism",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Parkinsonism caused by dopamine receptor blockade — typical and atypical antipsychotics, metoclopramide, prochlorperazine — or dopamine depletion. Characteristically symmetrical, with less rest tremor than idiopathic PD, and potentially reversible over weeks to months after withdrawal of the offending agent, though recovery can be incomplete.",
+    "details": [
+      {
+        "label": "Diagnostic relevance",
+        "text": "Treatment with a dopamine receptor blocker at a dose and time course consistent with drug-induced parkinsonism is an absolute exclusion criterion for Parkinson disease under the MDS framework [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "This is the most important reversible mimic. A medication review is warranted in any new parkinsonian presentation, particularly in older adults and those on antiemetics or antipsychotics."
+      }
+    ],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "drug-induced-parkinsonism",
+    "references": [
+      "Postuma, R. B., Berg, D., Stern, M., Poewe, W., Olanow, C. W., Oertel, W., Obeso, J., Marek, K., Litvan, I., Lang, A. E., Halliday, G., Goetz, C. G., Gasser, T., Dubois, B., Chan, P., Bloem, B. R., Adler, C. H., & Deuschl, G. (2015). MDS clinical diagnostic criteria for Parkinson's disease. *Movement Disorders, 30*(12), 1591–1601. https://doi.org/10.1002/mds.26424 (PMID: 26474316)"
+    ]
+  },
+  {
+    "name": "Essential tremor",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "The most common movement disorder in adults. Action tremor — postural and kinetic — typically bilateral, affecting hands, head, and voice, often improving transiently with alcohol and frequently with a positive family history. Distinguished from PD by absence of rest tremor, absence of bradykinesia and rigidity, and by the tremor appearing on action rather than at rest.",
+    "details": [],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "essential-tremor",
+    "references": []
+  },
+  {
+    "name": "Huntington disease",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Autosomal dominant disorder caused by an expanded CAG trinucleotide repeat of variable length in *HTT*, the gene encoding huntingtin. Onset is typically in the prime of adult life with a progressive course combining motor, cognitive and behavioural features — chorea, dystonia, eye movement abnormalities, executive dysfunction, and psychiatric disturbance [6].",
+    "details": [
+      {
+        "label": "Mechanism",
+        "text": "In mutation carriers, huntingtin is produced with abnormally long polyglutamine sequences conferring toxic gains of function and predisposing the protein to fragmentation, resulting in neuronal dysfunction and death [6]."
+      },
+      {
+        "label": "Epidemiology",
+        "text": "Prevalence is higher than previously thought, geographically variable, and increasing [6]."
+      },
+      {
+        "label": "Management",
+        "text": "There is a relationship between CAG repeat length and clinical phenotype, and genetic modifiers exist. In the absence of effective disease-modifying therapies, management is multidisciplinary and symptom-directed [6]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The combination of chorea with cognitive and behavioural change means falls risk is compounded by impaired insight and impulsivity — safety planning must account for both."
+      }
+    ],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "huntington-disease",
+    "references": [
+      "Bates, G. P., Dorsey, R., Gusella, J. F., Hayden, M. R., Kay, C., Leavitt, B. R., Nance, M., Ross, C. A., Scahill, R. I., Wetzel, R., Wild, E. J., & Tabrizi, S. J. (2015). Huntington disease. *Nature Reviews Disease Primers, 1*, 15005. https://doi.org/10.1038/nrdp.2015.5 (PMID: 27188817)"
+    ]
+  },
+  {
+    "name": "Dystonias — focal, segmental, generalized, cervical dystonia, writer's cramp",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Sustained or intermittent muscle contractions producing abnormal, often repetitive movements or postures. Classified by distribution — focal (single body region, e.g. cervical dystonia, blepharospasm, writer's cramp), segmental (contiguous regions), generalised. Characteristic features include a sensory trick (geste antagoniste) that transiently relieves the posture, and task-specificity in occupational dystonias such as writer's cramp.",
+    "details": [],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "dystonias-focal-segmental-generalized-cervical-dystonia-writer-s-cramp",
+    "references": []
+  },
+  {
+    "name": "Tardive dyskinesia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Involuntary, repetitive movements — classically orofacial (lip smacking, tongue protrusion, chewing) but also limb and truncal — emerging after prolonged dopamine receptor blockade. Distinguished from drug-induced parkinsonism by being hyperkinetic rather than hypokinetic, by later onset, and by frequently persisting or worsening after drug withdrawal rather than resolving.",
+    "details": [],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "tardive-dyskinesia",
+    "references": []
+  },
+  {
+    "name": "Tourette syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Neurodevelopmental disorder with multiple motor tics and at least one vocal tic persisting over a year, with onset before age 18. Tics are typically preceded by a premonitory urge and are suppressible temporarily at the cost of rising internal tension — a feature distinguishing them from other hyperkinetic movements. Frequently comorbid with ADHD and OCD, which often cause more functional impairment than the tics themselves.",
+    "details": [],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "tourette-syndrome",
+    "references": []
+  },
+  {
+    "name": "Ataxias — Friedreich ataxia, spinocerebellar ataxias, sporadic cerebellar ataxia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Friedreich ataxia is the most common inherited ataxia — autosomal recessive GAA repeat expansion in *FXN* — presenting in childhood or adolescence with progressive gait and limb ataxia, areflexia with extensor plantars, scoliosis, pes cavus, and hypertrophic cardiomyopathy (the usual cause of death). Spinocerebellar ataxias are a genetically heterogeneous autosomal dominant group with varying additional features. Sporadic cerebellar ataxia includes acquired causes — alcohol, paraneoplastic, immune-mediated, and MSA-cerebellar type.",
+    "details": [],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "ataxias-friedreich-ataxia-spinocerebellar-ataxias-sporadic-cerebellar-ataxia",
+    "references": []
+  },
+  {
+    "name": "Amyotrophic lateral sclerosis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Progressive neurodegenerative disease characterised by gradual loss of upper and lower motor neurons and their pathways, usually without affecting the extraocular and sphincter muscles — a sparing pattern that is diagnostically characteristic [3]. The cause is not yet known.",
+    "details": [
+      {
+        "label": "Prognosis",
+        "text": "Median survival is 2 to 4 years. Survival may be prolonged by prompt diagnosis, ALS subtype, and supportive management including tracheostomy and gastrostomy [3]."
+      },
+      {
+        "label": "Clinical variants",
+        "text": "The typical form involves both upper and lower motor neuron signs, with progressive bulbar paralysis where bulbar muscles are involved [3]."
+      },
+      {
+        "label": "Familial disease",
+        "text": "Familial ALS is associated with specific genes, the most common being *C9orf72*, and is usually associated with frontotemporal lobar dementia, behavioural disorders, cognitive dysfunction, and impaired executive function [3]."
+      },
+      {
+        "label": "Diagnosis",
+        "text": "Determined by excluding other conditions, using clinical examination, laboratory and genetic tests, and nerve conduction/needle EMG. Needle EMG records abnormal activity at rest and neurogenic patterns during contraction. Motor evoked potentials after transcranial magnetic stimulation remain the test of choice for identifying upper motor neuron impairment [3]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Cognitive and behavioural change is part of the disease in a substantial subset, not a separate problem — which affects capacity for complex home programmes and equipment decisions."
+      }
+    ],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "amyotrophic-lateral-sclerosis",
+    "references": [
+      "Štětkářová, I., & Ehler, E. (2021). Diagnostics of amyotrophic lateral sclerosis: Up to date. *Diagnostics, 11*(2), 231. https://doi.org/10.3390/diagnostics11020231 (PMID: 33546386)"
+    ]
+  },
+  {
+    "name": "Primary lateral sclerosis; progressive muscular atrophy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Motor neuron disease variants. Primary lateral sclerosis affects only the upper motor neuron, producing progressive spasticity, hyperreflexia, and pseudobulbar features without significant wasting; it progresses far more slowly than ALS with markedly longer survival. Progressive muscular atrophy affects only the lower motor neuron, producing wasting, weakness, and fasciculation without upper motor neuron signs.",
+    "details": [
+      {
+        "label": "Relative frequency",
+        "text": "Both forms are described as rare relative to typical ALS [3]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The distinction matters enormously for prognosis and for how the diagnosis is discussed — PLS in particular has a much longer trajectory than ALS, and conflating them causes avoidable distress."
+      }
+    ],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "primary-lateral-sclerosis-progressive-muscular-atrophy",
+    "references": [
+      "Štětkářová, I., & Ehler, E. (2021). Diagnostics of amyotrophic lateral sclerosis: Up to date. *Diagnostics, 11*(2), 231. https://doi.org/10.3390/diagnostics11020231 (PMID: 33546386)"
+    ]
+  },
+  {
+    "name": "Spinal muscular atrophy (types 0–IV)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Autosomal recessive progressive neurodegenerative primary motor neuron disorder caused by biallelic variants of the *SMN1* gene [4]. Traditionally typed 0–IV by age of onset and maximum motor milestone achieved: type I (never sits), II (sits, never walks), III (walks), IV (adult onset).",
+    "details": [
+      {
+        "label": "A field in transition",
+        "text": "The most recent best practice recommendations were published in 2018, shortly after approval of the first SMN-enhancing treatment. The availability of disease-modifying therapies and implementation of newborn screening has led to urgency in updating diagnostic recommendations and reevaluating the current classification of SMA [4]."
+      },
+      {
+        "label": "Newborn screening consensus",
+        "text": "The healthcare provider working group reached 100% consensus that SMA newborn screening is essential to include in updated best practice for diagnosis [4]."
+      },
+      {
+        "label": "What remains unresolved",
+        "text": "Limited data are available to advance efficient diagnosis of adult-onset SMA, and additional evidence is required [4]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The traditional type 0–IV classification was built on natural history in an untreated population. In treated and screened infants, that classification may no longer predict trajectory — which is precisely why the authors call for reevaluating it. Prognostic statements based on older natural-history data should be made cautiously [4]."
+      }
+    ],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "spinal-muscular-atrophy-types-0-iv",
+    "references": [
+      "Schroth, M., Deans, J., Arya, K., Castro, D., De Vivo, D. C., Gibbons, M. A., Ionita, C., Kuntz, N. L., Lakhotia, A., Neil Knierbein, E., Scoto, M., Sejersen, T., Servais, L., Tian, C., Waldrop, M. A., & Vázquez-Costa, J. F. (2024). Spinal muscular atrophy update in best practices: Recommendations for diagnosis considerations. *Neurology: Clinical Practice, 14*(4), e200310. https://doi.org/10.1212/CPJ.0000000000200310 (PMID: 38915908)"
+    ]
+  },
+  {
+    "name": "Post-polio syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "New or increasing muscle weakness, fatigue, and pain emerging decades after acute paralytic poliomyelitis, in muscles previously affected or apparently spared. Attributed to distal degeneration of enlarged motor units formed by collateral reinnervation during initial recovery. Diagnosis requires prior polio, a period of neurological stability, and exclusion of other causes.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Rehabilitation emphasises energy conservation and pacing rather than aggressive strengthening — overuse is thought to accelerate motor unit loss, making this population an exception to standard progressive overload principles."
+      }
+    ],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "post-polio-syndrome",
+    "references": []
+  },
+  {
+    "name": "Alzheimer disease and other dementias",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Alzheimer disease typically presents with early episodic memory impairment progressing to language, visuospatial, and executive deficits. Vascular dementia features executive dysfunction and slowed processing disproportionate to memory loss, often stepwise (see P05-01). Frontotemporal dementia presents with behavioural change or language impairment with relatively preserved memory, at younger onset. Lewy body dementia features fluctuating cognition, visual hallucinations, parkinsonism, and neuroleptic sensitivity.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Motor learning is relatively preserved in early Alzheimer disease even as declarative memory fails — errorless learning, consistent routines, and procedural practice are more effective than instruction-heavy approaches."
+      }
+    ],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "alzheimer-disease-and-other-dementias",
+    "references": []
+  },
+  {
+    "name": "Normal pressure hydrocephalus",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Ventricular enlargement with normal CSF opening pressure, producing the classic triad of gait disturbance, urinary incontinence, and cognitive impairment (\"wet, wobbly, wacky\"). Gait is characteristically magnetic, wide-based, and shuffling with preserved arm swing — sometimes described as lower-body parkinsonism. Gait typically appears first and responds best to shunting, which is why recognition matters.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "This is a potentially reversible cause of gait decline in an older adult, and gait improvement after high-volume lumbar puncture (tap test) is used to predict shunt response. A therapist may be well placed to document that change objectively."
+      }
+    ],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "normal-pressure-hydrocephalus",
+    "references": []
+  },
+  {
+    "name": "Wilson disease",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Autosomal recessive disorder of copper transport (*ATP7B*) producing hepatic, neurological, and psychiatric disease, typically presenting between ages 5 and 35. Neurological features include tremor (classically wing-beating), dystonia, dysarthria, and parkinsonism. Kayser-Fleischer rings are characteristic. Critically, it is treatable with chelation and zinc — making it a diagnosis not to miss in a young person with movement disorder or unexplained liver disease.",
+    "details": [],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "wilson-disease",
+    "references": []
+  },
+  {
+    "name": "Restless legs syndrome",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Urge to move the legs, usually accompanied by uncomfortable sensations, worse at rest, relieved by movement, and worse in the evening or night — the four essential diagnostic features. Associated with iron deficiency, renal failure, pregnancy, and peripheral neuropathy. Frequently causes significant sleep disruption, which itself amplifies pain and fatigue in comorbid conditions.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Serum ferritin should be checked — iron deficiency is a common and treatable contributor, and the threshold for treatment is higher than the threshold for anaemia."
+      }
+    ],
+    "section": "Neurodegenerative & Movement Disorders",
+    "slug": "restless-legs-syndrome",
+    "references": []
+  },
+  {
+    "name": "Multiple sclerosis — relapsing-remitting, secondary progressive, primary progressive, clinically isolated syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Immune-mediated demyelinating disease of the CNS. Relapsing-remitting (RRMS) — discrete attacks with variable recovery; secondary progressive (SPMS) — steady accrual of disability following an initial relapsing course; primary progressive (PPMS) — progression from onset without relapses; clinically isolated syndrome (CIS) — a first demyelinating episode not yet meeting dissemination criteria. Common presentations include optic neuritis, internuclear ophthalmoplegia, partial myelitis, and cerebellar or sensory syndromes. Fatigue and heat sensitivity (Uhthoff phenomenon) are near-universal and directly shape exercise prescription.",
+    "details": [
+      {
+        "label": "Diagnostic framework",
+        "text": "The 2017 McDonald criteria apply primarily to patients with a typical clinically isolated syndrome, define what is needed to fulfil dissemination in time and space of CNS lesions, and stress the need for no better explanation for the presentation [1]."
+      },
+      {
+        "label": "What changed in 2017",
+        "text": "In patients with typical CIS and clinical or MRI demonstration of dissemination in space, the presence of CSF-specific oligoclonal bands allows a diagnosis of MS; symptomatic lesions can now be used to demonstrate dissemination in space or time in supratentorial, infratentorial, or spinal cord syndromes; and cortical lesions can be used to demonstrate dissemination in space [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "These changes permit earlier diagnosis in CIS, which matters because disease-modifying therapy is more effective early. A patient with a single episode may now carry a definite diagnosis where previously they would have waited for a second event [1]."
+      },
+      {
+        "label": "Where refinement is still needed",
+        "text": "The panel identified optic nerve involvement, validation in diverse populations, and incorporation of advanced imaging, neurophysiological, and body fluid markers as research priorities [1]."
+      }
+    ],
+    "section": "Demyelinating & Immune-Mediated",
+    "slug": "multiple-sclerosis-relapsing-remitting-secondary-progressive-primary-progressive-clinically-isolated-syndrome",
+    "references": [
+      "Thompson, A. J., Banwell, B. L., Barkhof, F., Carroll, W. M., Coetzee, T., Comi, G., Correale, J., Fazekas, F., Filippi, M., Freedman, M. S., Fujihara, K., Galetta, S. L., Hartung, H. P., Kappos, L., Lublin, F. D., Marrie, R. A., Miller, A. E., Miller, D. H., Montalban, X., … Cohen, J. A. (2018). Diagnosis of multiple sclerosis: 2017 revisions of the McDonald criteria. *The Lancet Neurology, 17*(2), 162–173. https://doi.org/10.1016/S1474-4422(17)30470-2 (PMID: 29275977)"
+    ]
+  },
+  {
+    "name": "Neuromyelitis optica spectrum disorder",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "An inflammatory CNS syndrome distinct from multiple sclerosis associated with serum aquaporin-4 IgG antibodies (AQP4-IgG) [2]. Classically presents with severe optic neuritis and longitudinally extensive transverse myelitis, with attacks that are typically more severe and less well-recovered than MS relapses. Area postrema syndrome — intractable hiccups, nausea, and vomiting — is a characteristic and easily missed presentation.",
+    "details": [
+      {
+        "label": "Nomenclature and stratification",
+        "text": "Prior NMO criteria required optic nerve and spinal cord involvement, but more restricted or more extensive CNS involvement may occur. The unifying term NMO spectrum disorders (NMOSD) is stratified by serologic testing — NMOSD with or without AQP4-IgG [2]."
+      },
+      {
+        "label": "Core clinical characteristics",
+        "text": "For NMOSD with AQP4-IgG, required characteristics include clinical syndromes or MRI findings related to optic nerve, spinal cord, area postrema, other brainstem, diencephalic, or cerebral presentations. More stringent clinical criteria with additional neuroimaging findings are required for diagnosis without AQP4-IgG or when serologic testing is unavailable [2]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Distinguishing NMOSD from MS is not academic — some MS disease-modifying therapies worsen NMOSD. A patient with severe optic neuritis or longitudinally extensive myelitis warrants AQP4-IgG testing before an MS label is settled [2]."
+      }
+    ],
+    "section": "Demyelinating & Immune-Mediated",
+    "slug": "neuromyelitis-optica-spectrum-disorder",
+    "references": [
+      "Wingerchuk, D. M., Banwell, B., Bennett, J. L., Cabre, P., Carroll, W., Chitnis, T., de Seze, J., Fujihara, K., Greenberg, B., Jacob, A., Jarius, S., Lana-Peixoto, M., Levy, M., Simon, J. H., Tenembaum, S., Traboulsee, A. L., Waters, P., Wellik, K. E., & Weinshenker, B. G. (2015). International consensus diagnostic criteria for neuromyelitis optica spectrum disorders. *Neurology, 85*(2), 177–189. https://doi.org/10.1212/WNL.0000000000001729 (PMID: 26092914)"
+    ]
+  },
+  {
+    "name": "MOG antibody-associated disease",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Inflammatory demyelinating disease associated with antibodies to myelin oligodendrocyte glycoprotein, now recognised as distinct from both MS and AQP4-positive NMOSD. Presentations include bilateral optic neuritis (often with disc swelling), ADEM-like episodes particularly in children, and myelitis with conus involvement. Attacks are frequently steroid-responsive with better recovery than NMOSD, and the course may be monophasic or relapsing.",
+    "details": [],
+    "section": "Demyelinating & Immune-Mediated",
+    "slug": "mog-antibody-associated-disease",
+    "references": []
+  },
+  {
+    "name": "Acute disseminated encephalomyelitis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Monophasic multifocal demyelinating event, typically post-infectious and predominantly paediatric, characterised by encephalopathy — altered consciousness or behaviour — which distinguishes it from a first MS attack. Produces multifocal deficits with large, poorly demarcated white matter lesions on MRI. Most recover substantially, though a minority later prove to have MS or MOG antibody disease.",
+    "details": [],
+    "section": "Demyelinating & Immune-Mediated",
+    "slug": "acute-disseminated-encephalomyelitis",
+    "references": []
+  },
+  {
+    "name": "Transverse myelitis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Clinical syndrome affecting the spinal cord characterised by acute onset of motor, sensory, and autonomic dysfunction, with a defined sensory level. May be idiopathic or disease-associated — secondary to MS, NMOSD, MOG antibody disease, infection, or systemic autoimmune disease. Longitudinally extensive lesions spanning three or more vertebral segments point away from MS and toward NMOSD or MOG.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P05-03 (ref 4 there), including the finding that approximately 20% of acute transverse myelitis cases occur in children, that initial management centres on surveillance for life-threatening respiratory or autonomic complications, and that a small percentage are later diagnosed with NMOSD or MS."
+      }
+    ],
+    "section": "Demyelinating & Immune-Mediated",
+    "slug": "transverse-myelitis",
+    "references": []
+  },
+  {
+    "name": "Guillain-Barré syndrome and variants (AIDP, AMAN, Miller Fisher)",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Acute immune-mediated polyradiculoneuropathy, typically post-infectious, producing rapidly progressive ascending weakness with areflexia. AIDP (acute inflammatory demyelinating polyradiculoneuropathy) is the predominant Western form; AMAN (acute motor axonal neuropathy) is more common in Asia and follows *Campylobacter jejuni*; Miller Fisher presents with the triad of ophthalmoplegia, ataxia, and areflexia. Red-flagged because of respiratory failure and autonomic instability, both of which can develop rapidly.",
+    "details": [
+      {
+        "label": "Prognosis overall",
+        "text": "GBS often carries a favourable prognosis, but 10–30% of adult patients require mechanical ventilation during the acute phase [3]."
+      },
+      {
+        "label": "Predicting respiratory failure",
+        "text": "Bulbar weakness, the degree of motor weakness at disease nadir, and the Erasmus GBS Respiratory Insufficiency Score (EGRIS) are recommended as moderately reliable predictors of the need for mechanical ventilation [3]."
+      },
+      {
+        "label": "Predicting ambulation",
+        "text": "The Erasmus GBS Outcome Score (EGOS) and modified EGOS are moderately reliable predictors of independent ambulation at 3 months and beyond [3]."
+      },
+      {
+        "label": "Good practice principles",
+        "text": "Prognostication should consider both the acute and recovery phases, should include discussion of possible mechanical ventilation and enteral nutrition during counselling, and should weigh the complete clinical condition rather than any single variable [3]."
+      },
+      {
+        "label": "Honest limitation from the guideline",
+        "text": "Few predictors were considered moderately reliable based on available evidence, and higher quality data are needed. No predictor reached high reliability [3]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "After the acute phase the focus shifts to restoration of motor strength, ambulation, and neurological function, with variable speed and degree of recovery [3]. Serial vital capacity monitoring in the acute phase is a shared responsibility — a patient whose weakness is ascending needs respiratory surveillance, not progressive exercise."
+      }
+    ],
+    "section": "Demyelinating & Immune-Mediated",
+    "slug": "guillain-barr-syndrome-and-variants-aidp-aman-miller-fisher",
+    "references": [
+      "Busl, K. M., Fried, H., Muehlschlegel, S., Wartenberg, K. E., Rajajee, V., Alexander, S. A., Creutzfeldt, C. J., Fontaine, G. V., Hocker, S. E., Hwang, D. Y., Kim, K. S., Madzar, D., Mahanes, D., Mainali, S., Meixensberger, J., Sakowitz, O. W., Varelas, P. N., Westermaier, T., & Weimar, C. (2023). Guidelines for neuroprognostication in adults with Guillain-Barré syndrome. *Neurocritical Care, 38*(3), 564–583. https://doi.org/10.1007/s12028-023-01707-3 (PMID: 36964442)"
+    ]
+  },
+  {
+    "name": "Chronic inflammatory demyelinating polyneuropathy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "The chronic counterpart of AIDP — immune-mediated demyelinating polyneuropathy progressing over at least 8 weeks, distinguishing it from GBS. Characteristically produces symmetrical proximal and distal weakness with sensory involvement and areflexia. Unlike GBS it is treatment-responsive on an ongoing basis (corticosteroids, IVIG, plasma exchange) and follows a relapsing or progressive course.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Proximal *and* distal weakness in a symmetrical pattern is the feature that separates CIDP from length-dependent axonal neuropathies, where distal predominates. Recognising this pattern matters because CIDP is treatable."
+      }
+    ],
+    "section": "Demyelinating & Immune-Mediated",
+    "slug": "chronic-inflammatory-demyelinating-polyneuropathy",
+    "references": []
+  },
+  {
+    "name": "Myasthenia gravis; Lambert-Eaton myasthenic syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Myasthenia gravis is an antibody-mediated disorder of the postsynaptic neuromuscular junction (acetylcholine receptor or MuSK antibodies) producing fatigable weakness — worse with sustained activity and at the end of the day — with ptosis, diplopia, bulbar, and proximal limb involvement. Thymic abnormality is common. Lambert-Eaton myasthenic syndrome is presynaptic (voltage-gated calcium channel antibodies), frequently paraneoplastic with small cell lung cancer, and characteristically shows post-exercise facilitation — strength and reflexes briefly *improve* after brief maximal contraction, the reverse of MG.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "The fatigability pattern is the diagnostic signature and it inverts standard exercise reasoning — performance declining within a session, and recovering with rest, is the finding rather than an assessment artifact. Myasthenic crisis with respiratory compromise is a medical emergency."
+      }
+    ],
+    "section": "Demyelinating & Immune-Mediated",
+    "slug": "myasthenia-gravis-lambert-eaton-myasthenic-syndrome",
+    "references": []
+  },
+  {
+    "name": "Stiff person syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Rare autoimmune disorder, usually associated with anti-GAD65 antibodies, producing progressive axial and proximal limb rigidity with superimposed painful spasms, often triggered by startle, emotional stress, or touch. Produces a characteristic hyperlordotic posture and a stiff, board-like gait with high falls risk because protective responses are impaired. Frequently misdiagnosed as functional or psychiatric for years.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Spasms are triggered by unexpected stimuli, so a calm, predictable treatment environment is part of the intervention. Falls are often unprotected and therefore high-consequence."
+      }
+    ],
+    "section": "Demyelinating & Immune-Mediated",
+    "slug": "stiff-person-syndrome",
+    "references": []
+  },
+  {
+    "name": "Autoimmune encephalitis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Immune-mediated brain inflammation, either paraneoplastic or idiopathic, defined by specific antibodies. NMDA receptor encephalitis is the best characterised — typically young women, often with ovarian teratoma, progressing through psychiatric prodrome, seizures, movement disorder (orofacial dyskinesia), autonomic instability, and reduced consciousness. Recovery is often prolonged but can be substantial, and rehabilitation may span many months.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Recovery trajectories are long and non-linear, and cognitive and behavioural recovery typically lags motor recovery considerably — expectations set from stroke or TBI trajectories will mislead."
+      }
+    ],
+    "section": "Demyelinating & Immune-Mediated",
+    "slug": "autoimmune-encephalitis",
+    "references": []
+  },
+  {
+    "name": "Peripheral neuropathy — diabetic, chemotherapy-induced, alcoholic, idiopathic, B12 deficiency",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Damage to peripheral nerves, most commonly length-dependent and symmetrical — the \"stocking-glove\" distribution, feet before hands, because the longest axons fail first. Diabetic is the most common cause in high-income settings. Chemotherapy-induced (CIPN) follows platinum and taxane agents. B12 deficiency produces a mixed picture with dorsal column involvement (subacute combined degeneration), so proprioceptive loss and a positive Romberg may dominate. Alcoholic and idiopathic account for much of the remainder.",
+    "details": [
+      {
+        "label": "CIPN incidence",
+        "text": "Across 26 studies, overall incidence of neuropathy in platinum- and taxane-treated patients ranged from 16.9% to 89.4% [1]."
+      },
+      {
+        "label": "CIPN risk factors",
+        "text": "Obesity had the most consistent patient-oriented evidence as a risk factor. Moderate evidence suggested diabetes did not increase CIPN incidence or severity — a counterintuitive finding. A limited number of studies supported an association between low physical activity and greater CIPN risk [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "CIPN is described as a dose-limiting toxicity causing functional impairment and impacting quality of life, with effective prevention and treatment lacking [1]. The tentative signal that low physical activity increases risk is of direct interest to rehabilitation, but the authors are explicit that sensitive outcome measures in large trials are still needed before lifestyle intervention can be claimed to improve outcomes."
+      },
+      {
+        "label": "Autonomic involvement",
+        "text": "Peripheral neuropathies including amyloid and diabetic neuropathy are recognised causes of neurogenic orthostatic hypotension [2] — relevant whenever a neuropathy patient reports dizziness on standing."
+      }
+    ],
+    "section": "Peripheral Nerve",
+    "slug": "peripheral-neuropathy-diabetic-chemotherapy-induced-alcoholic-idiopathic-b12-deficiency",
+    "references": [
+      "Timmins, H. C., Mizrahi, D., Li, T., Kiernan, M. C., Goldstein, D., & Park, S. B. (2021). Metabolic and lifestyle risk factors for chemotherapy-induced peripheral neuropathy in taxane and platinum-treated patients: A systematic review. *Journal of Cancer Survivorship, 17*(1), 222–236. https://doi.org/10.1007/s11764-021-00988-x (PMID: 33438175)",
+      "Gibbons, C. H., Schmidt, P., Biaggioni, I., Frazier-Mills, C., Freeman, R., Isaacson, S., Karabin, B., Kuritzky, L., Lew, M., Low, P., Mehdirad, A., Raj, S. R., Vernino, S., & Kaufmann, H. (2017). The recommendations of a consensus panel for the screening, diagnosis, and treatment of neurogenic orthostatic hypotension and associated supine hypertension. *Journal of Neurology, 264*(8), 1567–1582. https://doi.org/10.1007/s00415-016-8375-x (PMID: 28050656)"
+    ]
+  },
+  {
+    "name": "Charcot-Marie-Tooth disease (hereditary motor and sensory neuropathy)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "The most common inherited neuropathy. CMT1 is demyelinating (most often *PMP22* duplication), CMT2 axonal. Presents in childhood or early adulthood with distal weakness and wasting producing the classic \"inverted champagne bottle\" leg, pes cavus with hammer toes, foot drop and steppage gait, distal sensory loss, and absent ankle reflexes. Progression is slow and life expectancy is usually normal.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Orthoses and activity modification are the mainstay. Certain neurotoxic drugs — including vincristine — are contraindicated or high-risk in CMT and can precipitate catastrophic deterioration, which is worth knowing if a patient with CMT develops cancer."
+      }
+    ],
+    "section": "Peripheral Nerve",
+    "slug": "charcot-marie-tooth-disease-hereditary-motor-and-sensory-neuropathy",
+    "references": []
+  },
+  {
+    "name": "Mononeuropathies: median, ulnar, radial, axillary, musculocutaneous, suprascapular, long thoracic, spinal accessory, femoral, obturator, sciatic, common/deep/superficial peroneal, tibial, sural, lateral femoral cutaneous",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Focal injury to a single nerve from compression, traction, laceration, or ischaemia. Each produces a characteristic motor and sensory deficit determined by branching anatomy — the level of the lesion relative to branch points is what makes the pattern diagnostic. Common peroneal at the fibular head is the most frequent lower limb compression neuropathy, producing foot drop with sparing of inversion (tibialis posterior, tibial nerve) — the feature distinguishing it from an L5 radiculopathy.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Several are sourced in detail elsewhere in this document — median at the wrist (carpal tunnel) and ulnar at Guyon's canal in P02-03; ulnar at the elbow (cubital tunnel), radial tunnel/PIN, and pronator teres syndrome in P02-02; axillary (quadrilateral space), suprascapular, long thoracic, and spinal accessory in P02-01; lateral femoral cutaneous (meralgia paraesthetica) in P03-01; sciatic (deep gluteal syndrome) and pudendal in P01-04; tibial (tarsal tunnel) and superficial peroneal in P03-03."
+      }
+    ],
+    "section": "Peripheral Nerve",
+    "slug": "mononeuropathies-median-ulnar-radial-axillary-musculocutaneous-suprascapular-long-thoracic-spinal-accessory-femoral-obturator-sciatic-common-deep-superficial-peroneal-tibial-sural-lateral-femoral-cutaneous",
+    "references": []
+  },
+  {
+    "name": "Brachial plexopathy — upper trunk (Erb-Duchenne), lower trunk (Klumpke), pan-plexus",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Upper trunk (C5–C6, Erb-Duchenne) produces the \"waiter's tip\" posture — adducted, internally rotated shoulder, extended elbow, pronated forearm — from loss of deltoid, supraspinatus, infraspinatus, biceps, and brachioradialis. Lower trunk (C8–T1, Klumpke) produces intrinsic hand weakness with a claw hand, and may include Horner syndrome from T1 sympathetic involvement. Pan-plexus injuries produce a flail, anaesthetic limb. Traumatic causes include traction, fracture, and penetrating injury; root avulsion carries a far worse prognosis than post-ganglionic rupture because the lesion is proximal to the dorsal root ganglion.",
+    "details": [],
+    "section": "Peripheral Nerve",
+    "slug": "brachial-plexopathy-upper-trunk-erb-duchenne-lower-trunk-klumpke-pan-plexus",
+    "references": []
+  },
+  {
+    "name": "Obstetric brachial plexus palsy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Brachial plexus injury sustained at birth, associated with shoulder dystocia, macrosomia, and instrumented delivery. Most are upper trunk lesions and the majority recover substantially in the first months. Persistent cases develop internal rotation and adduction contracture with secondary glenohumeral dysplasia, which is why early range of motion and monitoring for shoulder deformity matter. Return of biceps function by around 3 months is a conventional prognostic marker.",
+    "details": [],
+    "section": "Peripheral Nerve",
+    "slug": "obstetric-brachial-plexus-palsy",
+    "references": []
+  },
+  {
+    "name": "Lumbosacral plexopathy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Injury to the lumbar or sacral plexus producing multi-root, multi-nerve deficits in one limb that do not fit a single root or nerve distribution. Causes include retroperitoneal haematoma (particularly with anticoagulation), pelvic malignancy, radiation, obstetric compression, psoas abscess, and aortic surgery. The femoral and obturator nerves are most affected in lumbar plexopathy; sciatic and gluteal distributions in sacral.",
+    "details": [],
+    "section": "Peripheral Nerve",
+    "slug": "lumbosacral-plexopathy",
+    "references": []
+  },
+  {
+    "name": "Diabetic amyotrophy (diabetic lumbosacral radiculoplexus neuropathy)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Distinct from length-dependent diabetic polyneuropathy. Presents with acute, severe, asymmetrical thigh and hip pain followed by profound proximal weakness and wasting, often with marked weight loss, typically in older patients with type 2 diabetes and sometimes at a time of good glycaemic control. Thought to be immune-mediated microvasculitis rather than metabolic. Usually monophasic with slow, incomplete recovery over months to years.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "The combination of severe unilateral thigh pain, proximal weakness, and weight loss in a person with diabetes is a recognisable pattern that is frequently mistaken for lumbar radiculopathy or hip pathology."
+      }
+    ],
+    "section": "Peripheral Nerve",
+    "slug": "diabetic-amyotrophy-diabetic-lumbosacral-radiculoplexus-neuropathy",
+    "references": []
+  },
+  {
+    "name": "Radiation-induced plexopathy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Progressive plexus injury developing months to decades after radiotherapy, most often brachial after breast or lung cancer treatment. Characteristically painless progressive weakness with prominent myokymia on EMG, in contrast to neoplastic plexopathy, which is typically painful and often involves the lower plexus with Horner syndrome. Distinguishing recurrence from radiation injury is the central clinical question and changes management entirely.",
+    "details": [],
+    "section": "Peripheral Nerve",
+    "slug": "radiation-induced-plexopathy",
+    "references": []
+  },
+  {
+    "name": "Bell palsy; facial nerve paresis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Acute idiopathic lower motor neuron facial weakness. The forehead is involved, distinguishing it from an upper motor neuron (central) facial palsy where the forehead is spared by bilateral cortical innervation. May include hyperacusis, altered taste, and reduced tear production depending on lesion level. Graded by the House-Brackmann Facial Nerve Grading Scale.",
+    "details": [
+      {
+        "label": "Paediatric aetiology",
+        "text": "Among 144 children with peripheral facial palsy, causes were idiopathic (Bell palsy) in 79.9%, infections in 11.8% (otitis media, varicella zoster, dental abscess), trauma in 4.9%, congenital-syndromic in 2.8%, and hypertension in 0.7% [3]."
+      },
+      {
+        "label": "Paediatric prognosis",
+        "text": "Recovery rate at the end of the first year was 98.3%, with no significant difference in outcome between children treated with and without steroids. Recurrence occurred in 9%, with recurrence time ranging from 6 months to 6 years [3]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Prognosis in children is very good. The authors note that because recurrences occurred as late as 6 years, long-term follow-up is warranted [3]. Note these findings are paediatric — adult Bell palsy has a less favourable spontaneous recovery rate and stronger evidence supporting early corticosteroids, so do not transfer these figures to adults. Eye protection where blink is impaired is a priority in any age group."
+      }
+    ],
+    "section": "Peripheral Nerve",
+    "slug": "bell-palsy-facial-nerve-paresis",
+    "references": [
+      "Karalok, Z. S., Taskin, B. D., Ozturk, Z., Gurkas, E., Koc, T. B., & Guven, A. (2018). Childhood peripheral facial palsy. *Child's Nervous System, 34*(5), 911–917. https://doi.org/10.1007/s00381-018-3742-9 (PMID: 29427137)"
+    ]
+  },
+  {
+    "name": "Trigeminal neuralgia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Paroxysmal, severe, electric-shock-like facial pain in one or more trigeminal divisions, typically V2 and V3, triggered by innocuous stimuli — light touch, chewing, cold air, tooth brushing — with refractory periods between attacks. Classical trigeminal neuralgia is attributed to neurovascular compression at the root entry zone; secondary forms follow multiple sclerosis or a structural lesion. Bilateral presentation, sensory loss, or onset under age 40 should raise suspicion of a secondary cause, particularly MS.",
+    "details": [],
+    "section": "Peripheral Nerve",
+    "slug": "trigeminal-neuralgia",
+    "references": []
+  },
+  {
+    "name": "Vagus and glossopharyngeal nerve involvement",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Injury to CN IX and X producing dysphagia, dysphonia, reduced or absent gag reflex, and palatal deviation away from the lesion, with vocal fold paresis in recurrent laryngeal involvement. Causes include skull base pathology, neck surgery (particularly carotid endarterectomy and thyroidectomy), brainstem stroke, and tumour. Clinically critical because of aspiration risk.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Any suspicion of vagal or glossopharyngeal involvement warrants formal swallow evaluation before oral intake. Voice change plus cough on swallowing is a referral, not an observation to monitor."
+      }
+    ],
+    "section": "Peripheral Nerve",
+    "slug": "vagus-and-glossopharyngeal-nerve-involvement",
+    "references": []
+  },
+  {
+    "name": "Nerve laceration, transection, and repair; neuroma",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Classified by Seddon (neurapraxia, axonotmesis, neurotmesis) or Sunderland (grades I–V). Neurapraxia is conduction block with intact axons and full recovery over weeks. Axonotmesis involves axonal disruption with intact endoneurium, permitting regeneration at roughly 1 mm per day along preserved tubes. Neurotmesis is complete disruption requiring surgical repair, with regeneration limited by misdirection. Neuroma forms where regenerating axons cannot find a distal pathway, producing a focal, exquisitely tender mass with a positive Tinel sign.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "The 1 mm/day figure allows a rough estimate of expected reinnervation timing — useful for setting realistic expectations and for deciding when absence of recovery warrants re-referral. An advancing Tinel sign is the bedside marker of regeneration progress."
+      }
+    ],
+    "section": "Peripheral Nerve",
+    "slug": "nerve-laceration-transection-and-repair-neuroma",
+    "references": []
+  },
+  {
+    "name": "Double crush syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "The proposed phenomenon whereby proximal nerve compression renders the same axon more vulnerable to a second distal compression — classically cervical radiculopathy plus carpal tunnel syndrome. Offered as an explanation for incomplete relief after decompression at one site alone. The construct remains contested, with debate over whether observed co-occurrence exceeds what would be expected by chance given that both conditions are common in the same demographic.",
+    "details": [],
+    "section": "Peripheral Nerve",
+    "slug": "double-crush-syndrome",
+    "references": []
+  },
+  {
+    "name": "Thoracic outlet syndrome (neurogenic)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Compression of the brachial plexus at the thoracic outlet, most often the lower trunk, producing medial forearm and hand symptoms with intrinsic weakness. True neurogenic TOS with objective findings is rare; disputed or symptomatic TOS is far more common and much harder to confirm.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P01-02, including the Society for Vascular Surgery reporting standards, which define NTOS by three of four criteria — symptoms and signs at the thoracic outlet, signs of nerve compression, absence of other explanatory pathology, and a positive response to a properly performed scalene muscle test injection. No provocative physical test appears among the consensus criteria."
+      }
+    ],
+    "section": "Peripheral Nerve",
+    "slug": "thoracic-outlet-syndrome-neurogenic",
+    "references": []
+  },
+  {
+    "name": "Herpes zoster and postherpetic neuralgia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Reactivation of latent varicella-zoster virus in a dorsal root or cranial nerve ganglion, producing dermatomal pain that commonly precedes the vesicular rash by days — a recognised mimic of musculoskeletal pain. Postherpetic neuralgia is pain persisting beyond rash healing, with allodynia and burning dysaesthesia in the affected dermatome. Ramsay Hunt syndrome is zoster of the geniculate ganglion producing facial palsy with vesicles in the ear canal, and carries worse facial recovery than Bell palsy.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P01-02, including incidence of 3–5 per 1000 person-years, postherpetic neuralgia risk of 5% to over 30% depending on study design and age, and persistent pain beyond one year in more than 30% of those who develop PHN."
+      }
+    ],
+    "section": "Peripheral Nerve",
+    "slug": "herpes-zoster-and-postherpetic-neuralgia",
+    "references": []
+  },
+  {
+    "name": "Duchenne muscular dystrophy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "X-linked recessive dystrophinopathy from out-of-frame *DMD* mutations producing absent dystrophin. Presents in early childhood with delayed walking, calf pseudohypertrophy, Gowers sign, and proximal weakness, progressing to loss of ambulation typically in the early teens, then scoliosis, restrictive respiratory failure, and cardiomyopathy.",
+    "details": [
+      {
+        "label": "Current care standard",
+        "text": "The 2018 DMD care considerations updated the 2010 version across 11 topics, of which three were new — primary care and emergency management, endocrine management, and transitions of care across the lifespan. Part 1 covers diagnosis and neuromuscular, rehabilitation, endocrine, and gastrointestinal management [1]."
+      },
+      {
+        "label": "Why it was updated",
+        "text": "In conjunction with improved patient survival, a shift to more anticipatory diagnostic and therapeutic strategies has occurred, with a renewed focus on quality of life. The update aims to address the needs of patients with prolonged survival and to consider implications of emerging genetic and molecular therapies [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Improved survival means adults with DMD are now a real caseload — transitions of care across the lifespan was added as a topic precisely because that population did not previously exist in numbers. Corticosteroid therapy prolongs ambulation but brings endocrine, bone, and growth consequences that the update addresses directly [1]."
+      }
+    ],
+    "section": "Neuromuscular / Myopathic",
+    "slug": "duchenne-muscular-dystrophy",
+    "references": [
+      "Birnkrant, D. J., Bushby, K., Bann, C. M., Apkon, S. D., Blackwell, A., Brumbaugh, D., Case, L. E., Clemens, P. R., Hadjiyannakis, S., Pandya, S., Street, N., Tomezsko, J., Wagner, K. R., Ward, L. M., & Weber, D. R. (2018). Diagnosis and management of Duchenne muscular dystrophy, part 1: Diagnosis, and neuromuscular, rehabilitation, endocrine, and gastrointestinal and nutritional management. *The Lancet Neurology, 17*(3), 251–267. https://doi.org/10.1016/S1474-4422(18)30024-3 (PMID: 29395989)"
+    ]
+  },
+  {
+    "name": "Becker muscular dystrophy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Allelic to DMD but from in-frame *DMD* mutations producing reduced or abnormal — rather than absent — dystrophin. Later onset, slower progression, and preserved ambulation well into adulthood. Cardiomyopathy may be disproportionately severe relative to skeletal muscle involvement, and can be the presenting or life-limiting feature even in ambulant patients.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "The mismatch between relatively mild limb weakness and potentially severe cardiac disease is the key point — cardiac surveillance should not be scaled to ambulatory status."
+      }
+    ],
+    "section": "Neuromuscular / Myopathic",
+    "slug": "becker-muscular-dystrophy",
+    "references": []
+  },
+  {
+    "name": "Limb-girdle muscular dystrophies",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Genetically heterogeneous group with predominantly proximal shoulder and pelvic girdle weakness, sparing facial muscles. Both autosomal dominant and recessive forms exist, now classified by inheritance pattern and causative gene. Onset and severity vary widely by subtype, as does the presence of cardiac and respiratory involvement — which is why genetic subtyping changes surveillance, not just labelling.",
+    "details": [],
+    "section": "Neuromuscular / Myopathic",
+    "slug": "limb-girdle-muscular-dystrophies",
+    "references": []
+  },
+  {
+    "name": "Facioscapulohumeral dystrophy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Autosomal dominant dystrophy, usually from *D4Z4* contraction on chromosome 4q35, with characteristically asymmetrical involvement of face, scapular stabilisers, and humeral muscles. Produces scapular winging, difficulty whistling or closing eyes fully, and a transverse smile, with later foot drop and abdominal involvement (Beevor sign). Deltoid is relatively spared despite marked scapular winging, so scapular fixation can substantially improve arm elevation.",
+    "details": [],
+    "section": "Neuromuscular / Myopathic",
+    "slug": "facioscapulohumeral-dystrophy",
+    "references": []
+  },
+  {
+    "name": "Myotonic dystrophy types 1 and 2",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Multisystemic disorder caused by a noncoding triplet repeat [2]. Type 1 (DM1) produces distal-predominant weakness with grip and percussion myotonia, ptosis, temporal wasting, frontal balding, cataracts, cardiac conduction defects, insulin resistance, and cognitive involvement. Type 2 (DM2) is proximal-predominant with less severe systemic features. Age of onset is variable across the lifespan, but in its most severe form symptoms appear at birth (congenital) or in the paediatric range (childhood-onset) [2].",
+    "details": [
+      {
+        "label": "Paediatric care recommendations",
+        "text": "The Myotonic Dystrophy Foundation recruited 11 international clinicians experienced with congenital and childhood-onset DM1 to create consensus-based care recommendations, using a two-step methodology combining the single text procedure and nominal group technique. Prior to this, there were no agreed recommendations for caring for these children [2]."
+      },
+      {
+        "label": "Burden",
+        "text": "Children with congenital and childhood-onset DM1 have a range of disabilities that reduce the lifespan and cause significant morbidity, often requiring monitoring and intervention [2]."
+      },
+      {
+        "label": "Clinical implication — a genuine safety point",
+        "text": "Cardiac conduction abnormality in DM1 can be life-threatening and may precede significant weakness, and anaesthetic sensitivity is increased. Neither risk tracks with limb strength, so a patient who looks mildly affected is not necessarily low risk."
+      }
+    ],
+    "section": "Neuromuscular / Myopathic",
+    "slug": "myotonic-dystrophy-types-1-and-2",
+    "references": [
+      "Johnson, N. E., Aldana, E. Z., Angeard, N., Ashizawa, T., Berggren, K. N., Marini-Bettolo, C., Duong, T., Ekström, A.-B., Sansone, V., Tian, C., Hellerstein, L., & Campbell, C. (2019). Consensus-based care recommendations for congenital and childhood-onset myotonic dystrophy type 1. *Neurology: Clinical Practice, 9*(5), 443–454. https://doi.org/10.1212/CPJ.0000000000000646 (PMID: 31750030)"
+    ]
+  },
+  {
+    "name": "Emery-Dreifuss and congenital muscular dystrophies",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Emery-Dreifuss is defined by a characteristic triad — early contractures (elbows, Achilles, cervical/spinal extensors) preceding weakness, humeroperoneal weakness, and cardiac conduction defects with high sudden death risk. X-linked (emerin) and autosomal (lamin A/C) forms exist. Congenital muscular dystrophies present at or near birth with hypotonia, contractures, and delayed motor milestones, with subtypes varying in brain and eye involvement.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "In Emery-Dreifuss, contractures come *first* — early and sustained stretching plus splinting is the rehabilitation priority, and cardiac surveillance is mandatory regardless of how mild the weakness appears."
+      }
+    ],
+    "section": "Neuromuscular / Myopathic",
+    "slug": "emery-dreifuss-and-congenital-muscular-dystrophies",
+    "references": []
+  },
+  {
+    "name": "Congenital myopathies (nemaline, central core, myotubular)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Structurally defined myopathies presenting with neonatal or infantile hypotonia, weakness, and often facial and bulbar involvement, typically static or very slowly progressive — distinguishing them from the dystrophies. Central core disease is strongly associated with *RYR1* mutations and therefore with malignant hyperthermia susceptibility [4], which makes anaesthetic planning a defining clinical concern.",
+    "details": [],
+    "section": "Neuromuscular / Myopathic",
+    "slug": "congenital-myopathies-nemaline-central-core-myotubular",
+    "references": [
+      "Hopkins, P. M., Rüffert, H., Snoeck, M. M., Girard, T., Glahn, K. P. E., Ellis, F. R., Müller, C. R., & Urwyler, A. (2015). European Malignant Hyperthermia Group guidelines for investigation of malignant hyperthermia susceptibility. *British Journal of Anaesthesia, 115*(4), 531–539. https://doi.org/10.1093/bja/aev225 (PMID: 26188342)"
+    ]
+  },
+  {
+    "name": "Metabolic myopathies — McArdle disease, Pompe disease, mitochondrial myopathies",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "McArdle disease (myophosphorylase deficiency) produces exercise intolerance, cramps, and myoglobinuria with a characteristic \"second wind\" phenomenon — symptoms improve after several minutes of low-intensity activity as alternative fuels become available. Pompe disease (acid maltase deficiency) produces proximal weakness with early and disproportionate diaphragmatic involvement, so respiratory failure may precede significant limb weakness. Mitochondrial myopathies produce exercise intolerance, ptosis, ophthalmoplegia, and multisystem features.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "In McArdle, a gentle warm-up before harder activity is protective and high-intensity work without it risks rhabdomyolysis — this is one of the few conditions where the specific warm-up structure is the intervention. In Pompe, supine vital capacity should be checked because diaphragm weakness shows up there first."
+      }
+    ],
+    "section": "Neuromuscular / Myopathic",
+    "slug": "metabolic-myopathies-mcardle-disease-pompe-disease-mitochondrial-myopathies",
+    "references": []
+  },
+  {
+    "name": "Statin-associated and steroid-induced myopathy",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Statin-associated muscle symptoms span myalgia with normal CK, myopathy with raised CK, and rarely immune-mediated necrotising myopathy (anti-HMGCR) which persists or progresses after drug withdrawal. Steroid-induced myopathy produces painless proximal weakness — hips before shoulders — with normal CK, typically after weeks to months of corticosteroid exposure, and improves slowly on dose reduction.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Normal CK does not exclude steroid myopathy; it is expected. Conversely, weakness that worsens after stopping a statin argues against simple statin myopathy and toward an immune-mediated process requiring referral."
+      }
+    ],
+    "section": "Neuromuscular / Myopathic",
+    "slug": "statin-associated-and-steroid-induced-myopathy",
+    "references": []
+  },
+  {
+    "name": "Critical illness myopathy and polyneuropathy",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Profound muscle weakness developing during and after critical illness, termed intensive care unit-acquired weakness (ICUAW) [3]. Presents as symmetrical, generalised, often flaccid weakness with relative facial sparing, difficulty weaning from ventilation, and functional impairment persisting long after ICU discharge.",
+    "details": [
+      {
+        "label": "Associations",
+        "text": "Severe sepsis, difficult ventilator liberation, and prolonged mechanical ventilation are associated with ICUAW [3]."
+      },
+      {
+        "label": "Rehabilitation evidence — read carefully",
+        "text": "Physical rehabilitation improves outcomes in heterogeneous populations of ICU patients. However, the guideline's systematic review identified only one case series of patients with ICUAW specifically who received physical therapy. Compared with a case series who did not receive structured physical therapy, evidence suggested those receiving rehabilitation were more frequently discharged home rather than to a rehabilitation facility — although confidence intervals included no difference [3]."
+      },
+      {
+        "label": "Authors' conclusion",
+        "text": "Controlled clinical trials comparing physical rehabilitation with usual care in ICUAW are recommended, and research identifying treatments that benefit these patients is necessary to determine whether the benefits of diagnostic testing outweigh its burdens [3]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The rationale for identifying ICUAW is to target rehabilitation where universal provision is not feasible. But the ICUAW-specific evidence base is a single case series comparison with confidence intervals crossing no effect — considerably thinner than the general ICU rehabilitation literature it is often conflated with [3]."
+      }
+    ],
+    "section": "Neuromuscular / Myopathic",
+    "slug": "critical-illness-myopathy-and-polyneuropathy",
+    "references": [
+      "Fan, E., Cheek, F., Chlan, L., Gosselink, R., Hart, N., Herridge, M. S., Hopkins, R. O., Hough, C. L., Kress, J. P., Latronico, N., Moss, M., Needham, D. M., Rich, M. M., Stevens, R. D., Wilson, K. C., Winkelman, C., Zochodne, D. W., & Ali, N. A. (2014). An official American Thoracic Society clinical practice guideline: The diagnosis of intensive care unit-acquired weakness in adults. *American Journal of Respiratory and Critical Care Medicine, 190*(12), 1437–1446. https://doi.org/10.1164/rccm.201411-2011ST (PMID: 25496103)"
+    ]
+  },
+  {
+    "name": "Rhabdomyolysis",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Skeletal muscle breakdown releasing myoglobin, creatine kinase, potassium, and phosphate into the circulation. Classic triad is myalgia, weakness, and dark (tea- or cola-coloured) urine, though the full triad is frequently absent. Causes include crush injury, prolonged immobilisation, extreme unaccustomed exertion, hyperthermia, statins, and metabolic myopathies. Acute kidney injury, hyperkalaemia with arrhythmia, and compartment syndrome are the threats.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "This is directly relevant to exercise prescription. Unaccustomed high-volume eccentric work — particularly in deconditioned, sickle cell trait, or metabolic myopathy populations, and in heat — can precipitate it. Dark urine after exertion is an emergency referral, not a hydration reminder."
+      }
+    ],
+    "section": "Neuromuscular / Myopathic",
+    "slug": "rhabdomyolysis",
+    "references": []
+  },
+  {
+    "name": "Malignant hyperthermia susceptibility",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Pharmacogenetic disorder of skeletal muscle calcium regulation in which volatile anaesthetics and depolarising muscle relaxants trigger uncontrolled hypermetabolism — rigidity, hyperthermia, rhabdomyolysis, and acidosis. Associated with *RYR1* and *CACNA1S* mutations [4], and linked to central core disease and some other myopathies.",
+    "details": [
+      {
+        "label": "Diagnostic pathway",
+        "text": "The European Malignant Hyperthermia Group first published a consensus laboratory diagnostic protocol 30 years before its 2015 update; that protocol has been used in more than 10,000 individuals worldwide to inform anaesthetic drug choice, described by the authors as an early and successful example of stratified medicine [4]."
+      },
+      {
+        "label": "Current guideline scope",
+        "text": "The 2015 guideline provides a complete diagnostic pathway for patients potentially at increased risk, including patient referral criteria and clinical interpretation of laboratory findings, updating the 2001 DNA-based screening guidance [4]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Susceptibility is usually silent until anaesthetic exposure. A family history of anaesthetic death or unexplained perioperative crisis, or a known myopathy diagnosis, should be flagged before any surgical referral — this is one of the few areas where a therapist's history-taking can directly prevent a fatal event."
+      }
+    ],
+    "section": "Neuromuscular / Myopathic",
+    "slug": "malignant-hyperthermia-susceptibility",
+    "references": [
+      "Hopkins, P. M., Rüffert, H., Snoeck, M. M., Girard, T., Glahn, K. P. E., Ellis, F. R., Müller, C. R., & Urwyler, A. (2015). European Malignant Hyperthermia Group guidelines for investigation of malignant hyperthermia susceptibility. *British Journal of Anaesthesia, 115*(4), 531–539. https://doi.org/10.1093/bja/aev225 (PMID: 26188342)"
+    ]
+  },
+  {
+    "name": "Benign paroxysmal positional vertigo — posterior, horizontal, anterior canal; canalithiasis vs cupulolithiasis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Disorder of the inner ear characterised by repeated episodes of positional vertigo [2], caused by displaced otoconia. Canalithiasis — debris free-floating in the canal, producing latency and fatigable nystagmus lasting under a minute. Cupulolithiasis — debris adherent to the cupula, producing immediate, persistent nystagmus. Posterior canal accounts for the large majority; horizontal canal is next; anterior canal is rare.",
+    "details": [
+      {
+        "label": "Strong recommendations from the AAO-HNS guideline",
+        "text": "Clinicians should (1) diagnose posterior canal BPPV when vertigo with torsional, upbeating nystagmus is provoked by the Dix-Hallpike manoeuvre — upright to supine, head turned 45° to one side, neck extended 20°, affected ear down; and (2) treat, or refer for, canalith repositioning. A strong recommendation against post-procedural postural restrictions was also made [2]."
+      },
+      {
+        "label": "Strong recommendations against",
+        "text": "Routine radiographic imaging, routine vestibular testing, and routinely treating BPPV with vestibular suppressant medications (antihistamines, benzodiazepines) in patients meeting diagnostic criteria without inconsistent additional features [2]."
+      },
+      {
+        "label": "Further recommendations",
+        "text": "Perform a supine roll test for lateral canal BPPV if the history fits but Dix-Hallpike shows horizontal or no nystagmus; differentiate BPPV from other causes of dizziness; assess for factors that modify management — impaired mobility or balance, CNS disorders, lack of home support, increased falls risk; reassess within one month; and educate regarding safety, recurrence potential, and follow-up [2]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Three of the strong recommendations are things *not* to do. Post-manoeuvre postural restrictions, imaging, and vestibular suppressants are all common practice and all explicitly discouraged. Vestibular rehabilitation, self-administered or clinician-delivered, is offered as an option rather than a recommendation [2]."
+      }
+    ],
+    "section": "Vestibular & Balance",
+    "slug": "benign-paroxysmal-positional-vertigo-posterior-horizontal-anterior-canal-canalithiasis-vs-cupulolithiasis",
+    "references": [
+      "Bhattacharyya, N., Gubbels, S. P., Schwartz, S. R., Edlow, J. A., El-Kashlan, H., Fife, T., Holmberg, J. M., Mahoney, K., Hollingsworth, D. B., Roberts, R., Seidman, M. D., Steiner, R. W. P., Do, B. T., Voelker, C. C. J., Waguespack, R. W., & Corrigan, M. D. (2017). Clinical practice guideline: Benign paroxysmal positional vertigo (update). *Otolaryngology–Head and Neck Surgery, 156*(3_suppl), S1–S47. https://doi.org/10.1177/0194599816689667 (PMID: 28248609)"
+    ]
+  },
+  {
+    "name": "Vestibular neuritis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Acute unilateral vestibular hypofunction, presumed viral or post-viral, producing sudden severe vertigo, nausea, and unsteadiness lasting days, with unidirectional horizontal-torsional nystagmus beating away from the affected side, an abnormal head impulse test toward the affected side, and no hearing loss. Distinguished from labyrinthitis by preserved hearing.",
+    "details": [
+      {
+        "label": "The critical differential",
+        "text": "Acute vestibular syndrome is often due to vestibular neuritis but can result from vertebrobasilar stroke, and misdiagnosis of posterior fossa infarcts in emergency settings is frequent [1]. See HINTS below."
+      },
+      {
+        "label": "Rehabilitation",
+        "text": "Falls under acute unilateral vestibular hypofunction in the APTA guideline — gaze stabilisation exercises 3 times per day for a total of at least 12 minutes daily in the acute/subacute phase [3]."
+      }
+    ],
+    "section": "Vestibular & Balance",
+    "slug": "vestibular-neuritis",
+    "references": [
+      "Kattah, J. C., Talkad, A. V., Wang, D. Z., Hsieh, Y.-H., & Newman-Toker, D. E. (2009). HINTS to diagnose stroke in the acute vestibular syndrome: Three-step bedside oculomotor examination more sensitive than early MRI diffusion-weighted imaging. *Stroke, 40*(11), 3504–3510. https://doi.org/10.1161/STROKEAHA.109.551234 (PMID: 19762709)",
+      "Hall, C. D., Herdman, S. J., Whitney, S. L., Anson, E. R., Carender, W. J., Hoppes, C. W., Cass, S. P., Christy, J. B., Cohen, H. S., Fife, T. D., Furman, J. M., Shepard, N. T., Clendaniel, R. A., Dishman, J. D., Goebel, J. A., Meldrum, D., Ryan, C., Wallace, R. L., & Woodward, N. J. (2022). Vestibular rehabilitation for peripheral vestibular hypofunction: An updated clinical practice guideline from the Academy of Neurologic Physical Therapy of the American Physical Therapy Association. *Journal of Neurologic Physical Therapy, 46*(2), 118–177. https://doi.org/10.1097/NPT.0000000000000382 (PMID: 34864777)"
+    ]
+  },
+  {
+    "name": "Labyrinthitis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Inflammation involving both the vestibular and cochlear portions of the labyrinth, producing the vertigo and imbalance of neuritis plus hearing loss and often tinnitus. May be viral or bacterial; bacterial labyrinthitis complicating otitis media or meningitis is a medical emergency with permanent hearing loss risk.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Sudden sensorineural hearing loss with vertigo is an urgent ENT referral — the treatment window for hearing preservation is short, and it is also a recognised presentation of AICA territory stroke."
+      }
+    ],
+    "section": "Vestibular & Balance",
+    "slug": "labyrinthitis",
+    "references": []
+  },
+  {
+    "name": "Ménière disease",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Idiopathic endolymphatic hydrops producing the characteristic tetrad — episodic vertigo lasting 20 minutes to 12 hours, fluctuating low-frequency sensorineural hearing loss, tinnitus, and aural fullness — typically unilateral at onset. Progresses over years to fixed hearing loss with reduced vertigo frequency. Tumarkin otolithic crises (sudden drop attacks without loss of consciousness) occur in a minority and carry serious injury risk.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Vestibular rehabilitation does not help during fluctuating active disease — the deficit is not stable enough to compensate around. It becomes appropriate once hypofunction is fixed, whether from disease burnout or ablative treatment."
+      }
+    ],
+    "section": "Vestibular & Balance",
+    "slug": "m-ni-re-disease",
+    "references": []
+  },
+  {
+    "name": "Unilateral and bilateral vestibular hypofunction",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Reduced or absent peripheral vestibular function, uni- or bilaterally. Uncompensated hypofunction produces dizziness, imbalance, oscillopsia, gaze and gait instability, and impaired navigation and spatial orientation, negatively affecting quality of life, activities of daily living, driving, and work. Approximately one-third of adults in the United States have vestibular dysfunction, with incidence increasing with age [3].",
+    "details": [
+      {
+        "label": "Core recommendation — strong evidence",
+        "text": "Clinicians should offer vestibular rehabilitation to adults with unilateral and bilateral hypofunction presenting with related impairments, activity limitations, and participation restrictions [3]."
+      },
+      {
+        "label": "A strong recommendation against",
+        "text": "Based on strong evidence and a preponderance of harm over benefit, clinicians should not include voluntary saccadic or smooth-pursuit eye movements in isolation — that is, without head movement — to promote gaze stability [3]."
+      },
+      {
+        "label": "Dosage (moderate to weak evidence)",
+        "text": "Gaze stabilisation exercises, minimum — acute/subacute unilateral: 3×/day, ≥12 min daily. Chronic unilateral: 3–5×/day, ≥20 min daily for 4–6 weeks. Bilateral: 3–5×/day, 20–40 min daily for approximately 5–7 weeks [3]."
+      },
+      {
+        "label": "Balance exercise (moderate evidence)",
+        "text": "Static and dynamic balance exercises ≥20 minutes daily for at least 4–6 weeks in chronic unilateral hypofunction, and by expert opinion 6–9 weeks in bilateral [3]."
+      },
+      {
+        "label": "Supervision and discharge",
+        "text": "Clinicians should offer supervised vestibular rehabilitation (strong evidence, with patient preference considered). Stopping criteria may include achievement of primary goals, symptom resolution, normalised balance and vestibular function, or plateau in progress [3]."
+      },
+      {
+        "label": "Scope limitation stated by the authors",
+        "text": "The guideline addresses peripheral hypofunction confirmed by objective vestibular function testing. Recommendations may not apply to central vestibular disorders, nor to individuals reporting dizziness, imbalance, or oscillopsia without a diagnosis of hypofunction [3]."
+      }
+    ],
+    "section": "Vestibular & Balance",
+    "slug": "unilateral-and-bilateral-vestibular-hypofunction",
+    "references": [
+      "Hall, C. D., Herdman, S. J., Whitney, S. L., Anson, E. R., Carender, W. J., Hoppes, C. W., Cass, S. P., Christy, J. B., Cohen, H. S., Fife, T. D., Furman, J. M., Shepard, N. T., Clendaniel, R. A., Dishman, J. D., Goebel, J. A., Meldrum, D., Ryan, C., Wallace, R. L., & Woodward, N. J. (2022). Vestibular rehabilitation for peripheral vestibular hypofunction: An updated clinical practice guideline from the Academy of Neurologic Physical Therapy of the American Physical Therapy Association. *Journal of Neurologic Physical Therapy, 46*(2), 118–177. https://doi.org/10.1097/NPT.0000000000000382 (PMID: 34864777)"
+    ]
+  },
+  {
+    "name": "Vestibular migraine",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Recurrent vestibular symptoms — spontaneous or positional vertigo, head-motion-induced dizziness — in a patient with a history of migraine, with migrainous features (headache, photophobia, phonophobia, visual aura) during at least half of episodes. Duration is highly variable, from minutes to days, which distinguishes it from the more stereotyped durations of BPPV and Ménière. One of the most common causes of episodic vertigo and frequently underdiagnosed.",
+    "details": [],
+    "section": "Vestibular & Balance",
+    "slug": "vestibular-migraine",
+    "references": []
+  },
+  {
+    "name": "Superior canal dehiscence syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Bony dehiscence over the superior semicircular canal creating a \"third window,\" producing sound- or pressure-induced vertigo and nystagmus (Tullio and Hennebert phenomena), autophony, hearing one's own eye movements or footsteps, and low-frequency conductive hearing loss with intact acoustic reflexes. Diagnosed on high-resolution temporal bone CT with reformatted planes.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Vertigo provoked by loud sound, coughing, straining, or nose-blowing is close to pathognomonic and is not explained by any other common vestibular diagnosis."
+      }
+    ],
+    "section": "Vestibular & Balance",
+    "slug": "superior-canal-dehiscence-syndrome",
+    "references": []
+  },
+  {
+    "name": "Perilymphatic fistula",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Abnormal communication between the perilymphatic space and middle ear, typically following barotrauma, head trauma, straining, or surgery. Produces vertigo and hearing loss provoked by pressure change or exertion. A contested diagnosis in the absence of clear trauma, with no reliable non-surgical confirmatory test.",
+    "details": [],
+    "section": "Vestibular & Balance",
+    "slug": "perilymphatic-fistula",
+    "references": []
+  },
+  {
+    "name": "Persistent postural-perceptual dizziness (PPPD)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "The term is new, but the disorder is not — criteria were derived by expert consensus from 30 years of research on phobic postural vertigo, space-motion discomfort, visual vertigo, and chronic subjective dizziness [4]. Manifests with one or more symptoms of dizziness, unsteadiness, or non-spinning vertigo present on most days for three months or more, exacerbated by upright posture, active or passive movement, and exposure to moving or complex visual stimuli [4].",
+    "details": [
+      {
+        "label": "Precipitants",
+        "text": "May be precipitated by conditions that disrupt balance or cause vertigo — peripheral or central vestibular disorders, other medical illnesses, or psychological distress — and may exist alone or alongside other conditions [4]."
+      },
+      {
+        "label": "Classification — the point that matters most",
+        "text": "PPPD is classified as a chronic functional vestibular disorder. It is not a structural or psychiatric condition [4]. Emerging research suggests it may arise from functional changes in postural control mechanisms, multisensory information processing, or cortical integration of spatial orientation and threat assessment [4]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "This is the diagnosis for the patient whose acute vestibular event resolved but whose dizziness did not. Framing it as functional-but-real — neither \"nothing wrong\" nor \"anxiety\" — is central to management, and the consensus document's explicit rejection of a psychiatric classification is the sentence worth quoting to patients."
+      }
+    ],
+    "section": "Vestibular & Balance",
+    "slug": "persistent-postural-perceptual-dizziness-pppd",
+    "references": [
+      "Staab, J. P., Eckhardt-Henn, A., Horii, A., Jacob, R., Strupp, M., Brandt, T., & Bronstein, A. (2017). Diagnostic criteria for persistent postural-perceptual dizziness (PPPD): Consensus document of the Committee for the Classification of Vestibular Disorders of the Bárány Society. *Journal of Vestibular Research, 27*(4), 191–208. https://doi.org/10.3233/VES-170622 (PMID: 29036855)"
+    ]
+  },
+  {
+    "name": "Mal de débarquement syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Persistent perception of self-motion — rocking, swaying, bobbing — typically following prolonged passive motion exposure such as a sea voyage or long flight. Characteristically improves during passive motion (driving, re-boarding) and worsens when still, which is the reverse of most vestibular disorders and is the key diagnostic feature.",
+    "details": [],
+    "section": "Vestibular & Balance",
+    "slug": "mal-de-d-barquement-syndrome",
+    "references": []
+  },
+  {
+    "name": "Acoustic neuroma / vestibular schwannoma and post-resection status",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Benign Schwann cell tumour of the vestibular portion of CN VIII, typically presenting with unilateral progressive sensorineural hearing loss and tinnitus rather than vertigo, because slow growth allows central compensation. Larger tumours produce trigeminal and facial involvement and, eventually, brainstem compression. Post-resection, patients have a complete unilateral vestibular deafferentation and often facial nerve palsy.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Asymmetric sensorineural hearing loss warrants MRI, and unilateral tinnitus with hearing loss should not be attributed to noise exposure without considering this. Post-resection patients are candidates for vestibular rehabilitation under the unilateral hypofunction pathway [3]."
+      }
+    ],
+    "section": "Vestibular & Balance",
+    "slug": "acoustic-neuroma-vestibular-schwannoma-and-post-resection-status",
+    "references": [
+      "Hall, C. D., Herdman, S. J., Whitney, S. L., Anson, E. R., Carender, W. J., Hoppes, C. W., Cass, S. P., Christy, J. B., Cohen, H. S., Fife, T. D., Furman, J. M., Shepard, N. T., Clendaniel, R. A., Dishman, J. D., Goebel, J. A., Meldrum, D., Ryan, C., Wallace, R. L., & Woodward, N. J. (2022). Vestibular rehabilitation for peripheral vestibular hypofunction: An updated clinical practice guideline from the Academy of Neurologic Physical Therapy of the American Physical Therapy Association. *Journal of Neurologic Physical Therapy, 46*(2), 118–177. https://doi.org/10.1097/NPT.0000000000000382 (PMID: 34864777)"
+    ]
+  },
+  {
+    "name": "Ototoxicity-induced vestibular loss",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Bilateral vestibular hypofunction from aminoglycosides (gentamicin especially), platinum chemotherapy, or loop diuretics. Because it is bilateral and symmetrical, patients often report oscillopsia and imbalance in the dark without true vertigo — there is no asymmetry to generate spinning. Frequently missed in hospitalised patients whose unsteadiness is attributed to deconditioning.",
+    "details": [
+      {
+        "label": "Rehabilitation",
+        "text": "Managed under the bilateral hypofunction pathway — gaze stabilisation 3–5×/day for 20–40 minutes daily over approximately 5–7 weeks, with balance exercise for a minimum of 6–9 weeks by expert opinion [3]."
+      }
+    ],
+    "section": "Vestibular & Balance",
+    "slug": "ototoxicity-induced-vestibular-loss",
+    "references": [
+      "Hall, C. D., Herdman, S. J., Whitney, S. L., Anson, E. R., Carender, W. J., Hoppes, C. W., Cass, S. P., Christy, J. B., Cohen, H. S., Fife, T. D., Furman, J. M., Shepard, N. T., Clendaniel, R. A., Dishman, J. D., Goebel, J. A., Meldrum, D., Ryan, C., Wallace, R. L., & Woodward, N. J. (2022). Vestibular rehabilitation for peripheral vestibular hypofunction: An updated clinical practice guideline from the Academy of Neurologic Physical Therapy of the American Physical Therapy Association. *Journal of Neurologic Physical Therapy, 46*(2), 118–177. https://doi.org/10.1097/NPT.0000000000000382 (PMID: 34864777)"
+    ]
+  },
+  {
+    "name": "Cervicogenic dizziness",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Non-vertiginous disequilibrium attributed to altered cervical proprioceptive input, temporally linked with neck pain. A diagnosis of exclusion.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P01-01, including the proprioceptive mismatch mechanism, the cervical torsion test as the best available diagnostic method, and the finding that aetiopathology is heterogeneous enough that pooled study conclusions transfer poorly to individual patients."
+      }
+    ],
+    "section": "Vestibular & Balance",
+    "slug": "cervicogenic-dizziness",
+    "references": []
+  },
+  {
+    "name": "Orthostatic hypotension and postural orthostatic tachycardia syndrome (POTS)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Orthostatic hypotension is a sustained fall in blood pressure on standing, conventionally ≥20 mmHg systolic or ≥10 mmHg diastolic within 3 minutes. Neurogenic OH is common in patients with neurodegenerative disorders including Parkinson disease, multiple system atrophy, pure autonomic failure, dementia with Lewy bodies, and peripheral neuropathies including amyloid or diabetic neuropathy [5]. POTS is a sustained heart rate rise ≥30 bpm (≥40 in adolescents) within 10 minutes of standing without orthostatic hypotension, with chronic orthostatic intolerance symptoms.",
+    "details": [
+      {
+        "label": "Why it matters here",
+        "text": "Due to the frequency of neurogenic OH in the ageing population, clinicians need to be well informed about its diagnosis and management [5]. Associated supine hypertension frequently coexists and complicates treatment, since measures that raise standing pressure worsen it."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "This is dizziness that is cardiovascular, not vestibular, and it is distinguished by its temporal relationship to position change rather than head movement. Lying-to-standing blood pressure and heart rate measurement separates the two, and belongs in any dizziness assessment."
+      }
+    ],
+    "section": "Vestibular & Balance",
+    "slug": "orthostatic-hypotension-and-postural-orthostatic-tachycardia-syndrome-pots",
+    "references": [
+      "Gibbons, C. H., Schmidt, P., Biaggioni, I., Frazier-Mills, C., Freeman, R., Isaacson, S., Karabin, B., Kuritzky, L., Lew, M., Low, P., Mehdirad, A., Raj, S. R., Vernino, S., & Kaufmann, H. (2017). The recommendations of a consensus panel for the screening, diagnosis, and treatment of neurogenic orthostatic hypotension and associated supine hypertension. *Journal of Neurology, 264*(8), 1567–1582. https://doi.org/10.1007/s00415-016-8375-x (PMID: 28050656)"
+    ]
+  },
+  {
+    "name": "Multifactorial balance dysfunction and recurrent falls",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Falls in older adults arising from the interaction of multiple contributors — sensory (vestibular, visual, somatosensory), motor (strength, power, reaction time), cognitive, cardiovascular, medication-related, and environmental. Rarely attributable to a single system, which is why single-system interventions underperform.",
+    "details": [
+      {
+        "label": "Relevant context",
+        "text": "BPPV specifically is common and treatable in this population, and the AAO-HNS guideline recommends assessing BPPV patients for impaired mobility or balance, CNS disorders, lack of home support, and increased falls risk as factors modifying management [2]."
+      }
+    ],
+    "section": "Vestibular & Balance",
+    "slug": "multifactorial-balance-dysfunction-and-recurrent-falls",
+    "references": [
+      "Bhattacharyya, N., Gubbels, S. P., Schwartz, S. R., Edlow, J. A., El-Kashlan, H., Fife, T., Holmberg, J. M., Mahoney, K., Hollingsworth, D. B., Roberts, R., Seidman, M. D., Steiner, R. W. P., Do, B. T., Voelker, C. C. J., Waguespack, R. W., & Corrigan, M. D. (2017). Clinical practice guideline: Benign paroxysmal positional vertigo (update). *Otolaryngology–Head and Neck Surgery, 156*(3_suppl), S1–S47. https://doi.org/10.1177/0194599816689667 (PMID: 28248609)"
+    ]
+  },
+  {
+    "name": "Fear of falling / post-fall syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Persistent apprehension about falling leading to activity restriction, which produces deconditioning, reduced balance confidence, and — through that pathway — increased actual falls risk. May occur with or without a preceding fall. Measured with tools such as the Falls Efficacy Scale-International and Activities-specific Balance Confidence scale.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Fear-driven activity restriction is self-reinforcing, and addressing balance confidence is a distinct treatment target from balance impairment itself. A patient whose measured balance has improved but whose confidence has not will still restrict activity."
+      }
+    ],
+    "section": "Vestibular & Balance",
+    "slug": "fear-of-falling-post-fall-syndrome",
+    "references": []
+  },
+  {
+    "name": "Coronary artery disease; stable and unstable angina",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Atherosclerotic narrowing of the coronary arteries producing myocardial ischaemia. Stable angina is predictable, exertion-related chest discomfort relieved by rest or nitrates within minutes. Unstable angina is new-onset, at rest, or increasing in frequency/severity/duration — an acute coronary syndrome requiring urgent medical assessment, not exercise. Coronary heart disease is the most common cause of death globally [1].",
+    "details": [
+      {
+        "label": "What CR does not change in the short term",
+        "text": "Little to no difference in cardiovascular mortality (RR 0.88, 0.68–1.14), CABG (RR 0.99, high certainty), or PCI (RR 0.86) up to 12 months [1]."
+      },
+      {
+        "label": "Longer-term",
+        "text": "At >3 years, CR may produce a large reduction in cardiovascular mortality (RR 0.58, 95% CI 0.43–0.78) and MI (RR 0.67, 0.50–0.90), though all-cause mortality shows little difference [1]."
+      },
+      {
+        "label": "Benefits are robust to programme design",
+        "text": "Meta-regression showed benefits were independent of CHD case mix, type of CR, exercise dose, follow-up length, publication year, CR setting, study location, sample size, or risk of bias [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The NNTB of 12 for all-cause hospitalisation is the most persuasive single figure for commissioning. Note the honest limits — quality-of-life gains \"may not be clinically important differences,\" and women still account for under 15% of participants [1]."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "coronary-artery-disease-stable-and-unstable-angina",
+    "references": [
+      "Dibben, G., Faulkner, J., Oldridge, N., Rees, K., Thompson, D. R., Zwisler, A.-D., & Taylor, R. S. (2021). Exercise-based cardiac rehabilitation for coronary heart disease. *Cochrane Database of Systematic Reviews, 11*(11), CD001800. https://doi.org/10.1002/14651858.CD001800.pub4 (PMID: 34741536)"
+    ]
+  },
+  {
+    "name": "Myocardial infarction (STEMI, NSTEMI); post-MI rehabilitation phases I–IV",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Myocardial necrosis from prolonged ischaemia. STEMI reflects complete occlusion requiring immediate reperfusion; NSTEMI reflects partial occlusion diagnosed by troponin rise without ST elevation. Rehabilitation phases: I — inpatient mobilisation and education; II — early outpatient supervised, monitored exercise; III — later outpatient/community with reduced supervision; IV — long-term community maintenance.",
+    "details": [
+      {
+        "label": "Evidence",
+        "text": "The Cochrane CR population was predominantly post-MI and post-revascularisation patients, mean age 47–77 [1]. See the effect estimates above, which apply directly to this group."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The high-certainty MI reduction (RR 0.72) means CR is secondary prevention, not just reconditioning [1]."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "myocardial-infarction-stemi-nstemi-post-mi-rehabilitation-phases-i-iv",
+    "references": [
+      "Dibben, G., Faulkner, J., Oldridge, N., Rees, K., Thompson, D. R., Zwisler, A.-D., & Taylor, R. S. (2021). Exercise-based cardiac rehabilitation for coronary heart disease. *Cochrane Database of Systematic Reviews, 11*(11), CD001800. https://doi.org/10.1002/14651858.CD001800.pub4 (PMID: 34741536)"
+    ]
+  },
+  {
+    "name": "Post CABG, post PCI/stent status",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "CABG requires median sternotomy in most cases, with sternal healing governing upper limb loading — see P01-02, where the evidence supporting early upper body activity over blanket restrictive precautions is sourced. PCI/stent is percutaneous with access-site (radial or femoral) precautions and dual antiplatelet therapy, allowing far earlier mobilisation.",
+    "details": [
+      {
+        "label": "Evidence",
+        "text": "Both populations are included in the Cochrane CR review [1]. CR did not reduce subsequent CABG (RR 0.99, high certainty) or PCI (RR 0.86) rates up to 12 months — it improves outcomes without reducing revascularisation [1]."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "post-cabg-post-pci-stent-status",
+    "references": [
+      "Dibben, G., Faulkner, J., Oldridge, N., Rees, K., Thompson, D. R., Zwisler, A.-D., & Taylor, R. S. (2021). Exercise-based cardiac rehabilitation for coronary heart disease. *Cochrane Database of Systematic Reviews, 11*(11), CD001800. https://doi.org/10.1002/14651858.CD001800.pub4 (PMID: 34741536)"
+    ]
+  },
+  {
+    "name": "Heart failure with reduced and preserved ejection fraction (NYHA I–IV)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "HFrEF (EF <40%) and HFpEF (EF ≥50%) produce exercise intolerance, dyspnoea, fatigue, and fluid overload. NYHA I — no limitation; II — slight limitation with ordinary activity; III — marked limitation with less-than-ordinary activity; IV — symptoms at rest.",
+    "details": [
+      {
+        "label": "Rehabilitation evidence",
+        "text": "Across 44 trials (5783 participants), CR probably reduces overall hospital admission in the short term (RR 0.70, 95% CI 0.60–0.83; moderate quality; NNT 14) and may reduce HF-specific hospitalisation (RR 0.59, 0.42–0.84; low quality; NNT 25) [2]."
+      },
+      {
+        "label": "Mortality",
+        "text": "CR may make little or no difference to all-cause mortality within one year (RR 0.89, 0.66–1.21; low quality) but may improve it beyond 12 months (RR 0.88, 0.75–1.02; high-quality evidence) [2]."
+      },
+      {
+        "label": "Quality of life",
+        "text": "Clinically important improvement in disease-specific HRQoL (Minnesota Living With Heart Failure, MD −7.11 points, 95% CI −10.49 to −3.73), though the evidence is low quality [2]."
+      },
+      {
+        "label": "Delivery is flexible",
+        "text": "Effects appeared consistent across centre- versus home-based delivery, exercise dose, exercise-only versus comprehensive programmes, and aerobic versus aerobic-plus-resistance [2]."
+      },
+      {
+        "label": "Representation gap",
+        "text": "The evidence base is predominantly HFrEF, NYHA II–III, centre-based — women, older people, and HFpEF patients are under-represented, though a growing body of studies includes HFpEF and home-based settings [2]."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "heart-failure-with-reduced-and-preserved-ejection-fraction-nyha-i-iv",
+    "references": [
+      "Long, L., Mordi, I. R., Bridges, C., Sagar, V. A., Davies, E. J., Coats, A. J. S., Dalal, H., Rees, K., Singh, S. J., & Taylor, R. S. (2019). Exercise-based cardiac rehabilitation for adults with heart failure. *Cochrane Database of Systematic Reviews, 1*(1), CD003331. https://doi.org/10.1002/14651858.CD003331.pub5 (PMID: 30695817)"
+    ]
+  },
+  {
+    "name": "Cardiomyopathies — dilated, hypertrophic, restrictive, peripartum, chemotherapy-induced",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Dilated — ventricular dilatation with systolic dysfunction. Hypertrophic (HCM) — a common genetic heart disease reported in populations globally [3], with left ventricular hypertrophy, possible outflow tract obstruction, and sudden cardiac death risk. Restrictive — impaired filling with preserved systolic function. Peripartum — onset in late pregnancy or early postpartum. Chemotherapy-induced — most classically anthracycline and trastuzumab related.",
+    "details": [
+      {
+        "label": "HCM guidance",
+        "text": "The 2024 AHA/ACC/AMSSM/HRS/PACES/SCMR guideline updates the 2020 version and covers risk stratification, ICD decisions, septal reduction therapy, and — directly relevant here — exercise, physical activity, sports, and occupation, with an explicit emphasis on shared decision-making [3]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "HCM exercise guidance has shifted substantially over the past decade away from blanket restriction toward individualised shared decision-making. Do not apply older categorical prohibitions without checking current guidance — this is an area where practice inherited from training may be out of date. See verification notes."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "cardiomyopathies-dilated-hypertrophic-restrictive-peripartum-chemotherapy-induced",
+    "references": [
+      "Ommen, S. R., Ho, C. Y., Asif, I. M., Balaji, S., Burke, M. A., Day, S. M., Dearani, J. A., Epps, K. C., Evanovich, L., Ferrari, V. A., Joglar, J. A., Khan, S. S., Kim, J. J., Kittleson, M. M., Krittanawong, C., Martinez, M. W., Mital, S., Naidu, S. S., Saberi, S., … Waldman, C. B. (2024). 2024 AHA/ACC/AMSSM/HRS/PACES/SCMR guideline for the management of hypertrophic cardiomyopathy. *Circulation, 149*(23), e1239–e1311. https://doi.org/10.1161/CIR.0000000000001250 (PMID: 38718139)"
+    ]
+  },
+  {
+    "name": "Valvular disease — aortic stenosis/regurgitation, mitral stenosis/regurgitation, mitral valve prolapse",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Aortic stenosis produces exertional dyspnoea, angina, and syncope, with a harsh crescendo-decrescendo murmur radiating to the carotids; severe symptomatic AS is a relative contraindication to vigorous exercise given fixed cardiac output. Aortic and mitral regurgitation produce volume overload. Mitral stenosis is most often rheumatic. Mitral valve prolapse is usually benign.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Exertional syncope or near-syncope in a patient with a systolic murmur is an urgent cardiology referral before any exercise programme."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "valvular-disease-aortic-stenosis-regurgitation-mitral-stenosis-regurgitation-mitral-valve-prolapse",
+    "references": []
+  },
+  {
+    "name": "Post valve replacement or repair (TAVR, SAVR) status",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "SAVR (surgical) typically involves sternotomy with associated sternal precautions and a longer recovery; TAVR (transcatheter) is percutaneous with vascular access-site precautions and markedly faster mobilisation, and is increasingly used in lower-risk patients. Mechanical valves require lifelong anticoagulation, which carries bleeding and falls-risk implications; bioprosthetic valves generally do not.",
+    "details": [],
+    "section": "Cardiac",
+    "slug": "post-valve-replacement-or-repair-tavr-savr-status",
+    "references": []
+  },
+  {
+    "name": "Arrhythmias — atrial fibrillation/flutter, SVT, ventricular tachycardia, heart block",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Atrial fibrillation produces an irregularly irregular pulse with stroke risk requiring anticoagulation; rate response to exercise is often exaggerated and erratic, making heart rate an unreliable intensity guide — use RPE. SVT is regular and rapid, often terminated by vagal manoeuvres. Ventricular tachycardia is life-threatening. Heart block ranges from benign first-degree to complete block requiring pacing.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "A new irregular pulse, or a rate that fails to rise appropriately with exertion (chronotropic incompetence), both warrant medical review before progressing exercise."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "arrhythmias-atrial-fibrillation-flutter-svt-ventricular-tachycardia-heart-block",
+    "references": []
+  },
+  {
+    "name": "Pacemaker, ICD, and CRT device precautions",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Pacemakers treat bradyarrhythmia; ICDs detect and terminate ventricular arrhythmia by pacing or shock; CRT resynchronises ventricular contraction in heart failure with conduction delay. Early post-implant precautions typically restrict ipsilateral shoulder elevation above 90° for a period to prevent lead displacement. The ICD detection threshold must be known before exercise prescription — training heart rate should stay a defined margin below it to avoid inappropriate shocks.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Ask for the device interrogation parameters rather than estimating. An inappropriate shock during exercise is both dangerous and a powerful driver of subsequent activity avoidance."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "pacemaker-icd-and-crt-device-precautions",
+    "references": []
+  },
+  {
+    "name": "Left ventricular assist device (LVAD) status",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Implanted continuous-flow pump supporting the failing left ventricle, as bridge to transplant or destination therapy. Continuous-flow devices often produce no palpable pulse and unreliable non-invasive blood pressure — mean arterial pressure by Doppler is the usual measure. Driveline site care, anticoagulation, and avoidance of chest compression are governing constraints.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Standard vital sign monitoring does not apply. Exercise is appropriate and beneficial in these patients, but the assessment toolkit must be adapted and the device team consulted."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "left-ventricular-assist-device-lvad-status",
+    "references": []
+  },
+  {
+    "name": "Post heart transplant status",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "The transplanted heart is surgically denervated, which changes exercise physiology fundamentally: absent or blunted heart rate response at onset of exercise, reliance on circulating catecholamines producing a delayed rise and delayed recovery, and absence of anginal warning symptoms during ischaemia. Extended warm-up and cool-down are therefore essential rather than optional. Immunosuppression brings infection risk, steroid myopathy, osteoporosis, and accelerated graft vasculopathy.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Heart rate is a poor intensity guide early after transplant; RPE and workload are more reliable. The absence of angina means ischaemia is silent."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "post-heart-transplant-status",
+    "references": []
+  },
+  {
+    "name": "Pericarditis; myocarditis; endocarditis",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Pericarditis — pleuritic chest pain relieved by sitting forward, with a friction rub and diffuse ST elevation. Myocarditis — myocardial inflammation, often viral, which can cause arrhythmia, heart failure, and sudden death; exercise during active myocarditis is contraindicated and return-to-play requires cardiology clearance. Endocarditis — infective valve vegetation with fever, new murmur, and embolic phenomena; a medical emergency.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Myocarditis is the entry with the most direct bearing on exercise safety in this file — a young patient with chest pain, palpitations, or unexplained exercise intolerance after a viral illness should not be progressed without cardiology input."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "pericarditis-myocarditis-endocarditis",
+    "references": []
+  },
+  {
+    "name": "Hypertension; hypertensive crisis",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Sustained elevated arterial pressure. Hypertensive urgency is severe elevation without acute target organ damage; hypertensive emergency includes acute damage — encephalopathy, acute kidney injury, aortic dissection, pulmonary oedema — and requires immediate medical management. Exercise produces a normal systolic rise; a fall in systolic pressure during progressive exercise is an abnormal and concerning response.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Resting pressure thresholds for withholding exercise vary by setting and should follow local policy, but a declining systolic pressure with increasing workload, or a hypertensive response with symptoms, warrants stopping and medical review."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "hypertension-hypertensive-crisis",
+    "references": []
+  },
+  {
+    "name": "Congenital heart disease — tetralogy of Fallot, transposition, septal defects, single ventricle/Fontan",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Tetralogy of Fallot — VSD, overriding aorta, right ventricular outflow obstruction, RV hypertrophy. Transposition of the great arteries. Septal defects — atrial and ventricular. Single ventricle physiology palliated by Fontan circulation, in which systemic venous return flows passively to the pulmonary arteries without a subpulmonary ventricle — so pulmonary blood flow depends on preload, respiratory pump, and low pulmonary vascular resistance, and these patients tolerate dehydration and Valsalva poorly.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Adults with congenital heart disease are now a growing population. Fontan physiology in particular requires understanding before exercise prescription — the usual assumptions about cardiac output response do not hold."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "congenital-heart-disease-tetralogy-of-fallot-transposition-septal-defects-single-ventricle-fontan",
+    "references": []
+  },
+  {
+    "name": "Cardiac cachexia and deconditioning",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Cardiac cachexia is unintentional weight and lean mass loss in advanced heart failure, driven by neurohormonal and inflammatory activation, and is an independent predictor of mortality. Distinct from simple deconditioning, though the two coexist and compound each other.",
+    "details": [
+      {
+        "label": "Related evidence",
+        "text": "People with heart failure experience substantial burden including low exercise tolerance, poor health-related quality of life, increased risk of mortality and hospital admission, and high healthcare costs [2]."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "cardiac-cachexia-and-deconditioning",
+    "references": [
+      "Long, L., Mordi, I. R., Bridges, C., Sagar, V. A., Davies, E. J., Coats, A. J. S., Dalal, H., Rees, K., Singh, S. J., & Taylor, R. S. (2019). Exercise-based cardiac rehabilitation for adults with heart failure. *Cochrane Database of Systematic Reviews, 1*(1), CD003331. https://doi.org/10.1002/14651858.CD003331.pub5 (PMID: 30695817)"
+    ]
+  },
+  {
+    "name": "Postural orthostatic tachycardia syndrome; inappropriate sinus tachycardia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "POTS — sustained heart rate rise ≥30 bpm (≥40 in adolescents) within 10 minutes of standing without orthostatic hypotension, with chronic orthostatic intolerance symptoms. Inappropriate sinus tachycardia — resting sinus rate >100 bpm or disproportionate rate response to minimal exertion, without an identifiable secondary cause.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Also entered in P05-08 alongside orthostatic hypotension, where the neurogenic orthostatic hypotension consensus is sourced."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Recumbent and semi-recumbent exercise (rowing, recumbent cycling, swimming) is generally better tolerated at the outset than upright work, with gradual progression toward upright as tolerance improves."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "postural-orthostatic-tachycardia-syndrome-inappropriate-sinus-tachycardia",
+    "references": []
+  },
+  {
+    "name": "Syncope; exercise-induced syncope",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Transient loss of consciousness from global cerebral hypoperfusion with spontaneous complete recovery. Vasovagal (reflex) syncope is common and benign, typically with prodromal warmth, nausea, and visual greying. Cardiac syncope — arrhythmic or structural — carries far higher mortality risk.",
+    "details": [
+      {
+        "label": "The distinction that matters most",
+        "text": "Syncope occurring *during* exertion is presumed cardiac until proven otherwise and requires urgent cardiology evaluation. Syncope occurring *after* stopping exercise is more often reflex. Structural causes include severe aortic stenosis, hypertrophic cardiomyopathy, and anomalous coronary origin."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "This is the single most important red flag in a fitness or sports setting. Exertional syncope, exertional chest pain, and a family history of sudden death under 50 should all stop the session and generate a referral."
+      }
+    ],
+    "section": "Cardiac",
+    "slug": "syncope-exercise-induced-syncope",
+    "references": []
+  },
+  {
+    "name": "Peripheral arterial disease with intermittent claudication (Rutherford/Fontaine stages)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Atherosclerotic arterial narrowing producing reproducible exertional limb pain relieved by rest. Fontaine stages I (asymptomatic), IIa (mild claudication), IIb (moderate-severe claudication), III (rest pain), IV (ulceration/gangrene). Rutherford categories 0–6 map similarly. Ankle-brachial index <0.90 is the conventional diagnostic threshold; an ABI >1.40 indicates non-compressible calcified vessels and is uninterpretable, common in diabetes and renal disease.",
+    "details": [
+      {
+        "label": "What exercise does not change",
+        "text": "No improvement in ABI (MD 0.04, 95% CI 0.00–0.08; moderate quality), and no evidence of effect on mortality (RR 0.92, 0.39–2.17; moderate quality) or amputation (RR 0.20, 0.01–4.15; low quality) [1]."
+      },
+      {
+        "label": "Quality of life",
+        "text": "At six months, improvement in SF-36 physical summary score (MD 2.15, 1.26–3.04) and mental summary score (MD 3.76, 2.70–4.82), both moderate quality [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The mechanism is collateralisation and metabolic adaptation, not restored perfusion — which is exactly why walking distance improves substantially while ABI does not. Supervised sessions were generally at least twice weekly, and trials generally excluded people with other conditions limiting exercise capacity [1]."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "peripheral-arterial-disease-with-intermittent-claudication-rutherford-fontaine-stages",
+    "references": [
+      "Lane, R., Harwood, A., Watson, L., & Leng, G. C. (2017). Exercise for intermittent claudication. *Cochrane Database of Systematic Reviews, 12*(12), CD000990. https://doi.org/10.1002/14651858.CD000990.pub4 (PMID: 29278423)"
+    ]
+  },
+  {
+    "name": "Critical limb ischemia",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "End-stage PAD with rest pain lasting more than two weeks, ulceration, or gangrene — Fontaine III–IV. Rest pain is characteristically worse when supine and relieved by hanging the leg dependent, which is why patients sleep in a chair. Carries high limb-loss and mortality risk and requires urgent vascular referral for revascularisation assessment.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Exercise therapy is not the intervention here — the claudication evidence above applies to stable claudication, not critical ischaemia. New rest pain or tissue loss in a known PAD patient is an escalation, not a progression opportunity."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "critical-limb-ischemia",
+    "references": []
+  },
+  {
+    "name": "Acute arterial occlusion",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Sudden arterial obstruction from embolism or in-situ thrombosis, producing the six Ps — pain, pallor, pulselessness, paraesthesia, paralysis, poikilothermia (perishing cold). A surgical emergency with a limited window before irreversible muscle and nerve injury.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Paraesthesia and paralysis are late findings indicating impending irreversibility, not early warning signs. A suddenly cold, painful, pulseless limb is an immediate emergency referral."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "acute-arterial-occlusion",
+    "references": []
+  },
+  {
+    "name": "Aortic aneurysm (thoracic, abdominal) and post-repair status",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Localised arterial dilatation. Most intact AAAs are asymptomatic and found incidentally; presentation may include deep boring back or flank pain. Repair is open or endovascular (EVAR/TEVAR), the latter requiring lifelong surveillance for endoleak.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P01-03, including that smoking, male sex, and family history are the dominant risk factors, that it is most common in men over 65, and that mortality for ruptured AAA is 65%–85% with rupture risk rising with diameter though aneurysms of any size can rupture."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "A male smoker over 65 with new atypical back pain warrants vascular consideration rather than a mechanical trial. Heavy resistance exercise and Valsalva raise aortic wall stress and require vascular clearance in known unrepaired aneurysm."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "aortic-aneurysm-thoracic-abdominal-and-post-repair-status",
+    "references": []
+  },
+  {
+    "name": "Aortic dissection",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Tear in the aortic intima allowing blood into the media, creating a false lumen. Classically sudden severe tearing or ripping chest or interscapular pain, maximal at onset, sometimes with pulse or blood pressure differential between limbs, new aortic regurgitation, or focal neurological deficit. Stanford type A involves the ascending aorta and is a surgical emergency; type B is distal and often medically managed.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Abrupt-onset, maximal-at-onset interscapular pain in a hypertensive patient or someone with Marfan or Loeys-Dietz syndrome is a medical emergency, not a thoracic spine presentation. See P04-02 for the connective tissue disorders that predispose."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "aortic-dissection",
+    "references": []
+  },
+  {
+    "name": "Deep vein thrombosis",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Thrombus in the deep venous system, most often calf or proximal leg veins, presenting with unilateral limb swelling, warmth, erythema, and tenderness — though clinical signs alone are unreliable and many DVTs present atypically or silently. Risk factors follow Virchow's triad: stasis (immobility, surgery, travel), endothelial injury, and hypercoagulability (malignancy, pregnancy, oestrogen, thrombophilia).",
+    "details": [
+      {
+        "label": "Diagnostic strategy",
+        "text": "DVT can be safely and reliably excluded in patients with a low clinical probability and a negative D-dimer result [2]. In a pooled analysis of 2696 outpatients across three prospective studies, DVT was diagnosed in 400 (15%). The negative predictive value of a low or unlikely Wells pretest probability combined with a negative D-dimer was 99% across all age groups, including those ≥60 years [2]."
+      },
+      {
+        "label": "Utility in the elderly",
+        "text": "A negative D-dimer with a low or unlikely pretest probability excluded DVT in 21.7% of patients ≥80 years using the three-tier model and 31% using the two-tier model — so the strategy remains useful but rules out a smaller proportion as age rises [2]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The Wells score is a rule-out tool used with D-dimer, never alone, and a high pretest probability requires imaging regardless of D-dimer. Suspected DVT means the patient does not get mobilised or massaged pending assessment. The authors note the rule needs prospective validation with different D-dimer assays in elderly populations [2]."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "deep-vein-thrombosis",
+    "references": [
+      "Carrier, M., Le Gal, G., Bates, S. M., Anderson, D. R., & Wells, P. S. (2008). D-dimer testing is useful to exclude deep vein thrombosis in elderly outpatients. *Journal of Thrombosis and Haemostasis, 6*(7), 1072–1076. https://doi.org/10.1111/j.1538-7836.2008.03007.x (PMID: 18466311)"
+    ]
+  },
+  {
+    "name": "Pulmonary embolism",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Embolic obstruction of the pulmonary arterial circulation, usually from lower limb DVT. Presents with sudden dyspnoea, pleuritic chest pain, tachycardia, tachypnoea, and hypoxaemia; massive PE causes haemodynamic collapse. Unexplained tachycardia and unexplained hypoxaemia are often the earliest objective signs, sometimes preceding any chest symptoms.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Sudden desaturation or unexplained tachycardia during mobilisation of a post-surgical or immobile patient should prompt immediate escalation. The Wells-plus-D-dimer logic above has a PE-specific equivalent, not sourced here."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "pulmonary-embolism",
+    "references": []
+  },
+  {
+    "name": "Chronic venous insufficiency; venous stasis ulcers; varicose veins",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Venous hypertension from valvular incompetence or obstruction, producing oedema, haemosiderin staining, lipodermatosclerosis, atrophie blanche, and ulceration. Venous ulcers characteristically sit in the gaiter area above the medial malleolus, are shallow with irregular margins and heavy exudate, and are relatively less painful than arterial ulcers — which are distal, punched-out, dry, and painful.",
+    "details": [
+      {
+        "label": "Compression evidence",
+        "text": "Across 14 studies (1391 participants), compression bandages or stockings versus no compression probably shortens time to complete healing (pooled HR 2.17, 95% CI 1.52–3.10; moderate certainty) and makes complete healing within 12 months more likely (RR 1.77, 95% CI 1.41–2.21; moderate certainty) [3]."
+      },
+      {
+        "label": "Pain and quality of life",
+        "text": "Compression probably reduces mean pain score (pooled MD −1.39, 95% CI −1.79 to −0.98; moderate certainty) and may improve disease-specific quality of life, though not all aspects of general health status (low certainty) [3]."
+      },
+      {
+        "label": "Honest limits",
+        "text": "It is uncertain whether adverse event rates differ between compression and no compression (very low certainty), and cost-effectiveness is uncertain (very low certainty). Ten of the 14 studies were at high overall risk of bias, and most were small (median 51 participants) [3]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "ABI must be checked before applying compression — compression in undiagnosed arterial disease can precipitate tissue loss. This is not stated in the Cochrane review but is standard practice."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "chronic-venous-insufficiency-venous-stasis-ulcers-varicose-veins",
+    "references": [
+      "Shi, C., Dumville, J. C., Cullum, N., Connaughton, E., & Norman, G. (2021). Compression bandages or stockings versus no compression for treating venous leg ulcers. *Cochrane Database of Systematic Reviews, 7*(7), CD013397. https://doi.org/10.1002/14651858.CD013397.pub2 (PMID: 34308565)"
+    ]
+  },
+  {
+    "name": "Post-thrombotic syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Chronic venous insufficiency following DVT, from valvular damage and residual obstruction. Produces limb heaviness, aching, swelling, and in severe cases ulceration, developing in a substantial minority within two years of DVT. Graded by the Villalta score.",
+    "details": [
+      {
+        "label": "Related evidence",
+        "text": "Falls within the chronic venous insufficiency management pathway above, where compression has moderate-certainty evidence for ulcer healing [3]."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "post-thrombotic-syndrome",
+    "references": [
+      "Shi, C., Dumville, J. C., Cullum, N., Connaughton, E., & Norman, G. (2021). Compression bandages or stockings versus no compression for treating venous leg ulcers. *Cochrane Database of Systematic Reviews, 7*(7), CD013397. https://doi.org/10.1002/14651858.CD013397.pub2 (PMID: 34308565)"
+    ]
+  },
+  {
+    "name": "Raynaud phenomenon and disease",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Episodic digital vasospasm producing the classic triphasic colour change — white (ischaemia), blue (cyanosis), red (reperfusion hyperaemia) — provoked by cold and emotional stress. Primary (Raynaud disease) is idiopathic, symmetrical, and benign, typically in young women. Secondary (Raynaud phenomenon) is associated with connective tissue disease — particularly systemic sclerosis — and carries digital ulceration and tissue loss risk.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Asymmetry, onset after age 40, digital ulceration, or abnormal nailfold capillaries suggest a secondary cause requiring rheumatology assessment. See P04-01 for systemic sclerosis."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "raynaud-phenomenon-and-disease",
+    "references": []
+  },
+  {
+    "name": "Buerger disease (thromboangiitis obliterans)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Non-atherosclerotic segmental inflammatory occlusive disease of small and medium arteries and veins in the distal extremities, almost exclusively in tobacco users, typically men under 45. Produces distal ischaemia, digital ulceration, and migratory superficial thrombophlebitis.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Complete tobacco cessation is the only intervention that alters the disease course — continued use, including smokeless tobacco, predicts amputation. This is one of the few vascular conditions where the behavioural intervention is definitively the primary treatment."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "buerger-disease-thromboangiitis-obliterans",
+    "references": []
+  },
+  {
+    "name": "Vascular thoracic outlet syndrome; effort thrombosis (Paget-Schroetter)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Venous TOS classically presents as effort thrombosis (Paget-Schroetter) — acute subclavian vein thrombosis after repetitive overhead activity, with sudden arm swelling, cyanosis, and prominent superficial collateral veins in a young, otherwise healthy person. Arterial TOS is rare, usually associated with a cervical rib or bony anomaly, and may produce distal embolisation.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P01-02 via the Society for Vascular Surgery reporting standards for thoracic outlet syndrome."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Sudden unilateral arm swelling in a young overhead athlete is effort thrombosis until proven otherwise, and is a vascular emergency rather than a musculoskeletal presentation."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "vascular-thoracic-outlet-syndrome-effort-thrombosis-paget-schroetter",
+    "references": []
+  },
+  {
+    "name": "Arteriovenous fistula (dialysis access) precautions",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Surgically created arteriovenous anastomosis providing haemodialysis access, usually in the non-dominant forearm or upper arm. A patent fistula has a palpable thrill and audible bruit.",
+    "details": [
+      {
+        "label": "Absolute precautions",
+        "text": "No blood pressure measurement, venepuncture, intravenous access, or constrictive garments on the fistula limb. Avoid sustained pressure, heavy carrying, or sleeping on that arm. Loss of thrill or bruit indicates possible thrombosis and requires urgent notification of the renal team."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "This is one of the clearest and most consequential precaution sets in outpatient practice, and it is easily violated by routine blood pressure measurement without checking."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "arteriovenous-fistula-dialysis-access-precautions",
+    "references": []
+  },
+  {
+    "name": "Lymphedema — primary and secondary (stages 0–III)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Progressive and chronic syndrome of abnormal swelling and multiple symptoms, in the cancer context resulting from cancer treatment and remaining a major health problem affecting thousands of cancer survivors [4]. Primary is from congenital lymphatic malformation; secondary follows node dissection, radiotherapy, infection, or trauma. Stage 0 — subclinical; I — pitting, reversible with elevation; II — non-pitting with fibrosis, not reversible with elevation; III — lymphostatic elephantiasis with skin changes.",
+    "details": [
+      {
+        "label": "Highest-evidence interventions",
+        "text": "A systematic review of 75 articles (2009–2014) supports complete decongestive therapy, compression bandages, and compression garments with highest evidence for best clinical practice [4]."
+      },
+      {
+        "label": "Likely effective",
+        "text": "Weight management, full-body exercise, information provision, prevention, and early intervention protocols [4]."
+      },
+      {
+        "label": "A significant reversal",
+        "text": "Historic recommendations for activity restriction and avoidance of aerobic and resistive exercise that limit cancer survivors' daily lives have been challenged with more evidence. Survivors may not need to restrict activities such as resistive or aerobic exercise and weightlifting, with gradual exercise progression [4]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The old advice to avoid lifting with an at-risk limb is not supported. Gradual progressive loading is now the position, and unnecessary restriction carries its own cost in function and participation [4]."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "lymphedema-primary-and-secondary-stages-0-iii",
+    "references": [
+      "Fu, M. R., Deng, J., & Armer, J. M. (2014). Putting evidence into practice: Cancer-related lymphedema. *Clinical Journal of Oncology Nursing, 18*(Suppl.), 68–79. https://doi.org/10.1188/14.CJON.S3.68-79 (PMID: 25427610)"
+    ]
+  },
+  {
+    "name": "Lipedema",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Symmetrical, bilateral adipose tissue disorder almost exclusively in women, producing disproportionate fat deposition in the legs (and often arms) with characteristic sparing of the feet and hands — the \"cuff\" or \"bracelet\" sign at the ankle. Painful and tender to pressure, with easy bruising, and does not respond to caloric restriction in the affected areas.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Distinguishing lipedema from lymphoedema and obesity matters because management differs and because patients are frequently mislabelled as non-adherent to weight loss. Foot sparing plus pain and bruising is the discriminating pattern. Lipoedema can coexist with lymphoedema (lipo-lymphoedema) in later stages."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "lipedema",
+    "references": []
+  },
+  {
+    "name": "Cellulitis and lymphangitis",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Cellulitis is acute bacterial infection of dermis and subcutaneous tissue producing spreading erythema, warmth, swelling, tenderness, and often fever. Lymphangitis shows characteristic red streaking tracking proximally along lymphatic channels toward regional nodes. Both are far more common and more recurrent in limbs with existing lymphoedema or venous disease.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Suspected cellulitis is an urgent medical referral and a contraindication to manual lymphatic drainage, compression application, and exercise of the affected limb until treated. Marking the erythema border with a skin pen and dating it is a simple way to document spread. Recurrent cellulitis worsens lymphoedema, which in turn predisposes to further cellulitis."
+      }
+    ],
+    "section": "Vascular",
+    "slug": "cellulitis-and-lymphangitis",
+    "references": []
+  },
+  {
+    "name": "Chronic obstructive pulmonary disease — chronic bronchitis, emphysema (GOLD 1–4)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Persistent airflow limitation that is not fully reversible, from small airway disease and parenchymal destruction. GOLD 1–4 grade severity by post-bronchodilator FEV₁ % predicted (≥80, 50–79, 30–49, <30). Presents with progressive dyspnoea, chronic cough and sputum, hyperinflation, and reduced exercise tolerance, with a spiral of dyspnoea → inactivity → deconditioning → worse dyspnoea.",
+    "details": [
+      {
+        "label": "Quality of life gains exceed the MCID",
+        "text": "On the Chronic Respiratory Questionnaire (MCID 0.5 units) — dyspnoea MD 0.79 (95% CI 0.56–1.03; moderate quality), fatigue MD 0.68 (low quality), emotional function MD 0.56, mastery MD 0.71 (low quality). St George's Respiratory Questionnaire total improved −6.89 units (95% CI −9.26 to −4.52), better than the 4-unit threshold, and sensitivity analysis restricted to lower-risk-of-bias trials gave a similar estimate (−5.15) [1]."
+      },
+      {
+        "label": "Exercise capacity gains exceed the MCID",
+        "text": "Six-minute walk distance MD 43.93 m (95% CI 32.64–55.21; 38 studies, 1879 participants) and maximal exercise capacity MD 6.77 W (95% CI 1.89–11.65), both above their respective clinical significance thresholds [1]."
+      },
+      {
+        "label": "Programme design findings",
+        "text": "Hospital-based programmes showed larger CRQ effects than community-based, but this was not replicated on the SGRQ and both subgroup analyses may be confounded. Crucially, exercise-only programmes showed no significant difference from more complex programmes combining exercise with education and psychological support [1]."
+      },
+      {
+        "label": "The authors' verdict",
+        "text": "Improvements are \"moderately large and clinically significant,\" and \"additional RCTs comparing pulmonary rehabilitation and conventional care in COPD are not warranted\" — the question now is which components, what dose, and how long effects persist [1]."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "chronic-obstructive-pulmonary-disease-chronic-bronchitis-emphysema-gold-1-4",
+    "references": [
+      "McCarthy, B., Casey, D., Devane, D., Murphy, K., Murphy, E., & Lacasse, Y. (2015). Pulmonary rehabilitation for chronic obstructive pulmonary disease. *Cochrane Database of Systematic Reviews, 2015*(2), CD003793. https://doi.org/10.1002/14651858.CD003793.pub3 (PMID: 25705944)"
+    ]
+  },
+  {
+    "name": "Asthma; exercise-induced bronchoconstriction",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Chronic airway inflammation with variable, largely reversible airflow obstruction and bronchial hyperresponsiveness. Exercise-induced bronchoconstriction (EIB) is transient airway narrowing during or, characteristically, 5–15 minutes after exercise, driven by airway water loss and cooling. EIB can occur without underlying asthma, particularly in endurance and cold-weather athletes.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "An adequate warm-up can induce a refractory period reducing subsequent EIB severity. Symptoms peaking *after* exercise stops, rather than during, is the pattern that distinguishes EIB from deconditioning or inducible laryngeal obstruction. Pre-exercise short-acting bronchodilator use is a prescribing matter, but knowing whether it has been taken is part of session planning."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "asthma-exercise-induced-bronchoconstriction",
+    "references": []
+  },
+  {
+    "name": "Bronchiectasis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Permanent, abnormal bronchial dilatation with impaired mucociliary clearance, producing chronic cough, copious purulent sputum, and recurrent infective exacerbations that may drive progressive decline in clinical and functional status [2]. Causes include post-infective, immunodeficiency, ABPA, and ciliary disorders.",
+    "details": [
+      {
+        "label": "Airway clearance evidence",
+        "text": "Across 7 studies (105 participants, 6 cross-over), ACTs appear safe in stable bronchiectasis and may improve sputum expectoration, selected lung function measures, symptoms, and HRQoL — all on low-quality evidence [2]."
+      },
+      {
+        "label": "Specific findings",
+        "text": "Airway oscillatory devices increased sputum by 8.4 mL short-term (95% CI 3.4–13.4) and 3 mL long-term. HFCWO over 15 days improved FEV₁ by 156 mL and FVC by 229 mL; other ACT types showed no effect on dynamic lung volumes. Two studies showed reduced hyperinflation (FRC difference 19–30%). Median SGRQ improvement of 7.5 units over three months exceeded the clinical threshold [2]."
+      },
+      {
+        "label": "Honest limits",
+        "text": "One study of 20 adults found no significant difference in exacerbations at 12 weeks, and data were unavailable for time to exacerbation, hospitalisation incidence, or hospitalised days. The role of ACTs during acute exacerbation is unknown [2]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The evidence supports ACTs for symptoms, sputum, and quality of life in stable disease — not for reducing exacerbations, where the evidence simply isn't there yet [2]."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "bronchiectasis",
+    "references": [
+      "Lee, A. L., Burge, A. T., & Holland, A. E. (2015). Airway clearance techniques for bronchiectasis. *Cochrane Database of Systematic Reviews, 2015*(11), CD008351. https://doi.org/10.1002/14651858.CD008351.pub3 (PMID: 26591003)"
+    ]
+  },
+  {
+    "name": "Cystic fibrosis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Autosomal recessive CFTR defect producing viscous secretions with progressive bronchiectasis, chronic *Pseudomonas* colonisation, pancreatic insufficiency, CF-related diabetes, and reduced bone density. Airway clearance and exercise are lifelong daily commitments, and CFTR modulator therapy has substantially altered the trajectory for many patients.",
+    "details": [
+      {
+        "label": "Infection control",
+        "text": "Cross-infection risk between people with CF governs clinic scheduling and segregation — patients should not share waiting areas or equipment."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "cystic-fibrosis",
+    "references": []
+  },
+  {
+    "name": "Primary ciliary dyskinesia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Inherited disorder of ciliary structure and function producing impaired mucociliary clearance, chronic sinusitis, otitis media, bronchiectasis, and infertility. Roughly half have situs inversus (Kartagener syndrome). Presents from the neonatal period with unexplained respiratory distress in a term infant.",
+    "details": [],
+    "section": "Pulmonary",
+    "slug": "primary-ciliary-dyskinesia",
+    "references": []
+  },
+  {
+    "name": "Pneumonia — community-acquired, aspiration, ventilator-associated",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Lower respiratory tract infection with consolidation. Aspiration pneumonia follows impaired swallow or reduced consciousness and characteristically affects dependent segments — right lower lobe posterior segments when supine. Ventilator-associated pneumonia develops ≥48 hours after intubation.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Aspiration risk is the direct link between dysphagia (see P05-01) and respiratory deterioration. Positioning, oral hygiene, and swallow screening before oral intake are preventive measures within therapy scope."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "pneumonia-community-acquired-aspiration-ventilator-associated",
+    "references": []
+  },
+  {
+    "name": "Atelectasis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Alveolar collapse from resorption (obstruction), compression (effusion, pneumothorax), or hypoventilation — the last being the common post-operative and post-immobility mechanism. Produces reduced breath sounds, dullness, and hypoxaemia, with characteristic basal or dependent distribution.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Post-operative atelectasis is largely preventable by early mobilisation, positioning off the dependent side, and deep breathing with sustained maximal inspiration. Mobilisation is generally more effective than any device."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "atelectasis",
+    "references": []
+  },
+  {
+    "name": "Interstitial lung disease; idiopathic pulmonary fibrosis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Heterogeneous group producing parenchymal inflammation and fibrosis with restrictive physiology — reduced volumes with preserved or raised FEV₁/FVC ratio and reduced DLCO. Idiopathic pulmonary fibrosis has the worst prognosis, presenting with progressive exertional dyspnoea, dry cough, fine bibasal \"velcro\" crackles, and clubbing.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Exertional desaturation is often profound and disproportionate to resting saturation — a normal resting SpO₂ does not predict exercise tolerance in ILD, and ambulatory oximetry during the first session is essential rather than optional."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "interstitial-lung-disease-idiopathic-pulmonary-fibrosis",
+    "references": []
+  },
+  {
+    "name": "Pneumoconiosis, asbestosis, silicosis, hypersensitivity pneumonitis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Occupational and environmental interstitial diseases. Asbestosis carries mesothelioma and bronchogenic carcinoma risk with a long latency. Silicosis carries markedly elevated tuberculosis risk. Hypersensitivity pneumonitis follows repeated inhaled antigen exposure (birds, mould, humidifiers) and may be reversible if the exposure is identified and removed.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Occupational history is diagnostic here in a way it rarely is elsewhere — and in hypersensitivity pneumonitis, identifying the exposure is the treatment."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "pneumoconiosis-asbestosis-silicosis-hypersensitivity-pneumonitis",
+    "references": []
+  },
+  {
+    "name": "Sarcoidosis (pulmonary)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Multisystem non-caseating granulomatous disease with bilateral hilar lymphadenopathy and parenchymal involvement, staged 0–IV radiographically. Often asymptomatic and self-limiting; a minority progress to fibrosis. Fatigue is frequently the dominant and most disabling symptom, out of proportion to lung function.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Musculoskeletal sarcoidosis, including Löfgren syndrome, is entered in P04-01."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "sarcoidosis-pulmonary",
+    "references": []
+  },
+  {
+    "name": "Pleural effusion; empyema; pneumothorax and hemothorax",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Pleural effusion — fluid in the pleural space, transudative (heart failure, hypoalbuminaemia) or exudative (infection, malignancy, PE). Empyema — infected pleural collection requiring drainage. Pneumothorax — air in the pleural space; tension pneumothorax produces tracheal deviation away, distended neck veins, and haemodynamic collapse and is an immediate emergency. Haemothorax — blood in the pleural space.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Sudden pleuritic chest pain with dyspnoea and unilaterally absent breath sounds during or after mobilisation, line insertion, or trauma should stop the session and generate urgent escalation. Spontaneous pneumothorax classically affects tall, thin, young men and patients with COPD or CF."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "pleural-effusion-empyema-pneumothorax-and-hemothorax",
+    "references": []
+  },
+  {
+    "name": "Pulmonary hypertension; cor pulmonale",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Elevated pulmonary arterial pressure producing progressive right ventricular strain and, ultimately, cor pulmonale — right heart failure secondary to lung disease. Presents with exertional dyspnoea, fatigue, exertional syncope or presyncope, peripheral oedema, and a loud pulmonary second heart sound.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Exertional syncope or presyncope in pulmonary hypertension is a marker of severe disease and a hard stop — it indicates the right ventricle cannot augment output. Isometric work and Valsalva are poorly tolerated. Exercise is beneficial in stable, medically optimised patients but requires specialist prescription."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "pulmonary-hypertension-cor-pulmonale",
+    "references": []
+  },
+  {
+    "name": "Acute respiratory distress syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Acute diffuse inflammatory lung injury producing bilateral opacities, non-cardiogenic pulmonary oedema, and severe hypoxaemia, graded mild/moderate/severe by PaO₂/FiO₂ ratio (Berlin definition). Survivors frequently have prolonged physical, cognitive, and psychological impairment.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "ICU-acquired weakness, a common sequela, is entered in P05-07 — including the important caveat that ICUAW-specific rehabilitation evidence is far thinner than the general ICU rehabilitation literature."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "acute-respiratory-distress-syndrome",
+    "references": []
+  },
+  {
+    "name": "Respiratory failure — hypoxemic and hypercapnic; ventilator dependence",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Type 1 (hypoxaemic) — PaO₂ <60 mmHg with normal or low PaCO₂, from V/Q mismatch or shunt. Type 2 (hypercapnic) — PaCO₂ >45 mmHg, from alveolar hypoventilation due to pump failure (neuromuscular disease, chest wall restriction, COPD, sedation).",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "The distinction governs oxygen therapy. In chronic type 2 failure, uncontrolled high-flow oxygen risks worsening hypercapnia; target saturation ranges are set for this reason and should be checked before mobilising with oxygen. Rising drowsiness with a flushed appearance and bounding pulse suggests CO₂ retention, not fatigue."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "respiratory-failure-hypoxemic-and-hypercapnic-ventilator-dependence",
+    "references": []
+  },
+  {
+    "name": "Tracheostomy status; ventilator weaning",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Surgical or percutaneous airway providing long-term ventilation access, secretion clearance, or bypass of upper airway obstruction. Cuff status determines whether the patient can phonate and whether aspiration protection is present; a speaking valve requires cuff deflation and adequate upper airway patency.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Never occlude a tracheostomy tube with the cuff inflated — the patient cannot exhale. Emergency equipment, including a spare tube of the same size and one smaller, must be present before mobilising. Suction availability is a prerequisite, not a convenience."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "tracheostomy-status-ventilator-weaning",
+    "references": []
+  },
+  {
+    "name": "Post lung transplant; post lobectomy/pneumonectomy status",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Lung transplant recipients have a denervated graft with absent cough reflex below the anastomosis, impaired mucociliary clearance, and lifelong immunosuppression; chronic lung allograft dysfunction (bronchiolitis obliterans) is the main long-term limitation. Lobectomy and pneumonectomy produce permanent volume loss with compensatory changes, and pneumonectomy carries positioning implications.",
+    "details": [],
+    "section": "Pulmonary",
+    "slug": "post-lung-transplant-post-lobectomy-pneumonectomy-status",
+    "references": []
+  },
+  {
+    "name": "Tuberculosis",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "*Mycobacterium tuberculosis* infection, typically pulmonary, presenting with chronic cough, haemoptysis, fever, night sweats, and weight loss. Latent infection is asymptomatic and non-infectious; active pulmonary disease is transmitted by airborne droplet nuclei. Extrapulmonary forms include spinal (Pott disease) — see P01-03 vertebral osteomyelitis.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Airborne precautions and a negative-pressure room are required for suspected or confirmed infectious pulmonary TB — this is not a standard-precautions situation. Chronic cough with weight loss and night sweats in an at-risk patient warrants medical referral before any group or gym-based programme. Silicosis substantially increases TB risk."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "tuberculosis",
+    "references": []
+  },
+  {
+    "name": "COVID-19, acute and post-acute sequelae (long COVID)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "The WHO clinical case definition of post-COVID-19 condition requires a history of probable or confirmed SARS-CoV-2 infection, with symptoms starting within 3 months of onset, lasting at least 2 months, and not explained by an alternative diagnosis [3]. Common symptoms include fatigue, shortness of breath, and cognitive dysfunction, generally with an impact on everyday functioning [3].",
+    "details": [
+      {
+        "label": "Severity of initial illness does not predict who is affected",
+        "text": "Those with relatively mild initial infections, without severe respiratory disease or end-organ injury, can still develop chronic impairments [3]."
+      },
+      {
+        "label": "The overlap that governs rehabilitation",
+        "text": "Symptoms overlap with ME/CFS — profound fatigue, unrefreshing sleep, post-exertional malaise, cognitive dysfunction, and orthostatic intolerance [3]. Because some presentations mimic ME/CFS, treatment guidelines for that and related conditions can be helpful for managing post-COVID-19 symptoms [3]."
+      },
+      {
+        "label": "Mechanism and treatment",
+        "text": "Mechanisms are not understood, there may be several distinct types of long COVID requiring different treatments, and there is no single pharmacologic agent effective for all symptoms [3]."
+      },
+      {
+        "label": "Clinical implication — the safety point",
+        "text": "Screen for post-exertional malaise before prescribing progressive exercise. Where PEM is present, standard graded exercise progression is not an appropriate default and pacing should lead. See P04-03, where PEM and ME/CFS are entered, and note the caveat there about the contested status of graded exercise therapy."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "covid-19-acute-and-post-acute-sequelae-long-covid",
+    "references": [
+      "Morrow, A. K., Malone, L. A., Kokorelis, C., Petracek, L. S., Eastin, E. F., Lobner, K. L., Neuendorff, L., & Rowe, P. C. (2022). Long-term COVID-19 sequelae in adolescents: The overlap with orthostatic intolerance and ME/CFS. *Current Pediatrics Reports, 10*(2), 31–44. https://doi.org/10.1007/s40124-022-00261-4 (PMID: 35287333)"
+    ]
+  },
+  {
+    "name": "Obstructive sleep apnea; obesity hypoventilation syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "OSA — repetitive upper airway collapse during sleep producing apnoeas/hypopnoeas, fragmented sleep, nocturnal desaturation, and daytime somnolence, graded by apnoea-hypopnoea index. Obesity hypoventilation syndrome — daytime hypercapnia (PaCO₂ >45 mmHg) in obesity without other cause, often with coexisting OSA.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Untreated OSA contributes to hypertension, arrhythmia, and cardiovascular risk, and daytime somnolence affects rehabilitation engagement and driving safety. Weight management and CPAP adherence are the primary interventions; positional therapy helps a subset."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "obstructive-sleep-apnea-obesity-hypoventilation-syndrome",
+    "references": []
+  },
+  {
+    "name": "Diaphragmatic paralysis or paresis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Loss of diaphragm function from phrenic nerve injury (cardiac surgery, birth trauma, tumour, neuralgic amyotrophy) or neuromuscular disease. Unilateral is often well tolerated at rest with exertional dyspnoea; bilateral produces severe orthopnoea, paradoxical inward abdominal motion on inspiration in supine, and a fall in vital capacity of >25% from sitting to supine.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Supine vital capacity is the measure that reveals this — a substantial sitting-to-supine drop is the bedside signal. Neuralgic amyotrophy is a recognised and under-recognised cause (see P02-01)."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "diaphragmatic-paralysis-or-paresis",
+    "references": []
+  },
+  {
+    "name": "Inducible laryngeal obstruction / vocal cord dysfunction",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Paradoxical vocal fold adduction during inspiration producing acute dyspnoea, inspiratory stridor, throat tightness, and voice change. Frequently misdiagnosed and treated as refractory asthma for years. Distinguishing features from asthma: inspiratory rather than expiratory difficulty, throat rather than chest location, abrupt onset and abrupt resolution, and no response to bronchodilator.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Highly responsive to speech and language therapy breathing retraining, making accurate recognition genuinely consequential. Occurs commonly in athletes during high-intensity exercise and is a recognised mimic of EIB."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "inducible-laryngeal-obstruction-vocal-cord-dysfunction",
+    "references": []
+  },
+  {
+    "name": "Chest wall restriction secondary to kyphoscoliosis or neuromuscular disease",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Extrapulmonary restrictive defect from reduced chest wall or respiratory muscle compliance rather than lung parenchymal disease. Produces reduced volumes with normal DLCO — the feature separating it from parenchymal restriction. Progresses to nocturnal hypoventilation before daytime hypercapnia.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Nocturnal hypoventilation precedes daytime symptoms — morning headache, unrefreshing sleep, and daytime somnolence in a patient with neuromuscular disease or severe kyphoscoliosis warrant sleep-disordered breathing assessment. See P04-02 for kyphoscoliosis and P05-07 for neuromuscular causes."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "chest-wall-restriction-secondary-to-kyphoscoliosis-or-neuromuscular-disease",
+    "references": []
+  },
+  {
+    "name": "Deconditioning and impaired exercise tolerance",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Reduced exercise capacity from inactivity rather than primary organ disease, though the two almost always coexist and compound each other in chronic respiratory disease. The dyspnoea–inactivity–deconditioning spiral is the central target of pulmonary rehabilitation.",
+    "details": [
+      {
+        "label": "Related evidence",
+        "text": "Pulmonary rehabilitation produced 6MWD gains of 43.93 m and maximal exercise gains of 6.77 W in COPD, both exceeding clinical significance thresholds, with quality-of-life gains exceeding the MCID across all four CRQ domains [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Deconditioning is the modifiable component in patients whose lung disease itself is not reversible — which is precisely why PR works despite no change in FEV₁."
+      }
+    ],
+    "section": "Pulmonary",
+    "slug": "deconditioning-and-impaired-exercise-tolerance",
+    "references": [
+      "McCarthy, B., Casey, D., Devane, D., Murphy, K., Murphy, E., & Lacasse, Y. (2015). Pulmonary rehabilitation for chronic obstructive pulmonary disease. *Cochrane Database of Systematic Reviews, 2015*(2), CD003793. https://doi.org/10.1002/14651858.CD003793.pub3 (PMID: 25705944)"
+    ]
+  },
+  {
+    "name": "Pressure injuries (stages 1–4, unstageable, deep tissue injury)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Localised damage to skin and underlying soft tissue from sustained pressure, or pressure combined with shear, usually over a bony prominence. Stage 1 — intact skin with non-blanchable erythema. Stage 2 — partial-thickness loss with exposed dermis, pink/red moist wound bed, no slough. Stage 3 — full-thickness loss with visible adipose, possible slough/eschar, undermining and tunnelling. Stage 4 — full-thickness with exposed fascia, muscle, tendon, ligament, cartilage, or bone. Unstageable — full-thickness loss where the base is obscured by slough or eschar. Deep tissue injury — persistent non-blanchable deep red, maroon, or purple discolouration, or a blood-filled blister.",
+    "details": [
+      {
+        "label": "Guideline framework",
+        "text": "The EPUAP/NPIAP/PPPIA international Clinical Practice Guideline is the reference standard, updated in 2019 with evidence searches from July 2013 through August 2018. A methodological advance in that revision was a clear distinction between evidence-based recommendations and good practice statements, alongside strong consumer involvement [1]."
+      },
+      {
+        "label": "Cross-reference",
+        "text": "Pressure injury in the spinal cord injury population is sourced in P05-03, including the finding that improving risk-assessment completion from 46% to 94% produced no significant change in incidence — a caution against equating documentation with prevention."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Staging describes tissue loss at a point in time and a healing stage 4 injury is not \"reverse-staged\" to a stage 2 — it is recorded as a healing stage 4. Deep tissue injury may deteriorate rapidly despite intact skin."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "pressure-injuries-stages-1-4-unstageable-deep-tissue-injury",
+    "references": [
+      "Kottner, J., Cuddigan, J., Carville, K., Balzer, K., Berlowitz, D., Law, S., Litchford, M., Mitchell, P., Moore, Z., Pittman, J., Sigaudo-Roussel, D., Yee, C. Y., & Haesler, E. (2019). Prevention and treatment of pressure ulcers/injuries: The protocol for the second update of the international Clinical Practice Guideline 2019. *Journal of Tissue Viability, 28*(2), 51–58. https://doi.org/10.1016/j.jtv.2019.01.001 (PMID: 30658878)"
+    ]
+  },
+  {
+    "name": "Venous insufficiency ulcers",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Ulceration from sustained venous hypertension, characteristically in the gaiter area above the medial malleolus, shallow with irregular sloping margins, heavy exudate, and surrounding haemosiderin staining, lipodermatosclerosis, and oedema. Relatively less painful than arterial ulcers, and often improved by elevation.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Compression evidence is sourced in P06-02 — compression versus no compression probably shortens time to healing (HR 2.17, 95% CI 1.52–3.10; moderate certainty) and probably reduces pain, with adverse events and cost-effectiveness at very low certainty."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "ABI must be established before compression is applied. Compression on an undiagnosed arterial limb can precipitate tissue loss. Mixed arterial-venous disease requires modified pressures under specialist direction."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "venous-insufficiency-ulcers",
+    "references": []
+  },
+  {
+    "name": "Arterial insufficiency ulcers",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Ulceration from inadequate perfusion, characteristically distal — toes, lateral malleolus, pressure points — with a punched-out appearance, well-demarcated margins, dry or necrotic base, minimal exudate, and disproportionate pain worsened by elevation and relieved by dependency. Surrounding skin is shiny, hairless, cool, with delayed capillary refill and absent pulses.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Peripheral arterial disease and critical limb ischaemia are entered in P06-02. The claudication exercise evidence there applies to stable claudication, not to limbs with tissue loss."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "An arterial ulcer signals critical limb ischaemia and warrants urgent vascular referral for revascularisation assessment. Debridement of dry, stable eschar on an ischaemic limb is generally contraindicated pending vascular assessment — it removes a protective barrier from tissue that cannot heal."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "arterial-insufficiency-ulcers",
+    "references": []
+  },
+  {
+    "name": "Diabetic neuropathic ulcers (Wagner grades 0–5)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Ulceration arising from the interaction of peripheral neuropathy (loss of protective sensation), peripheral arterial disease, and repetitive mechanical stress — classically on the plantar surface over metatarsal heads or the hallux, with surrounding callus and a punched-out appearance in an insensate foot. Wagner 0 — intact skin at risk; 1 — superficial ulcer; 2 — deeper, to tendon or capsule; 3 — deep with abscess or osteomyelitis; 4 — localised gangrene; 5 — extensive gangrene.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P03-03, including the African cohort finding of 13% ulcer prevalence, roughly 15% major amputation, and 14.2% in-hospital mortality — with the caveat there that these regional figures should not be quoted as global."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Offloading is the intervention that determines healing, more than any dressing choice. Neuropathy explains why the ulcer forms; vascular status predicts whether the limb is saved. Both must be assessed, and probing to bone raises suspicion of osteomyelitis (see P04-02)."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "diabetic-neuropathic-ulcers-wagner-grades-0-5",
+    "references": []
+  },
+  {
+    "name": "Traumatic wounds; skin tears; abrasions and lacerations",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Skin tears are traumatic separation of epidermis from dermis, or of both from underlying structures, classified by the ISTAP system by degree of flap loss. Predominantly affect older adults with fragile skin, and those on long-term corticosteroids or anticoagulants. Common mechanisms in therapy settings are shear during transfers, equipment contact, and adhesive removal.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Largely preventable in practice — limb protection during transfers, silicone rather than acrylic adhesives, and careful equipment padding. If a flap is present, it should be gently approximated rather than debrided."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "traumatic-wounds-skin-tears-abrasions-and-lacerations",
+    "references": []
+  },
+  {
+    "name": "Surgical wounds and dehiscence",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Wounds healing by primary intention, with dehiscence being partial or complete separation of previously approximated wound edges. Risk factors include infection, haematoma, obesity, diabetes, corticosteroids, malnutrition, and mechanical stress on the incision. Peak incidence is around 5–8 days post-operatively.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Serosanguinous discharge from a closed incision may precede visible dehiscence and warrants surgical review. This is directly relevant to exercise progression — see P01-02 on sternal precautions, where the evidence supports early upper body activity over blanket restriction."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "surgical-wounds-and-dehiscence",
+    "references": []
+  },
+  {
+    "name": "Burns — superficial, superficial partial-, deep partial-, full-thickness; TBSA estimation",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Superficial (first-degree) — epidermis only, erythematous, painful, blanching, heals without scarring. Superficial partial-thickness — into papillary dermis, blistered, moist, very painful, blanches, heals in ~2 weeks. Deep partial-thickness — into reticular dermis, mottled red/white, less painful, sluggish or absent blanching, heals slowly with scarring. Full-thickness — through dermis, leathery, white/brown/charred, insensate, requires grafting.",
+    "details": [
+      {
+        "label": "TBSA estimation is far less accurate than assumed",
+        "text": "A survey of experts at national and international burn conferences found deviations in burn depth and size estimates of up to 62% relative to the mean of all participants, and overestimation of up to 161% compared with a computer-based method [2]."
+      },
+      {
+        "label": "Authors' conclusion",
+        "text": "Improved methods for burn depth and size assessment should be introduced into clinical routine to allocate burn care resources efficiently [2]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "TBSA drives fluid resuscitation, transfer criteria, and prognosis, and experienced clinicians disagree substantially. Treat a quoted TBSA as an estimate with real uncertainty attached, particularly when it sits near a transfer or resuscitation threshold [2]."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "burns-superficial-superficial-partial-deep-partial-full-thickness-tbsa-estimation",
+    "references": [
+      "Giretzlehner, M., Dirnberger, J., Owen, R., Haller, H. L., Lumenta, D. B., & Kamolz, L.-P. (2013). The determination of total burn surface area: How much difference? *Burns, 39*(6), 1107–1113. https://doi.org/10.1016/j.burns.2013.01.021 (PMID: 23566430)"
+    ]
+  },
+  {
+    "name": "Electrical, chemical, and inhalation burn injury",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Electrical injury produces damage along the current path that is frequently far more extensive than the visible entry and exit wounds — deep muscle necrosis, rhabdomyolysis, compartment syndrome, and cardiac arrhythmia are the major risks, and the visible skin injury badly underestimates the true burden. Chemical burns continue to injure until the agent is removed; alkalis penetrate deeper than acids. Inhalation injury is suggested by facial burns, singed nasal hair, carbonaceous sputum, hoarseness, and stridor, and carries airway obstruction risk with a delayed peak.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Electrical injury requires cardiac monitoring and vigilance for compartment syndrome and myoglobinuria — see P05-07 for rhabdomyolysis. Inhalation injury may deteriorate hours after presentation."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "electrical-chemical-and-inhalation-burn-injury",
+    "references": []
+  },
+  {
+    "name": "Frostbite",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Freezing injury to tissue, graded 1–4 by depth analogously to burns. Presents initially numb, white, and hard, with the extent of injury frequently unclear for days to weeks — the \"freeze in January, amputate in July\" aphorism reflects how long demarcation takes. Rewarming is intensely painful.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Do not rewarm if there is any risk of refreezing — a freeze-thaw-refreeze cycle is substantially more damaging than delayed rewarming. Avoid rubbing the affected tissue."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "frostbite",
+    "references": []
+  },
+  {
+    "name": "Necrotizing fasciitis",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Rapidly progressive infection of fascia and subcutaneous tissue with secondary tissue necrosis. Pain grossly out of proportion to visible findings is the cardinal early feature, alongside systemic toxicity, rapid progression over hours, skin anaesthesia, crepitus, bullae, and dusky discolouration. A surgical emergency where survival depends on early debridement.",
+    "details": [
+      {
+        "label": "The LRINEC score performs worse than commonly assumed",
+        "text": "Across 18 studies (2004–2018), the score showed sensitivity ranging 43.2–80%, positive predictive value 57–64%, and negative predictive value 42–86% — all lower than the original derivation by Wong et al. (2004). A score ≥6 correlates with diagnosis, though 7.1 was statistically significant, and it is not sensitive in immunocompromised patients [3]."
+      },
+      {
+        "label": "Authors' conclusion",
+        "text": "There is Level 3 evidence (grade C) that LRINEC is a reliable aid that can stratify high-risk patients and predict outcome, but it should be correlated with clinical assessment and radiological modalities used simultaneously when doubt exists [3]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "A low LRINEC score does not exclude necrotising fasciitis — negative predictive value as low as 42% means it cannot be used to rule out, and it is least reliable in exactly the immunocompromised patients most at risk. Pain out of proportion to findings should trigger urgent surgical referral regardless of score [3]."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "necrotizing-fasciitis",
+    "references": [
+      "Abdullah, M., McWilliams, B., & Khan, S. U. (2019). Reliability of the Laboratory Risk Indicator in Necrotising Fasciitis (LRINEC) score. *The Surgeon, 17*(5), 309–318. https://doi.org/10.1016/j.surge.2018.08.001 (PMID: 30166238)"
+    ]
+  },
+  {
+    "name": "Cellulitis",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Acute bacterial infection of dermis and subcutaneous tissue producing spreading erythema, warmth, swelling, tenderness, and often fever.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Also entered in P06-02, where it is flagged as a priority gap."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Suspected cellulitis is an urgent medical referral and a contraindication to compression, manual lymphatic drainage, and exercise of the affected limb until treated. Marking and dating the erythema border documents spread. The critical differential is necrotising fasciitis — pain out of proportion, rapid progression over hours, systemic toxicity, or skin anaesthesia should escalate immediately rather than being managed as cellulitis [3]."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "cellulitis",
+    "references": [
+      "Abdullah, M., McWilliams, B., & Khan, S. U. (2019). Reliability of the Laboratory Risk Indicator in Necrotising Fasciitis (LRINEC) score. *The Surgeon, 17*(5), 309–318. https://doi.org/10.1016/j.surge.2018.08.001 (PMID: 30166238)"
+    ]
+  },
+  {
+    "name": "Hypertrophic and keloid scarring",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Hypertrophic scars remain within the boundaries of the original wound, often regress partially over time, and typically follow burns, wounds crossing joints, or delayed healing. Keloids extend beyond the original wound margins, rarely regress, and recur after excision. Both are more common in darker skin phototypes and at high-tension sites — sternum, shoulder, upper back, earlobe.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "The within-versus-beyond-margin distinction is the practical discriminator and predicts response — hypertrophic scars respond considerably better to pressure therapy and silicone than keloids do."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "hypertrophic-and-keloid-scarring",
+    "references": []
+  },
+  {
+    "name": "Scar contracture and adhesions",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Shortening of scar tissue restricting range of motion, most consequential across joints and in the hand, neck, and axilla. Burn scar contracture develops over months as collagen remodels, and is the principal long-term functional consequence of deep burns.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Positioning against the anticipated contracture direction, splinting, and sustained low-load stretch are the mainstays, and prevention is far more effective than correction. The anti-deformity position is generally the opposite of the position of comfort."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "scar-contracture-and-adhesions",
+    "references": []
+  },
+  {
+    "name": "Split-thickness/full-thickness skin graft and flap management",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Split-thickness grafts include epidermis and part of dermis, take more reliably, and contract more; full-thickness grafts include the entire dermis, contract less, and give better cosmetic and functional results but require a well-vascularised bed. Flaps carry their own blood supply and can cover avascular structures. Graft take depends on imbibition, inosculation, and revascularisation over roughly the first 5 days.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Shear is the enemy of graft take — immobilisation of the grafted area during the initial take period, and careful reintroduction of movement thereafter, governs the rehabilitation plan. Flap monitoring for colour, temperature, and capillary refill is a shared responsibility, and positioning must avoid pressure on the pedicle."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "split-thickness-full-thickness-skin-graft-and-flap-management",
+    "references": []
+  },
+  {
+    "name": "Toxic epidermal necrolysis / Stevens-Johnson syndrome",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Severe, usually drug-induced mucocutaneous reactions on a spectrum defined by epidermal detachment — SJS <10% BSA, overlap 10–30%, TEN >30%. Produce widespread epidermal necrosis and sloughing with mucosal involvement (oral, ocular, genital), and carry high mortality. Nikolsky sign is positive. Managed like a major burn, often in a burn unit.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "These patients require burn-level handling precautions — extreme care with transfers, adhesives, and positioning — and the causative drug must be identified and stopped. Ocular involvement carries long-term visual morbidity."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "toxic-epidermal-necrolysis-stevens-johnson-syndrome",
+    "references": []
+  },
+  {
+    "name": "Radiation dermatitis and fibrosis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Acute radiation dermatitis develops during or shortly after radiotherapy — erythema, dry then moist desquamation, and ulceration in severe cases. Late radiation fibrosis develops months to years afterwards, producing progressive induration, contracture, lymphoedema, reduced range of motion, and, uncommonly, brachial plexopathy or osteoradionecrosis.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Radiation-induced plexopathy is entered in P05-06, where the painless-progressive-with-myokymia pattern distinguishes it from painful neoplastic plexopathy."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Radiation fibrosis is progressive and largely irreversible, which makes early and sustained range-of-motion work more valuable than late remediation. Irradiated skin has permanently reduced tolerance to friction, heat, and adhesives."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "radiation-dermatitis-and-fibrosis",
+    "references": []
+  },
+  {
+    "name": "Psoriasis, eczema affecting therapy delivery",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Psoriasis — well-demarcated erythematous plaques with silvery scale, typically extensor surfaces, scalp, and nails, with Koebner phenomenon (new lesions at sites of skin trauma). Eczema/atopic dermatitis — poorly demarcated, itchy, flexural, with lichenification in chronic disease and high secondary infection risk from scratching.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Koebnerisation means friction, adhesive tape, and pressure at plaque sites can provoke new psoriatic lesions — relevant to taping, electrode placement, and splint edges. Psoriatic arthritis is entered in P04-01, and skin involvement may precede joint disease by years."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "psoriasis-eczema-affecting-therapy-delivery",
+    "references": []
+  },
+  {
+    "name": "Epidermolysis bullosa",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Group of inherited disorders producing extreme skin fragility with blistering and erosion from minor friction or trauma. Subtypes (simplex, junctional, dystrophic) vary from localised to lethal. Severe dystrophic forms produce pseudosyndactyly (\"mitten hand\") from repeated scarring, oesophageal strictures, and markedly elevated squamous cell carcinoma risk.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Shear is the mechanism of injury — patients must be lifted, never slid or dragged, and adhesive dressings and standard tapes are contraindicated. Hand therapy to delay pseudosyndactyly is a recognised role. Every aspect of handling requires modification."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "epidermolysis-bullosa",
+    "references": []
+  },
+  {
+    "name": "Scleroderma skin involvement",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Progressive skin fibrosis producing thickening, tightening, and loss of elasticity, with sclerodactyly, digital contractures, microstomia, and reduced facial expression. Digital ulceration and calcinosis are common, and Raynaud phenomenon nearly universal.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Systemic sclerosis is entered in P04-01 as a sourcing priority; Raynaud phenomenon in P06-02."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Hand function is the dominant rehabilitation concern, and contracture prevention through sustained stretching and splinting must begin early, since established contractures respond poorly. Digital ulcers heal slowly and are prone to infection."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "scleroderma-skin-involvement",
+    "references": []
+  },
+  {
+    "name": "Hidradenitis suppurativa",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Chronic inflammatory follicular occlusion disorder affecting apocrine-bearing intertriginous skin — axilla, groin, inframammary, perineal — producing painful nodules, abscesses, draining sinus tracts, and rope-like scarring. Staged by Hurley I–III. Frequently misdiagnosed as recurrent boils for years.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Axillary and groin scarring produces genuine range-of-motion restriction and pain that limits exercise participation, and the condition carries substantial psychological burden. Friction and heat aggravate it, which affects clothing, equipment, and exercise selection."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "hidradenitis-suppurativa",
+    "references": []
+  },
+  {
+    "name": "Cutaneous manifestations suggesting systemic disease (melanoma ABCDEs)",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Melanoma ABCDE — Asymmetry, Border irregularity, Colour variegation, Diameter >6 mm, Evolution (change in size, shape, colour, or symptoms). Evolution is the single most important criterion. The \"ugly duckling\" sign — a lesion that looks different from the patient's other naevi — is a useful adjunct. Other cutaneous markers of systemic disease include clubbing, erythema nodosum, pyoderma gangrenosum, acanthosis nigricans, and the Gottron papules and heliotrope rash of dermatomyositis (P04-01).",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Physical therapists see large areas of undressed skin, often repeatedly over weeks, and are well placed to notice change. A suspicious lesion warrants referral rather than reassurance — this is observation and onward referral, not diagnosis."
+      }
+    ],
+    "section": "INTEGUMENTARY & WOUND",
+    "slug": "cutaneous-manifestations-suggesting-systemic-disease-melanoma-abcdes",
+    "references": []
+  },
+  {
+    "name": "Breast cancer and post-mastectomy/lumpectomy status",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Surgical management ranges from lumpectomy with sentinel node biopsy to mastectomy with axillary lymph node dissection, with or without reconstruction. Rehabilitation concerns include shoulder range of motion, pectoral and axillary tightness, postural change, scar mobility, and lymphoedema risk. Axillary lymph node dissection carries substantially higher lymphoedema risk than sentinel node biopsy.",
+    "details": [
+      {
+        "label": "Exercise evidence",
+        "text": "Breast cancer survivors are among the best-represented populations in the Roundtable evidence base, where aerobic and resistance training improve fatigue, physical functioning, and quality of life [1]."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "breast-cancer-and-post-mastectomy-lumpectomy-status",
+    "references": [
+      "Campbell, K. L., Winters-Stone, K. M., Wiskemann, J., May, A. M., Schwartz, A. L., Courneya, K. S., Zucker, D. S., Matthews, C. E., Ligibel, J. A., Gerber, L. H., Morris, G. S., Patel, A. V., Hue, T. F., Perna, F. M., & Schmitz, K. H. (2019). Exercise guidelines for cancer survivors: Consensus statement from International Multidisciplinary Roundtable. *Medicine & Science in Sports & Exercise, 51*(11), 2375–2390. https://doi.org/10.1249/MSS.0000000000002116 (PMID: 31626055)"
+    ]
+  },
+  {
+    "name": "Axillary web syndrome (cording)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Palpable or visible axillary cords extending from the mid-axilla down the ipsilateral arm, developing after axillary surgery. Restricts shoulder abduction and elbow extension and is often painful on stretch. Usually self-limiting over weeks to months but responsive to manual therapy and stretching.",
+    "details": [
+      {
+        "label": "Incidence",
+        "text": "Among 107 Chilean women assessed within 90 days of breast cancer surgery, AWS was present in 49 (45.8%) [2]."
+      },
+      {
+        "label": "Predisposing factors — counterintuitive",
+        "text": "Younger age and lower BMI were the sole predisposing factors identified. Higher BMI was associated with *reduced* odds (overweight OR 0.35, 95% CI 0.11–1.12; obesity OR 0.28, 95% CI 0.08–0.97) [2]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Roughly one in two patients develops cording after axillary surgery — it should be actively looked for rather than waited for. The younger, leaner patient is at higher risk, which inverts the usual pattern for post-surgical complications [2]."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "axillary-web-syndrome-cording",
+    "references": [
+      "Ramírez-Parada, K., Garay-Acevedo, D., Mella-Abarca, W., Petric-Guajardo, M., Sánchez-Rojel, C., McNeely, M. L., Leao-Ribeiro, I., & Fernández-Verdejo, R. (2020). Axillary web syndrome among Chilean women with breast cancer: Incidence and possible predisposing factors. *Supportive Care in Cancer, 28*(6), 2941–2947. https://doi.org/10.1007/s00520-019-05190-5 (PMID: 31768730)"
+    ]
+  },
+  {
+    "name": "Cancer-related lymphedema",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Progressive chronic swelling from lymphatic disruption after node dissection, radiotherapy, infection, or tumour obstruction.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P06-02, including that complete decongestive therapy, compression bandages, and compression garments carry the highest evidence, and that historic recommendations for activity restriction have been challenged — survivors may not need to restrict resistive or aerobic exercise and weightlifting, with gradual progression."
+      },
+      {
+        "label": "Consistency with the Roundtable",
+        "text": "Lymphoedema appears among the outcomes addressed in the 2018 exercise guidelines [1], and the direction of both sources is the same: unnecessary restriction has its own cost."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "cancer-related-lymphedema",
+    "references": [
+      "Campbell, K. L., Winters-Stone, K. M., Wiskemann, J., May, A. M., Schwartz, A. L., Courneya, K. S., Zucker, D. S., Matthews, C. E., Ligibel, J. A., Gerber, L. H., Morris, G. S., Patel, A. V., Hue, T. F., Perna, F. M., & Schmitz, K. H. (2019). Exercise guidelines for cancer survivors: Consensus statement from International Multidisciplinary Roundtable. *Medicine & Science in Sports & Exercise, 51*(11), 2375–2390. https://doi.org/10.1249/MSS.0000000000002116 (PMID: 31626055)"
+    ]
+  },
+  {
+    "name": "Post-mastectomy pain syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Chronic neuropathic pain persisting beyond three months after breast surgery, typically in the axilla, medial upper arm, chest wall, or scar, attributed to intercostobrachial nerve injury. Presents with burning, allodynia, and sensory change, and is frequently accompanied by protective posturing and reduced shoulder use.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Chronic postsurgical pain is entered in P04-03, including the finding that an identifiable nerve injury can be found in only about one-third of patients — the mechanism is more complex than surgical nerve division alone."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "post-mastectomy-pain-syndrome",
+    "references": []
+  },
+  {
+    "name": "Aromatase inhibitor–associated arthralgia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Diffuse joint pain and stiffness affecting up to roughly half of women on aromatase inhibitors, typically symmetrical, worst in hands, wrists, and knees, with morning stiffness. A leading cause of treatment discontinuation, which matters because adherence affects survival. Distinguished from inflammatory arthritis by absence of synovitis and normal inflammatory markers.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Exercise is among the interventions with supporting evidence, making this a condition where physical therapy may directly protect oncological outcomes by supporting endocrine therapy adherence."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "aromatase-inhibitor-associated-arthralgia",
+    "references": []
+  },
+  {
+    "name": "Head and neck cancer — post neck dissection, radiation fibrosis, trismus, accessory nerve injury",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Multimodal treatment produces a distinctive cluster: spinal accessory nerve injury from neck dissection causing trapezius weakness, shoulder droop, and lateral scapular winging; radiation fibrosis producing progressive neck stiffness and reduced cervical range; trismus limiting mouth opening; plus dysphagia, xerostomia, and lymphoedema of the face and neck.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Spinal accessory nerve palsy is entered in P02-01; trismus in P04-03; radiation fibrosis and plexopathy in P05-06 and P07-00."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Radiation fibrosis is progressive and largely irreversible, so early and sustained range-of-motion work is more valuable than late remediation. Shoulder dysfunction after neck dissection is common and under-treated."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "head-and-neck-cancer-post-neck-dissection-radiation-fibrosis-trismus-accessory-nerve-injury",
+    "references": []
+  },
+  {
+    "name": "Lung cancer; post thoracic surgery",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Lobectomy, pneumonectomy, or wedge resection, increasingly via video-assisted or robotic approaches with lower morbidity than thoracotomy. Rehabilitation concerns include reduced pulmonary reserve, shoulder and thoracic mobility on the operated side, post-thoracotomy pain, and often substantial pre-existing COPD.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Post-thoracotomy pain syndrome is sourced in P01-02 (up to 65% report persistent pain, 10% debilitating); post lobectomy/pneumonectomy status in P06-03."
+      },
+      {
+        "label": "Exercise evidence",
+        "text": "The Roundtable supports exercise across cancer types for fatigue, physical functioning, and quality of life [1]."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "lung-cancer-post-thoracic-surgery",
+    "references": [
+      "Campbell, K. L., Winters-Stone, K. M., Wiskemann, J., May, A. M., Schwartz, A. L., Courneya, K. S., Zucker, D. S., Matthews, C. E., Ligibel, J. A., Gerber, L. H., Morris, G. S., Patel, A. V., Hue, T. F., Perna, F. M., & Schmitz, K. H. (2019). Exercise guidelines for cancer survivors: Consensus statement from International Multidisciplinary Roundtable. *Medicine & Science in Sports & Exercise, 51*(11), 2375–2390. https://doi.org/10.1249/MSS.0000000000002116 (PMID: 31626055)"
+    ]
+  },
+  {
+    "name": "Colorectal, prostate, gynecologic, bladder cancers",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Pelvic and abdominal malignancies whose treatments produce shared rehabilitation problems — abdominal wall dysfunction, pelvic floor impairment, bowel and bladder dysfunction, sexual dysfunction, stoma management, and radiation enteritis or cystitis. Androgen deprivation therapy in prostate cancer additionally produces sarcopenia, bone loss, fatigue, and metabolic change.",
+    "details": [
+      {
+        "label": "Exercise evidence",
+        "text": "Prostate and colorectal cancer survivors are represented in the Roundtable evidence base [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Androgen deprivation therapy makes resistance training and bone health a specific priority rather than a general recommendation."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "colorectal-prostate-gynecologic-bladder-cancers",
+    "references": [
+      "Campbell, K. L., Winters-Stone, K. M., Wiskemann, J., May, A. M., Schwartz, A. L., Courneya, K. S., Zucker, D. S., Matthews, C. E., Ligibel, J. A., Gerber, L. H., Morris, G. S., Patel, A. V., Hue, T. F., Perna, F. M., & Schmitz, K. H. (2019). Exercise guidelines for cancer survivors: Consensus statement from International Multidisciplinary Roundtable. *Medicine & Science in Sports & Exercise, 51*(11), 2375–2390. https://doi.org/10.1249/MSS.0000000000002116 (PMID: 31626055)"
+    ]
+  },
+  {
+    "name": "Prostatectomy-related urinary incontinence",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Stress urinary incontinence following radical prostatectomy, from sphincteric damage and loss of proximal urethral support. Most improves over 6–12 months, with a minority having persistent leakage. Pelvic floor muscle training is the primary conservative intervention, and pre-operative training is widely used.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Pelvic health conditions are covered in Part IX."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "prostatectomy-related-urinary-incontinence",
+    "references": []
+  },
+  {
+    "name": "Sarcomas — soft tissue and bone; limb salvage and amputation status",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Limb salvage with endoprosthetic reconstruction or allograft is now standard where margins permit, with weight-bearing and range restrictions determined by the reconstruction. Amputation may still be required for extensive disease. Both follow neoadjuvant or adjuvant chemotherapy and often radiotherapy, compounding deconditioning.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Primary bone tumours are entered in P04-02 as a priority gap; lower extremity amputation in P03-03."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Endoprosthetic reconstructions have surgeon-specific and construct-specific restrictions that must be confirmed rather than assumed — these are not standard arthroplasty protocols."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "sarcomas-soft-tissue-and-bone-limb-salvage-and-amputation-status",
+    "references": []
+  },
+  {
+    "name": "Brain tumors — glioma, meningioma, metastases; post-resection status",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Produce focal neurological deficits by location, plus seizures, raised intracranial pressure, cognitive impairment, and fatigue. Rehabilitation resembles stroke in its deficit profile but differs in trajectory — progressive in high-grade glioma, potentially stable or improving after meningioma resection.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Post-craniotomy and decompressive craniectomy status is entered in P05-02; cerebrovascular deficits in P05-01."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Corticosteroids used for peritumoural oedema commonly produce proximal steroid myopathy, which compounds tumour-related weakness and is frequently misattributed to disease progression."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "brain-tumors-glioma-meningioma-metastases-post-resection-status",
+    "references": []
+  },
+  {
+    "name": "Spinal cord compression from malignancy",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Epidural compression from vertebral metastasis or direct tumour extension, producing progressive back pain (often preceding neurological signs by weeks), then weakness, sensory level, and bladder/bowel dysfunction. An oncological emergency.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P04-02, including the key finding that preoperative ambulatory status predicts postoperative ambulatory status across eight studies, while no study found time-to-surgery affected survival."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Recognising compression while the patient is still walking is the single most valuable contribution a therapist can make. New or worsening back pain in a patient with known malignancy warrants urgent imaging, not a mechanical trial."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "spinal-cord-compression-from-malignancy",
+    "references": []
+  },
+  {
+    "name": "Leukemias and lymphomas",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Haematological malignancies producing fatigue, anaemia, thrombocytopenia, neutropenia, and treatment-related deconditioning. Rehabilitation is frequently delivered during active treatment and around cytopenic nadirs.",
+    "details": [
+      {
+        "label": "Exercise evidence",
+        "text": "Exercise training and testing are generally safe across cancer survivor populations, with the standing instruction to avoid inactivity [1]."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "leukemias-and-lymphomas",
+    "references": [
+      "Campbell, K. L., Winters-Stone, K. M., Wiskemann, J., May, A. M., Schwartz, A. L., Courneya, K. S., Zucker, D. S., Matthews, C. E., Ligibel, J. A., Gerber, L. H., Morris, G. S., Patel, A. V., Hue, T. F., Perna, F. M., & Schmitz, K. H. (2019). Exercise guidelines for cancer survivors: Consensus statement from International Multidisciplinary Roundtable. *Medicine & Science in Sports & Exercise, 51*(11), 2375–2390. https://doi.org/10.1249/MSS.0000000000002116 (PMID: 31626055)"
+    ]
+  },
+  {
+    "name": "Multiple myeloma",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Plasma cell malignancy producing lytic bone lesions, pathological fracture, vertebral compression fracture, hypercalcaemia, renal impairment, and anaemia. Lesions are characteristically purely lytic and may not show on bone scan.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Entered as a sourcing gap in both P01-03 and P04-02, so a single sourcing pass would close three entries."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Skeletal fragility governs everything — spinal loading, resisted exercise, and manual therapy all require imaging-informed caution. This is the oncology diagnosis where enthusiastic strengthening can cause fracture."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "multiple-myeloma",
+    "references": []
+  },
+  {
+    "name": "Hematopoietic stem cell transplant; graft-versus-host disease",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Autologous or allogeneic transplantation preceded by myeloablative conditioning, producing profound cytopenia, mucositis, and deconditioning. Chronic graft-versus-host disease after allogeneic transplant produces sclerodermatous skin changes, fasciitis, joint contractures, dry eyes and mouth, and bronchiolitis obliterans.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Chronic GVHD fasciitis produces contractures that respond to sustained stretching, and range of motion should be monitored routinely in allogeneic recipients. Protective isolation constrains where and how therapy is delivered."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "hematopoietic-stem-cell-transplant-graft-versus-host-disease",
+    "references": []
+  },
+  {
+    "name": "Chemotherapy-induced peripheral neuropathy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Length-dependent sensory-predominant neuropathy from platinum, taxane, vinca alkaloid, and bortezomib agents, producing numbness, paraesthesia, neuropathic pain, impaired balance, and falls risk.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P05-06, including incidence ranging 16.9% to 89.4%, obesity as the most consistent risk factor, and the counterintuitive finding that diabetes did not increase CIPN incidence or severity on moderate evidence."
+      },
+      {
+        "label": "An honest limit",
+        "text": "The 2018 Roundtable states that implications of exercise for peripheral neuropathy remain uncertain [1] — so while exercise is safe, its specific benefit for CIPN is not established."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Falls risk from proprioceptive loss is the actionable concern, and balance training is justified on falls-prevention grounds independent of whether it modifies the neuropathy itself."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "chemotherapy-induced-peripheral-neuropathy",
+    "references": [
+      "Campbell, K. L., Winters-Stone, K. M., Wiskemann, J., May, A. M., Schwartz, A. L., Courneya, K. S., Zucker, D. S., Matthews, C. E., Ligibel, J. A., Gerber, L. H., Morris, G. S., Patel, A. V., Hue, T. F., Perna, F. M., & Schmitz, K. H. (2019). Exercise guidelines for cancer survivors: Consensus statement from International Multidisciplinary Roundtable. *Medicine & Science in Sports & Exercise, 51*(11), 2375–2390. https://doi.org/10.1249/MSS.0000000000002116 (PMID: 31626055)"
+    ]
+  },
+  {
+    "name": "Cancer-related fatigue",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Persistent, distressing, subjective sense of physical, emotional, or cognitive exhaustion related to cancer or its treatment, not proportional to recent activity and not relieved by rest — the features that distinguish it from ordinary tiredness. Remains one of the most prevalent and troublesome adverse events during and after therapy [3].",
+    "details": [
+      {
+        "label": "The comparative evidence — 113 studies, 11,525 participants",
+        "text": "Weighted effect sizes for reducing CRF were exercise 0.30 (95% CI 0.25–0.36), psychological 0.27 (0.21–0.33), exercise plus psychological 0.26 (0.13–0.38) — all p<0.001 — versus pharmaceutical 0.09 (0.00–0.19), p=0.05 [3]."
+      },
+      {
+        "label": "The authors' conclusion, stated plainly",
+        "text": "Exercise and psychological interventions are effective and \"significantly better than the available pharmaceutical options. Clinicians should prescribe exercise or psychological interventions as first-line treatments for CRF\" [3]."
+      },
+      {
+        "label": "Not attributable to attention",
+        "text": "The effectiveness of behavioural interventions was not attributable to time, attention, and education — a control-condition analysis that strengthens the causal claim [3]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "This is among the strongest evidence statements in this entire document for physical therapy as a first-line treatment, from a good-quality meta-analysis with no evidence of publication bias [3]."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "cancer-related-fatigue",
+    "references": [
+      "Mustian, K. M., Alfano, C. M., Heckler, C., Kleckner, A. S., Kleckner, I. R., Leach, C. R., Mohr, D., Palesh, O. G., Peppone, L. J., Piper, B. F., Scarpato, J., Smith, T., Sprod, L. K., & Miller, S. M. (2017). Comparison of pharmaceutical, psychological, and exercise treatments for cancer-related fatigue: A meta-analysis. *JAMA Oncology, 3*(7), 961–968. https://doi.org/10.1001/jamaoncol.2016.6914 (PMID: 28253393)"
+    ]
+  },
+  {
+    "name": "Cancer cachexia and sarcopenia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Multifactorial syndrome of ongoing skeletal muscle loss, with or without fat loss, not fully reversible by nutritional support, driven by inflammation and metabolic derangement. Distinct from simple starvation and from age-related sarcopenia, though they compound. An independent predictor of mortality, treatment toxicity, and reduced treatment tolerance.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Resistance training combined with nutritional support is the rational approach, but cachexia is not reversible by nutrition alone and expectations should be set accordingly. Weight stability does not exclude it, since muscle can be lost while fat is retained."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "cancer-cachexia-and-sarcopenia",
+    "references": []
+  },
+  {
+    "name": "Chemotherapy-induced cardiotoxicity",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Cardiac injury from anthracyclines (dose-dependent, potentially irreversible), trastuzumab (often reversible), and immune checkpoint inhibitors (myocarditis). Presents as declining ejection fraction, often asymptomatic initially, progressing to heart failure. Mediastinal radiation adds valvular, pericardial, and coronary disease risk with long latency.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Heart failure and cardiac rehabilitation evidence is sourced in P06-01."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Baseline and serial echocardiography is standard for anthracycline and trastuzumab regimens. A cancer survivor years out of treatment presenting with exertional dyspnoea warrants cardiac consideration, not an assumption of deconditioning — the latency can be decades."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "chemotherapy-induced-cardiotoxicity",
+    "references": []
+  },
+  {
+    "name": "Radiation fibrosis syndrome; radiation-induced brachial plexopathy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Progressive fibrosis of skin, subcutaneous tissue, muscle, nerve, and other structures within the radiation field, developing months to years after treatment and progressing over decades.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Radiation-induced plexopathy is entered in P05-06, where the distinguishing pattern is painless progressive weakness with myokymia on EMG, versus painful, lower-plexus, often with Horner syndrome in neoplastic plexopathy. Radiation dermatitis and fibrosis are in P07-00."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Distinguishing radiation injury from tumour recurrence is the central clinical question and changes management entirely. Progressive symptoms in a previously irradiated field always require oncological review rather than assumption."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "radiation-fibrosis-syndrome-radiation-induced-brachial-plexopathy",
+    "references": []
+  },
+  {
+    "name": "Steroid myopathy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Painless proximal weakness — hips before shoulders — from corticosteroid exposure, with normal creatine kinase, developing over weeks to months and improving slowly on dose reduction. Extremely common in oncology given corticosteroid use for oedema, nausea, and as part of treatment protocols.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Entered in P05-07 with statin-associated myopathy."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Normal CK is expected and does not exclude it. In a patient with a brain tumour on dexamethasone, new proximal weakness is more often steroid myopathy than tumour progression — a distinction worth raising rather than assuming."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "steroid-myopathy",
+    "references": []
+  },
+  {
+    "name": "Pathologic fracture and metastatic bone disease precautions",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Fracture through bone weakened by metastatic deposit, most often in vertebrae, proximal femur, humerus, pelvis, and ribs. Mirels' score (site, pain, lesion type, size) is used to estimate impending fracture risk and guide prophylactic fixation. Lytic lesions in weight-bearing bone are the highest concern.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Bone metastases are sourced in P04-02."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Weight-bearing status and resisted exercise in metastatic bone disease are imaging-informed decisions requiring oncology or orthopaedic input, not therapist judgement alone. Increasing localised pain, particularly night pain or pain on weight-bearing, warrants imaging before progression. Prophylactic fixation before fracture produces far better outcomes than fixation after."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "pathologic-fracture-and-metastatic-bone-disease-precautions",
+    "references": []
+  },
+  {
+    "name": "Thrombocytopenia and neutropenia exercise precautions",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Thrombocytopenia raises bleeding risk, with commonly used thresholds restricting resistance exercise and contact activity as platelet counts fall, and withholding exercise below very low counts. Neutropenia raises infection risk and governs environment — avoiding group gyms and shared equipment during the nadir.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Local institutional thresholds vary and must be followed rather than recalled, since published values differ between centres. The general principle is that both counts fall predictably to a nadir after each cycle, so timing therapy around the cycle is more useful than reacting to each result."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "thrombocytopenia-and-neutropenia-exercise-precautions",
+    "references": []
+  },
+  {
+    "name": "Palliative and hospice-phase rehabilitation",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Rehabilitation directed at comfort, function, and dignity rather than recovery, with goals reframed toward what matters to the patient — transfers to a commode, sitting at a table for a meal, managing stairs to a bedroom. Encompasses energy conservation, equipment provision, positioning for comfort and breathlessness, carer training, and falls prevention.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Deterioration is expected and is not treatment failure. Goals should be reviewed frequently and set at short horizons, and the value of maintaining a specific function should be weighed against the energy cost of achieving it. Equipment provision often delivers more functional benefit than exercise at this stage."
+      }
+    ],
+    "section": "ONCOLOGY & ONCOLOGIC REHABILITATION",
+    "slug": "palliative-and-hospice-phase-rehabilitation",
+    "references": []
+  },
+  {
+    "name": "Stress urinary incontinence",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Involuntary urine loss on effort, exertion, sneezing, or coughing, from urethral sphincter deficiency and/or loss of urethral support. The most common incontinence type in women, and the primary indication for pelvic floor muscle training.",
+    "details": [
+      {
+        "label": "Cure or improvement",
+        "text": "74% versus 11% (RR 6.33, 95% CI 3.88–10.33; moderate quality) [1]."
+      },
+      {
+        "label": "Objective measures",
+        "text": "PFMT reduced leakage by approximately one episode per 24 hours (MD 1.23 lower, 95% CI 1.78–0.68; 7 trials, 432 women) and reduced urine loss on short clinic pad tests (MD 9.71 g lower; moderate quality) [1]."
+      },
+      {
+        "label": "Safety and other outcomes",
+        "text": "Women in PFMT groups were more satisfied with treatment and reported better sexual outcomes. Adverse events were rare and, where reported, minor [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "\"Participant-perceived cure in women with SUI\" was the single outcome rated high quality in the entire review — most others were downgraded to moderate on methodological grounds. This is as strong as conservative-management evidence gets, and it justifies PFMT as first-line [1]."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "stress-urinary-incontinence",
+    "references": [
+      "Dumoulin, C., Cacciari, L. P., & Hay-Smith, E. J. C. (2018). Pelvic floor muscle training versus no treatment, or inactive control treatments, for urinary incontinence in women. *Cochrane Database of Systematic Reviews, 10*(10), CD005654. https://doi.org/10.1002/14651858.CD005654.pub4 (PMID: 30288727)"
+    ]
+  },
+  {
+    "name": "Urgency urinary incontinence; overactive bladder",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Involuntary leakage preceded by a sudden compelling urge, usually from detrusor overactivity. Overactive bladder is the symptom syndrome — urgency with or without incontinence, usually with frequency and nocturia. Management combines bladder training, urge suppression techniques, fluid and dietary modification, and PFMT for urge inhibition.",
+    "details": [
+      {
+        "label": "An evidence limit worth knowing",
+        "text": "The Cochrane review included only one study of women with UUI alone, with no data on cure, cure or improvement, or leakage episodes for that subgroup [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The strong PFMT evidence is for stress incontinence. Its use in pure urgency incontinence rests on mechanistic rationale and clinical consensus rather than trial data of comparable strength [1]."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "urgency-urinary-incontinence-overactive-bladder",
+    "references": [
+      "Dumoulin, C., Cacciari, L. P., & Hay-Smith, E. J. C. (2018). Pelvic floor muscle training versus no treatment, or inactive control treatments, for urinary incontinence in women. *Cochrane Database of Systematic Reviews, 10*(10), CD005654. https://doi.org/10.1002/14651858.CD005654.pub4 (PMID: 30288727)"
+    ]
+  },
+  {
+    "name": "Mixed urinary incontinence",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Both stress and urgency components. Treatment is generally directed at the more bothersome component first.",
+    "details": [
+      {
+        "label": "Evidence limit",
+        "text": "As with UUI, the Cochrane review found only one small trial (12 women) in mixed UI, reporting better quality of life [1]. For any type of UI, PFMT groups were five times more likely to report cure (35% versus 6%; RR 5.34; moderate quality) and twice as likely to report cure or improvement (67% versus 29%; RR 2.39) [1]."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "mixed-urinary-incontinence",
+    "references": [
+      "Dumoulin, C., Cacciari, L. P., & Hay-Smith, E. J. C. (2018). Pelvic floor muscle training versus no treatment, or inactive control treatments, for urinary incontinence in women. *Cochrane Database of Systematic Reviews, 10*(10), CD005654. https://doi.org/10.1002/14651858.CD005654.pub4 (PMID: 30288727)"
+    ]
+  },
+  {
+    "name": "Urinary retention; dysfunctional voiding",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Retention is failure to empty, acute or chronic, from obstruction, detrusor underactivity, neurological cause, or medication. Dysfunctional voiding is inappropriate pelvic floor or sphincter contraction during voiding in a neurologically intact person, producing hesitancy, straining, intermittent flow, and incomplete emptying — treated by downtraining rather than strengthening.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "This is the group where strengthening the pelvic floor is the wrong intervention. Prescribing Kegels for a non-relaxing pelvic floor worsens symptoms, which is why assessment must establish whether the floor is underactive or overactive before treatment is chosen."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "urinary-retention-dysfunctional-voiding",
+    "references": []
+  },
+  {
+    "name": "Fecal incontinence",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Involuntary loss of solid or liquid stool or flatus, from sphincter injury (most often obstetric), neuropathy, altered stool consistency, or reduced rectal compliance. Frequently under-reported by patients unless directly asked.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Stool consistency management is often more effective than sphincter exercise alone, and the two combine. Obstetric anal sphincter injury (see perineal tear entry) is the dominant cause in younger women, sometimes presenting decades after the delivery."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "fecal-incontinence",
+    "references": []
+  },
+  {
+    "name": "Constipation; dyssynergic defecation; obstructed defecation",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Dyssynergic defecation is paradoxical contraction or failure to relax the pelvic floor and anal sphincter during attempted defecation — a behavioural disorder highly responsive to biofeedback. Obstructed defecation may additionally involve structural causes such as rectocele, intussusception, or rectal prolapse.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Dyssynergia is one of the most treatable conditions in pelvic health, and biofeedback-based retraining substantially outperforms laxatives for it. Defecation dynamics — positioning, breath, and avoidance of straining — are teachable and often decisive."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "constipation-dyssynergic-defecation-obstructed-defecation",
+    "references": []
+  },
+  {
+    "name": "Pelvic organ prolapse — cystocele, rectocele, uterine, vaginal vault (POP-Q stages)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Descent of pelvic organs into or through the vaginal canal, staged by the POP-Q system 0–IV. Symptoms include vaginal bulge or heaviness, and associated urinary, bowel, and sexual dysfunction. Symptom burden correlates poorly with anatomical stage.",
+    "details": [
+      {
+        "label": "PFMT evidence",
+        "text": "Across 18 RCTs, PFMT improved pelvic, urinary, and intestinal symptoms associated with POP, pelvic floor function, and quality of life [2]."
+      },
+      {
+        "label": "Two important negatives",
+        "text": "PFMT did not produce significant changes in sexual function, and results for change in POP stage were inconclusive [2]."
+      },
+      {
+        "label": "As an adjunct to surgery",
+        "text": "No significant improvement was observed in any analysed variable when PFMT was added to surgery compared with surgical treatment alone [2]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "PFMT improves how a prolapse feels and functions, not reliably where it sits anatomically — an honest framing to give patients. The adjunct-to-surgery finding is notable given how routinely peri-operative PFMT is provided. The authors call for higher-quality RCTs with larger samples and longer follow-up [2]."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "pelvic-organ-prolapse-cystocele-rectocele-uterine-vaginal-vault-pop-q-stages",
+    "references": [
+      "Espiño-Albela, A., Castaño-García, C., Díaz-Mohedo, E., & Ibáñez-Vera, A. J. (2022). Effects of pelvic-floor muscle training in patients with pelvic organ prolapse approached with surgery vs. conservative treatment: A systematic review. *Journal of Personalized Medicine, 12*(5), 806. https://doi.org/10.3390/jpm12050806 (PMID: 35629228)"
+    ]
+  },
+  {
+    "name": "Pelvic floor hypertonicity / non-relaxing pelvic floor",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Elevated resting tone with impaired relaxation, producing pelvic pain, dyspareunia, obstructed voiding and defecation, and urinary urgency. Often coexists with anxiety, trauma history, and other persistent pain conditions.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "The central practice point in this file — an overactive pelvic floor presents with many of the same symptoms as an underactive one (urgency, leakage, incomplete emptying), and strengthening makes it worse. Downtraining, breathing, manual therapy, and graded exposure are the approach."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "pelvic-floor-hypertonicity-non-relaxing-pelvic-floor",
+    "references": []
+  },
+  {
+    "name": "Levator ani syndrome; proctalgia fugax",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Levator ani syndrome — chronic or recurrent rectal aching or pressure lasting 30 minutes or more, worse with sitting, with levator tenderness on palpation. Proctalgia fugax — sudden severe fleeting anorectal pain lasting seconds to minutes with complete resolution between episodes. Both are functional anorectal pain disorders under the Rome criteria.",
+    "details": [],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "levator-ani-syndrome-proctalgia-fugax",
+    "references": []
+  },
+  {
+    "name": "Dyspareunia; vaginismus; vulvodynia; vestibulodynia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Dyspareunia — persistent genital pain with intercourse, superficial or deep. Vaginismus — involuntary pelvic floor contraction preventing penetration. Vulvodynia — vulvar pain of at least three months without identifiable cause; vestibulodynia is the localised provoked subtype and the most common. These frequently coexist with pelvic floor hypertonicity and central sensitisation.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Central sensitisation and nociplastic pain are entered in P04-03."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Multimodal management — pelvic floor downtraining, manual therapy, education, graded exposure, and psychological support — outperforms single-modality treatment. These conditions carry substantial diagnostic delay and patients often arrive having been told nothing is wrong."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "dyspareunia-vaginismus-vulvodynia-vestibulodynia",
+    "references": []
+  },
+  {
+    "name": "Chronic pelvic pain syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Non-cyclical pelvic pain of at least six months' duration causing functional disability, without a clearly identifiable single pathology. Frequently multifactorial — musculoskeletal, visceral, neurological, and psychosocial contributors coexist.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "ICD-11 chronic primary pain, which explicitly legitimises chronic pain as a diagnosis independent of identified contributors, is entered in P04-03."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "chronic-pelvic-pain-syndrome",
+    "references": []
+  },
+  {
+    "name": "Interstitial cystitis / bladder pain syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Chronic bladder pain, pressure, or discomfort with urinary urgency and frequency, in the absence of infection or other identifiable cause. Pain characteristically worsens with bladder filling and is relieved by voiding — the reverse of most urinary conditions. Commonly coexists with pelvic floor hypertonicity, fibromyalgia, and IBS.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Pelvic floor manual therapy targeting hypertonicity has better supporting evidence than pelvic floor strengthening, which can worsen symptoms."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "interstitial-cystitis-bladder-pain-syndrome",
+    "references": []
+  },
+  {
+    "name": "Endometriosis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Endometrial-like tissue outside the uterus producing dysmenorrhoea, chronic pelvic pain, dyspareunia, dyschezia, and infertility. Diagnostic delay averages years. Symptom severity correlates poorly with disease stage, and central sensitisation frequently develops.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Physical therapy addresses the secondary musculoskeletal and pelvic floor consequences and the central pain component — it does not treat the disease. Framing this honestly matters, since patients are often referred with unclear expectations."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "endometriosis",
+    "references": []
+  },
+  {
+    "name": "Chronic prostatitis / chronic pelvic pain syndrome (male)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Pelvic, perineal, or genital pain for at least three months with voiding and sexual dysfunction, without demonstrable infection — NIH category III, by far the most common prostatitis category. Pelvic floor hypertonicity and myofascial trigger points are consistent findings, and the condition responds poorly to repeated antibiotic courses.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Despite the name, this is largely a pelvic floor and central pain condition rather than a prostatic infection. Male patients are frequently under-referred to pelvic health physical therapy."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "chronic-prostatitis-chronic-pelvic-pain-syndrome-male",
+    "references": []
+  },
+  {
+    "name": "Erectile dysfunction with pelvic floor component",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Erectile dysfunction where impaired ischiocavernosus and bulbospongiosus function contributes to inadequate venous occlusion. Pelvic floor muscle training has supporting evidence as a conservative intervention, particularly post-prostatectomy and in venogenic dysfunction.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Cardiovascular disease is a major cause of erectile dysfunction, and new-onset ED can be an early marker of endothelial disease — worth ensuring medical assessment has occurred."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "erectile-dysfunction-with-pelvic-floor-component",
+    "references": []
+  },
+  {
+    "name": "Post-prostatectomy incontinence",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Stress incontinence after radical prostatectomy from sphincteric injury and loss of proximal support. Most improves substantially over 6–12 months. Pre-operative PFMT is widely provided.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Also entered in P08-00 under oncologic rehabilitation."
+      },
+      {
+        "label": "Evidence limit",
+        "text": "The Cochrane PFMT review [1] covers women only, so its effect estimates do not transfer to this population."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "post-prostatectomy-incontinence",
+    "references": [
+      "Dumoulin, C., Cacciari, L. P., & Hay-Smith, E. J. C. (2018). Pelvic floor muscle training versus no treatment, or inactive control treatments, for urinary incontinence in women. *Cochrane Database of Systematic Reviews, 10*(10), CD005654. https://doi.org/10.1002/14651858.CD005654.pub4 (PMID: 30288727)"
+    ]
+  },
+  {
+    "name": "Pregnancy-related low back and pelvic girdle pain",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Lumbopelvic pain during pregnancy, affecting a large proportion of pregnancies, from hormonal ligamentous laxity, altered load distribution, and postural change.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P01-04 via the European guidelines — point prevalence approximately 20% in pregnant women, with previous low back pain and previous pelvic trauma as the probable risk factors, and with the ASLR plus provocation tests recommended while mobility, palpation-for-position tests, and imaging are explicitly not recommended."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "pregnancy-related-low-back-and-pelvic-girdle-pain",
+    "references": []
+  },
+  {
+    "name": "Diastasis recti abdominis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Separation of the rectus abdominis at the linea alba, near-universal in late pregnancy and resolving variably postpartum. Measured as inter-recti distance (IRD), commonly by ultrasound or palpation.",
+    "details": [
+      {
+        "label": "An important negative finding",
+        "text": "In 224 postpartum women with core instability symptoms and DRA, IRD was associated in univariable analysis with impairment in running (p=0.007), heavy work (p=0.036), and exercise/sport (p=0.047) — but not with dressing, walking, sitting, standing bent over, carrying, bed-making, light manual labour, or heavy lifting. In multivariable analysis adjusting for BMI and parity, no significant correlations remained [3]."
+      },
+      {
+        "label": "Authors' conclusion",
+        "text": "The postpartum core instability condition is complex and probably associated with more factors than IRD alone. \"The IRD alone does not seem to be a sufficient proxy for decision-making regarding optimal treatment\" and a more complete assessment instrument is warranted [3]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Gap width is a poor guide to function or to treatment decisions. Measuring the gap and treating the number misses what actually matters — load transfer, tension generation, and symptom response [3]."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "diastasis-recti-abdominis",
+    "references": [
+      "Bixo, L., Sandblom, G., Österberg, J., Stackelberg, O., Bewö, K., & Olsson, A. (2022). Association between inter-recti distance and impaired abdominal core function in post-partum women with diastasis recti abdominis. *Journal of Abdominal Wall Surgery, 1*, 10909. https://doi.org/10.3389/jaws.2022.10909 (PMID: 38314149)"
+    ]
+  },
+  {
+    "name": "Round ligament pain",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Sharp, brief, often stabbing pain in the lower lateral abdomen or groin during pregnancy, typically second trimester, provoked by sudden movement, coughing, or position change. Benign and self-limiting, but a diagnosis of exclusion — appendicitis, ovarian torsion, preterm labour, and placental abruption must be considered.",
+    "details": [],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "round-ligament-pain",
+    "references": []
+  },
+  {
+    "name": "Symphysis pubis dysfunction",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Pain at the pubic symphysis during pregnancy or postpartum, with tenderness on palpation, pain on single-leg loading, weight-bearing, and turning in bed. Part of the pelvic girdle pain spectrum rather than a separate entity in current terminology.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Pelvic girdle pain, including the recommended and not-recommended assessment tests, is sourced in P01-04; pubic-related groin pain in athletes under the Doha agreement in the same file."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "symphysis-pubis-dysfunction",
+    "references": []
+  },
+  {
+    "name": "Carpal tunnel syndrome of pregnancy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Median nerve compression from pregnancy-related fluid retention, typically third trimester and often bilateral, with nocturnal symptoms predominating. Usually resolves within weeks to months postpartum, though a minority persist.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Carpal tunnel syndrome is sourced in P02-03, including the finding that electrophysiological median neuropathy is present in 18.4% of asymptomatic controls and that the hand elevation test substantially outperforms Phalen and Tinel (diagnostic odds ratio 128.63 versus 7.23 and 5.31)."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Night splinting is first-line and usually sufficient given the expected postpartum resolution."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "carpal-tunnel-syndrome-of-pregnancy",
+    "references": []
+  },
+  {
+    "name": "Postpartum pelvic floor dysfunction; perineal tear (grades 1–4)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Grade 1 — perineal skin only. Grade 2 — perineal muscles, sphincter intact. Grade 3 — anal sphincter complex involved (3a <50% external sphincter, 3b >50%, 3c internal sphincter). Grade 4 — sphincter complex plus anorectal mucosa. Grades 3 and 4 are obstetric anal sphincter injuries (OASIS) and carry substantial faecal incontinence risk.",
+    "details": [
+      {
+        "label": "Evidence context",
+        "text": "The PFMT evidence for urinary incontinence [1] is largely from mixed adult female populations and supports postpartum PFMT for urinary symptoms."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "OASIS should be actively identified in the history — women frequently do not know the grade of their tear, and it changes both prognosis and the threshold for colorectal referral."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "postpartum-pelvic-floor-dysfunction-perineal-tear-grades-1-4",
+    "references": [
+      "Dumoulin, C., Cacciari, L. P., & Hay-Smith, E. J. C. (2018). Pelvic floor muscle training versus no treatment, or inactive control treatments, for urinary incontinence in women. *Cochrane Database of Systematic Reviews, 10*(10), CD005654. https://doi.org/10.1002/14651858.CD005654.pub4 (PMID: 30288727)"
+    ]
+  },
+  {
+    "name": "Cesarean section recovery and scar management",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Recovery after abdominal delivery, with considerations including transversus abdominis and abdominal wall recruitment, scar mobility and desensitisation, adhesion formation, posture and lifting mechanics with a newborn, and — frequently overlooked — that pelvic floor dysfunction still occurs after caesarean, since pregnancy itself loads the pelvic floor.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Numbness above the scar is expected from iliohypogastric and ilioinguinal cutaneous branch division. Scar tethering can refer pain and restrict trunk extension months to years later."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "cesarean-section-recovery-and-scar-management",
+    "references": []
+  },
+  {
+    "name": "Lactation-related musculoskeletal pain; mastitis",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Neck, thoracic, and upper limb pain from sustained feeding postures and infant carrying, plus wrist and thumb tendinopathy (de Quervain — see P02-03). Mastitis presents with a wedge-shaped area of breast erythema, warmth, pain, and systemic features including fever and flu-like symptoms.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Mastitis with systemic features requires medical review — it can progress to abscess. Feeding position modification, forearm and thumb support, and upper quadrant exercise address the musculoskeletal component."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "lactation-related-musculoskeletal-pain-mastitis",
+    "references": []
+  },
+  {
+    "name": "Coccydynia (obstetric and traumatic)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Coccygeal pain provoked by sitting and by rising from sitting, following childbirth, direct trauma, or arising idiopathically.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P01-04, with the caveat there that the cited cohort is adolescent — 37.7% post-traumatic, abnormal mobility rarer and spicules more frequent than in adults — and those figures should not be transferred to adult obstetric coccydynia."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "coccydynia-obstetric-and-traumatic",
+    "references": []
+  },
+  {
+    "name": "Pudendal neuralgia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Neuropathic pain in the pudendal nerve distribution, worsened by sitting.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P01-04 via the Nantes criteria — pain in the pudendal territory, worsened by sitting, not waking the patient at night, no objective sensory loss, and positive anaesthetic block. Criteria 3 and 4 are counterintuitive: night waking and objective sensory loss argue *against* the diagnosis."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "pudendal-neuralgia",
+    "references": []
+  },
+  {
+    "name": "Post-hysterectomy and gynecologic surgery rehabilitation",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Recovery after abdominal, vaginal, or laparoscopic hysterectomy and related procedures. Considerations include vaginal vault prolapse risk (particularly after hysterectomy), pelvic floor support changes, abdominal wall recovery, scar management, and lifting restrictions during vault healing.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Vaginal vault prolapse is included in the POP entry above [2]."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "post-hysterectomy-and-gynecologic-surgery-rehabilitation",
+    "references": [
+      "Espiño-Albela, A., Castaño-García, C., Díaz-Mohedo, E., & Ibáñez-Vera, A. J. (2022). Effects of pelvic-floor muscle training in patients with pelvic organ prolapse approached with surgery vs. conservative treatment: A systematic review. *Journal of Personalized Medicine, 12*(5), 806. https://doi.org/10.3390/jpm12050806 (PMID: 35629228)"
+    ]
+  },
+  {
+    "name": "Gender-affirming surgery rehabilitation",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Rehabilitation after vaginoplasty, phalloplasty, metoidioplasty, chest surgery, or facial procedures. Pelvic floor considerations include pre- and post-operative pelvic floor function, dilation protocols after vaginoplasty, voiding dysfunction, pain management, and scar care. Chest surgery involves shoulder and thoracic mobility and scar management.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Care requires the same clinical rigour and the same respect for patient goals as any other post-surgical population, with attention to using the patient's own language and confirming surgical details rather than assuming anatomy."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "gender-affirming-surgery-rehabilitation",
+    "references": []
+  },
+  {
+    "name": "Menopause-related musculoskeletal syndrome",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Cluster of musculoskeletal changes associated with oestrogen decline — arthralgia, reduced tendon and ligament tolerance, sarcopenia, accelerated bone loss, adhesive capsulitis, and increased frozen shoulder and tendinopathy incidence. Increasingly recognised as a distinct clinical entity rather than incidental ageing.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Osteoporosis is entered in P04-02; adhesive capsulitis in P02-01, where 44.2% of a large cohort had comorbid diabetes and the peak age overlaps the menopausal transition."
+      }
+    ],
+    "section": "PELVIC HEALTH, OBSTETRICS & UROGENITAL",
+    "slug": "menopause-related-musculoskeletal-syndrome",
+    "references": []
+  },
+  {
+    "name": "Cerebral palsy — spastic (hemi-, di-, quadriplegic), dyskinetic, ataxic, mixed; GMFCS I–V",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "The most common physical disability of childhood, occurring in 1 in 500 live births [2], from a non-progressive lesion of the developing brain. GMFCS I–V classifies gross motor function: I walks without limitation; II walks with limitations; III walks using a hand-held mobility device; IV self-mobility with limitations, may use powered mobility; V transported in a manual wheelchair.",
+    "details": [
+      {
+        "label": "Trajectory is improving",
+        "text": "The rate is falling and severity is lessening [1]."
+      },
+      {
+        "label": "Early diagnosis has moved substantially earlier",
+        "text": "Historically made between 12 and 24 months, the diagnosis can now be made before 6 months' corrected age [2]."
+      },
+      {
+        "label": "Diagnostic tool accuracy — before 5 months corrected age",
+        "text": "Term-age MRI (86–89% sensitivity), the Prechtl Qualitative Assessment of General Movements (98% sensitivity), and the Hammersmith Infant Neurological Examination (90% sensitivity) [2]."
+      },
+      {
+        "label": "After 5 months corrected age",
+        "text": "MRI (86–89%) where safe and feasible, HINE (90%), and the Developmental Assessment of Young Children (83% C index) [2]."
+      },
+      {
+        "label": "Prognosis in high-income countries",
+        "text": "2 in 3 individuals with cerebral palsy will walk, 3 in 4 will talk, and 1 in 2 will have normal intelligence [2]."
+      },
+      {
+        "label": "Effective allied health interventions (2019 traffic-light review)",
+        "text": "Acceptance and commitment therapy, action observation, bimanual training, casting, constraint-induced movement therapy, environmental enrichment, fitness training, goal-directed training, hippotherapy, home programmes, literacy interventions, mobility training, oral sensorimotor (with or without electrical stimulation), pressure care, Stepping Stones Triple P, strength training, task-specific training, treadmill training, partial body weight support treadmill training, and weight-bearing [1]."
+      },
+      {
+        "label": "Effective medical and surgical interventions",
+        "text": "Anticonvulsants, bisphosphonates, botulinum toxin (alone, with occupational therapy, or with casting), diazepam, dentistry, hip surveillance, intrathecal baclofen, scoliosis correction, selective dorsal rhizotomy, and umbilical cord blood cell therapy [1]."
+      },
+      {
+        "label": "Effective prevention",
+        "text": "Antenatal corticosteroids, magnesium sulfate, caffeine, and neonatal hypothermia [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The interventions with evidence are active, goal-directed, task-specific, and intensity-dependent — the list is dominated by approaches that involve the child practising real tasks. Prompt referral to diagnosis-specific early intervention is emphasised to optimise motor and cognitive plasticity, prevent secondary complications, and enhance caregiver wellbeing [2]."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "cerebral-palsy-spastic-hemi-di-quadriplegic-dyskinetic-ataxic-mixed-gmfcs-i-v",
+    "references": [
+      "Novak, I., Morgan, C., Fahey, M., Finch-Edmondson, M., Galea, C., Hines, A., Langdon, K., Namara, M. M., Paton, M. C. B., Popat, H., Shore, B., Khamis, A., Stanton, E., Finemore, O. P., Tricks, A., Te Velde, A., Dark, L., Morton, N., & Badawi, N. (2020). State of the evidence traffic lights 2019: Systematic review of interventions for preventing and treating children with cerebral palsy. *Current Neurology and Neuroscience Reports, 20*(2), 3. https://doi.org/10.1007/s11910-020-1022-z (PMID: 32086598)",
+      "Novak, I., Morgan, C., Adde, L., Blackman, J., Boyd, R. N., Brunstrom-Hernandez, J., Cioni, G., Damiano, D., Darrah, J., Eliasson, A.-C., de Vries, L. S., Einspieler, C., Fahey, M., Fehlings, D., Ferriero, D. M., Fetters, L., Fiori, S., Forssberg, H., Gordon, A. M., … Badawi, N. (2017). Early, accurate diagnosis and early intervention in cerebral palsy: Advances in diagnosis and treatment. *JAMA Pediatrics, 171*(9), 897–907. https://doi.org/10.1001/jamapediatrics.2017.1689 (PMID: 28715518)"
+    ]
+  },
+  {
+    "name": "Developmental coordination disorder",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Motor skill acquisition and execution substantially below expectation for age and learning opportunity, interfering with activities of daily living and academic performance, not explained by intellectual disability, visual impairment, or a neurological condition. Frequently coexists with ADHD and learning difficulties. Persists into adolescence and adulthood in a majority.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Task-oriented approaches that teach specific functional goals outperform process-oriented approaches targeting underlying deficits."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "developmental-coordination-disorder",
+    "references": []
+  },
+  {
+    "name": "Global developmental delay",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Significant delay in two or more developmental domains in a child under 5, used when the child is too young for reliable intellectual assessment. A descriptive term prompting aetiological investigation rather than a diagnosis in itself — genetic, metabolic, neurological, and environmental causes must be considered.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Regression of previously acquired skills is a red flag distinguishing progressive neurological or metabolic disease from static delay, and warrants urgent medical referral rather than continued therapy alone."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "global-developmental-delay",
+    "references": []
+  },
+  {
+    "name": "Gross motor delay; torticollis with plagiocephaly",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Deformational plagiocephaly is asymmetric skull flattening from sustained positional pressure, strongly associated with congenital muscular torticollis and with supine sleeping. The two co-occur frequently and each perpetuates the other — restricted rotation drives consistent head position, which drives flattening, which further biases positioning.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Congenital muscular torticollis is sourced in P01-01 via the 2024 APTA Academy of Pediatric Physical Therapy CPG, with low birth weight, breech presentation, and motor asymmetry as prognostic factors for longer treatment duration."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Screening for torticollis in any infant with plagiocephaly, and vice versa, is the practical rule."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "gross-motor-delay-torticollis-with-plagiocephaly",
+    "references": []
+  },
+  {
+    "name": "Congenital muscular torticollis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Postural deformity from unilateral sternocleidomastoid shortening and fibrosis, with cervical lateral flexion toward and rotation away from the involved side, often with an SCM mass in early infancy.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Fully sourced in P01-01 — the 2024 APTA CPG covers screening, examination, classification, prognosis, first-choice and supplemental interventions, discontinuation criteria, and discharge."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Earlier referral is associated with shorter treatment duration, making this a condition where the referral pathway matters as much as the intervention."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "congenital-muscular-torticollis",
+    "references": []
+  },
+  {
+    "name": "Brachial plexus birth injury",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Traction injury to the brachial plexus at delivery, associated with shoulder dystocia, macrosomia, and instrumented delivery. Most are upper trunk (Erb) lesions and the majority recover substantially in the first months. Return of biceps function by around 3 months is a conventional prognostic marker.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Obstetric brachial plexus palsy and the avulsion-versus-rupture distinction are entered in P05-06, where brachial plexopathy is flagged as the highest-priority gap in that file."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Persistent cases develop internal rotation and adduction contracture with secondary glenohumeral dysplasia, so early range of motion and monitoring for shoulder deformity are the priorities."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "brachial-plexus-birth-injury",
+    "references": []
+  },
+  {
+    "name": "Prematurity and NICU follow-up; bronchopulmonary dysplasia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Preterm birth carries risk of cerebral palsy, developmental delay, sensory impairment, and bronchopulmonary dysplasia — chronic lung disease of prematurity from ventilation and oxygen exposure, producing prolonged respiratory support needs and exercise limitation.",
+    "details": [
+      {
+        "label": "Relevant evidence",
+        "text": "Neonatal hypothermia and antenatal corticosteroids, magnesium sulfate, and caffeine are effective CP prevention strategies [1]; term-age MRI and the General Movements Assessment are the most predictive early detection tools in this population [2]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Corrected age must be used for developmental expectations until around 2 years, and General Movements Assessment is a validated tool available to therapists in follow-up clinics."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "prematurity-and-nicu-follow-up-bronchopulmonary-dysplasia",
+    "references": [
+      "Novak, I., Morgan, C., Fahey, M., Finch-Edmondson, M., Galea, C., Hines, A., Langdon, K., Namara, M. M., Paton, M. C. B., Popat, H., Shore, B., Khamis, A., Stanton, E., Finemore, O. P., Tricks, A., Te Velde, A., Dark, L., Morton, N., & Badawi, N. (2020). State of the evidence traffic lights 2019: Systematic review of interventions for preventing and treating children with cerebral palsy. *Current Neurology and Neuroscience Reports, 20*(2), 3. https://doi.org/10.1007/s11910-020-1022-z (PMID: 32086598)",
+      "Novak, I., Morgan, C., Adde, L., Blackman, J., Boyd, R. N., Brunstrom-Hernandez, J., Cioni, G., Damiano, D., Darrah, J., Eliasson, A.-C., de Vries, L. S., Einspieler, C., Fahey, M., Fehlings, D., Ferriero, D. M., Fetters, L., Fiori, S., Forssberg, H., Gordon, A. M., … Badawi, N. (2017). Early, accurate diagnosis and early intervention in cerebral palsy: Advances in diagnosis and treatment. *JAMA Pediatrics, 171*(9), 897–907. https://doi.org/10.1001/jamapediatrics.2017.1689 (PMID: 28715518)"
+    ]
+  },
+  {
+    "name": "Down syndrome (with atlantoaxial instability screening)",
+    "redFlag": true,
+    "comorbidity": false,
+    "description": "Trisomy 21, producing hypotonia, ligamentous laxity, joint hypermobility, and delayed motor milestones alongside intellectual disability, congenital heart disease (roughly half), and increased risk of atlantoaxial instability.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Atlantoaxial instability is entered in P01-01, including the biomechanical finding that transverse ligament stiffness reduction beyond 75% has the greatest effect on atlantoaxial subluxation, and that serial physical and neurological examination is the best noninvasive diagnostic tool."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Symptomatic atlantoaxial instability — neck pain, torticollis, gait change, new incontinence, or upper motor neuron signs — requires urgent imaging and cessation of activities loading the cervical spine. Screening practice varies between jurisdictions and sporting bodies; follow local policy rather than assuming."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "down-syndrome-with-atlantoaxial-instability-screening",
+    "references": []
+  },
+  {
+    "name": "Fragile X, Prader-Willi, Angelman, Rett, Williams syndromes",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Fragile X — most common inherited intellectual disability, with hypotonia, joint laxity, and autism features. Prader-Willi — neonatal hypotonia and feeding difficulty followed by hyperphagia, obesity, short stature, and scoliosis. Angelman — severe intellectual disability, ataxic gait, happy demeanour, seizures. Rett — regression after normal early development, loss of purposeful hand use with stereotyped hand-wringing, and in most cases loss of ambulation. Williams — supravalvular aortic stenosis, distinctive facies, hypotonia progressing to contractures, and a characteristic strong verbal-relative-to-visuospatial profile.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Rett syndrome involves regression, distinguishing it from static conditions, and cardiac involvement in Williams syndrome requires clearance before exertion."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "fragile-x-prader-willi-angelman-rett-williams-syndromes",
+    "references": []
+  },
+  {
+    "name": "Autism spectrum disorder with motor involvement",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Neurodevelopmental condition with social communication differences and restricted or repetitive behaviours, frequently accompanied by motor differences — hypotonia, dyspraxia, gait atypicality, and balance deficits — which are under-recognised relative to the social and communication features.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Sensory and communication accommodations are prerequisites for effective motor intervention. Predictable structure, clear expectations, and attention to sensory environment usually determine whether a session is productive."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "autism-spectrum-disorder-with-motor-involvement",
+    "references": []
+  },
+  {
+    "name": "Spina bifida / myelomeningocele",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Neural tube defect spectrum producing motor, sensory, bladder, and bowel impairment, frequently with hydrocephalus and Chiari II malformation.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P05-03 — among children with sacral-level lesions, 67% of myelomeningocele and 64% of lipomyelomeningocele were normal ambulant, with ambulation strongly associated with hip abductor strength (OR 13.5) and ankle dorsiflexor strength (OR 110). Most problems were in mobility skills and caregiver assistance for bladder and bowel management."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Even \"sacral level\" spina bifida produces meaningful functional burden, and continence management may matter more to participation than gait does. Tethered cord should be suspected with progressive weakness, scoliosis, or bladder deterioration, particularly during growth spurts."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "spina-bifida-myelomeningocele",
+    "references": []
+  },
+  {
+    "name": "Arthrogryposis multiplex congenita",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Multiple congenital joint contractures present at birth, from reduced fetal movement of any cause — neurogenic, myopathic, connective tissue, or mechanical. Contractures are typically symmetrical and distal, with characteristic featureless \"tubular\" limbs and absent skin creases. Intelligence is usually normal in amyoplasia, the most common form.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Early and intensive stretching, serial casting, and splinting during the first months produce the greatest gains, and function is often far better than the appearance suggests. Adaptive strategies matter more than achieving normal range."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "arthrogryposis-multiplex-congenita",
+    "references": []
+  },
+  {
+    "name": "Developmental dysplasia of the hip",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "A common musculoskeletal condition in newborns, spanning dysplasia, subluxation, and frank dislocation. Infants with DDH, whether treated or untreated, have a higher incidence of early-onset hip osteoarthritis in adulthood [3].",
+    "details": [
+      {
+        "label": "Screening evidence is genuinely conflicted",
+        "text": "Evidence supporting universal screening by physical examination or ultrasonography is limited and often conflicting, and the US Preventive Services Task Force found insufficient evidence that screening prevents adverse outcomes. The AAP and POSNA nonetheless recommend physical examination screening using Ortolani and Barlow manoeuvres up to three months of age [3]."
+      },
+      {
+        "label": "The age-dependent test shift",
+        "text": "Several recent studies support starting assessment for limited hip abduction at eight weeks of age, which is the most sensitive test for DDH from that age onward [3]."
+      },
+      {
+        "label": "Referral pathway",
+        "text": "Overtly dislocated or dislocatable hips warrant priority orthopaedic referral at diagnosis. Equivocal findings at birth can be re-examined in two weeks; if subluxation or dislocation is then present, refer. Persistent equivocal findings beyond six weeks should be evaluated by an orthopaedist [3]."
+      },
+      {
+        "label": "Treatment and its risks",
+        "text": "Generally flexion-abduction splinting. The benefits of treatment are unclear, and there are risks — most notably increased occurrence of avascular necrosis of the femoral head [3]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Ortolani and Barlow lose sensitivity after about 8–12 weeks as the hip stiffens; limited abduction becomes the more useful sign. Knowing which test applies at which age is the practical point [3]."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "developmental-dysplasia-of-the-hip",
+    "references": [
+      "Jackson, J. C., Runge, M. M., & Nye, N. S. (2014). Common questions about developmental dysplasia of the hip. *American Family Physician, 90*(12), 843–850. (PMID: 25591184)"
+    ]
+  },
+  {
+    "name": "Clubfoot (talipes equinovarus); metatarsus adductus",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Clubfoot — congenital deformity combining cavus, forefoot adductus, hindfoot varus, and equinus (CAVE), treated primarily by the Ponseti method of serial casting, usually with percutaneous Achilles tenotomy, followed by a foot abduction brace. Metatarsus adductus is isolated forefoot adduction with a normal hindfoot, usually flexible and self-resolving.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Bracing adherence is the dominant determinant of recurrence after Ponseti correction, and supporting families through the bracing phase is often where therapy adds most value. Distinguishing flexible metatarsus adductus (self-limiting) from clubfoot (requires early treatment) is the key differential in a newborn foot."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "clubfoot-talipes-equinovarus-metatarsus-adductus",
+    "references": []
+  },
+  {
+    "name": "Congenital limb deficiency",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Transverse or longitudinal reduction deficiency, isolated or syndromic. Prosthetic fitting is typically timed to developmental milestones — upper limb around sitting, lower limb around pulling to stand — to integrate the prosthesis with emerging function.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Children adapt to limb difference far more readily than adults, and prosthetic rejection is common when the device does not add function. Goal-setting with the child and family rather than assumptions about normality drives outcomes."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "congenital-limb-deficiency",
+    "references": []
+  },
+  {
+    "name": "Osteogenesis imperfecta",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Monogenic disease of decreased bone mass, bone fragility, and recurrent fractures, with a phenotypic spectrum from prenatal lethal to mild.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P04-02, including the Sillence, functional, and genetic classification systems and their distinct uses."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Handling technique, transfer training, and load progression must be individualised rather than type-driven. Activity restriction increases fracture risk through disuse osteopenia, so appropriately graded loading is protective rather than dangerous."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "osteogenesis-imperfecta",
+    "references": []
+  },
+  {
+    "name": "Duchenne and other pediatric muscular dystrophies",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Progressive dystrophinopathies and related conditions producing proximal weakness, calf pseudohypertrophy, Gowers sign, and eventual loss of ambulation.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P05-07 via the 2018 DMD Care Considerations part 1 (diagnosis, neuromuscular, rehabilitation, endocrine, gastrointestinal), with the observation that improved survival prompted the addition of transitions of care across the lifespan as a new topic."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Corticosteroids prolong ambulation but carry endocrine, bone, and growth consequences. Eccentric and high-resistance exercise is avoided; submaximal activity and contracture prevention are the mainstays."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "duchenne-and-other-pediatric-muscular-dystrophies",
+    "references": []
+  },
+  {
+    "name": "Spinal muscular atrophy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Autosomal recessive motor neuron disorder from biallelic *SMN1* variants, typed 0–IV by onset and maximum milestone achieved.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P05-07, including the 2024 best-practice update finding 100% consensus that newborn screening is essential, and the explicit statement that disease-modifying therapy and newborn screening have created urgency to reevaluate the current classification."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Type-based prognostic expectations derived from untreated natural history may not hold in treated children — prognostic statements should be made cautiously."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "spinal-muscular-atrophy",
+    "references": []
+  },
+  {
+    "name": "Juvenile idiopathic arthritis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Arthritis of at least 6 weeks' duration beginning before age 16 with no identifiable cause, classified by the ILAR system into six categories.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P04-01, including that chronic uveitis is observed mainly in oligoarthritis with positive ANA and is characteristically asymptomatic — which is why slit-lamp screening runs on a risk-based schedule rather than on symptoms."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Exercise is safe and beneficial in JIA, and the historic caution against activity has been superseded."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "juvenile-idiopathic-arthritis",
+    "references": []
+  },
+  {
+    "name": "Idiopathic toe walking",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Persistent toe walking beyond age 2–3 in a child with normal neurological examination and no identifiable cause — a diagnosis of exclusion. Must be distinguished from cerebral palsy (particularly mild diplegia), muscular dystrophy, tethered cord, and autism spectrum disorder, all of which can present with toe walking.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Asymmetry, progressive tightness, loss of previously acquired heel-strike, or abnormal neurological findings are the features that argue against idiopathic toe walking and warrant investigation. A boy with toe walking and calf hypertrophy warrants a creatine kinase check before rehabilitation proceeds."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "idiopathic-toe-walking",
+    "references": []
+  },
+  {
+    "name": "Blount disease; genu varum/valgum; femoral anteversion; tibial torsion",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Physiological genu varum is normal to around age 2, transitioning through neutral to physiological genu valgum peaking around age 3–4, then settling toward adult alignment by 7–8. Blount disease is pathological tibia vara from proximal tibial physeal disturbance, associated with obesity and early walking. Femoral anteversion produces in-toeing with W-sitting preference; internal tibial torsion produces in-toeing in toddlers.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Most rotational and angular variants resolve with growth and require reassurance rather than intervention. Asymmetry, progression, short stature, pain, or deviation outside the expected age band are what distinguish pathology from normal development — the age-based sequence is the reference point."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "blount-disease-genu-varum-valgum-femoral-anteversion-tibial-torsion",
+    "references": []
+  },
+  {
+    "name": "Growth plate (Salter-Harris I–V) injuries",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Type I — through the physis. II — through physis and metaphysis (most common). III — through physis and epiphysis, intra-articular. IV — across metaphysis, physis, and epiphysis, intra-articular. V — crush injury to the physis. Growth disturbance risk rises with type, and type V is often diagnosed retrospectively once growth arrest appears.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "The physis is weaker than surrounding ligament in skeletally immature athletes, so a mechanism that would sprain an adult ligament often fractures a child's physis — point tenderness over the physis after an injury warrants imaging rather than a sprain diagnosis."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "growth-plate-salter-harris-i-v-injuries",
+    "references": []
+  },
+  {
+    "name": "Apophysitis conditions — Osgood-Schlatter, Sever, Sinding-Larsen-Johansson, Little League shoulder/elbow",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Traction injuries at growth-plate attachment sites in skeletally immature athletes, where the apophysis is the weak link rather than the tendon.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Osgood-Schlatter is sourced in P03-02 (the most common osteochondritis of the lower limb in sport-practising children, multifactorial aetiology, with uncertainty about whether specific exercises or usual care is more appropriate). Sever, Sinding-Larsen-Johansson, and Iselin are entered in P03-02 and P03-03. Little League elbow is in P02-02, where cumulative pitching workload correlates with injury in youth pitchers — unlike in professionals."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Pitch-count and workload guidelines have their evidence base in youth, not professional, populations."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "apophysitis-conditions-osgood-schlatter-sever-sinding-larsen-johansson-little-league-shoulder-elbow",
+    "references": []
+  },
+  {
+    "name": "Scoliosis (infantile, juvenile, adolescent, congenital, neuromuscular)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Lateral curvature exceeding 10° Cobb with vertebral rotation, classified by age at onset and by aetiology.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P01-02 — the Adams forward bend test was more sensitive than the Scoliometer for thoracic curves ≥20°, with the Scoliometer showing high interexaminer measurement error limiting its use as an outcome instrument. BrAIST found bracing success in 72% versus 48% with observation, with a significant dose-response relationship to hours of brace wear."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Hours of brace wear predict success, which makes adherence support a direct determinant of outcome."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "scoliosis-infantile-juvenile-adolescent-congenital-neuromuscular",
+    "references": []
+  },
+  {
+    "name": "Pediatric concussion",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Traumatically induced transient disturbance of brain function from biomechanical forces, with no structural abnormality on conventional imaging.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P05-02 — the Amsterdam 2022 consensus introduced the CRT6, SCAT6/Child SCAT6, and SCOAT6/Child SCOAT6 tools, and Leddy's RCT in adolescents aged 13–18 found early subthreshold aerobic exercise produced median recovery of 13 days versus 17 with stretching."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Prolonged rest is no longer the default. Children take longer to recover than adults on average, and return-to-learn precedes return-to-play."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "pediatric-concussion",
+    "references": []
+  },
+  {
+    "name": "Pediatric obesity and physical inactivity",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Excess adiposity with associated cardiometabolic, musculoskeletal, and psychosocial consequences, including insulin resistance, obstructive sleep apnoea, SCFE, Blount disease, and reduced physical competence that further limits participation.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "SCFE is entered in P03-01, where obesity or overweight was present in 56% of girls and 76% of boys and 12% presented with knee pain, causing diagnostic delay."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Framing matters enormously — weight-centric language undermines engagement, while building physical competence and enjoyment sustains activity. Hip or knee pain in an overweight adolescent warrants SCFE consideration before a musculoskeletal diagnosis is settled."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "pediatric-obesity-and-physical-inactivity",
+    "references": []
+  },
+  {
+    "name": "Chronic pain syndromes in youth; juvenile fibromyalgia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Persistent pain beyond expected healing, with functional disability, sleep disruption, school absence, and mood impact. Juvenile fibromyalgia involves widespread pain with fatigue and unrefreshing sleep. Frequently follows an identifiable injury or illness that has resolved.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Fibromyalgia criteria, central sensitisation, and ICD-11 chronic primary pain are entered in P04-03. Note that the 2016 fibromyalgia criteria were developed and validated in adults, and their application to children is not established."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Function-first rehabilitation — restoring school attendance, sleep, and activity independent of pain level — outperforms pain-contingent approaches. Family involvement is essential, and parental catastrophising predicts child disability."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "chronic-pain-syndromes-in-youth-juvenile-fibromyalgia",
+    "references": []
+  },
+  {
+    "name": "Sensory processing disorder",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Proposed condition of atypical detection, modulation, or response to sensory input, producing over- or under-responsivity and craving behaviours that interfere with participation. Its status as a distinct diagnostic entity remains contested — it does not appear as a standalone diagnosis in DSM-5, where sensory differences are instead a criterion within autism spectrum disorder.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Sensory differences are real and functionally significant regardless of the classification debate. Accommodations that enable participation are justified on functional grounds without requiring the diagnostic construct to be settled."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "sensory-processing-disorder",
+    "references": []
+  },
+  {
+    "name": "Hypotonia of infancy (benign congenital hypotonia)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Reduced resting muscle tone without weakness, with normal strength, reflexes, and eventual normal development — a diagnosis of exclusion made retrospectively. Must be distinguished from central hypotonia (brain origin, with normal or brisk reflexes and preserved strength) and peripheral hypotonia (motor unit origin, with weakness, reduced reflexes, and often feeding or respiratory difficulty).",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "The central-versus-peripheral distinction is the assessment priority. Hypotonia with genuine weakness, absent reflexes, or feeding and respiratory difficulty suggests a neuromuscular cause — SMA in particular — and warrants urgent referral rather than developmental therapy alone. Newborn screening for SMA has changed this pathway where implemented (see P05-07)."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "hypotonia-of-infancy-benign-congenital-hypotonia",
+    "references": []
+  },
+  {
+    "name": "Hydrocephalus with shunt",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "CSF accumulation treated by ventriculoperitoneal or ventriculoatrial shunting. Shunt malfunction presents with headache, vomiting, irritability, drowsiness, declining school performance, or new neurological signs — and in infants with increasing head circumference, bulging fontanelle, and sunsetting eyes.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Post-craniotomy and shunt considerations are noted in P05-02."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Shunt malfunction is a medical emergency and can present subtly as behavioural or performance change. A child with a shunt who is \"just not themselves\" warrants medical review rather than reassurance. Positioning restrictions and activity limits should be confirmed with the neurosurgical team."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "hydrocephalus-with-shunt",
+    "references": []
+  },
+  {
+    "name": "Erb palsy; Klumpke palsy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Erb (C5–C6) produces the \"waiter's tip\" posture — adducted, internally rotated shoulder, extended elbow, pronated forearm. Klumpke (C8–T1) produces intrinsic hand weakness with a claw hand and may include Horner syndrome.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Entered in P05-06 under brachial plexopathy, flagged there as the highest-priority gap in that file."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Klumpke palsy is far less common than Erb and carries a worse prognosis. Horner syndrome suggests T1 root avulsion, which is proximal to the dorsal root ganglion and does not recover spontaneously."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "erb-palsy-klumpke-palsy",
+    "references": []
+  },
+  {
+    "name": "Congenital heart disease rehabilitation",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Rehabilitation for children with structural cardiac disease, including single-ventricle physiology palliated by Fontan circulation.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P06-01, including that Fontan physiology depends on preload, respiratory pump, and low pulmonary vascular resistance rather than a subpulmonary ventricle — so these patients tolerate dehydration and Valsalva poorly."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Adults with congenital heart disease are a growing population, and the usual assumptions about cardiac output response do not apply in Fontan circulation. Exercise is beneficial but requires understanding the specific physiology."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "congenital-heart-disease-rehabilitation",
+    "references": []
+  },
+  {
+    "name": "Cystic fibrosis (pediatric airway clearance)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Autosomal recessive CFTR defect producing viscous secretions, progressive bronchiectasis, chronic infection, and pancreatic insufficiency, with airway clearance and exercise as lifelong daily commitments.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Entered in P06-03, with the explicit caveat that the bronchiectasis airway clearance evidence sourced there is for non-CF bronchiectasis and does not transfer."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Cross-infection risk between people with CF governs clinic scheduling and segregation — patients should not share waiting areas or equipment. CFTR modulator therapy has substantially altered the trajectory for many children."
+      }
+    ],
+    "section": "PEDIATRICS",
+    "slug": "cystic-fibrosis-pediatric-airway-clearance",
+    "references": []
+  },
+  {
+    "name": "Frailty syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "State of reduced physiological reserve across multiple systems with heightened vulnerability to stressors, such that a minor insult produces disproportionate functional decline. Commonly operationalised by the Fried phenotype — unintentional weight loss, exhaustion, weakness, slow gait speed, low physical activity, with 3 or more indicating frailty and 1–2 pre-frailty — or by cumulative deficit indices. Distinct from comorbidity and from disability, though they overlap.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Frailty is dynamic and partially reversible, not a one-way trajectory — which is the case for intervening rather than accepting decline. Gait speed alone is a useful single screen, and slowing is frequently the first observable sign."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "frailty-syndrome",
+    "references": []
+  },
+  {
+    "name": "Sarcopenia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Age-related loss of skeletal muscle mass and function. Declines in muscle mass and strength are expected aspects of ageing, but there is significant variability between individuals in rates of loss — some explained by fixed factors such as sex, but much of the remaining variation unexplained, which is what has driven interest in modifiable lifestyle factors [1].",
+    "details": [
+      {
+        "label": "Combined exercise and nutrition — the honest position",
+        "text": "Across 17 studies of adults aged ≥65 combining nutrition and exercise interventions, enhanced benefits of exercise training when combined with dietary supplementation have been shown in some trials, but existing evidence is inconsistent [1]."
+      },
+      {
+        "label": "Why the evidence is inconsistent",
+        "text": "The studies were diverse in participants (nutritional status, degree of frailty), supplementation strategy (nutrients, doses), exercise training (type, frequency), and design (duration, setting) [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Resistance training is the intervention with the most consistent support; adding protein or other supplementation may enhance it but should not be presented to patients as established. The authors call for further studies before public health and clinical recommendations can be firmly based [1]."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "sarcopenia",
+    "references": [
+      "Denison, H. J., Cooper, C., Sayer, A. A., & Robinson, S. M. (2015). Prevention and optimal management of sarcopenia: A review of combined exercise and nutrition interventions to improve muscle outcomes in older people. *Clinical Interventions in Aging, 10*, 859–869. https://doi.org/10.2147/CIA.S55842 (PMID: 25999704)"
+    ]
+  },
+  {
+    "name": "Generalized deconditioning; hospital-associated disability",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Loss of functional capacity acquired during hospitalisation, independent of the admitting diagnosis. Older adults spend the large majority of hospital time in bed even when able to walk, and a substantial proportion are discharged with new deficits in activities of daily living they had performed independently on admission. Often not recovered at one year.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "The exposure is bed rest, and the intervention is mobilisation — hospital-associated disability is largely iatrogenic and largely preventable. Documenting baseline pre-admission function is what makes new decline visible."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "generalized-deconditioning-hospital-associated-disability",
+    "references": []
+  },
+  {
+    "name": "Immobility syndrome; disuse atrophy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Multisystem consequences of prolonged immobility — muscle atrophy and strength loss (accelerating within days), contracture, bone density loss, orthostatic intolerance from plasma volume reduction and baroreceptor deconditioning, pressure injury, atelectasis and pneumonia, constipation, venous thromboembolism, insulin resistance, and delirium.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Pressure injury in P07-00 and P05-03; atelectasis and pneumonia in P06-03; DVT in P06-02."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Strength loss begins within the first days of bed rest, and orthostatic intolerance can appear before strength loss is measurable — which is why a patient may be unable to stand for reasons unrelated to their muscles."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "immobility-syndrome-disuse-atrophy",
+    "references": []
+  },
+  {
+    "name": "Falls and recurrent falls; fall-related injury",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "At least one-third of community-dwelling people over 65 fall each year [2]. Falls arise from interaction between sensory, motor, cognitive, cardiovascular, medication, and environmental factors, and are rarely attributable to a single cause.",
+    "details": [
+      {
+        "label": "Exercise evidence — high certainty, 108 RCTs, 23,407 participants",
+        "text": "Exercise reduces the rate of falls by 23% (RaR 0.77, 95% CI 0.71–0.83; high-certainty evidence) and reduces the number of people experiencing one or more falls by 15% (RR 0.85, 95% CI 0.81–0.89; high-certainty evidence) [2]."
+      },
+      {
+        "label": "Absolute effect",
+        "text": "Against an illustrative baseline of 850 falls per 1000 people per year, this equates to 195 fewer falls (95% CI 144–246); against 480 fallers per 1000, 72 fewer fallers (95% CI 52–91) [2]."
+      },
+      {
+        "label": "Which exercise — this is the practically decisive finding",
+        "text": "Different exercise types had significantly different effects (test for subgroup differences p=0.004). Balance and functional exercises reduce the rate of falls by 24% (RaR 0.76; high certainty). Multiple exercise types — most commonly balance and functional plus resistance — probably reduce the rate by 34% (RaR 0.66; moderate certainty). Tai Chi may reduce the rate by 19% (RaR 0.81; low certainty) while reducing the number of fallers by 20% (RR 0.80; high certainty) [2]."
+      },
+      {
+        "label": "What is uncertain",
+        "text": "The effects of programmes that are primarily resistance training, or dance, or walking, on falls are uncertain. No trials compared flexibility or endurance exercise versus control [2]."
+      },
+      {
+        "label": "Injury outcomes are less certain",
+        "text": "Exercise may reduce fall-related fractures (RR 0.73, 95% CI 0.56–0.95; low certainty) and falls requiring medical attention (RR 0.61, 0.47–0.79; low certainty). The effect on falls requiring hospital admission is unclear (RR 0.78, 0.51–1.18; very low certainty) [2]."
+      },
+      {
+        "label": "Quality of life",
+        "text": "Exercise may make little important difference to health-related quality of life — the confidence intervals were much smaller than minimally important differences on both EQ-5D and SF-36 [2]."
+      },
+      {
+        "label": "Safety",
+        "text": "Aside from two serious adverse events in one trial (a pelvic stress fracture and an inguinal hernia repair), reported events were non-serious and primarily musculoskeletal, with a median of three events per exercise group [2]."
+      },
+      {
+        "label": "A finding that should change targeting practice",
+        "text": "Subgroup analyses showed no evidence of a difference in effect according to whether trials selected participants at increased risk of falling or not [2] — the benefit is not confined to high-risk groups."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Walking programmes and resistance training alone are not established falls interventions. Balance and functional exercise is the active ingredient, and adding resistance to it probably does better still."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "falls-and-recurrent-falls-fall-related-injury",
+    "references": [
+      "Sherrington, C., Fairhall, N. J., Wallbank, G. K., Tiedemann, A., Michaleff, Z. A., Howard, K., Clemson, L., Hopewell, S., & Lamb, S. E. (2019). Exercise for preventing falls in older people living in the community. *Cochrane Database of Systematic Reviews, 1*(1), CD012424. https://doi.org/10.1002/14651858.CD012424.pub2 (PMID: 30703272)"
+    ]
+  },
+  {
+    "name": "Gait disorders — antalgic, Trendelenburg, steppage, ataxic, festinating, hemiplegic, apraxic, scissoring, waddling",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Antalgic — shortened stance on the painful limb. Trendelenburg — pelvic drop on the swing side from hip abductor weakness. Steppage — exaggerated hip and knee flexion to clear a dropped foot. Ataxic — wide-based, irregular, worse with eyes closed if sensory. Festinating — short accelerating steps with reduced arm swing, in parkinsonism. Hemiplegic — circumduction with extended knee and plantarflexed ankle. Apraxic — feet appear stuck to the floor with preserved strength and coordination, classically in normal pressure hydrocephalus and frontal lobe disease. Scissoring — adductor overactivity crossing midline, in spastic diplegia. Waddling — bilateral pelvic drop from proximal myopathy.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Gait pattern is diagnostically informative. Apraxic gait with incontinence and cognitive change suggests normal pressure hydrocephalus (P05-04) — potentially reversible. Waddling gait in a child warrants a creatine kinase check."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "gait-disorders-antalgic-trendelenburg-steppage-ataxic-festinating-hemiplegic-apraxic-scissoring-waddling",
+    "references": []
+  },
+  {
+    "name": "Impaired functional mobility; impaired transfers",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Reduced ability to perform bed mobility, sit-to-stand, transfers, and ambulation safely. Commonly measured with the Timed Up and Go, 30-second sit-to-stand, gait speed, Berg Balance Scale, and Short Physical Performance Battery.",
+    "details": [
+      {
+        "label": "Related evidence",
+        "text": "Balance and functional exercise is the exercise category with high-certainty falls reduction [2]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Gait speed is the single most informative routine measure in this population, predicting mortality, hospitalisation, and disability, and is quick enough to repeat at every visit."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "impaired-functional-mobility-impaired-transfers",
+    "references": [
+      "Sherrington, C., Fairhall, N. J., Wallbank, G. K., Tiedemann, A., Michaleff, Z. A., Howard, K., Clemson, L., Hopewell, S., & Lamb, S. E. (2019). Exercise for preventing falls in older people living in the community. *Cochrane Database of Systematic Reviews, 1*(1), CD012424. https://doi.org/10.1002/14651858.CD012424.pub2 (PMID: 30703272)"
+    ]
+  },
+  {
+    "name": "Dementias — Alzheimer, vascular, Lewy body, frontotemporal",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Progressive cognitive decline of sufficient severity to impair independence.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Alzheimer and other dementias are entered in P05-04 (flagged there as a priority gap); vascular cognitive impairment in P05-01, characterised by executive dysfunction and slowed processing disproportionate to memory loss; Lewy body dementia in P05-04 with fluctuating cognition, visual hallucinations, parkinsonism, and neuroleptic sensitivity."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Motor learning is relatively preserved in early Alzheimer disease even as declarative memory fails — errorless learning, consistent routines, and procedural practice outperform instruction-heavy approaches. Lewy body dementia carries high falls risk from parkinsonism plus orthostatic hypotension plus fluctuating attention."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "dementias-alzheimer-vascular-lewy-body-frontotemporal",
+    "references": []
+  },
+  {
+    "name": "Delirium",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Acute disturbance of attention and awareness that develops over hours to days, fluctuates, and is caused by an underlying medical condition — the acuity and fluctuation are what distinguish it from dementia. Hypoactive delirium is more common than hyperactive and is routinely missed, presenting as withdrawn, drowsy, and \"settled\" rather than agitated. Causes include infection, medication, pain, constipation, urinary retention, hypoxia, and metabolic derangement.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Delirium is a medical emergency and an independent predictor of mortality and long-term cognitive decline. A therapist who knows a patient's usual state is often the first to notice the change. Mobilisation, sleep hygiene, sensory aids, orientation, and hydration are among the effective non-pharmacological prevention components. A sudden decline in participation or performance should prompt delirium screening rather than being recorded as refusal."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "delirium",
+    "references": []
+  },
+  {
+    "name": "Sensory impairment — vision loss, macular degeneration, hearing loss",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Macular degeneration produces central vision loss with preserved peripheral vision — patients navigate but cannot read faces or detail. Glaucoma produces peripheral loss with preserved central vision, which is more consequential for mobility and falls. Cataract produces generalised blur and glare sensitivity. Hearing loss impairs communication, contributes to social isolation, and is independently associated with falls and cognitive decline.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Which visual field is lost changes the falls risk profile and the intervention — peripheral loss demands environmental modification and scanning strategies, central loss demands contrast and lighting. Multifocal lenses increase falls risk on stairs and in unfamiliar environments. Confirming that glasses and hearing aids are present and working is a legitimate part of a falls assessment."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "sensory-impairment-vision-loss-macular-degeneration-hearing-loss",
+    "references": []
+  },
+  {
+    "name": "Malnutrition; dehydration",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Protein-energy undernutrition and fluid deficit, both highly prevalent in hospitalised and institutionalised older adults, and both contributing directly to sarcopenia, impaired wound healing, delirium, orthostatic intolerance, and falls.",
+    "details": [
+      {
+        "label": "Related evidence",
+        "text": "Combined nutrition and exercise interventions show enhanced benefit in some sarcopenia trials but the evidence is inconsistent, and diverse in supplementation strategy and dose [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Rehabilitation potential is capped by nutritional status — resistance training without adequate protein and energy intake will underperform. Weight loss, reduced intake, and dehydration are within a therapist's observational remit even though management is not."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "malnutrition-dehydration",
+    "references": [
+      "Denison, H. J., Cooper, C., Sayer, A. A., & Robinson, S. M. (2015). Prevention and optimal management of sarcopenia: A review of combined exercise and nutrition interventions to improve muscle outcomes in older people. *Clinical Interventions in Aging, 10*, 859–869. https://doi.org/10.2147/CIA.S55842 (PMID: 25999704)"
+    ]
+  },
+  {
+    "name": "Polypharmacy effects on balance and cognition",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Concurrent use of multiple medications, conventionally five or more, with cumulative risk of adverse effects and interactions. Falls-risk-increasing drugs (FRIDs) include benzodiazepines, Z-drugs, antipsychotics, antidepressants, opioids, anticholinergics, antihypertensives, and diuretics. Anticholinergic burden accumulates across drugs that are individually modest.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Medication review is among the components of multifactorial falls intervention. A therapist cannot deprescribe but can identify the pattern — recent medication change followed by new instability, or new orthostatic symptoms — and flag it specifically rather than generally."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "polypharmacy-effects-on-balance-and-cognition",
+    "references": []
+  },
+  {
+    "name": "Post-ICU syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "New or worsening impairment in physical, cognitive, or mental health arising after critical illness and persisting beyond discharge, affecting survivors and often family members. Physical impairment includes ICU-acquired weakness; cognitive impairment resembles a mild traumatic brain injury profile; mental health impairment includes PTSD, anxiety, and depression.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "ICU-acquired weakness is entered in P05-07, including the important caveat that ICUAW-specific rehabilitation evidence is a single case series comparison with confidence intervals including no difference, far thinner than the general ICU rehabilitation literature it is often conflated with. ARDS is in P06-03."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Cognitive and psychological components frequently exceed physical impairment in their effect on return to work and role, and are less often screened for."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "post-icu-syndrome",
+    "references": []
+  },
+  {
+    "name": "Critical illness polyneuromyopathy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Symmetrical, generalised, often flaccid weakness with relative facial sparing developing during critical illness, encompassing myopathy, neuropathy, or both.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P05-07 — severe sepsis, difficult ventilator liberation, and prolonged mechanical ventilation are associated with ICUAW, and the ATS guideline found only one case series of ICUAW patients receiving physical therapy, with results suggesting more frequent discharge home although confidence intervals included no difference."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The rationale for identifying ICUAW is to target rehabilitation where universal provision is not feasible — but the ICUAW-specific evidence base does not yet support strong claims of benefit, and the guideline authors say so directly."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "critical-illness-polyneuromyopathy",
+    "references": []
+  },
+  {
+    "name": "Sepsis survivorship",
+    "redFlag": true,
+    "comorbidity": true,
+    "description": "Persistent physical, cognitive, and psychological impairment after sepsis, with elevated risk of rehospitalisation, recurrent infection, cardiovascular events, and death extending years beyond the acute episode. Sepsis survivors frequently have a step-change in functional trajectory rather than a return to baseline.",
+    "details": [
+      {
+        "label": "Related evidence",
+        "text": "Severe sepsis is associated with ICU-acquired weakness (P05-07) [see cross-reference above]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Red-flagged because recurrent sepsis is common and presents atypically in older adults — new confusion, falls, or functional decline may be the only signs, without fever. A sepsis survivor with acute unexplained deterioration needs medical review, not rehabilitation escalation."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "sepsis-survivorship",
+    "references": []
+  },
+  {
+    "name": "Multi-trauma and polytrauma rehabilitation",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Injuries to multiple body regions or systems, commonly combining orthopaedic injury, traumatic brain injury, spinal injury, and thoracoabdominal trauma, with competing and sometimes contradictory precautions.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "TBI in P05-02; spinal cord injury in P05-03; pelvic and long bone fracture in P01-04 and P03-01; rib fractures in P01-02, where each additional rib fracture in the elderly increased mortality by 19% and pneumonia risk by 27%."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The governing skill is reconciling competing restrictions — weight-bearing status on one limb against transfer requirements, spinal precautions against pulmonary needs. Undiagnosed injuries are common in polytrauma and often surface when mobilisation begins; new focal pain in a previously uncomplained-of region warrants review rather than progression."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "multi-trauma-and-polytrauma-rehabilitation",
+    "references": []
+  },
+  {
+    "name": "Post-surgical general debility",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Generalised functional decline after surgery from anaesthesia, pain, immobility, catabolic stress, and nutritional interruption, distinct from the specific consequences of the procedure itself. Prehabilitation before elective surgery is increasingly used to raise the functional starting point.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Sternal precautions after median sternotomy are sourced in P01-02, where the evidence supports early upper body activity over blanket restriction, and restrictive precautions may exacerbate loss of independence and prevent discharge home."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "post-surgical-general-debility",
+    "references": []
+  },
+  {
+    "name": "End-stage renal disease and dialysis-related deconditioning",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Profound exercise intolerance in dialysis populations from uraemic myopathy, anaemia, fluid shifts, cardiovascular disease, and the time burden of treatment itself. Intradialytic exercise is feasible and increasingly delivered.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Arteriovenous fistula precautions are entered in P06-02 — no blood pressure measurement, venepuncture, intravenous access, or constrictive garments on the fistula limb, and loss of thrill or bruit requires urgent notification."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Post-dialysis days are typically the worst for fatigue and hypotension; scheduling matters as much as programme content. The fistula precaution set is routinely violated by reflexive blood pressure measurement."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "end-stage-renal-disease-and-dialysis-related-deconditioning",
+    "references": []
+  },
+  {
+    "name": "Liver disease, cirrhosis, hepatic encephalopathy",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Cirrhosis produces sarcopenia (an independent predictor of mortality and transplant outcome), ascites limiting diaphragm excursion and mobility, coagulopathy, and hepatic encephalopathy — fluctuating confusion with asterixis, ranging from subtle cognitive change to coma.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Hepatic encephalopathy fluctuates and can mimic delirium or dementia; a change in orientation or asterixis warrants medical review. Coagulopathy raises bruising and bleeding risk with manual techniques. Sarcopenia in cirrhosis is a transplant-eligibility issue, which makes resistance training directly consequential."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "liver-disease-cirrhosis-hepatic-encephalopathy",
+    "references": []
+  },
+  {
+    "name": "Organ transplant rehabilitation (kidney, liver, heart, lung)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Rehabilitation before and after solid organ transplantation, constrained by immunosuppression (infection risk, steroid myopathy, osteoporosis), rejection episodes, and organ-specific physiology.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Post heart transplant is entered in P06-01 — the denervated heart has a blunted and delayed heart rate response requiring extended warm-up and cool-down, and no anginal warning. Post lung transplant is in P06-03, with absent cough reflex below the anastomosis and chronic lung allograft dysfunction as the long-term limitation."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Heart rate is an unreliable intensity guide after cardiac transplant; RPE and workload are more useful. Steroid myopathy (P05-07) is common across all transplant groups and presents with normal creatine kinase."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "organ-transplant-rehabilitation-kidney-liver-heart-lung",
+    "references": []
+  },
+  {
+    "name": "Pressure injury prevention in immobile patients",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Prevention through repositioning, support surface selection, skin inspection, moisture and continence management, nutrition, and — critically — mobilisation.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Pressure injury staging and the international guideline are in P07-00; the SCI population data are in P05-03, where 22% had a pressure injury at rehabilitation admission and 14% developed a new one during rehabilitation, and where improving risk-assessment completion from 46% to 94% produced no significant change in incidence."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Completing a risk assessment is not prevention. The SCI implementation study is the honest evidence here — documentation improved substantially and outcomes did not."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "pressure-injury-prevention-in-immobile-patients",
+    "references": []
+  },
+  {
+    "name": "Contracture management",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Loss of passive range from shortening of muscle, tendon, capsule, ligament, or skin, developing rapidly in immobile patients and particularly where a joint is held in a shortened position with increased tone.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Contracture in burns and scar is in P07-00; Emery-Dreifuss contractures precede weakness (P05-07); arthrogryposis in P10-00."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The evidence for stretch and splinting to prevent or reverse contracture in neurological populations is weaker than practice assumes, and positioning plus active movement where possible is likely more valuable than passive stretch alone. Prevention through positioning is substantially more effective than correction once established."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "contracture-management",
+    "references": []
+  },
+  {
+    "name": "Hospice and end-of-life mobility care",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Rehabilitation directed at comfort, dignity, and meaningful function rather than recovery — transfers to a commode, sitting for a meal, getting to a favourite chair or window.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Palliative and hospice-phase rehabilitation is entered in P08-00."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Deterioration is expected and is not treatment failure. Goals should be short-horizon and reviewed frequently, and the energy cost of achieving a function must be weighed against its value to the patient. Equipment provision and carer training often deliver more than exercise at this stage. Discharge from therapy is not abandonment, and continued presence may matter more than continued treatment."
+      }
+    ],
+    "section": "GERIATRICS, ACUTE CARE & MEDICALLY COMPLEX",
+    "slug": "hospice-and-end-of-life-mobility-care",
+    "references": []
+  },
+  {
+    "name": "Type 1 and type 2 diabetes mellitus; exercise and glycemic considerations",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Type 1 — autoimmune beta-cell destruction with absolute insulin deficiency, requiring exogenous insulin. Type 2 — insulin resistance with progressive secretory failure. Both produce microvascular (retinopathy, nephropathy, neuropathy) and macrovascular complications.",
+    "details": [
+      {
+        "label": "Guideline framework",
+        "text": "The American Diabetes Association position statement on physical activity and exercise is the reference standard, covering exercise prescription across diabetes types and the management of glycaemia around activity [1]."
+      },
+      {
+        "label": "Clinical implication — hypoglycaemia is the acute risk",
+        "text": "Patients on insulin or sulfonylureas can become hypoglycaemic during and for many hours after exercise, with delayed post-exercise hypoglycaemia occurring overnight. Confirm the patient has eaten, knows their glucose, and has fast-acting carbohydrate accessible before starting. Beta-blockers mask the adrenergic warning symptoms."
+      },
+      {
+        "label": "Complication-specific caution",
+        "text": "Proliferative retinopathy is a relative contraindication to Valsalva and high-intensity resistance work; peripheral neuropathy with loss of protective sensation changes footwear and weight-bearing decisions; autonomic neuropathy blunts heart rate response, making RPE more reliable than heart rate for intensity."
+      },
+      {
+        "label": "Note on this reference",
+        "text": "the PubMed abstract for this position statement is unavailable, so the specific recommendations were not retrieved in this pass and none are reproduced. See verification notes."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "type-1-and-type-2-diabetes-mellitus-exercise-and-glycemic-considerations",
+    "references": [
+      "Colberg, S. R., Sigal, R. J., Yardley, J. E., Riddell, M. C., Dunstan, D. W., Dempsey, P. C., Horton, E. S., Castorino, K., & Tate, D. F. (2016). Physical activity/exercise and diabetes: A position statement of the American Diabetes Association. *Diabetes Care, 39*(11), 2065–2079. https://doi.org/10.2337/dc16-1728 (PMID: 27926890)"
+    ]
+  },
+  {
+    "name": "Diabetic peripheral neuropathy, autonomic neuropathy, Charcot foot",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Peripheral neuropathy — length-dependent sensory-predominant loss producing the stocking distribution and loss of protective sensation. Autonomic neuropathy — orthostatic hypotension, resting tachycardia, blunted heart rate response, gastroparesis, and impaired hypoglycaemia awareness. Charcot foot — progressive destructive arthropathy in a neuropathic foot, presenting acutely as a red, hot, swollen foot easily mistaken for infection or cellulitis.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Diabetic peripheral neuropathy is sourced in P05-06; diabetic foot ulcer in P03-03, where neuropathy was the most common predisposing factor but peripheral arterial disease correlated with amputation rates; Charcot neuroarthropathy in P03-03; neurogenic orthostatic hypotension in P05-06 and P05-08."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "A unilateral warm swollen foot in a neuropathic patient is Charcot until proven otherwise — immediate offloading and non-weight-bearing pending imaging. Continued walking on an acute Charcot foot produces the rocker-bottom deformity that leads to ulceration."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "diabetic-peripheral-neuropathy-autonomic-neuropathy-charcot-foot",
+    "references": []
+  },
+  {
+    "name": "Metabolic syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Clustering of central adiposity, dyslipidaemia (raised triglycerides, low HDL), hypertension, and impaired fasting glucose, conferring elevated cardiovascular and type 2 diabetes risk. Diagnostic thresholds vary between defining bodies.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Exercise improves each component and improves insulin sensitivity independent of weight change — which matters for framing, since weight-focused goals frequently disappoint while fitness and metabolic gains occur regardless."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "metabolic-syndrome",
+    "references": []
+  },
+  {
+    "name": "Obesity and severe obesity; post-bariatric surgery rehabilitation",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Excess adiposity with mechanical, metabolic, and psychosocial consequences. Post-bariatric patients face rapid weight loss with attendant sarcopenia risk, nutritional deficiency (particularly B12, iron, calcium, vitamin D, thiamine), dumping syndrome, and — as weight falls — the emergence of previously masked musculoskeletal problems and altered joint loading.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Paediatric obesity in P10-00, including that obesity was present in 56% of girls and 76% of boys with SCFE; osteoarthritis burden in P03-02, where injury and obesity are named as risk factors whose awareness should be improved."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Resistance training after bariatric surgery protects lean mass during rapid loss. Weight-centric framing undermines engagement; capability and participation goals sustain it. Equipment weight limits, seating, and plinth capacity are practical considerations that should be checked in advance rather than discovered."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "obesity-and-severe-obesity-post-bariatric-surgery-rehabilitation",
+    "references": []
+  },
+  {
+    "name": "Hypothyroidism and hyperthyroidism",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Hypothyroidism — fatigue, cold intolerance, weight gain, constipation, myalgia, proximal myopathy with elevated creatine kinase, delayed reflex relaxation, and carpal tunnel syndrome from fluid retention. Hyperthyroidism — heat intolerance, weight loss, tremor, palpitations and atrial fibrillation, proximal myopathy, and accelerated bone loss.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Adhesive capsulitis is sourced in P02-01, where thyroid disorder was present in 29.6% of a 165,937-patient cohort alongside diabetes in 44.2%."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Both produce proximal myopathy, and thyroid disease is a treatable cause of diffuse musculoskeletal pain, fatigue, and weakness that is frequently attributed to deconditioning or fibromyalgia. Frozen shoulder and carpal tunnel syndrome both cluster with thyroid disease."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "hypothyroidism-and-hyperthyroidism",
+    "references": []
+  },
+  {
+    "name": "Hyperparathyroidism",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Excess parathyroid hormone producing hypercalcaemia with bone resorption, osteoporosis, brown tumours in advanced disease, renal stones, abdominal pain, and neuropsychiatric change — the classic \"bones, stones, abdominal groans, and psychiatric moans.\" Proximal muscle weakness is common.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Osteoporosis is entered in P04-02."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "A cause of secondary osteoporosis and pathological fracture that must be excluded before osteoporosis is labelled primary, since treatment differs entirely."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "hyperparathyroidism",
+    "references": []
+  },
+  {
+    "name": "Cushing syndrome; Addison disease",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Cushing syndrome — cortisol excess producing central obesity, proximal myopathy with normal creatine kinase, osteoporosis and vertebral fracture, skin fragility and striae, hypertension, hyperglycaemia, and impaired healing. Most commonly iatrogenic from corticosteroid therapy. Addison disease — adrenal insufficiency producing fatigue, weakness, weight loss, hypotension, hyperpigmentation, and salt craving, with risk of adrenal crisis under physiological stress.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Steroid myopathy is entered in P05-07 and P08-00 — painless proximal weakness, hips before shoulders, with normal CK."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Adrenal crisis is a medical emergency and can be precipitated by illness, injury, or major physiological stress; patients on long-term steroids may need stress dosing. Cushingoid patients have fragile skin and bone — manual handling and loading require care, and vertebral fracture may be occult."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "cushing-syndrome-addison-disease",
+    "references": []
+  },
+  {
+    "name": "Acromegaly",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Growth hormone excess in adults producing enlargement of hands, feet, and facial features, with arthropathy affecting large joints, carpal tunnel syndrome, proximal myopathy, obstructive sleep apnoea, cardiomyopathy, and hypertension. Arthropathy is common, often precedes diagnosis, and may persist after biochemical control.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "A patient reporting increasing ring, glove, or shoe size with new large-joint arthropathy and carpal tunnel syndrome warrants endocrine consideration. Diagnostic delay averages years."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "acromegaly",
+    "references": []
+  },
+  {
+    "name": "Vitamin D deficiency",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Insufficient 25-hydroxyvitamin D, producing proximal myopathy, bone pain, and — in severe and prolonged deficiency — osteomalacia in adults or rickets in children. Common in older adults, those with limited sun exposure, darker skin, malabsorption, and obesity.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Osteomalacia and rickets are entered in P04-02, where the proximal myopathy with waddling gait and diffuse bone pain is described as frequently reaching musculoskeletal services before the metabolic cause is recognised."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Diffuse musculoskeletal pain with proximal weakness that does not fit a mechanical pattern is worth flagging for biochemical assessment rather than treating as deconditioning."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "vitamin-d-deficiency",
+    "references": []
+  },
+  {
+    "name": "Anemia; sickle cell disease; hemophilia (hemarthrosis)",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Anaemia reduces oxygen carriage, producing fatigue, dyspnoea, and tachycardia disproportionate to workload. Sickle cell disease produces vaso-occlusive crises, acute chest syndrome, avascular necrosis (femoral and humeral heads), stroke, and leg ulceration; dehydration, hypoxia, extremes of temperature, and exhaustive exercise are recognised crisis triggers. Haemophilia produces recurrent haemarthrosis, most often knee, elbow, and ankle, leading to chronic synovitis and haemophilic arthropathy.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Avascular necrosis is entered in P04-02 and P03-01, where sickle cell disease is named among nontraumatic causes."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "In haemophilia, an acutely warm, swollen, painful joint with a \"tingling aura\" is a bleed — rest, ice, compression, elevation, and factor replacement, not mobilisation or stretching. Coordination with the haemophilia centre around factor cover allows physiotherapy to proceed safely. In sickle cell disease, hydration, temperature, and graded intensity matter more than in almost any other population."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "anemia-sickle-cell-disease-hemophilia-hemarthrosis",
+    "references": []
+  },
+  {
+    "name": "Thrombocytopenia and bleeding precautions",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Reduced platelet count raising bleeding risk, with commonly used thresholds restricting resistance exercise and contact activity as counts fall, and withholding exercise below very low counts.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Also entered in P08-00, where it is flagged as the highest-priority gap in that file — the entry where a therapist most often needs a specific number for a go/no-go decision."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Published thresholds vary between institutions and must be followed locally rather than recalled. Anticoagulation and antiplatelet therapy raise bleeding risk independent of platelet count, and the combination compounds it."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "thrombocytopenia-and-bleeding-precautions",
+    "references": []
+  },
+  {
+    "name": "Chronic kidney disease",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Progressive loss of renal function staged G1–G5 by eGFR, producing uraemic myopathy, anaemia, renal bone disease with fracture risk, cardiovascular disease, and profound exercise intolerance. Muscle wasting is multifactorial and an independent mortality predictor.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "End-stage renal disease and dialysis-related deconditioning are entered in P11-00; arteriovenous fistula precautions are sourced in P06-02 — no blood pressure measurement, venepuncture, or constrictive garments on the fistula limb."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The fistula precaution set is routinely violated by reflexive blood pressure measurement. Post-dialysis days are typically worst for fatigue and hypotension, making scheduling as consequential as programme design."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "chronic-kidney-disease",
+    "references": []
+  },
+  {
+    "name": "Gastroesophageal reflux, irritable bowel syndrome, inflammatory bowel disease",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "GORD — reflux symptoms aggravated by supine and inverted positions and by increased intra-abdominal pressure, relevant to exercise selection and treatment positioning. IBS — functional disorder with abdominal pain related to defaecation and altered bowel habit, frequently comorbid with fibromyalgia and other persistent pain conditions. IBD (Crohn, ulcerative colitis) — inflammatory disease with extraintestinal manifestations including peripheral and axial arthritis, and with corticosteroid-related bone loss and myopathy.",
+    "details": [
+      {
+        "label": "Cross-reference",
+        "text": "Enteropathic arthritis is entered in P04-01, where inflammatory bowel disease is a qualifying parameter within the ASAS peripheral spondyloarthritis criteria."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Prone and inverted positions aggravate reflux. In IBD, new inflammatory back pain warrants axial spondyloarthritis consideration, and axial involvement runs independent of bowel disease activity."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "gastroesophageal-reflux-irritable-bowel-syndrome-inflammatory-bowel-disease",
+    "references": []
+  },
+  {
+    "name": "Eating disorders and RED-S (relative energy deficiency in sport)",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Relative Energy Deficiency in Sport (REDs) is a syndrome of deleterious health and performance outcomes experienced by female and male athletes exposed to low energy availability — inadequate energy intake in relation to exercise energy expenditure [2]. It may arise with or without a clinical eating disorder, and eating disorders themselves are serious psychiatric illnesses requiring specialist multidisciplinary care.",
+    "details": [
+      {
+        "label": "Current framework",
+        "text": "Since the 2018 consensus there have been over 170 original research publications, including emerging data on the role of low carbohydrate availability, further evidence of the interplay between mental health and REDs, and more data on the impact of low energy availability in males [2]."
+      },
+      {
+        "label": "What the 2023 statement introduced",
+        "text": "Updated Health and Performance Conceptual Models, a novel Physiological Model showing that low energy availability exposure may be problematic or adaptable depending on individual moderating factors, guidelines for safe and effective body composition assessment, and a REDs Clinical Assessment Tool Version 2 for detection and diagnosis based on accumulated severity and risk stratification, with associated training and competition recommendations [2]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The physical therapist's role is recognition and referral, not nutritional management. Recurrent bone stress injury, unexplained performance decline, menstrual disturbance, recurrent illness, or mood change in an active person should prompt referral to a physician and, where indicated, a specialist eating disorder service — and should prompt a conversation about load rather than an increase in it. Body composition assessment is not a routine part of physical therapy and can cause harm in this population; the consensus statement itself devotes guidance to when and how it should be conducted safely. See verification notes."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "eating-disorders-and-red-s-relative-energy-deficiency-in-sport",
+    "references": [
+      "Mountjoy, M., Ackerman, K. E., Bailey, D. M., Burke, L. M., Constantini, N., Hackney, A. C., Heikura, I. A., Melin, A., Pensgaard, A. M., Stellingwerff, T., Sundgot-Borgen, J. K., Torstveit, M. K., Jacobsen, A. U., Verhagen, E., Budgett, R., Engebretsen, L., & Erdener, U. (2023). 2023 International Olympic Committee's (IOC) consensus statement on Relative Energy Deficiency in Sport (REDs). *British Journal of Sports Medicine, 57*(17), 1073–1097. https://doi.org/10.1136/bjsports-2023-106994 (PMID: 37752011)"
+    ]
+  },
+  {
+    "name": "Female athlete triad",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "The historical term for the interrelationship of low energy availability, menstrual dysfunction, and impaired bone health in female athletes. Superseded in current terminology by REDs, which recognises the syndrome affects both sexes and involves a broader range of body systems than the original three components [2].",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "The terminology change is not cosmetic — framing this as a female-specific triad caused under-recognition in male athletes, and the 2023 consensus explicitly notes emerging data on the impact of low energy availability in males [2]."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "female-athlete-triad",
+    "references": [
+      "Mountjoy, M., Ackerman, K. E., Bailey, D. M., Burke, L. M., Constantini, N., Hackney, A. C., Heikura, I. A., Melin, A., Pensgaard, A. M., Stellingwerff, T., Sundgot-Borgen, J. K., Torstveit, M. K., Jacobsen, A. U., Verhagen, E., Budgett, R., Engebretsen, L., & Erdener, U. (2023). 2023 International Olympic Committee's (IOC) consensus statement on Relative Energy Deficiency in Sport (REDs). *British Journal of Sports Medicine, 57*(17), 1073–1097. https://doi.org/10.1136/bjsports-2023-106994 (PMID: 37752011)"
+    ]
+  },
+  {
+    "name": "Substance use disorders affecting rehabilitation",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Alcohol, opioid, stimulant, and other substance use disorders, affecting attendance, engagement, pain reporting, healing (alcohol and nicotine impair bone and soft tissue healing), falls risk, and safety. Opioid use disorder frequently begins with legitimately prescribed analgesia following injury or surgery.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "Non-judgemental, matter-of-fact enquiry is more productive than avoidance, and disclosure is more likely when the question is asked routinely of everyone. Withdrawal states can present as agitation, tremor, or autonomic instability during admission. Buprenorphine and methadone complicate acute pain management, which is a medical issue but affects what is achievable in a session."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "substance-use-disorders-affecting-rehabilitation",
+    "references": []
+  },
+  {
+    "name": "Depression, anxiety, PTSD, and kinesiophobia as modifiers of outcome",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Kinesiophobia is fear of movement or re-injury, commonly measured by the Tampa Scale. Alongside depression, anxiety, PTSD, catastrophising, and low self-efficacy, these are consistently among the strongest predictors of persistent pain and disability — frequently outperforming imaging findings and physical impairment measures.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Whiplash prognosis in P01-01, where passive coping, depressed mood, and fear of movement predict slower or less complete recovery while collision factors largely do not. Chronic primary pain and nociplastic pain in P04-03. Parental catastrophising predicting child disability in P10-00."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "These are modifiable and belong in the assessment, not as an explanation for failure to progress but as a treatment target. Identifying them changes the emphasis of treatment rather than the prognosis — graded exposure, education, and self-efficacy building are within scope, with referral where symptoms meet clinical thresholds."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "depression-anxiety-ptsd-and-kinesiophobia-as-modifiers-of-outcome",
+    "references": []
+  },
+  {
+    "name": "Sleep disorders and insomnia",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Insufficient or non-restorative sleep from insomnia, obstructive sleep apnoea, restless legs syndrome, shift work, or pain itself. Sleep disturbance lowers pain threshold, impairs tissue healing and motor learning, and worsens mood — and the relationship with pain is bidirectional, with poor sleep predicting next-day pain at least as strongly as pain predicts poor sleep.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Obstructive sleep apnoea in P06-03; restless legs syndrome in P05-04, where serum ferritin should be checked since iron deficiency is a common and treatable contributor; nocturnal hypoventilation in neuromuscular disease in P06-03."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Asking about sleep is not peripheral to musculoskeletal care. Morning headache, unrefreshing sleep, and daytime somnolence warrant sleep-disordered breathing assessment, particularly with obesity or neuromuscular disease."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "sleep-disorders-and-insomnia",
+    "references": []
+  },
+  {
+    "name": "HIV-associated neuropathy and myopathy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Distal sensory polyneuropathy is the most common neurological complication of HIV, from the virus itself and from older antiretroviral agents, producing painful burning feet with reduced ankle reflexes. HIV-associated myopathy produces proximal weakness with raised creatine kinase; statin and antiretroviral myopathy are differentials. Modern therapy has shifted the picture toward metabolic complications, accelerated cardiovascular disease, and osteoporosis with fracture risk.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "People with well-controlled HIV have near-normal life expectancy and increasingly present with age-related and metabolic conditions rather than opportunistic disease. Standard precautions are sufficient, and this is a chronic manageable condition rather than an infection-control problem."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "hiv-associated-neuropathy-and-myopathy",
+    "references": []
+  },
+  {
+    "name": "Chronic infections affecting rehab tolerance",
+    "redFlag": false,
+    "comorbidity": true,
+    "description": "Chronic hepatitis B and C, tuberculosis, chronic osteomyelitis, and post-acute infection syndromes, producing fatigue, reduced exercise tolerance, and — in some — direct musculoskeletal involvement.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Tuberculosis in P06-03, where airborne precautions and a negative-pressure room are required for suspected or confirmed infectious pulmonary TB, and silicosis substantially increases TB risk. Osteomyelitis in P04-02 and P01-03. Long COVID in P06-03 and post-exertional malaise in P04-03."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Where post-exertional malaise is present, standard graded exercise progression is not an appropriate default and pacing should lead. Screening for PEM before prescribing progressive exercise applies across post-acute infection syndromes, not only ME/CFS."
+      }
+    ],
+    "section": "ENDOCRINE, METABOLIC & OTHER MEDICAL COMORBIDITIES",
+    "slug": "chronic-infections-affecting-rehab-tolerance",
+    "references": []
+  },
+  {
+    "name": "Cancer (primary or metastatic) presenting as spinal or limb pain",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Progressive, unremitting pain, often worse at night and not relieved by rest or position change, in a patient with known malignancy or constitutional symptoms. Bone pain that does not follow a mechanical pattern."
+      },
+      {
+        "label": "Screening accuracy",
+        "text": "History of malignancy is the single most useful flag (33% post-test probability); most other individually endorsed flags change probability very little [1]."
+      },
+      {
+        "label": "Cross-references",
+        "text": "Spinal metastasis and primary bone tumours in P04-02, where primary bone tumours are flagged as the top gap; bone metastases and pathologic fracture precautions in P08-00; multiple myeloma in P01-03, P04-02, and P08-00."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "cancer-primary-or-metastatic-presenting-as-spinal-or-limb-pain",
+    "references": [
+      "Downie, A., Williams, C. M., Henschke, N., Hancock, M. J., Ostelo, R. W. J. G., de Vet, H. C. W., Macaskill, P., Irwig, L., van Tulder, M. W., Koes, B. W., & Maher, C. G. (2013). Red flags to screen for malignancy and fracture in patients with low back pain: Systematic review. *BMJ, 347*, f7095. https://doi.org/10.1136/bmj.f7095 (PMID: 24335669)"
+    ]
+  },
+  {
+    "name": "Cauda equina syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Saddle anaesthesia, bladder or bowel dysfunction, bilateral radicular symptoms, lower limb weakness, reduced anal tone."
+      },
+      {
+        "label": "The finding that should govern practice",
+        "text": "In 79 patients undergoing urgent MRI, no individual clinical feature predicted established CES — anal tone, faecal incontinence, urinary retention, bladder incontinence, and saddle anaesthesia were all non-predictive, and only 6.3% of urgent scans were positive."
+      },
+      {
+        "label": "Cross-references",
+        "text": "Sourced in P01-03 and P05-03."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The absence of a discriminating sign is the argument for low-threshold urgent referral, not against it. Classic features cannot rule the diagnosis out."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "cauda-equina-syndrome",
+    "references": []
+  },
+  {
+    "name": "Spinal infection (osteomyelitis, discitis, epidural abscess)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Insidious progressive back pain, often without fever, with raised inflammatory markers. Risk factors: intravenous drug use, diabetes, immunosuppression, recent instrumentation, indwelling catheters, bacteraemia, endocarditis."
+      },
+      {
+        "label": "Cross-references",
+        "text": "Spinal epidural abscess and vertebral osteomyelitis in P01-03 (IDSA guideline); osteomyelitis in P04-02; retropharyngeal abscess in P01-01."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Epidural abscess has an estimated incidence around 1 per 10,000 hospital admissions and a reputation for delayed diagnosis; the classic triad of back pain, fever, and neurological deficit is frequently incomplete."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "spinal-infection-osteomyelitis-discitis-epidural-abscess",
+    "references": []
+  },
+  {
+    "name": "Vertebral fracture (traumatic or insufficiency)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Focal midline tenderness with pain sharply worsened by upright loading. In osteoporosis, often minimal or unrecalled trauma, and frequently asymptomatic or attributed to ordinary back pain."
+      },
+      {
+        "label": "Cross-references",
+        "text": "Vertebral compression fracture in P01-02; osteoporosis and the fracture-risk paradox in P04-02; sacral insufficiency fracture in P01-04, where plain radiographs are generally normal and the diagnosis must be actively considered."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "vertebral-fracture-traumatic-or-insufficiency",
+    "references": []
+  },
+  {
+    "name": "Abdominal aortic aneurysm",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Deep, boring, non-mechanical back or flank pain. Most intact AAAs are asymptomatic and found incidentally."
+      },
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P01-03 — smoking, male sex, and family history are the dominant risk factors; most common in men over 65; mortality for ruptured AAA is 65%–85%."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The combination of asymptomatic natural history and very high rupture mortality is why a male smoker over 65 with new atypical back pain warrants vascular consideration rather than a mechanical trial."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "abdominal-aortic-aneurysm",
+    "references": []
+  },
+  {
+    "name": "Aortic or cervical artery dissection",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Aortic dissection — sudden severe tearing chest or interscapular pain, maximal at onset, sometimes with pulse or blood pressure differential. Cervical artery dissection — new, unusual, severe head or neck pain unlike any previous, which may precede neurological signs by hours to days."
+      },
+      {
+        "label": "Cross-references",
+        "text": "Aortic dissection in P06-02; cervical artery dissection and the IFOMPT framework in P01-01, where interexaminer agreement on high-risk classification was only 63%; connective tissue predisposition (Marfan, Loeys-Dietz) in P04-02."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Cervical artery dissection is a leading cause of stroke under 45 and the single most consequential differential in cervical practice. No clinical test reliably excludes it."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "aortic-or-cervical-artery-dissection",
+    "references": []
+  },
+  {
+    "name": "Myocardial infarction presenting as shoulder, jaw, or interscapular pain",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Chest discomfort with radiation to left arm, jaw, or interscapular region, often with dyspnoea, diaphoresis, and nausea, and typically exertional."
+      },
+      {
+        "label": "Atypical presentation is common and consequential",
+        "text": "Not all acute coronary syndromes exhibit classic chest pain, and patients without typical chest pain are at increased risk for delayed or incorrect diagnosis, less aggressive treatment, and high in-hospital mortality [2]."
+      },
+      {
+        "label": "Who presents atypically",
+        "text": "The association between diabetes mellitus and absence of chest pain is established, and women more frequently than men have atypical presentation. Beyond these, NSTE-ACS presents atypically more often than STEMI; atypical symptoms are common in the aged population of both sexes; and patients with heart failure, chronic kidney disease, COPD, or prior stroke are less likely to report chest pain as their chief complaint [2]."
+      },
+      {
+        "label": "Cross-reference",
+        "text": "Coronary artery disease and cardiac rehabilitation in P06-01."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "This is the entry where the comorbidity list matters most. An older diabetic patient with COPD presenting with new shoulder or interscapular discomfort and dyspnoea fits the atypical profile precisely, and the absence of classic chest pain is not reassuring — it is associated with worse outcomes [2]."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "myocardial-infarction-presenting-as-shoulder-jaw-or-interscapular-pain",
+    "references": [
+      "Ricci, B., Cenko, E., Varotti, E., Puddu, P. E., & Manfrini, O. (2016). Atypical chest pain in ACS: A trap especially for women. *Current Pharmaceutical Design, 22*(25), 3877–3884. https://doi.org/10.2174/1381612822666160309115125 (PMID: 26956231)"
+    ]
+  },
+  {
+    "name": "Pulmonary embolism presenting as chest wall or shoulder pain",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Sudden dyspnoea, pleuritic chest pain, tachycardia, tachypnoea, hypoxaemia. Unexplained tachycardia and unexplained desaturation are often the earliest objective signs, sometimes preceding chest symptoms."
+      },
+      {
+        "label": "Cross-reference",
+        "text": "Entered in P06-02, where it is flagged as a priority gap."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Sudden desaturation or unexplained tachycardia during mobilisation of a post-surgical or immobile patient should prompt immediate escalation."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "pulmonary-embolism-presenting-as-chest-wall-or-shoulder-pain",
+    "references": []
+  },
+  {
+    "name": "Deep vein thrombosis presenting as calf strain",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Unilateral limb swelling, warmth, erythema, tenderness — though clinical signs alone are unreliable and many DVTs present atypically or silently."
+      },
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P06-02 — a low or unlikely Wells score with a negative D-dimer has 99% negative predictive value across age groups, but rules out a shrinking proportion as age rises (21.7–31% in those over 80)."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Wells is a rule-out tool used with D-dimer, never alone. A high pretest probability requires imaging regardless. Suspected DVT means the patient is not mobilised or massaged pending assessment. Gastrocnemius strain and ruptured Baker cyst are the common mimics in the other direction."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "deep-vein-thrombosis-presenting-as-calf-strain",
+    "references": []
+  },
+  {
+    "name": "Acute compartment syndrome",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Pain out of proportion to injury and pain on passive stretch are the earliest signs. Pulselessness is late and unreliable."
+      },
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P03-03, including the paediatric data — and the explicit caveat there that the paediatric finding of good recovery despite delayed fasciotomy must not be generalised to adults."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Paraesthesia and paralysis are late findings indicating impending irreversibility, not early warnings."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "acute-compartment-syndrome",
+    "references": []
+  },
+  {
+    "name": "Septic arthritis and septic bursitis",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Acute monoarticular pain with severe pain on any movement and refusal to weight-bear."
+      },
+      {
+        "label": "Cross-references",
+        "text": "Sourced in P04-01 — fever has only 57% sensitivity, and synovial white cell count is what discriminates (LR 0.32 below 25,000 rising to 28.0 above 100,000). Paediatric septic arthritis in P03-01, where the Kocher algorithm failed external validation (59% versus the original 99.6%). Olecranon septic bursitis in P02-02, where aspiration is the discriminator and *S. aureus* accounts for 80%."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Absence of fever does not exclude septic arthritis. A hot joint in a patient with rheumatoid arthritis is the classic trap, since RA is both a risk factor and a competing explanation."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "septic-arthritis-and-septic-bursitis",
+    "references": []
+  },
+  {
+    "name": "Cholecystitis presenting as right shoulder/scapular pain",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Right upper quadrant or epigastric pain referring to the right shoulder tip or inferior angle of the right scapula, via diaphragmatic irritation and the phrenic nerve (C3–C5). Typically postprandial, worse after fatty meals, with nausea. Murphy sign — inspiratory arrest on right upper quadrant palpation."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Right scapular or shoulder pain that is meal-related rather than movement-related, and not reproducible on shoulder or cervical examination, is the pattern. Pain unaffected by any position or movement is a general signal to look beyond the musculoskeletal system."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "cholecystitis-presenting-as-right-shoulder-scapular-pain",
+    "references": []
+  },
+  {
+    "name": "Renal colic or pyelonephritis presenting as flank/low back pain",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Renal colic — severe, colicky loin-to-groin pain, with the patient characteristically restless and unable to find a comfortable position (unlike peritonitis, where patients lie still), often with haematuria, nausea, and vomiting. Pyelonephritis — flank pain with fever, rigors, dysuria, and costovertebral angle tenderness."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Writhing, unrelieved-by-position pain is the discriminating feature of renal colic — mechanical back pain almost always has a position of relative ease. Costovertebral angle tenderness with fever is not a musculoskeletal finding."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "renal-colic-or-pyelonephritis-presenting-as-flank-low-back-pain",
+    "references": []
+  },
+  {
+    "name": "Pancreatitis presenting as thoracolumbar pain",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Severe epigastric pain boring through to the back, characteristically relieved by sitting forward and worsened by lying supine, with nausea and vomiting. Alcohol and gallstones are the dominant causes."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The relief on sitting forward is the distinguishing feature and is the opposite of most mechanical thoracolumbar patterns, which ease with recumbency."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "pancreatitis-presenting-as-thoracolumbar-pain",
+    "references": []
+  },
+  {
+    "name": "Peptic ulcer presenting as midback pain",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Epigastric pain with back radiation, related to meals — classically relieved by food in duodenal ulcer and worsened by food in gastric ulcer — with a history of NSAID use or *H. pylori*. Posterior penetration produces back pain."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "NSAID use is both a common analgesic in musculoskeletal care and a cause of this presentation, which makes the medication history directly relevant. Melaena or haematemesis is an emergency."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "peptic-ulcer-presenting-as-midback-pain",
+    "references": []
+  },
+  {
+    "name": "Splenic pathology presenting as left shoulder pain (Kehr sign)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Kehr sign — left shoulder tip pain from diaphragmatic irritation by blood or fluid in the peritoneal cavity, classically from splenic rupture, referred via the phrenic nerve. May follow trauma, sometimes trivial in an enlarged spleen (infectious mononucleosis, haematological malignancy)."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Left shoulder tip pain after abdominal or lower rib trauma is a surgical emergency until proven otherwise. Splenic rupture can be delayed by days after the index injury. Contact sport participation in acute infectious mononucleosis carries this specific risk."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "splenic-pathology-presenting-as-left-shoulder-pain-kehr-sign",
+    "references": []
+  },
+  {
+    "name": "Ectopic pregnancy presenting as pelvic/abdominal pain",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Unilateral pelvic or abdominal pain with amenorrhoea and vaginal bleeding in a person of reproductive age; shoulder tip pain from haemoperitoneum indicates rupture, alongside syncope and haemodynamic instability."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "A life-threatening emergency. New pelvic pain in a person of reproductive age warrants asking about last menstrual period — a question easily omitted in a musculoskeletal assessment. Shoulder tip pain with abdominal pain in this context is rupture until excluded."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "ectopic-pregnancy-presenting-as-pelvic-abdominal-pain",
+    "references": []
+  },
+  {
+    "name": "Endometriosis and ovarian pathology presenting as low back/pelvic pain",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Endometriosis — cyclical pelvic and low back pain, dysmenorrhoea, dyspareunia, dyschezia, and infertility, with symptom severity correlating poorly with disease stage and diagnostic delay averaging years. Ovarian torsion — sudden severe unilateral pain with nausea, a surgical emergency. Ovarian cyst rupture — sudden onset, often mid-cycle."
+      },
+      {
+        "label": "Cross-reference",
+        "text": "Endometriosis is entered in P09-00, where physical therapy addresses secondary musculoskeletal and pelvic floor consequences and the central pain component but does not treat the disease."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Cyclical symptom patterning is the discriminating feature and is only found by asking. Low back pain that reliably tracks the menstrual cycle is not mechanical."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "endometriosis-and-ovarian-pathology-presenting-as-low-back-pelvic-pain",
+    "references": []
+  },
+  {
+    "name": "Testicular torsion presenting as groin pain",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Sudden severe unilateral testicular or groin pain, often with nausea and vomiting, a high-riding transversely oriented testis, and absent cremasteric reflex. Peak incidence in adolescence."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "A surgical emergency with a salvage window of roughly six hours. Adolescent males may report only groin or lower abdominal pain and may not volunteer testicular symptoms — this is a presentation where a direct, matter-of-fact question is warranted and where hesitation costs the testis."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "testicular-torsion-presenting-as-groin-pain",
+    "references": []
+  },
+  {
+    "name": "Herpes zoster prior to rash",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Dermatomal pain, burning, or itch preceding the vesicular rash by days, without any mechanical pattern. Thoracic dermatomes are most commonly affected."
+      },
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P01-02 — incidence 3–5 per 1000 person-years, with postherpetic neuralgia risk of 5% to over 30%, and more than 30% of those who develop PHN having persistent pain beyond one year. Also in P05-06."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Unilateral pain in a strict dermatomal band that respects the midline and does not vary with position or movement should prompt this consideration. Early antiviral treatment reduces PHN risk, so recognising the prodrome has therapeutic consequence."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "herpes-zoster-prior-to-rash",
+    "references": []
+  },
+  {
+    "name": "Giant cell arteritis presenting as jaw claudication and headache",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "New temporal headache, scalp tenderness, jaw claudication, and visual symptoms in an adult over 50, with raised inflammatory markers. Frequently coexists with polymyalgia rheumatica — bilateral shoulder and hip girdle pain with prolonged morning stiffness."
+      },
+      {
+        "label": "Cross-reference",
+        "text": "Sourced in P04-01 — the 2022 ACR/EULAR criteria require age ≥50 as an absolute prerequisite, with a cumulative score ≥6 classifying (validation AUC 0.91, sensitivity 87.0%, specificity 94.8%)."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "A medical emergency because of irreversible visual loss risk — same-day referral, and treatment is not delayed for biopsy. The PMR overlap means this presentation reaches musculoskeletal services first."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "giant-cell-arteritis-presenting-as-jaw-claudication-and-headache",
+    "references": []
+  },
+  {
+    "name": "Upper motor neuron signs indicating myelopathy",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Hyperreflexia, clonus, Babinski, Hoffmann, inverted supinator sign, spasticity, gait disturbance, loss of hand dexterity, and bladder involvement."
+      },
+      {
+        "label": "Cross-references",
+        "text": "Cervical myelopathy in P01-01 — the most sensitive signs are Tromner and hyperreflexia; the most specific are Babinski, Tromner, clonus, and inverted supinator, and no definite association was found between Hoffmann, Babinski, or hyperreflexia and disease severity. Also P01-03 (conus and cauda equina), P05-03 (cord syndromes), P04-02 (metastatic cord compression)."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "These signs support referral for imaging but should not be used to grade severity. Degenerative cervical myelopathy is the most common spinal cord disorder in adults and progresses insidiously, often painlessly."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "upper-motor-neuron-signs-indicating-myelopathy",
+    "references": []
+  },
+  {
+    "name": "Unexplained weight loss, night pain, fever, night sweats",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Constitutional symptoms suggesting malignancy, infection, or inflammatory disease."
+      },
+      {
+        "label": "Screening caution",
+        "text": "Individually, most such flags perform poorly. History of malignancy is the only flag reaching a 33% post-test probability for spinal malignancy; many guideline-endorsed flags change probability virtually not at all or have untested accuracy [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "The value is in combination and trajectory, not in any single item. Unexplained weight loss with progressive night pain and a history of malignancy is a different proposition from night pain alone, which is common in benign musculoskeletal conditions including rotator cuff disease and hip osteoarthritis."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "unexplained-weight-loss-night-pain-fever-night-sweats",
+    "references": [
+      "Downie, A., Williams, C. M., Henschke, N., Hancock, M. J., Ostelo, R. W. J. G., de Vet, H. C. W., Macaskill, P., Irwig, L., van Tulder, M. W., Koes, B. W., & Maher, C. G. (2013). Red flags to screen for malignancy and fracture in patients with low back pain: Systematic review. *BMJ, 347*, f7095. https://doi.org/10.1136/bmj.f7095 (PMID: 24335669)"
+    ]
+  },
+  {
+    "name": "Progressive neurologic deficit",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Objectively worsening motor, sensory, or autonomic function over days to weeks, as opposed to stable or fluctuating symptoms."
+      },
+      {
+        "label": "Cross-references",
+        "text": "Metastatic cord compression in P04-02, where preoperative ambulatory status predicts postoperative ambulatory status; cauda equina in P01-03; GBS in P05-05, where 10–30% of adults require mechanical ventilation; myelopathy above."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Progression is the feature, not severity. A mild but demonstrably worsening deficit warrants more urgency than a severe stable one. In cord compression specifically, recognising it while the patient still walks is the single most valuable contribution a therapist makes."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "progressive-neurologic-deficit",
+    "references": []
+  },
+  {
+    "name": "Vertebrobasilar insufficiency signs (5 Ds and 3 Ns)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "",
+    "details": [
+      {
+        "label": "Pattern",
+        "text": "Dizziness, diplopia, dysarthria, dysphagia, drop attacks, plus nausea, numbness, and nystagmus. Symptoms may be positional."
+      },
+      {
+        "label": "Cross-references",
+        "text": "Sourced in P01-01 via the IFOMPT framework — no single clinical test can be relied on, and interexaminer reliability of risk stratification is only moderate (weighted κ = 0.39). HINTS and the acute vestibular syndrome differential in P05-08, where a normal head impulse test in acute continuous vertigo points central, and early DWI-MRI was falsely negative in 12%."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Positional testing does not clear the patient. The two most useful facts are that a normal head impulse test in continuous vertigo is the worrying finding, and that a negative early MRI does not exclude posterior circulation stroke."
+      }
+    ],
+    "section": "RED FLAGS & NON-MUSCULOSKELETAL MASQUERADERS",
+    "slug": "vertebrobasilar-insufficiency-signs-5-ds-and-3-ns",
+    "references": []
+  },
+  {
+    "name": "Mobility deficits (hypomobility)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Restricted physiological or accessory motion from capsular, muscular, fascial, articular, or neural sources, limiting the excursion available for a task. May be structural (contracture, adhesion, bony block) or protective (guarding, pain inhibition) — a distinction that determines whether the target is tissue length or pain and threat.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Contracture management in P11-00, where the evidence for stretch and splinting is flagged as weaker than practice assumes; adhesive capsulitis in P02-01; scar contracture in P07-00."
+      },
+      {
+        "label": "Framework",
+        "text": "Falls within motion in the 4-element model [1]."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "mobility-deficits-hypomobility",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Movement system instability (hypermobility)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Excessive available motion relative to the control available to manage it. The clinically important construct is the mismatch between mobility and control, not range in isolation — a hypermobile person with excellent control may be asymptomatic while a mildly hypermobile person without it is not.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Generalized joint hypermobility and hypermobility spectrum disorder in P04-02; clinical lumbar instability in P01-03, flagged there as a contested construct; hip microinstability in P03-01."
+      },
+      {
+        "label": "Framework",
+        "text": "A motion–control interaction [1]."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "movement-system-instability-hypermobility",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Impaired joint integrity and range of motion",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Loss of articular surface congruence, capsuloligamentous restraint, or passive range, from degenerative, traumatic, inflammatory, or post-surgical causes. Distinguished from soft tissue mobility restriction by the end-feel and by the pattern of loss.",
+    "details": [
+      {
+        "label": "Framework",
+        "text": "Motion [1]."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "impaired-joint-integrity-and-range-of-motion",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Force production deficit / muscle performance impairment",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Reduced capacity to generate, sustain, or rapidly develop force, from atrophy, neural inhibition, denervation, pain, fatigue, or disuse. Encompasses maximal strength, endurance, power, and rate of force development — which dissociate, so a patient may have adequate maximal strength and inadequate power for the task.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Sarcopenia in P11-00; steroid myopathy in P05-07 and P08-00; ICU-acquired weakness in P05-07, with the caveat there about the thin ICUAW-specific evidence base."
+      },
+      {
+        "label": "Framework",
+        "text": "Force [1]."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "force-production-deficit-muscle-performance-impairment",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Impaired integumentary integrity",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Compromised skin and subcutaneous tissue integrity, or the risk of it, from pressure, shear, moisture, friction, impaired perfusion, loss of protective sensation, or fragility. Relevant to movement because it constrains positioning, weight-bearing surface, equipment interface, and handling technique — and because immobility is itself the dominant cause.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Pressure injury staging and prevention in P07-00 and P05-03, where improving risk-assessment completion from 46% to 94% produced no significant change in incidence; wound types and their differentiation in P07-00; diabetic foot ulceration and loss of protective sensation in P03-03 and P12-00; skin fragility in epidermolysis bullosa and scleroderma in P07-00."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "This impairment sits at the intersection of the other elements — it is produced by immobility, worsened by impaired sensation, and it in turn restricts the positions and surfaces available for movement. Completing a risk assessment is not prevention; mobilisation is the intervention."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "impaired-integumentary-integrity",
+    "references": []
+  },
+  {
+    "name": "Impaired anthropometric characteristics (edema, girth, body composition)",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Altered limb girth, oedema, or body composition affecting movement and load tolerance. Oedema restricts range and inhibits muscle activation; altered body composition affects load and metabolic capacity.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Lymphedema in P06-02 and P08-00, including the reversal of historic activity restriction advice; obesity in P12-00; cancer cachexia in P08-00, which is not reversible by nutrition alone."
+      },
+      {
+        "label": "A deliberate note",
+        "text": "This document does not provide body composition targets or measurement protocols. Routine body composition assessment can cause harm in some populations — the IOC REDs statement (P12-00) devotes specific guidance to when and how it should be conducted safely."
+      },
+      {
+        "label": "Framework",
+        "text": "Force and energy [1]."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "impaired-anthropometric-characteristics-edema-girth-body-composition",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Impaired aerobic capacity and endurance",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Reduced capacity to sustain activity, from cardiac, pulmonary, haematological, metabolic, or deconditioning causes, frequently in combination. The limiting system determines the intervention, and identifying it is the assessment task.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Cardiac rehabilitation in P06-01 (NNTB 12 for all-cause hospitalisation in CHD); pulmonary rehabilitation in P06-03, where 6MWD and quality-of-life gains exceed their MCIDs; anaemia in P12-00."
+      },
+      {
+        "label": "Framework",
+        "text": "Energy [1]."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "impaired-aerobic-capacity-and-endurance",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Impaired ventilation and respiration/gas exchange",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Reduced ventilatory capacity or gas exchange efficiency from obstructive, restrictive, vascular, neuromuscular, or chest wall causes.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "P06-03 throughout, including that exertional desaturation in ILD is often profound and disproportionate to resting saturation, and the type 1 versus type 2 respiratory failure distinction governing oxygen targets."
+      },
+      {
+        "label": "Framework",
+        "text": "Energy [1]."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "impaired-ventilation-and-respiration-gas-exchange",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Deconditioning",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Reduced physiological capacity from inactivity rather than primary organ disease, though the two almost always coexist and compound. The dyspnoea–inactivity–deconditioning and pain–inactivity–deconditioning spirals are the same mechanism in different systems.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Hospital-associated disability and immobility syndrome in P11-00; deconditioning in P06-03, where pulmonary rehabilitation works despite no change in FEV₁ because deconditioning is the modifiable component."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Deconditioning is the impairment that remains modifiable when the underlying pathology is not — which is the argument for rehabilitation in progressive and irreversible disease."
+      },
+      {
+        "label": "Framework",
+        "text": "Energy [1]."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "deconditioning",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Movement coordination impairments",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Impaired timing, sequencing, magnitude, or interjoint coordination of movement, with adequate range and force available. Presents as altered movement quality during functional tasks rather than as a deficit on isolated testing — which is precisely why visual qualitative assessment during functional tasks is positioned as the precursor to quantitative measurement [1].",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Neck pain with movement coordination impairments in P01-01 (an APTA CPG category); scapular dyskinesis in P02-01, where the consensus describes it as a potential impairment rather than a diagnosis, and where treating the scapula in isolation is not what the evidence supports."
+      },
+      {
+        "label": "Framework",
+        "text": "Control [1]."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "movement-coordination-impairments",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Impaired postural control and balance",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Reduced ability to maintain, achieve, or restore equilibrium, from sensory (vestibular, visual, somatosensory), motor, cognitive, or integrative causes.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Falls in P11-00, where balance and functional exercise is the high-certainty active ingredient and the effects of walking or resistance training alone are uncertain; vestibular rehabilitation dosages in P05-08, with the scope caveat that they apply to confirmed peripheral hypofunction."
+      },
+      {
+        "label": "Framework",
+        "text": "Control [1]."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "impaired-postural-control-and-balance",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Impaired gait and locomotion",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Deviation in the pattern, speed, endurance, or safety of walking. Gait pattern carries diagnostic information — the specific deviations and their significance are catalogued in P11-00.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Gait disorders in P11-00, including that apraxic gait with incontinence and cognitive change suggests normal pressure hydrocephalus and is potentially reversible; locomotor training outcomes in P05-03, where 70% improved gait speed but only 8% converted AIS grade."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Gait speed is the single most informative routine measure in older and neurological populations, predicting mortality, hospitalisation, and disability."
+      },
+      {
+        "label": "Framework",
+        "text": "Integrates all four elements [1]."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "impaired-gait-and-locomotion",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Impaired motor function and sensory integrity",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Impaired voluntary movement production and/or altered sensory reception and integration. Sensory loss impairs movement independently of motor capacity — proprioceptive loss produces ataxia with normal strength, and loss of protective sensation permits tissue damage.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Posterior cord syndrome in P05-03, producing profound sensory ataxia despite preserved strength; diabetic peripheral neuropathy in P05-06 and P12-00; CIPN in P05-06, where exercise implications remain uncertain per the oncology roundtable."
+      },
+      {
+        "label": "Framework",
+        "text": "Control [1]."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "impaired-motor-function-and-sensory-integrity",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Pain with movement / referred pain patterns",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Pain provoked, altered, or maintained by movement and load, and pain perceived at a site distant from its source. Referred patterns follow segmental, sclerotomal, and visceral routes rather than dermatomal ones, which is why referral maps and dermatomes disagree.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Nociplastic pain and the three-mechanism framework in P04-03; visceral referral patterns in P13-00; facet referral in P01-01, P01-02, and P01-03."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Pain that does not vary with any position or movement is a signal to look beyond the musculoskeletal system (P13-00)."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "pain-with-movement-referred-pain-patterns",
+    "references": []
+  },
+  {
+    "name": "Fear-avoidance behavior and kinesiophobia",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Fear of movement or re-injury leading to avoidance, and thence to disuse, disability, and further pain. The fear-avoidance model is a cognitive-behavioural account that explains why a minority of acute low back pain sufferers develop a chronic pain problem [2].",
+    "details": [
+      {
+        "label": "Components of the model",
+        "text": "Pain severity, pain catastrophizing, attention to pain, escape/avoidance behavior, disability, disuse, and vulnerabilities [2]."
+      },
+      {
+        "label": "Where pain-related fear contributes",
+        "text": "Evidence supports its contribution to the inception of low back pain, the development of chronic low back pain from an acute episode, and the maintenance of enduring pain [2] — three distinct roles, not one."
+      },
+      {
+        "label": "Cross-references",
+        "text": "Whiplash prognosis in P01-01, where fear of movement, passive coping, and depressed mood predict slower recovery while collision factors largely do not; psychological modifiers in P12-00, flagged there as the top gap — this entry partly closes it."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Because fear-avoidance operates at inception, transition, and maintenance, the intervention point differs by stage. In acute presentations the target is preventing the transition; in established pain it is graded exposure and disconfirming the expectation of harm."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "fear-avoidance-behavior-and-kinesiophobia",
+    "references": [
+      "Leeuw, M., Goossens, M. E. J. B., Linton, S. J., Crombez, G., Boersma, K., & Vlaeyen, J. W. S. (2007). The fear-avoidance model of musculoskeletal pain: Current state of scientific evidence. *Journal of Behavioral Medicine, 30*(1), 77–94. https://doi.org/10.1007/s10865-006-9085-0 (PMID: 17180640)"
+    ]
+  },
+  {
+    "name": "Chronic pain behavior and maladaptive coping",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Learned patterns of activity avoidance, guarding, help-seeking, and communication that persist beyond tissue healing and are maintained by their consequences. Disuse and disability are explicit components of the fear-avoidance model rather than merely its outcomes [2].",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "ICD-11 chronic primary pain in P04-03, which classifies chronic pain as a diagnosis appropriate independently of identified biological or psychological contributors; central sensitisation and nociplastic pain in P04-03."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Describing behaviour as maladaptive is a statement about its current function, not about the person's character or credibility. The ICD-11 framing — chronic pain as a diagnosis in its own right — is the more useful thing to say to a patient."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "chronic-pain-behavior-and-maladaptive-coping",
+    "references": [
+      "Leeuw, M., Goossens, M. E. J. B., Linton, S. J., Crombez, G., Boersma, K., & Vlaeyen, J. W. S. (2007). The fear-avoidance model of musculoskeletal pain: Current state of scientific evidence. *Journal of Behavioral Medicine, 30*(1), 77–94. https://doi.org/10.1007/s10865-006-9085-0 (PMID: 17180640)"
+    ]
+  },
+  {
+    "name": "Impaired ergonomics and body mechanics",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Mismatch between task demands, environment, and the person's capacity, in occupational, domestic, and recreational settings.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "The evidence for specific \"correct\" lifting postures preventing back injury is weaker than the confidence with which it is often taught. Load management, capacity building, and task variation have better support than posture correction alone."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "impaired-ergonomics-and-body-mechanics",
+    "references": []
+  },
+  {
+    "name": "Impaired self-care and home management",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Difficulty with basic activities of daily living — bathing, dressing, toileting, feeding, grooming, transfers — and with home management tasks.",
+    "details": [
+      {
+        "label": "Framework",
+        "text": "Sits at the activity level of the ICF, with which the 4-element model is explicitly consistent [1]."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "impaired-self-care-and-home-management",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Difficulty with activities of daily living and instrumental ADLs",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Basic ADLs — self-care tasks. Instrumental ADLs — shopping, cooking, medication management, finances, transport, telephone use — which require higher cognitive load and typically decline first in cognitive impairment.",
+    "details": [
+      {
+        "label": "Clinical implication",
+        "text": "IADL decline often precedes basic ADL decline and precedes formal cognitive diagnosis, making it a sensitive early indicator worth asking about specifically."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "difficulty-with-activities-of-daily-living-and-instrumental-adls",
+    "references": []
+  },
+  {
+    "name": "Impaired work, community, and leisure integration",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Restricted participation in occupational, social, and recreational roles.",
+    "details": [
+      {
+        "label": "Framework",
+        "text": "Sits at the participation level of the ICF [1]. Human movement always occurs within an environmental context and is affected by personal factors, both explicitly represented in the 4-element model [1]."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Participation restriction correlates imperfectly with impairment severity, and is what patients typically care about most. Two people with identical impairments can have entirely different participation outcomes depending on environment, role demands, and personal factors."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "impaired-work-community-and-leisure-integration",
+    "references": [
+      "McClure, P., Tevald, M., Zarzycki, R., Kantak, S., Malloy, P., Day, K., Shah, K., Miller, A., & Mangione, K. (2021). The 4-element movement system model to guide physical therapist education, practice, and movement-related research. *Physical Therapy, 101*(3), pzab024. https://doi.org/10.1093/ptj/pzab024 (PMID: 33482006)"
+    ]
+  },
+  {
+    "name": "Assistive/adaptive device or prosthetic/orthotic requirement",
+    "redFlag": false,
+    "comorbidity": false,
+    "description": "Need for equipment to enable or make safe an activity — mobility aids, wheelchairs, orthoses, prostheses, and adaptive equipment.",
+    "details": [
+      {
+        "label": "Cross-references",
+        "text": "Lower extremity amputation in P03-03 and P08-00; congenital limb deficiency in P10-00, where prosthetic rejection is common when the device does not add function; hospice equipment provision in P11-00 and P08-00, where equipment often delivers more functional benefit than exercise."
+      },
+      {
+        "label": "Clinical implication",
+        "text": "Provision is not the endpoint — abandonment rates are substantial when devices do not match goals, environment, or capability."
+      }
+    ],
+    "section": "MOVEMENT SYSTEM & FUNCTIONAL DIAGNOSES",
+    "slug": "assistive-adaptive-device-or-prosthetic-orthotic-requirement",
+    "references": []
   }
 ];

@@ -1622,7 +1622,7 @@ export const CONDITION_REFERENCE = [
   {
     "part": "PART III — MUSCULOSKELETAL: LOWER QUARTER",
     "section": "Knee",
-    "name": "Post-traumatic knee OA",
+    "name": "Post-traumatic knee osteoarthritis",
     "redFlag": false,
     "comorbidity": false
   },

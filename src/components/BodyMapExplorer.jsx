@@ -92,7 +92,20 @@ function ConditionList({ entries, onOpenReference }) {
   );
 }
 
-const LIST_CAP = 250;
+const LIST_CAP = 800;
+
+// A handful of conditions are cross-listed in two taxonomy parts (e.g. cauda
+// equina under both Lumbar Spine and Red Flags). The per-region views want
+// both; the flat A–Z list wants each name once.
+function dedupeByName(entries) {
+  const seen = new Set();
+  return entries.filter((e) => {
+    const key = e.name.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
 
 export default function BodyMapExplorer() {
   const navigate = useNavigate();
@@ -102,7 +115,7 @@ export default function BodyMapExplorer() {
   const [view, setView] = useState("map"); // "map" | "list"
 
   const allEntries = useMemo(
-    () => [...CONDITION_REFERENCE].sort((a, b) => a.name.localeCompare(b.name)),
+    () => dedupeByName([...CONDITION_REFERENCE].sort((a, b) => a.name.localeCompare(b.name))),
     []
   );
 
@@ -117,8 +130,10 @@ export default function BodyMapExplorer() {
 
   const trimmedQuery = query.trim().toLowerCase();
   const searchEntries = trimmedQuery
-    ? CONDITION_REFERENCE.filter((e) => e.name.toLowerCase().includes(trimmedQuery)).sort((a, b) =>
-        a.name.localeCompare(b.name)
+    ? dedupeByName(
+        CONDITION_REFERENCE.filter((e) => e.name.toLowerCase().includes(trimmedQuery)).sort((a, b) =>
+          a.name.localeCompare(b.name)
+        )
       )
     : [];
 
