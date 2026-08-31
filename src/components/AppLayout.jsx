@@ -54,7 +54,7 @@ export default function AppLayout() {
       <header className="sticky top-0 z-20 border-b-2 border-border bg-card px-4 py-3 sm:px-6">
         <div className="mx-auto flex max-w-6xl items-center gap-4">
           <div className="hidden shrink-0 items-center gap-2 lg:flex">
-            <img src="/favicon.svg" alt="" width="36" height="36" className="h-9 w-9 rounded-xl shadow-sm" />
+            <img src="/pwa-192.png" alt="" width="36" height="36" className="h-9 w-9 rounded-xl shadow-sm" />
             <span className="text-lg font-black tracking-tight">infera</span>
           </div>
           <Link to="/profile" aria-label="Your profile" className="shrink-0 rounded-full transition-transform hover:scale-105">
