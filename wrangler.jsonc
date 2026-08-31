@@ -1,0 +1,26 @@
+// wrangler.jsonc
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "infera",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-08-01",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // Serve .html files as-is. The default (auto-trailing-slash) redirects
+    // /terms.html -> /terms, which loops back through run_worker_first.
+    "html_handling": "none",
+    // Client-routed paths (/explore, /case/:id, …) have no matching file and
+    // must fall back to the SPA shell.
+    "not_found_handling": "single-page-application",
+    // The marketing page and the legal pages are served as static HTML by
+    // the Worker; every other request is served straight from the assets
+    // binding.
+    "run_worker_first": ["/", "/marketing", "/terms", "/privacy", "/refunds"]
+  },
+  "routes": [
+    { "pattern": "infera-app.com", "custom_domain": true },
+    { "pattern": "www.infera-app.com", "custom_domain": true }
+  ]
+}
