@@ -191,7 +191,7 @@ export default function DailyGame() {
     // guess just can't show attribute matches (attributeMatches handles a
     // null guessedCase safely, all badges gray) but still uses up a guess
     // and advances the clue, same as a recognized-but-wrong one.
-    const matched = findMatchingCase(guessText, caseBank);
+    const matched = findMatchingCase(guessText, caseBank, targetCase);
     const correct = !!matched && matched.id === targetCase.id;
     playFeedback(correct);
     const newGuess = {

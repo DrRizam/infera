@@ -112,6 +112,15 @@ describe("findMatchingCase", () => {
   it("does not apply the single-word fallback to a multi-word guess", () => {
     expect(findMatchingCase("acl syndrome", BANK)).toBeNull();
   });
+
+  it("prefers the target case when the bank holds a duplicate diagnosis", () => {
+    const older = { ...CASE_A, id: "older", region: "hand" };
+    const target = { ...CASE_A, id: "target", region: "elbow" };
+    const dupBank = [older, target];
+    expect(findMatchingCase("Lateral epicondylalgia", dupBank, target)).toBe(target);
+    // without a preference it still resolves to the first match
+    expect(findMatchingCase("Lateral epicondylalgia", dupBank)).toBe(older);
+  });
 });
 
 describe("attributeMatches", () => {

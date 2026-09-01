@@ -92,13 +92,21 @@ function buildUniqueWordIndex(caseBank) {
  * single-word guess that doesn't match any full term falls back to
  * matching one distinctive word of a diagnosis (e.g. "meniscus" resolves
  * to "Meniscus tear") as long as that word isn't shared by another case.
+ *
+ * `preferCase` breaks a tie toward a specific case (today's target): the
+ * bank can hold more than one case for the same diagnosis, and naming
+ * today's diagnosis has to resolve to today's case, not whichever
+ * duplicate sits earlier in the bank.
  */
-export function findMatchingCase(guess, caseBank) {
+export function findMatchingCase(guess, caseBank, preferCase = null) {
   const norm = normalizeGuess(guess);
   if (!norm) return null;
-  for (const c of caseBank || []) {
-    const candidates = [c.diagnosis, ...(c.synonyms || [])];
-    if (candidates.some((term) => fuzzyEquals(norm, normalizeGuess(term)))) return c;
+  const nameMatches = (caseBank || []).filter((c) =>
+    [c.diagnosis, ...(c.synonyms || [])].some((term) => fuzzyEquals(norm, normalizeGuess(term)))
+  );
+  if (nameMatches.length) {
+    if (preferCase && nameMatches.some((c) => c.id === preferCase.id)) return preferCase;
+    return nameMatches[0];
   }
   if (!norm.includes(" ")) {
     const match = buildUniqueWordIndex(caseBank).get(norm);
