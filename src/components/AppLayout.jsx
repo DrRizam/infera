@@ -8,6 +8,7 @@ import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { isAdmin, isPremium } from "@/lib/subscription";
 import { levelFromXp, retentionStats } from "@/lib/gamification";
+import { IS_BETA, isBetaHidden } from "@/lib/beta";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -32,7 +33,10 @@ export default function AppLayout() {
   const location = useLocation();
   const lvl = levelFromXp(profile.xp || 0);
   const retention = retentionStats(profile);
-  const showUpgrade = !isAdmin(user) && !isPremium(profile);
+  // No upgrade CTA during the closed beta — checkout isn't live and everyone
+  // already has full access. Retention pill drives Recall, which is hidden.
+  const showUpgrade = !IS_BETA && !isAdmin(user) && !isPremium(profile);
+  const showRetention = retention.percent != null && !isBetaHidden("recall");
 
   const navIndex = navIndexForPath(location.pathname);
   const prevNavIndexRef = useRef(navIndex);
@@ -57,6 +61,14 @@ export default function AppLayout() {
             <img src="/pwa-192.png" alt="" width="36" height="36" className="h-9 w-9 rounded-xl shadow-sm" />
             <span className="text-lg font-black tracking-tight">infera</span>
           </div>
+          <Link
+            to="/profile"
+            title="You're on the closed beta — tap to send feedback"
+            aria-label="Closed beta — send feedback"
+            className="shrink-0 rounded-full border border-amber-300 bg-amber-50 px-1.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-amber-700 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-400"
+          >
+            Beta
+          </Link>
           <Link to="/profile" aria-label="Your profile" className="shrink-0 rounded-full transition-transform hover:scale-105">
             <LevelRing level={lvl.level} progress={lvl.progress} size={48} />
           </Link>
@@ -78,7 +90,7 @@ export default function AppLayout() {
             >
               <Flame className="h-3.5 w-3.5" aria-hidden="true" />{profile.streak_count ?? 0}
             </Link>
-            {retention.percent != null && (
+            {showRetention && (
               <Link
                 to="/recall"
                 className={cn(

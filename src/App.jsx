@@ -5,9 +5,11 @@ import { ProfileProvider } from "@/lib/ProfileContext";
 import { useAndroidBackButton } from "@/lib/useAndroidBackButton";
 import { useAdMobInit } from "@/lib/useAdMobInit";
 import ScrollToTop from "@/components/ScrollToTop";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import AppLayout from "@/components/AppLayout";
 import RequireAuth, { RequireBaseline } from "@/components/RequireAuth";
 import PageNotFound from "@/lib/PageNotFound";
+import { isBetaHidden } from "@/lib/beta";
 
 // Login is the first thing a logged-out visitor sees — keep it eager. Every
 // other page is a separate chunk, so the login screen no longer ships the
@@ -47,6 +49,13 @@ function RouteFallback() {
   return <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">Loading…</div>;
 }
 
+// Closed-beta feature gate: a hidden feature's route bounces to Home rather
+// than rendering a page nothing links to. Drop the key from BETA_HIDDEN_FEATURES
+// (src/lib/beta.js) to bring it back.
+function betaGated(featureKey, element) {
+  return isBetaHidden(featureKey) ? <Navigate to="/home" replace /> : element;
+}
+
 export default function App() {
   useAdMobInit();
   return (
@@ -55,6 +64,7 @@ export default function App() {
         <BrowserRouter>
           <ScrollToTop />
           <AndroidBackButton />
+          <ErrorBoundary>
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               {/* "/" is the static marketing page (served by the CF Worker / the
@@ -73,11 +83,11 @@ export default function App() {
                     <Route path="/home" element={<Home />} />
                     <Route path="/condition-of-the-day" element={<ConditionOfTheDay />} />
                     <Route path="/speed" element={<SpeedRound />} />
-                    <Route path="/recall" element={<Recall />} />
-                    <Route path="/anatomy" element={<AnatomyQuiz />} />
+                    <Route path="/recall" element={betaGated("recall", <Recall />)} />
+                    <Route path="/anatomy" element={betaGated("anatomy", <AnatomyQuiz />)} />
                     <Route path="/daily-game" element={<DailyGame />} />
-                    <Route path="/groups" element={<Groups />} />
-                    <Route path="/submit-case" element={<SubmitCase />} />
+                    <Route path="/groups" element={betaGated("groups", <Groups />)} />
+                    <Route path="/submit-case" element={betaGated("submit-case", <SubmitCase />)} />
                     <Route path="/explore" element={<Explore />} />
                     <Route path="/condition/:caseId" element={<ConditionInfo />} />
                     <Route path="/reference/:slug" element={<ConditionReferenceInfo />} />
@@ -89,7 +99,7 @@ export default function App() {
                     <Route path="/premium" element={<Premium />} />
                     <Route path="/admin/feedback" element={<AdminFeedback />} />
                     <Route path="/admin/daily-game" element={<AdminDailyGameReview />} />
-                    <Route path="/osce" element={<OsceCheckpoint />} />
+                    <Route path="/osce" element={betaGated("osce", <OsceCheckpoint />)} />
                   </Route>
 
                   <Route path="/case/:caseId" element={<CasePlay />} />
@@ -99,6 +109,7 @@ export default function App() {
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </Suspense>
+          </ErrorBoundary>
         </BrowserRouter>
       </ProfileProvider>
     </AuthProvider>

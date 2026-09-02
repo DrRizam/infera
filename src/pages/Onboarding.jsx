@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useProfile } from "@/lib/ProfileContext";
 import { MODULES } from "@/lib/modules";
 import Mascot from "@/components/Mascot";
+import { DISCLAIMER_SHORT } from "@/lib/beta";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -54,7 +55,10 @@ export default function Onboarding() {
                 starting content instead of guessing.
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-3">
+              <p className="rounded-lg bg-muted px-3 py-2 text-xs text-muted-foreground">
+                {DISCLAIMER_SHORT} You're joining an early closed beta, so expect rough edges.
+              </p>
               <Button className="w-full" onClick={advance}>
                 Let's go
               </Button>

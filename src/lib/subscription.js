@@ -10,6 +10,12 @@
 // never against anything stored in the profile.
 export const ADMIN_EMAILS = ["rizamshaar2014@gmail.com"];
 
+// Closed beta: paid checkout isn't live yet (Paddle still in verification),
+// so every cap is lifted and every Premium-only feature is unlocked for all
+// signed-in testers. Flip to false the moment billing goes live — the cap
+// math below is the post-beta contract and stays fully exercised in tests.
+export const BETA_UNLIMITED = true;
+
 export function isAdmin(user) {
   return !!user?.email && ADMIN_EMAILS.includes(user.email.toLowerCase());
 }
@@ -18,9 +24,9 @@ export function isPremium(profile) {
   return profile?.subscription_status === "active" || profile?.subscription_status === "past_due";
 }
 
-/** Admin or a paying subscriber — the gate for every Premium-only feature. */
+/** Admin or a paying subscriber — the gate for every Premium-only feature. During the closed beta, everyone. */
 export function hasFullAccess(profile, user) {
-  return isAdmin(user) || isPremium(profile);
+  return BETA_UNLIMITED || isAdmin(user) || isPremium(profile);
 }
 
 // ── Case practice: a small daily allowance for free users ────────────────

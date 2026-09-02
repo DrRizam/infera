@@ -27,7 +27,6 @@ export default function AdminDailyGameReview() {
   useEffect(() => {
     if (!isAdmin(user)) return;
     load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const decide = async (id, decision) => {

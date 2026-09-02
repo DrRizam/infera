@@ -17,6 +17,7 @@ import {
   speedRoundsRemaining,
 } from "@/lib/subscription";
 import { openBillingPortal, startCheckout } from "@/lib/subscriptionStore";
+import { IS_BETA } from "@/lib/beta";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -183,6 +184,19 @@ export default function Settings() {
         <CardContent className="space-y-3">
           {checkoutNotice && <p className="text-sm text-primary">{checkoutNotice}</p>}
           {billingError && <p className="text-sm text-destructive">{billingError}</p>}
+          {IS_BETA && !admin ? (
+            <>
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-bold">Beta tester</span>
+                <span className="text-xs text-muted-foreground">Full access</span>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Everything is unlocked and unlimited during the closed beta — no caps, no ads. Paid plans
+                arrive after the beta; nothing to set up now.
+              </p>
+            </>
+          ) : (
+          <>
           <div className="flex items-center justify-between">
             <span className="text-sm font-bold">{admin ? "Admin" : premium ? "Premium" : "Free"}</span>
             {!admin && !premium && (
@@ -246,6 +260,8 @@ export default function Settings() {
                 {billingBusy ? "Redirecting…" : "Upgrade for unlimited practice"}
               </Button>
             </>
+          )}
+          </>
           )}
         </CardContent>
       </Card>

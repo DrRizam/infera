@@ -23,7 +23,7 @@ import {
   updateMastery,
   xpForCase,
 } from "@/lib/gamification";
-import { casesRemaining, ensureCasePeriodFresh, FREE_CASES_PER_DAY, hasCasesRemaining, isPremium } from "@/lib/subscription";
+import { ensureCasePeriodFresh, FREE_CASES_PER_DAY, hasCasesRemaining, isPremium } from "@/lib/subscription";
 import { useRewardedAd } from "@/lib/useRewardedAd";
 import { Capacitor } from "@capacitor/core";
 import { Button } from "@/components/ui/button";

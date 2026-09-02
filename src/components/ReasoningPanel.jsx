@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Lock, Target } from "lucide-react";
+import { isBetaHidden } from "@/lib/beta";
 import { getModule } from "@/lib/modules";
 import { reasoningDimensions, recommendCasesFor, weakestDimension } from "@/lib/reasoningProfile";
 import { todayStr } from "@/lib/gamification";
@@ -28,7 +29,7 @@ export default function ReasoningPanel({ competency, cases, progressByCaseId, mo
       <div className="mb-3 flex items-center gap-2">
         <Target className="h-4 w-4 text-primary" />
         <h3 className="text-xs font-black uppercase tracking-wide text-primary">Your reasoning</h3>
-        {scoredCount >= 3 && (
+        {scoredCount >= 3 && !isBetaHidden("osce") && (
           <button
             type="button"
             onClick={() => navigate("/osce")}

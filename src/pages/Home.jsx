@@ -11,7 +11,9 @@ import { countDueRecallItems, generateRecallItems } from "@/lib/recallItems";
 import { suggestModuleFocus } from "@/lib/contextPrompt";
 import { currentCaseNumber } from "@/lib/dailyGame";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
+import { isBetaHidden } from "@/lib/beta";
 import ReasoningPanel from "@/components/ReasoningPanel";
+import BetaNotice from "@/components/BetaNotice";
 import CaseList from "@/components/CaseList";
 import Mascot from "@/components/Mascot";
 import { Card, CardContent } from "@/components/ui/card";
@@ -109,6 +111,7 @@ export default function Home() {
 
   return (
     <div className="space-y-8">
+      <BetaNotice />
       <div className="rounded-2xl border-2 border-border bg-card p-5 sm:p-6">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
@@ -188,7 +191,7 @@ export default function Home() {
         </Card>
       )}
 
-      {fullAccess && focusSuggestionModule && (
+      {fullAccess && focusSuggestionModule && !isBetaHidden("recall") && (
         <button
           onClick={() => navigate(`/recall?module=${focusSuggestion.moduleId}`)}
           className="flex w-full items-center gap-3 rounded-xl border-2 border-primary/40 bg-accent px-4 py-3 text-left transition-colors hover:border-primary"
@@ -201,27 +204,31 @@ export default function Home() {
         </button>
       )}
 
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className={cn("grid gap-3", isBetaHidden("recall") ? "sm:grid-cols-1" : "sm:grid-cols-3")}>
         <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/speed")}>
           <Zap className="h-4 w-4" />
           Speed round
         </Button>
-        <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/recall")}>
-          <Brain className="h-4 w-4" />
-          Recall drill
-          {fullAccess ? (
-            recallDue > 0 && (
-              <span className="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">{recallDue} due</span>
-            )
-          ) : (
-            <Lock className="ml-auto h-3.5 w-3.5 text-muted-foreground" />
-          )}
-        </Button>
-        <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/anatomy")}>
-          <Bone className="h-4 w-4" />
-          Anatomy quiz
-          {!fullAccess && <Lock className="ml-auto h-3.5 w-3.5 text-muted-foreground" />}
-        </Button>
+        {!isBetaHidden("recall") && (
+          <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/recall")}>
+            <Brain className="h-4 w-4" />
+            Recall drill
+            {fullAccess ? (
+              recallDue > 0 && (
+                <span className="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">{recallDue} due</span>
+              )
+            ) : (
+              <Lock className="ml-auto h-3.5 w-3.5 text-muted-foreground" />
+            )}
+          </Button>
+        )}
+        {!isBetaHidden("anatomy") && (
+          <Button variant="outline" className="w-full justify-start gap-2 bg-card" onClick={() => navigate("/anatomy")}>
+            <Bone className="h-4 w-4" />
+            Anatomy quiz
+            {!fullAccess && <Lock className="ml-auto h-3.5 w-3.5 text-muted-foreground" />}
+          </Button>
+        )}
       </div>
 
       {fullAccess && dueReviews.length > 0 && (

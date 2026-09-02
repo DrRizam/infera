@@ -108,7 +108,7 @@ function parseBoldFormat(bodyPart) {
       // line, strip bold + flag emoji, so the name matches its taxonomy
       // entry. Flags can sit anywhere on the line (inside the parens too).
       const name = stripBold(line)
-        .replace(/[🚩⚕️]/gu, "")
+        .replace(/🚩|⚕️/gu, "")
         .replace(/\s+/g, " ")
         .trim();
       current = {
@@ -140,7 +140,7 @@ function parsePlainFormat(bodyPart) {
   const flush = () => {
     if (current) entries.push(current);
   };
-  const LABEL = /^([A-Za-z][A-Za-z \/'-]{1,40}):\s+(.+)$/;
+  const LABEL = /^([A-Za-z][A-Za-z /'-]{1,40}):\s+(.+)$/;
   for (const raw of bodyPart.split("\n")) {
     const line = raw.trim();
     if (!line) continue;
@@ -156,7 +156,7 @@ function parsePlainFormat(bodyPart) {
     }
     // Not a label line -> a new condition header.
     flush();
-    const flagMatch = line.match(/^(.*?)\s*([🚩⚕️]*)\s*$/);
+    const flagMatch = line.match(/^(.*?)\s*((?:🚩|⚕️)*)\s*$/u);
     const name = stripBold((flagMatch ? flagMatch[1] : line).trim());
     const flags = flagMatch ? flagMatch[2] : "";
     current = {

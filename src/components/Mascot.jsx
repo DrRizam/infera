@@ -156,7 +156,6 @@ export default function Mascot({
     const duration = ONE_SHOT_MS[animation] ?? 600;
     const t = setTimeout(() => setActivePreset("idle"), duration);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animation, animationKey, reducedMotion]);
 
   const handleClick = () => {

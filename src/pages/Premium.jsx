@@ -6,6 +6,7 @@ import { useProfile } from "@/lib/ProfileContext";
 import { useAuth } from "@/lib/AuthContext";
 import { FREE_CASES_PER_DAY, FREE_SPEED_ROUNDS_PER_WEEK, isAdmin, isPremium } from "@/lib/subscription";
 import { openBillingPortal, PLAN_PRICING, startCheckout } from "@/lib/subscriptionStore";
+import { IS_BETA } from "@/lib/beta";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -45,6 +46,32 @@ export default function Premium() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+
+  // During the closed beta everyone has full access and checkout is off.
+  if (IS_BETA && !premium) {
+    return (
+      <div className="mx-auto max-w-lg space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-white">
+            <Crown className="h-6 w-6" />
+          </div>
+          <h1 className="text-2xl font-black tracking-tight sm:text-3xl">Everything's unlocked</h1>
+        </div>
+        <Card>
+          <CardContent className="space-y-3 p-4 sm:p-5 text-sm text-muted-foreground">
+            <p>
+              You're on the closed beta, so every part of Infera is open and unlimited — no daily cap, no ads,
+              nothing to pay for.
+            </p>
+            <p>Paid plans come after the beta. We'll give testers plenty of notice before anything changes.</p>
+            <Button variant="outline" className="w-full" onClick={() => navigate("/home")}>
+              Back to Learn
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   const subscribe = async () => {
     setBusy(true);

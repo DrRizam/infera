@@ -12,7 +12,7 @@
 // never reached and stay opaque. The flood-filled region gets a binary
 // (fully transparent) alpha, then a couple of small box-blur passes soften
 // that into a clean anti-aliased edge instead of a hard/speckled cutoff.
-import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import sharp from "sharp";
